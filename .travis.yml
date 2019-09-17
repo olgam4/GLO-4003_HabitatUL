@@ -1,0 +1,17 @@
+language: java
+
+branches:
+  only:
+  - master
+
+stages:
+- name: "Verification"
+
+jobs:
+  include:
+  - stage: "Verification"
+    script:
+    - mvn clean install && mvn verify
+
+notifications:
+  email: false
