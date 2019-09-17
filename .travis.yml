@@ -11,7 +11,7 @@ jobs:
   include:
   - stage: "Verification"
     script:
-    - mvn clean install && mvn verify
+    - mvn verify
 
 notifications:
   email: false
