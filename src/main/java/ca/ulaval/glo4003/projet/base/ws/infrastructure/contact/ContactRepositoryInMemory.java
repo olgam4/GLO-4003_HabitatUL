@@ -1,14 +1,13 @@
 package ca.ulaval.glo4003.projet.base.ws.infrastructure.contact;
 
+import ca.ulaval.glo4003.projet.base.ws.domain.contact.Contact;
+import ca.ulaval.glo4003.projet.base.ws.domain.contact.ContactNotFoundException;
+import ca.ulaval.glo4003.projet.base.ws.domain.contact.ContactRepository;
 import jersey.repackaged.com.google.common.collect.Lists;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import ca.ulaval.glo4003.projet.base.ws.domain.contact.Contact;
-import ca.ulaval.glo4003.projet.base.ws.domain.contact.ContactNotFoundException;
-import ca.ulaval.glo4003.projet.base.ws.domain.contact.ContactRepository;
 
 public class ContactRepositoryInMemory implements ContactRepository {
 
@@ -16,7 +15,7 @@ public class ContactRepositoryInMemory implements ContactRepository {
 
   @Override
   public List<Contact> findAll() {
-      return Lists.newArrayList(contacts.values());
+    return Lists.newArrayList(contacts.values());
   }
 
   @Override
@@ -25,8 +24,7 @@ public class ContactRepositoryInMemory implements ContactRepository {
   }
 
   @Override
-  public void update(Contact contact)
-          throws ContactNotFoundException {
+  public void update(Contact contact) throws ContactNotFoundException {
     Contact foundContact = contacts.get(contact.getId());
     if (foundContact != null) {
       contacts.put(contact.getId(), contact);
