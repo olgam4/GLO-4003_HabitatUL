@@ -43,6 +43,9 @@
         <build-helper-maven-plugin.version>1.5</build-helper-maven-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
 
+        <!-- Code Coverage -->
+        <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+
         <!-- Reporting -->
         <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
     </properties>
@@ -156,6 +159,7 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <!-- Build & Exec -->
             <plugin>
@@ -263,18 +267,50 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Code Coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
-    <!-- mvn checkstyle:checkstyle -->
-    <!-- [WARNING] Unable to locate Source XRef to link to - DISABLED -->
-    <!-- https://stackoverflow.com/questions/12038238/unable-to-locate-source-xref-to-link-to -->
     <reporting>
         <plugins>
+            <!-- mvn checkstyle:checkstyle -->
+            <!-- [WARNING] Unable to locate Source XRef to link to - DISABLED -->
+            <!-- https://stackoverflow.com/questions/12038238/unable-to-locate-source-xref-to-link-to -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${maven-jxr-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
