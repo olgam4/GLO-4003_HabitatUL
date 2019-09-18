@@ -12,6 +12,7 @@
 
     <properties>
         <!-- General -->
+        <jar-file-name>habitatul</jar-file-name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main-class>ca.ulaval.glo4003.projet.base.ProjetBaseMain</main-class>
         <maven-compiler.version>3.5</maven-compiler.version>
@@ -48,6 +49,9 @@
 
         <!-- Reporting -->
         <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
+
+        <!-- Deployment -->
+        <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
     </properties>
 
     <dependencies>
@@ -159,6 +163,7 @@
     </dependencies>
 
     <build>
+        <finalName>${jar-file-name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <!-- Build & Exec -->
@@ -288,6 +293,45 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Deployment -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>module-info.class</exclude>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${main-class}</mainClass>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -301,6 +345,7 @@
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${maven-jxr-plugin.version}</version>
             </plugin>
+            <!-- select non-aggregate reports -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

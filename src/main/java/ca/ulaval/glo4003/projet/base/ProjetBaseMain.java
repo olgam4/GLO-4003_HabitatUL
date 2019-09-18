@@ -55,7 +55,8 @@ public class ProjetBaseMain {
     // Setup http server
     ContextHandlerCollection contexts = new ContextHandlerCollection();
     contexts.setHandlers(new Handler[] {context});
-    Server server = new Server(8080);
+    int port = Integer.parseInt(System.getProperty("port") == null ? "8080" : System.getProperty("port"));
+    Server server = new Server(port);
     server.setHandler(contexts);
 
     try {
