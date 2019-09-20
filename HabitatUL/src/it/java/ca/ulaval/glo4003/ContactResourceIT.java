@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.projet.base.ProjetBaseMain;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

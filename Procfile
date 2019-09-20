@@ -1,1 +1,1 @@
-web: java -Dport=$PORT -jar HabitatULMain/target/habitatul.jar
+web: java -Dport=$PORT -jar HabitatUL/target/habitatul.jar
