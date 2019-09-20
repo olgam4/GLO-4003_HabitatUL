@@ -1,8 +1,6 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.api.contact.ContactResource;
-import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.http.CORSResponseFilter;
+import ca.ulaval.glo4003.infrastructure.http.CORSResponseFilter;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -15,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Server {
-  public static final String CONTEXT_PATH = "/api/";
+  public static final String CONTEXT_PATH = "/v1/";
   private org.eclipse.jetty.server.Server server;
 
   public void start(int serverPort) {
@@ -25,17 +23,15 @@ public class Server {
   }
 
   private void configureServer(org.eclipse.jetty.server.Server server) {
-    ContactResource contactResource = ServiceLocator.resolve(ContactResource.class);
-
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
     context.setContextPath(CONTEXT_PATH);
+    // TODO: find how to register controllers automatically
     ResourceConfig resourceConfig =
         ResourceConfig.forApplication(
             new Application() {
               @Override
               public Set<Object> getSingletons() {
                 HashSet<Object> resources = new HashSet<>();
-                resources.add(contactResource);
                 return resources;
               }
             });
