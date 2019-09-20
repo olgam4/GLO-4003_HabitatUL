@@ -5,11 +5,11 @@ branches:
   - master
 
 stages:
-- name: "Verification"
+- name: "All"
 
 jobs:
   include:
-  - stage: "Verification"
+  - stage: "All"
     script:
     - mvn verify
 
