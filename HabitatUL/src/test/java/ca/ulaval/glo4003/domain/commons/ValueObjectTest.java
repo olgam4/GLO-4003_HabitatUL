@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.domain.commons;
 
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -8,11 +9,11 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ValueObjectTest {
-  private static final String A_STRING = "A_STRING";
-  private static final Integer AN_INTEGER = 383;
-  private static final String ANOTHER_STRING = "ANOTHER_STRING";
-  private static final Date A_DATE = new Date();
-  public static final int ANOTHER_INTEGER = 2;
+  private static final String A_STRING = new Faker().dragonBall().character();
+  private static final String ANOTHER_STRING = new Faker().dragonBall().character();
+  private static final int AN_INTEGER = new Faker().number().randomDigit();
+  private static final int ANOTHER_INTEGER = new Faker().number().randomDigit();
+  private static final Date A_DATE = new Faker().date().birthday();
 
   @Test
   public void checkingForEquality_whenValueObjectsOfDifferentClasses_thenObjectsAreDifferent() {
@@ -115,19 +116,19 @@ public class ValueObjectTest {
   @Test
   public void
       comparingValueObjects_whenObjectsOfSameClassWithDifferentAttributes_thenOrderBasedOnAttributes() {
-    ValueObject valueObject1 = new FirstValueObject(A_STRING, ANOTHER_INTEGER);
-    ValueObject valueObject2 = new FirstValueObject(ANOTHER_STRING, AN_INTEGER);
+    ValueObject valueObject1 = new FirstValueObject("A_STRING", AN_INTEGER);
+    ValueObject valueObject2 = new FirstValueObject("B_STRING", ANOTHER_INTEGER);
 
-    assertTrue(valueObject1.compareTo(valueObject2) > 0);
+    assertTrue(valueObject1.compareTo(valueObject2) < 0);
   }
 
   @Test
   public void
-      comparingValueObjects_whenObjectsOfSameClassButDifferentAttributes_thenOrderBasedOnAllAttributes() {
-    ValueObject valueObject1 = new FirstValueObject(A_STRING, ANOTHER_INTEGER);
-    ValueObject valueObject2 = new FirstValueObject(A_STRING, AN_INTEGER);
+      comparingValueObjects_whenObjectsOfSameClassButDifferentAttributes_thenOrderBasedOnAttributeOrder() {
+    ValueObject valueObject1 = new FirstValueObject(A_STRING, 65);
+    ValueObject valueObject2 = new FirstValueObject(A_STRING, 56);
 
-    assertTrue(valueObject1.compareTo(valueObject2) < 0);
+    assertTrue(valueObject1.compareTo(valueObject2) > 0);
   }
 
   @Test
@@ -141,10 +142,10 @@ public class ValueObjectTest {
   @Test
   public void comparingValueObjects_whenNestedObjectsWithDifferentAttributes_thenOrderBasedOnAttributes() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
-    ValueObject valueObject1 = new NestedValueObject(new FirstValueObject(A_STRING, AN_INTEGER), attr2);
-    ValueObject valueObject2 = new NestedValueObject(new FirstValueObject(ANOTHER_STRING, ANOTHER_INTEGER), attr2);
+    ValueObject valueObject1 = new NestedValueObject(new FirstValueObject("A_STRING", AN_INTEGER), attr2);
+    ValueObject valueObject2 = new NestedValueObject(new FirstValueObject("B_STRING", ANOTHER_INTEGER), attr2);
 
-    assertTrue(valueObject1.compareTo(valueObject2) > 0);
+    assertTrue(valueObject1.compareTo(valueObject2) < 0);
   }
 
   @Test
@@ -173,7 +174,7 @@ public class ValueObjectTest {
     String observed = valueObject.toString();
 
     assertTrue(observed.contains(A_STRING));
-    assertTrue(observed.contains(AN_INTEGER.toString()));
+    assertTrue(observed.contains(String.format("%d", AN_INTEGER)));
   }
 
   class FirstValueObject extends ValueObject {
