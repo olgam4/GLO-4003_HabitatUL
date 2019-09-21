@@ -228,3 +228,6 @@ buildNumber.properties
 .history
 
 # End of https://www.gitignore.io/api/java,macos,maven,intellij,jetbrains,visualstudiocode
+
+### Deployment Key ###
+id_rsa
