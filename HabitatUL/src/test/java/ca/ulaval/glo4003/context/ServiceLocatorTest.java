@@ -2,34 +2,43 @@ package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.context.exception.CannotRegisterContractTwiceException;
 import ca.ulaval.glo4003.context.exception.UnableResolveServiceException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ServiceLocatorTest {
-
-  @Before
+  @BeforeEach
   public void setUp() {
     ServiceLocator.reset();
   }
 
   @Test
-  public void givenARegisteredService_whenResolving_thenServiceIsResolved() {
-    TestImplementation implementation = new TestImplementation();
-    ServiceLocator.register(TestContract.class, implementation);
-    assertSame(implementation, ServiceLocator.resolve(TestContract.class));
+  public void resolvingAService_whenServiceIsRegistered_thenServiceIsResolved() {
+    TestImplementation expectedImplementation = new TestImplementation();
+    ServiceLocator.register(TestContract.class, expectedImplementation);
+
+    TestContract observedImplementation = ServiceLocator.resolve(TestContract.class);
+
+    assertSame(expectedImplementation, observedImplementation);
   }
 
-  @Test(expected = UnableResolveServiceException.class)
-  public void givenAnUnregisteredService_whenResolving_thenThrows() {
-    ServiceLocator.resolve(TestContract.class);
+  @Test
+  public void resolvingAService_whenServiceIsNotRegistered_thenThrows() {
+    Executable act = () -> ServiceLocator.resolve(Test.class);
+
+    assertThrows(UnableResolveServiceException.class, act);
   }
 
-  @Test(expected = CannotRegisterContractTwiceException.class)
-  public void givenAlreadyRegisteredService_whenRegisteringTwice_thenThrows() {
+  @Test
+  public void registeringAService_whenServiceAlreadyRegistered_thenThrows() {
     ServiceLocator.register(TestContract.class, new TestImplementation());
-    ServiceLocator.register(TestContract.class, new TestImplementation());
+
+    Executable act = () -> ServiceLocator.register(TestContract.class, new TestImplementation());
+
+    assertThrows(CannotRegisterContractTwiceException.class, act);
   }
 
   private interface TestContract {}
