@@ -217,11 +217,10 @@ buildNumber.properties
 .flattened-pom.xml
 
 ### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode
+.settings
+.project
+.classpath
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files

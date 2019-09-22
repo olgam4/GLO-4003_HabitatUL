@@ -1,12 +1,11 @@
 package ca.ulaval.glo4003.domain.commons;
 
 import com.github.javafaker.Faker;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class ValueObjectTest {
   private static final String A_STRING = new Faker().dragonBall().character();
@@ -103,14 +102,12 @@ public class ValueObjectTest {
     assertEquals(valueObject1.hashCode(), valueObject2.hashCode());
   }
 
-  @Test
+  @Test(expected = ClassCastException.class)
   public void comparingValueObjects_whenObjectsOfDifferentClass_thenThrows() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
 
-    Executable executable = () -> valueObject1.compareTo(valueObject2);
-
-    assertThrows(ClassCastException.class, executable);
+    valueObject1.compareTo(valueObject2);
   }
 
   @Test
@@ -140,10 +137,13 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void comparingValueObjects_whenNestedObjectsWithDifferentAttributes_thenOrderBasedOnAttributes() {
+  public void
+      comparingValueObjects_whenNestedObjectsWithDifferentAttributes_thenOrderBasedOnAttributes() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
-    ValueObject valueObject1 = new NestedValueObject(new FirstValueObject("A_STRING", AN_INTEGER), attr2);
-    ValueObject valueObject2 = new NestedValueObject(new FirstValueObject("B_STRING", ANOTHER_INTEGER), attr2);
+    ValueObject valueObject1 =
+        new NestedValueObject(new FirstValueObject("A_STRING", AN_INTEGER), attr2);
+    ValueObject valueObject2 =
+        new NestedValueObject(new FirstValueObject("B_STRING", ANOTHER_INTEGER), attr2);
 
     assertTrue(valueObject1.compareTo(valueObject2) < 0);
   }

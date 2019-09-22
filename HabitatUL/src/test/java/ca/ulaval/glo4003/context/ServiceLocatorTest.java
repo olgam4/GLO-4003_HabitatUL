@@ -2,15 +2,13 @@ package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.context.exception.CannotRegisterContractTwiceException;
 import ca.ulaval.glo4003.context.exception.UnableResolveServiceException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertSame;
 
 public class ServiceLocatorTest {
-  @BeforeEach
+  @Before
   public void setUp() {
     ServiceLocator.reset();
   }
@@ -25,20 +23,16 @@ public class ServiceLocatorTest {
     assertSame(expectedImplementation, observedImplementation);
   }
 
-  @Test
+  @Test(expected = UnableResolveServiceException.class)
   public void resolvingAService_whenServiceIsNotRegistered_thenThrows() {
-    Executable act = () -> ServiceLocator.resolve(Test.class);
-
-    assertThrows(UnableResolveServiceException.class, act);
+    ServiceLocator.resolve(Test.class);
   }
 
-  @Test
+  @Test(expected = CannotRegisterContractTwiceException.class)
   public void registeringAService_whenServiceAlreadyRegistered_thenThrows() {
     ServiceLocator.register(TestContract.class, new TestImplementation());
 
-    Executable act = () -> ServiceLocator.register(TestContract.class, new TestImplementation());
-
-    assertThrows(CannotRegisterContractTwiceException.class, act);
+    ServiceLocator.register(TestContract.class, new TestImplementation());
   }
 
   private interface TestContract {}
