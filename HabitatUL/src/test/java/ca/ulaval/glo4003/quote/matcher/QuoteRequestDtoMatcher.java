@@ -13,6 +13,16 @@ public class QuoteRequestDtoMatcher extends TypeSafeMatcher<QuoteRequest> {
     this.quoteRequestDto = quoteRequestDto;
   }
 
+  public static QuoteRequest getQuoteRequestDtoMockitoMatcher(
+      final QuoteRequestDto quoteRequestDto) {
+    return MockitoHamcrest.argThat(getQuoteRequestDtoMatcher(quoteRequestDto));
+  }
+
+  public static QuoteRequestDtoMatcher getQuoteRequestDtoMatcher(
+      final QuoteRequestDto quoteRequestDto) {
+    return new QuoteRequestDtoMatcher(quoteRequestDto);
+  }
+
   @Override
   public void describeTo(final Description description) {
     description.appendText(
@@ -22,15 +32,5 @@ public class QuoteRequestDtoMatcher extends TypeSafeMatcher<QuoteRequest> {
   @Override
   public boolean matchesSafely(final QuoteRequest quoteRequest) {
     return true;
-  }
-
-  public static QuoteRequest getQuoteRequestDtoMockitoMatcher(
-      final QuoteRequestDto quoteRequestDto) {
-    return MockitoHamcrest.argThat(getQuoteRequestDtoMatcher(quoteRequestDto));
-  }
-
-  public static QuoteRequestDtoMatcher getQuoteRequestDtoMatcher(
-      final QuoteRequestDto quoteRequestDto) {
-    return new QuoteRequestDtoMatcher(quoteRequestDto);
   }
 }

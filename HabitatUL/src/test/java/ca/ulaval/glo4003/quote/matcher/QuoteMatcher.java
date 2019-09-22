@@ -12,18 +12,17 @@ public class QuoteMatcher extends TypeSafeMatcher<QuoteDto> {
     this.quote = quote;
   }
 
+  public static boolean matchesQuote(final Quote quote, final QuoteDto quoteDto) {
+    return new QuoteMatcher(quote).matchesSafely(quoteDto);
+  }
+
   @Override
   public void describeTo(final Description description) {
-    description.appendText(
-        String.format("matches corresponding quote: %s", quote.toString()));
+    description.appendText(String.format("matches corresponding quote: %s", quote.toString()));
   }
 
   @Override
   public boolean matchesSafely(final QuoteDto quoteDto) {
     return true;
-  }
-
-  public static boolean matchesQuote(final Quote quote, final QuoteDto quoteDto) {
-    return new QuoteMatcher(quote).matchesSafely(quoteDto);
   }
 }

@@ -20,6 +20,7 @@ public class Main {
   }
 
   private static Integer retrievePortNumber() {
-    return Optional.ofNullable(Integer.valueOf(System.getProperty(PORT_ENV_VAR))).orElse(DEFAULT_PORT);
+    return Optional.ofNullable(Integer.valueOf(System.getProperty(PORT_ENV_VAR)))
+        .orElse(DEFAULT_PORT);
   }
 }
