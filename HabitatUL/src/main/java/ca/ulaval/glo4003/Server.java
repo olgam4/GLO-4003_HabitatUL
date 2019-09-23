@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.quote.infrastructure.http.CORSResponseFilter;
+import ca.ulaval.glo4003.underwriting.infrastructure.http.CORSResponseFilter;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
