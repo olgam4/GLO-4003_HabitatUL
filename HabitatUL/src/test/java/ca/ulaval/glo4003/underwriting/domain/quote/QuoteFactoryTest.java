@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.shared.ClockProvider;
-import ca.ulaval.glo4003.shared.Date;
+import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.FixedClockProvider;
-import ca.ulaval.glo4003.shared.Premium;
+import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.generator.QuoteRequestGenerator;
 import org.junit.Before;
 import org.junit.Test;

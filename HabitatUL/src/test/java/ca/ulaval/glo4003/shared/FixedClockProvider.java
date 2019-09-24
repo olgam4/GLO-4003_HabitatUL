@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.shared;
 
+import ca.ulaval.glo4003.shared.domain.ClockProvider;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;

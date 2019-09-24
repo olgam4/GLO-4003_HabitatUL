@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.shared;
+package ca.ulaval.glo4003.shared.domain;
 
 import java.time.Clock;
 import java.time.Duration;

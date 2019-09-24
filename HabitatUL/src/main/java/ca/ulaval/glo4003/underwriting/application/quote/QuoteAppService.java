@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.shared.Premium;
+import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;

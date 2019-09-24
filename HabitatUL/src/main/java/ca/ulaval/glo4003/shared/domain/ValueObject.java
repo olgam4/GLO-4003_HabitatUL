@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.shared;
+package ca.ulaval.glo4003.shared.domain;
 
 import org.apache.commons.lang3.builder.*;
 

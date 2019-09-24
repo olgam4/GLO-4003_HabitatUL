@@ -8,7 +8,7 @@ import java.util.Optional;
 @SuppressWarnings("all")
 public class Main {
   private static final String PORT_ENV_VAR = "PORT";
-  private static final int DEFAULT_PORT = 8080;
+  private static final String DEFAULT_PORT = "8080";
   private static final ProdContext DEFAULT_CONTEXT = new ProdContext();
 
   public static void main(String[] args) {
@@ -20,7 +20,6 @@ public class Main {
   }
 
   private static Integer retrievePortNumber() {
-    return Optional.ofNullable(Integer.valueOf(System.getProperty(PORT_ENV_VAR)))
-        .orElse(DEFAULT_PORT);
+    return Integer.valueOf(Optional.ofNullable(System.getProperty(PORT_ENV_VAR)).orElse(DEFAULT_PORT));
   }
 }

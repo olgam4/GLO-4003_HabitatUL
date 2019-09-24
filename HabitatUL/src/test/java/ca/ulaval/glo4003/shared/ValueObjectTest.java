@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.shared;
 
+import ca.ulaval.glo4003.shared.domain.ValueObject;
 import com.github.javafaker.Faker;
 import org.junit.Test;
 

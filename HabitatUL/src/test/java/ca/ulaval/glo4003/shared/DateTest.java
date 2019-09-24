@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.shared;
 
+import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.Date;
 import org.junit.Before;
 import org.junit.Test;
 
