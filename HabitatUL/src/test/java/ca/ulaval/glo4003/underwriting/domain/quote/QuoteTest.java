@@ -15,7 +15,7 @@ public class QuoteTest {
   public void setUp() {}
 
   @Test
-  public void purchasingQuote_marksQuoteAsPurchased() {
+  public void purchasingQuote_shouldMarkQuoteAsPurchased() {
     subject = QuoteGenerator.createValidQuote();
 
     subject.purchase();
@@ -24,14 +24,14 @@ public class QuoteTest {
   }
 
   @Test(expected = ExpiredQuoteException.class)
-  public void purchasingQuote_whenQuoteIsExpired_throws() {
+  public void purchasingQuote_withExpiredQuote_shouldThrow() {
     subject = QuoteGenerator.createExpiredQuote();
 
     subject.purchase();
   }
 
   @Test(expected = QuoteAlreadyPurchasedException.class)
-  public void purchasingQuote_whenQuoteIsAlreadyPurchased_throws() {
+  public void purchasingQuote_withAlreadyPurchasedQuote_shouldThrow() {
     subject = QuoteGenerator.createPurchasedQuote();
 
     subject.purchase();

@@ -14,7 +14,7 @@ public class ServiceLocatorTest {
   }
 
   @Test
-  public void resolvingContract_whenServiceIsRegistered_resolvesAssociatedService() {
+  public void resolvingContract_withRegisteredService_shouldResolvesService() {
     TestImplementation expectedImplementation = new TestImplementation();
     ServiceLocator.register(TestContract.class, expectedImplementation);
 
@@ -24,12 +24,12 @@ public class ServiceLocatorTest {
   }
 
   @Test(expected = UnableResolveServiceException.class)
-  public void resolvingContract_whenServiceIsNotRegistered_throws() {
+  public void resolvingContract_withoutRegisteredService_shouldThrow() {
     ServiceLocator.resolve(Test.class);
   }
 
   @Test(expected = CannotRegisterContractTwiceException.class)
-  public void registeringService_whenServiceAlreadyRegistered_throws() {
+  public void registeringContract_withAlreadyRegisteredService_shouldThrow() {
     ServiceLocator.register(TestContract.class, new TestImplementation());
 
     ServiceLocator.register(TestContract.class, new TestImplementation());

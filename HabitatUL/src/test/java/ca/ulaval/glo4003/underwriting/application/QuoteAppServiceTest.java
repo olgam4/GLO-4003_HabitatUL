@@ -23,13 +23,12 @@ public class QuoteAppServiceTest {
   private static final QuoteId QUOTE_ID = new QuoteId();
 
   private QuoteAppService subject;
+  private QuoteRequestDto quoteRequestDto;
 
   @Mock private PremiumCalculator premiumCalculator;
   @Mock private Quote quote;
   @Mock private QuoteFactory quoteFactory;
   @Mock private QuoteRepository quoteRepository;
-
-  private QuoteRequestDto quoteRequestDto;
 
   @Before
   public void setUp() {
@@ -43,7 +42,7 @@ public class QuoteAppServiceTest {
   }
 
   @Test
-  public void requestingQuote_computesQuotePrice() {
+  public void requestingQuote_shouldComputeQuotePrice() {
     subject.requestQuote(quoteRequestDto);
 
     verify(premiumCalculator)
@@ -51,35 +50,35 @@ public class QuoteAppServiceTest {
   }
 
   @Test
-  public void requestingQuote_createsQuote() {
+  public void requestingQuote_shouldCreateQuote() {
     subject.requestQuote(quoteRequestDto);
 
     verify(quoteRepository).create(quote);
   }
 
   @Test
-  public void requestingQuote_returnsCorrespondingQuoteDto() {
+  public void requestingQuote_shouldProduceCorrespondingQuoteDto() {
     QuoteDto observedQuoteDto = subject.requestQuote(quoteRequestDto);
 
     matchesQuote(quote, observedQuoteDto);
   }
 
   @Test
-  public void purchasingQuote_getsQuoteById() {
+  public void purchasingQuote_shouldGetQuoteById() {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quoteRepository).getById(QUOTE_ID);
   }
 
   @Test
-  public void purchasingQuote_purchasesQuote() {
+  public void purchasingQuote_shouldPurchaseQuote() {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quote).purchase();
   }
 
   @Test
-  public void purchasingQuote_updatesQuote() {
+  public void purchasingQuote_shouldUpdateQuote() {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quoteRepository).update(quote);

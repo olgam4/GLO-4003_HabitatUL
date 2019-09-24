@@ -15,7 +15,7 @@ public class ValueObjectTest {
   private static final Date A_DATE = new Faker().date().birthday();
 
   @Test
-  public void checkingForEquality_whenValueObjectsOfDifferentClasses_marksObjectsAsDifferent() {
+  public void checkingForEquality_withValueObjectsOfDifferentClasses_shouldBeDifferent() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
 
@@ -24,7 +24,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      checkingForEquality_whenValueObjectsOfSameClassButDifferentAttributes_marksObjectsAsDifferent() {
+      checkingForEquality_withValueObjectsOfSameClassButDifferentAttributes_shouldBeDifferent() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject(ANOTHER_STRING, AN_INTEGER);
 
@@ -32,7 +32,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void checkingForEquality_whenValueObjectsOfSameClassesAndAttributes_marksObjectsAsEqual() {
+  public void checkingForEquality_withValueObjectsOfSameClassesAndAttributes_shouldBeEqual() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject(A_STRING, AN_INTEGER);
 
@@ -41,7 +41,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      checkingForEquality_whenNestedValueObjectWithDifferentAttributes_marksObjectsAsDifferent() {
+      checkingForEquality_withNestedValueObjectWithDifferentAttributes_shouldBeDifferent() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
     ValueObject valueObject1 =
         new NestedValueObject(new FirstValueObject(A_STRING, AN_INTEGER), attr2);
@@ -52,7 +52,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void checkingForEquality_whenNestedValueObjectWithSameAttributes_marksObjectsAsEqual() {
+  public void checkingForEquality_withNestedValueObjectWithSameAttributes_shouldBeEqual() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
     ValueObject valueObject1 =
         new NestedValueObject(new FirstValueObject(A_STRING, AN_INTEGER), attr2);
@@ -64,7 +64,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      computingHashCode_whenObjectsOfSameClassWithDifferentAttributes_producesDifferentHashCodes() {
+      computingHashCode_withObjectsOfSameClassWithDifferentAttributes_shouldProduceDifferentHashCodes() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject(ANOTHER_STRING, AN_INTEGER);
 
@@ -72,7 +72,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void computingHashCode_whenObjectsOfSameClassAndAttributes_producesSameHashCode() {
+  public void computingHashCode_withObjectsOfSameClassAndAttributes_shouldProduceSameHashCode() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject(A_STRING, AN_INTEGER);
 
@@ -81,7 +81,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      computingHashCode_whenNestedObjectsWithDifferentAttributes_producesDifferentHashCodes() {
+      computingHashCode_withNestedObjectsWithDifferentAttributes_shouldProduceDifferentHashCodes() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
     ValueObject valueObject1 =
         new NestedValueObject(new FirstValueObject(A_STRING, AN_INTEGER), attr2);
@@ -92,7 +92,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void computingHashCode_whenNestedObjectsWithSameAttributes_producesSameHashCode() {
+  public void computingHashCode_withNestedObjectsWithSameAttributes_shouldProduceSameHashCode() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
     ValueObject valueObject1 =
         new NestedValueObject(new FirstValueObject(A_STRING, AN_INTEGER), attr2);
@@ -103,7 +103,7 @@ public class ValueObjectTest {
   }
 
   @Test(expected = ClassCastException.class)
-  public void comparingValueObjects_whenObjectsOfDifferentClass_throws() {
+  public void comparingValueObjects_withObjectsOfDifferentClass_shouldThrow() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
 
@@ -112,7 +112,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      comparingValueObjects_whenObjectsOfSameClassWithDifferentAttributes_ordersObjectsBasedOnAttributes() {
+      comparingValueObjects_withObjectsOfSameClassWithDifferentAttributes_shouldOrderObjectsBasedOnAttributes() {
     ValueObject valueObject1 = new FirstValueObject("A_STRING", AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject("B_STRING", ANOTHER_INTEGER);
 
@@ -121,7 +121,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      comparingValueObjects_whenObjectsOfSameClassButDifferentAttributes_ordersObjectsBasedOnAttributeOrder() {
+      comparingValueObjects_withObjectsOfSameClassButDifferentAttributes_shouldOrderObjectsBasedOnAttributeOrder() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, 65);
     ValueObject valueObject2 = new FirstValueObject(A_STRING, 56);
 
@@ -129,7 +129,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void comparingValueObjects_whenObjectsOfSameClassAndAttributes_ordersObjectsEqually() {
+  public void comparingValueObjects_withObjectsOfSameClassAndAttributes_shouldOrderObjectsEqually() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject(A_STRING, AN_INTEGER);
 
@@ -138,7 +138,7 @@ public class ValueObjectTest {
 
   @Test
   public void
-      comparingValueObjects_whenNestedObjectsWithDifferentAttributes_ordersObjectsBasedOnAttributes() {
+      comparingValueObjects_withNestedObjectsWithDifferentAttributes_shouldOrderObjectsBasedOnAttributes() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
     ValueObject valueObject1 =
         new NestedValueObject(new FirstValueObject("A_STRING", AN_INTEGER), attr2);
@@ -149,7 +149,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void stringifyingValueObject_showsClassName() {
+  public void stringifyingValueObject_shouldShowClassName() {
     ValueObject valueObject = new FirstValueObject(A_STRING, AN_INTEGER);
 
     String observed = valueObject.toString();
@@ -158,7 +158,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void stringifyingValueObject_showsAttributesName() {
+  public void stringifyingValueObject_shouldShowAttributesName() {
     ValueObject valueObject = new FirstValueObject(A_STRING, AN_INTEGER);
 
     String observed = valueObject.toString();
@@ -168,7 +168,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void stringifyingValueObject_showsAttributesValue() {
+  public void stringifyingValueObject_shouldShowAttributesValue() {
     ValueObject valueObject = new FirstValueObject(A_STRING, AN_INTEGER);
 
     String observed = valueObject.toString();

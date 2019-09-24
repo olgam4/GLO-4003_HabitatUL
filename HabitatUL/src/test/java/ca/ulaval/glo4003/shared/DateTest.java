@@ -9,30 +9,38 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class DateTest {
-  private static final Date BEFORE_DATE = new Date(LocalDateTime.now().minusDays(2));
-  private static final Date AFTER_DATE = new Date(LocalDateTime.now().plusDays(2));
+  private static final Date NULL_DATE = Date.nullDate();
+  private static final Date BEFORE_DATE = Date.from(LocalDateTime.now().minusDays(2));
+  private static final Date AFTER_DATE = Date.from(LocalDateTime.now().plusDays(2));
 
   private Date subject;
+  private ClockProvider clockProvider;
 
   @Before
   public void setUp() {
-    subject = Date.now();
+    clockProvider = new FixedClockProvider();
+    subject = Date.now(clockProvider.getClock());
   }
 
   @Test
-  public void checkingIfDateIsAfterAnother_whenNullDate_isNotAfter() {
+  public void checkingIfDateIsAfterAnother_onNullDate_shouldBeBefore() {
     subject = Date.nullDate();
 
     assertFalse(subject.isAfter(AFTER_DATE));
   }
 
   @Test
-  public void checkingIfDateIsAfterAnother_whenDateIsAfter_isAfter() {
+  public void checkingIfDateIsAfterAnother_withNullDate_shouldBeBefore() {
+    assertFalse(subject.isAfter(NULL_DATE));
+  }
+
+  @Test
+  public void checkingIfDateIsAfterAnother_withDateAfter_shouldBeAfter() {
     assertTrue(subject.isAfter(BEFORE_DATE));
   }
 
   @Test
-  public void checkingIfDateIsAfterAnother_whenDateIsBefore_isNotAfter() {
+  public void checkingIfDateIsAfterAnother_withDateBefore_shouldBeBefore() {
     assertFalse(subject.isAfter(AFTER_DATE));
   }
 }

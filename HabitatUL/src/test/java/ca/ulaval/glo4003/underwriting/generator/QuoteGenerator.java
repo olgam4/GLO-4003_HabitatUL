@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.underwriting.generator;
 
+import ca.ulaval.glo4003.shared.ClockProvider;
 import ca.ulaval.glo4003.shared.Date;
+import ca.ulaval.glo4003.shared.FixedClockProvider;
 import ca.ulaval.glo4003.shared.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -20,7 +22,9 @@ public class QuoteGenerator {
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createFutureDate();
     Date purchaseDate = Date.nullDate();
-    return new Quote(new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate);
+    ClockProvider clockProvider = new FixedClockProvider();
+    return new Quote(
+        new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }
 
   public static Quote createExpiredQuote() {
@@ -28,7 +32,9 @@ public class QuoteGenerator {
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createPastDate();
     Date purchaseDate = Date.nullDate();
-    return new Quote(new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate);
+    ClockProvider clockProvider = new FixedClockProvider();
+    return new Quote(
+        new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }
 
   public static Quote createPurchasedQuote() {
@@ -36,18 +42,20 @@ public class QuoteGenerator {
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createPastDate();
     Date purchaseDate = createPastDate();
-    return new Quote(new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate);
+    ClockProvider clockProvider = new FixedClockProvider();
+    return new Quote(
+        new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }
 
   private static Date createFutureDate() {
     Instant futureInstant = Faker.instance().date().future(365, TimeUnit.DAYS).toInstant();
     LocalDateTime futureDate = LocalDateTime.ofInstant(futureInstant, ZoneOffset.UTC);
-    return new Date(futureDate);
+    return Date.from(futureDate);
   }
 
   private static Date createPastDate() {
     Instant pastInstant = Faker.instance().date().past(365, TimeUnit.DAYS).toInstant();
     LocalDateTime pastDate = LocalDateTime.ofInstant(pastInstant, ZoneOffset.UTC);
-    return new Date(pastDate);
+    return Date.from(pastDate);
   }
 }
