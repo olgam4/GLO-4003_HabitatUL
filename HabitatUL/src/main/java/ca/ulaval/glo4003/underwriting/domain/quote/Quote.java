@@ -29,15 +29,19 @@ public class Quote {
     this.clockProvider = clockProvider;
   }
 
+  public QuoteId getQuoteId() {
+    return quoteId;
+  }
+
+  public Date getExpirationDate() {
+    return expirationDate;
+  }
+
   public void purchase() {
     if (isPurchased()) throw new QuoteAlreadyPurchasedException();
     if (isExpired()) throw new ExpiredQuoteException();
 
     purchaseDate = Date.now(clockProvider.getClock());
-  }
-
-  public Date getExpirationDate() {
-    return expirationDate;
   }
 
   public boolean isPurchased() {

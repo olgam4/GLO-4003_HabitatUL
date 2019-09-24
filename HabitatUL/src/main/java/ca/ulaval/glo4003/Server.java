@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003;
 
+import ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource;
 import ca.ulaval.glo4003.underwriting.infrastructure.http.CORSResponseFilter;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -32,6 +33,7 @@ public class Server {
               @Override
               public Set<Object> getSingletons() {
                 HashSet<Object> resources = new HashSet<>();
+                resources.add(new QuoteResource());
                 return resources;
               }
             });

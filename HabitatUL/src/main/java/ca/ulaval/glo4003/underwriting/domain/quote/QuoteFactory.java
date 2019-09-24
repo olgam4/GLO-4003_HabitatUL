@@ -4,20 +4,21 @@ import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.Premium;
 
-import java.time.Duration;
-
 public class QuoteFactory {
-  private Duration quoteValidityPeriod;
+  private QuoteValidityPeriodProvider quoteValidityPeriodProvider;
   private ClockProvider clockProvider;
 
-  public QuoteFactory(Duration quoteValidityPeriod, ClockProvider clockProvider) {
-    this.quoteValidityPeriod = quoteValidityPeriod;
+  public QuoteFactory(
+      QuoteValidityPeriodProvider quoteValidityPeriodProvider, ClockProvider clockProvider) {
+    this.quoteValidityPeriodProvider = quoteValidityPeriodProvider;
     this.clockProvider = clockProvider;
   }
 
   public Quote create(Premium premium, QuoteRequest quoteRequest) {
     QuoteId quoteId = new QuoteId();
-    Date expirationDate = Date.now(clockProvider.getClock()).plus(quoteValidityPeriod);
+    Date expirationDate =
+        Date.now(clockProvider.getClock())
+            .plus(quoteValidityPeriodProvider.getQuoteValidityPeriod());
     Date purchaseDate = Date.nullDate();
     return new Quote(quoteId, premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }

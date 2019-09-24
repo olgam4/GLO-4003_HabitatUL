@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
@@ -11,13 +13,22 @@ public class QuoteAppService {
   private QuoteRepository quoteRepository;
   private QuoteFactory quoteFactory;
 
+  public QuoteAppService() {
+    this(
+        ServiceLocator.resolve(PremiumCalculator.class),
+        new QuoteFactory(
+            ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
+            ServiceLocator.resolve(ClockProvider.class)),
+        ServiceLocator.resolve(QuoteRepository.class));
+  }
+
   public QuoteAppService(
       PremiumCalculator premiumCalculator,
       QuoteFactory quoteFactory,
       QuoteRepository quoteRepository) {
     this.premiumCalculator = premiumCalculator;
-    this.quoteRepository = quoteRepository;
     this.quoteFactory = quoteFactory;
+    this.quoteRepository = quoteRepository;
   }
 
   public QuoteDto requestQuote(QuoteRequestDto quoteRequestDto) {

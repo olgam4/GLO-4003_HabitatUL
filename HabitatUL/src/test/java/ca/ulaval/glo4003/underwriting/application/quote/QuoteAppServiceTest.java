@@ -1,20 +1,19 @@
-package ca.ulaval.glo4003.underwriting.application;
+package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.shared.domain.Premium;
-import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
-import ca.ulaval.glo4003.underwriting.generator.QuoteRequestGenerator;
+import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.underwriting.matcher.QuoteMatcher.matchesQuote;
-import static ca.ulaval.glo4003.underwriting.matcher.QuoteRequestDtoMatcher.getQuoteRequestDtoMockitoMatcher;
+import static ca.ulaval.glo4003.matcher.QuoteDtoMatcher.matchesQuote;
+import static ca.ulaval.glo4003.matcher.QuoteRequestMatcher.getQuoteRequestDtoMockitoMatcher;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +31,7 @@ public class QuoteAppServiceTest {
 
   @Before
   public void setUp() {
-    quoteRequestDto = QuoteRequestGenerator.createDto();
+    quoteRequestDto = QuoteRequestGenerator.createQuoteRequestDto();
 
     when(premiumCalculator.computeQuotePremium(any(QuoteRequest.class))).thenReturn(A_PREMIUM);
     when(quoteFactory.create(any(Premium.class), any(QuoteRequest.class))).thenReturn(quote);

@@ -1,9 +1,11 @@
-package ca.ulaval.glo4003.underwriting.generator;
+package ca.ulaval.glo4003.generator;
 
+import ca.ulaval.glo4003.shared.FixedClockProvider;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.FixedClockProvider;
 import ca.ulaval.glo4003.shared.domain.Premium;
+import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRequest;
@@ -16,6 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 public class QuoteGenerator {
   private QuoteGenerator() {}
+
+  public static QuoteDto createValidQuoteDto() {
+    return QuoteAssembler.from(createValidQuote());
+  }
 
   public static Quote createValidQuote() {
     Premium premium = new Premium();

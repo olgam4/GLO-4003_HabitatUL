@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRequest;
 
 public class QuoteAssembler {
   public static QuoteDto from(Quote quote) {
-    return new QuoteDto();
+    return new QuoteDto(quote.getQuoteId());
   }
 
   public static QuoteRequest from(QuoteRequestDto quoteRequestDto) {

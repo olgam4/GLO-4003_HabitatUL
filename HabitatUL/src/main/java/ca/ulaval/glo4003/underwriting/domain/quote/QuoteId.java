@@ -10,4 +10,8 @@ public class QuoteId extends ValueObject {
   public QuoteId() {
     this.value = UUID.randomUUID();
   }
+
+  public UUID getValue() {
+    return value;
+  }
 }
