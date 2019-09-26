@@ -1,10 +1,11 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
+import ca.ulaval.glo4003.generator.PremiumGenerator;
+import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
 import ca.ulaval.glo4003.shared.FixedClockProvider;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.Premium;
-import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteFactoryTest {
+  private static final Premium A_PREMIUM = PremiumGenerator.create();
   private static final Duration VALIDITY_PERIOD = Duration.of(1, ChronoUnit.MINUTES);
 
   @Mock private QuoteValidityPeriodProvider quoteValidityPeriodProvider;
@@ -37,7 +39,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
-    Quote quote = subject.create(new Premium(), QuoteRequestGenerator.createValidQuoteRequest());
+    Quote quote = subject.create(A_PREMIUM, QuoteRequestGenerator.createValidQuoteRequest());
 
     Date expectedExpirationDate =
         Date.from(LocalDateTime.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
@@ -46,7 +48,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(new Premium(), QuoteRequestGenerator.createValidQuoteRequest());
+    Quote quote = subject.create(A_PREMIUM, QuoteRequestGenerator.createValidQuoteRequest());
 
     assertFalse(quote.isPurchased());
   }

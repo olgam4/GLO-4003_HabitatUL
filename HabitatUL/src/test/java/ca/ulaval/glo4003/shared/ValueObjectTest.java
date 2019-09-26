@@ -41,8 +41,7 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void
-      checkingForEquality_withNestedValueObjectWithDifferentAttributes_shouldBeDifferent() {
+  public void checkingForEquality_withNestedValueObjectWithDifferentAttributes_shouldBeDifferent() {
     SecondValueObject attr2 = new SecondValueObject(A_STRING, ANOTHER_STRING, A_DATE);
     ValueObject valueObject1 =
         new NestedValueObject(new FirstValueObject(A_STRING, AN_INTEGER), attr2);
@@ -130,7 +129,8 @@ public class ValueObjectTest {
   }
 
   @Test
-  public void comparingValueObjects_withObjectsOfSameClassAndAttributes_shouldOrderObjectsEqually() {
+  public void
+      comparingValueObjects_withObjectsOfSameClassAndAttributes_shouldOrderObjectsEqually() {
     ValueObject valueObject1 = new FirstValueObject(A_STRING, AN_INTEGER);
     ValueObject valueObject2 = new FirstValueObject(A_STRING, AN_INTEGER);
 

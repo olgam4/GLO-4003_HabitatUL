@@ -10,49 +10,49 @@ import org.junit.Test;
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuote;
 
 public abstract class QuoteRepositoryIT {
-  private QuoteRepository quoteRepository;
+  private QuoteRepository subject;
   private Quote quote;
   private QuoteId quoteId;
 
   @Before
   public void setUp() {
-    quoteRepository = createRepository();
+    subject = createSubject();
     quote = QuoteGenerator.createValidQuote();
     quoteId = quote.getQuoteId();
   }
 
   @Test(expected = QuoteNotFoundException.class)
   public void gettingQuoteById_withUnknownQuoteId_shouldThrow() {
-    quoteRepository.getById(new QuoteId());
+    subject.getById(new QuoteId());
   }
 
   @Test
   public void creatingQuote_shouldPersistQuoteAsIs() {
-    quoteRepository.create(quote);
+    subject.create(quote);
 
-    matchesQuote(quote, quoteRepository.getById(quoteId));
+    matchesQuote(quote, subject.getById(quoteId));
   }
 
   @Test(expected = QuoteAlreadyPersistedException.class)
   public void creatingQuote_withAlreadyPersistedQuote_shouldThrow() {
-    quoteRepository.create(quote);
-    quoteRepository.create(quote);
+    subject.create(quote);
+    subject.create(quote);
   }
 
   @Test
   public void updatingQuote_shouldChangeAssociatedQuote() {
-    quoteRepository.create(quote);
+    subject.create(quote);
 
     Quote updatedQuote = QuoteGenerator.createValidQuoteWithId(quoteId);
-    quoteRepository.update(updatedQuote);
+    subject.update(updatedQuote);
 
-    matchesQuote(updatedQuote, quoteRepository.getById(quoteId));
+    matchesQuote(updatedQuote, subject.getById(quoteId));
   }
 
   @Test(expected = QuoteNotYetPersistedException.class)
   public void updatingQuote_withNotYetPersistedQuote_shouldThrow() {
-    quoteRepository.update(quote);
+    subject.update(quote);
   }
 
-  protected abstract QuoteRepository createRepository();
+  protected abstract QuoteRepository createSubject();
 }

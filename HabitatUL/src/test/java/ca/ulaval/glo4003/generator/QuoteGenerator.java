@@ -28,17 +28,16 @@ public class QuoteGenerator {
   }
 
   public static Quote createValidQuoteWithId(QuoteId quoteId) {
-    Premium premium = new Premium();
+    Premium premium = PremiumGenerator.create();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createFutureDate();
     Date purchaseDate = Date.nullDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(
-        quoteId, premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+    return new Quote(quoteId, premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }
 
   public static Quote createExpiredQuote() {
-    Premium premium = new Premium();
+    Premium premium = PremiumGenerator.create();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createPastDate();
     Date purchaseDate = Date.nullDate();
@@ -48,7 +47,7 @@ public class QuoteGenerator {
   }
 
   public static Quote createPurchasedQuote() {
-    Premium premium = new Premium();
+    Premium premium = PremiumGenerator.create();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createPastDate();
     Date purchaseDate = createPastDate();

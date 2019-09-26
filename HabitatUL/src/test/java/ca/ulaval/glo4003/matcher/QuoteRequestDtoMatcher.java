@@ -26,8 +26,7 @@ public class QuoteRequestDtoMatcher extends TypeSafeMatcher<QuoteRequestDto> {
   @Override
   public void describeTo(final Description description) {
     description.appendText(
-        String.format(
-            "matches corresponding quote request dto: %s", quoteRequestView.toString()));
+        String.format("matches corresponding quote request dto: %s", quoteRequestView.toString()));
   }
 
   @Override

@@ -1,11 +1,12 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.generator.PremiumGenerator;
+import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
 import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
-import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Premium A_PREMIUM = new Premium();
+  private static final Premium A_PREMIUM = PremiumGenerator.create();
   private static final QuoteId QUOTE_ID = new QuoteId();
 
   private QuoteAppService subject;

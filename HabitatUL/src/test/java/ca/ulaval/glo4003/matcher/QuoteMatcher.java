@@ -5,7 +5,7 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 public class QuoteMatcher extends TypeSafeMatcher<Quote> {
-      private final Quote quote;
+  private final Quote quote;
 
   private QuoteMatcher(final Quote quote) {
     this.quote = quote;
@@ -17,8 +17,7 @@ public class QuoteMatcher extends TypeSafeMatcher<Quote> {
 
   @Override
   public void describeTo(final Description description) {
-    description.appendText(
-        String.format("matches corresponding quote: %s", quote.toString()));
+    description.appendText(String.format("matches corresponding quote: %s", quote.toString()));
   }
 
   @Override
