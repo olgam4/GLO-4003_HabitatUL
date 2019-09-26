@@ -27,7 +27,7 @@ public class QuoteRequestMatcher extends TypeSafeMatcher<QuoteRequest> {
   public void describeTo(final Description description) {
     description.appendText(
         String.format(
-            "matches corresponding underwriting request dto: %s", quoteRequestDto.toString()));
+            "matches corresponding quote request dto: %s", quoteRequestDto.toString()));
   }
 
   @Override

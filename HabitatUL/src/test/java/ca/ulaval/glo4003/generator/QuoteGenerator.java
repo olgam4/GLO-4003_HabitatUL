@@ -24,13 +24,17 @@ public class QuoteGenerator {
   }
 
   public static Quote createValidQuote() {
+    return createValidQuoteWithId(new QuoteId());
+  }
+
+  public static Quote createValidQuoteWithId(QuoteId quoteId) {
     Premium premium = new Premium();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createFutureDate();
     Date purchaseDate = Date.nullDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(
-        new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+        quoteId, premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }
 
   public static Quote createExpiredQuote() {
