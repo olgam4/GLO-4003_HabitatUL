@@ -17,14 +17,14 @@ public class InMemoryQuoteRepository implements QuoteRepository {
   public Quote getById(QuoteId quoteId) {
     if (isExistingQuote(quoteId)) return quotes.get(quoteId);
 
-    throw new QuoteNotFoundException();
+    throw new QuoteNotFoundException(quoteId);
   }
 
   @Override
   public void create(Quote quote) {
     QuoteId quoteId = quote.getQuoteId();
 
-    if (isExistingQuote(quoteId)) throw new QuoteAlreadyPersistedException();
+    if (isExistingQuote(quoteId)) throw new QuoteAlreadyPersistedException(quoteId);
 
     quotes.put(quoteId, quote);
   }
@@ -33,7 +33,7 @@ public class InMemoryQuoteRepository implements QuoteRepository {
   public void update(Quote quote) {
     QuoteId quoteId = quote.getQuoteId();
 
-    if (!isExistingQuote(quoteId)) throw new QuoteNotYetPersistedException();
+    if (!isExistingQuote(quoteId)) throw new QuoteNotYetPersistedException(quoteId);
 
     quotes.put(quoteId, quote);
   }

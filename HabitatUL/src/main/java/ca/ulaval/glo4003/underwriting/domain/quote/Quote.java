@@ -38,8 +38,8 @@ public class Quote {
   }
 
   public void purchase() {
-    if (isPurchased()) throw new QuoteAlreadyPurchasedException();
-    if (isExpired()) throw new ExpiredQuoteException();
+    if (isPurchased()) throw new QuoteAlreadyPurchasedException(quoteId);
+    if (isExpired()) throw new ExpiredQuoteException(quoteId);
 
     purchaseDate = Date.now(clockProvider.getClock());
   }
