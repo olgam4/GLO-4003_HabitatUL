@@ -1,51 +1,50 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource;
+import ca.ulaval.glo4003.gateway.presentation.databind.JacksonFeature;
 import ca.ulaval.glo4003.underwriting.infrastructure.http.CORSResponseFilter;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-import javax.ws.rs.core.Application;
-import java.util.HashSet;
-import java.util.Set;
-
 public class Server {
-  public static final String CONTEXT_PATH = "/v1/";
+  public static final String CONTEXT_PATH = "/v1";
   private org.eclipse.jetty.server.Server server;
+  private ContextHandlerCollection contextHandlerCollection;
 
   public void start(int serverPort) {
     server = new org.eclipse.jetty.server.Server(serverPort);
-    configureServer(server);
+    contextHandlerCollection = new ContextHandlerCollection();
+    server.setHandler(contextHandlerCollection);
     serverStart();
   }
 
-  private void configureServer(org.eclipse.jetty.server.Server server) {
-    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-    context.setContextPath(CONTEXT_PATH);
-    // TODO: find how to register controllers automatically
-    ResourceConfig resourceConfig =
-        ResourceConfig.forApplication(
-            new Application() {
-              @Override
-              public Set<Object> getSingletons() {
-                HashSet<Object> resources = new HashSet<>();
-                resources.add(new QuoteResource());
-                return resources;
-              }
-            });
-    resourceConfig.register(CORSResponseFilter.class);
+  public void addResourceConfig(ResourceConfig resourceConfig) {
+    ServletContextHandler servletContextHandler =
+        createServletContextHandlerFromResourceConfig(resourceConfig);
+    startServletContextHandler(servletContextHandler);
+  }
 
+  private void startServletContextHandler(ServletContextHandler servletContextHandler) {
+    try {
+      servletContextHandler.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private ServletContextHandler createServletContextHandlerFromResourceConfig(
+      ResourceConfig resourceConfig) {
+    ServletContextHandler servletContextHandler =
+        new ServletContextHandler(
+            contextHandlerCollection, CONTEXT_PATH, ServletContextHandler.SESSIONS);
+    resourceConfig.register(CORSResponseFilter.class);
+    resourceConfig.register(JacksonFeature.class);
     ServletContainer servletContainer = new ServletContainer(resourceConfig);
     ServletHolder servletHolder = new ServletHolder(servletContainer);
-    context.addServlet(servletHolder, "/*");
-
-    ContextHandlerCollection contexts = new ContextHandlerCollection();
-    contexts.setHandlers(new Handler[] {context});
-    server.setHandler(contexts);
+    servletContextHandler.addServlet(servletHolder, "/*");
+    return servletContextHandler;
   }
 
   private void serverStart() {

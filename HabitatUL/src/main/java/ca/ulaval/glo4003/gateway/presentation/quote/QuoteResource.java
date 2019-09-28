@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 
+import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
+
 @Path(QuoteResource.QUOTE_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public class QuoteResource {
@@ -39,7 +41,7 @@ public class QuoteResource {
     QuoteDto quoteDto = quoteAppService.requestQuote(quoteRequestDto);
     QuoteId quoteId = quoteDto.getQuoteId();
     String quoteIdString = quoteId.getValue().toString();
-    URI location = UriBuilder.fromResource(QuoteResource.class).path(quoteIdString).build();
+    URI location = UriBuilder.fromPath(CONTEXT_PATH).path(QUOTE_PATH).path(quoteIdString).build();
     return Response.created(location).build();
   }
 }

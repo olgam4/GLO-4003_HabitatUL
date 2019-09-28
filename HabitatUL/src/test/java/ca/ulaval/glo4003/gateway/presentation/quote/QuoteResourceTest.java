@@ -12,11 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.ws.rs.core.Response;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,23 +40,5 @@ public class QuoteResourceTest {
 
     verify(quoteAppService)
         .requestQuote(QuoteRequestDtoMatcher.getQuoteRequestDtoMockitoMatcher(quoteRequestView));
-  }
-
-  @Test
-  public void requestingQuote_shouldHaveExpectedStatus() {
-    Response response = subject.requestQuote(quoteRequestView);
-
-    int expectedStatus = Response.Status.CREATED.getStatusCode();
-    assertEquals(expectedStatus, response.getStatus());
-  }
-
-  @Test
-  public void requestingQuote_shouldIndicateLocationCreatedQuote() {
-    Response response = subject.requestQuote(quoteRequestView);
-
-    List<String> locationParts =
-        Arrays.asList(QuoteResource.QUOTE_PATH, quoteDto.getQuoteId().getValue().toString());
-    String expectedLocation = String.join("/", locationParts);
-    assertEquals(expectedLocation, response.getHeaderString("location"));
   }
 }
