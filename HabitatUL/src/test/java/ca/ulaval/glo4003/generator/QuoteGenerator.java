@@ -24,7 +24,7 @@ public class QuoteGenerator {
   }
 
   public static Quote createValidQuote() {
-    return createValidQuoteWithId(new QuoteId());
+    return createValidQuoteWithId(createQuoteId());
   }
 
   public static Quote createValidQuoteWithId(QuoteId quoteId) {
@@ -43,7 +43,7 @@ public class QuoteGenerator {
     Date purchaseDate = Date.nullDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(
-        new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+        createQuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
   }
 
   public static Quote createPurchasedQuote() {
@@ -53,7 +53,11 @@ public class QuoteGenerator {
     Date purchaseDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(
-        new QuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+        createQuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+  }
+
+  private static QuoteId createQuoteId() {
+    return new QuoteId();
   }
 
   private static Date createFutureDate() {

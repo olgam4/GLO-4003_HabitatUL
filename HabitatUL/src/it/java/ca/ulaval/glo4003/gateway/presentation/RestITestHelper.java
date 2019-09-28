@@ -49,10 +49,19 @@ public class RestITestHelper {
   }
 
   public static String toUri(String... pathParts) {
-    List<String> uriParts = new ArrayList<>(Arrays.asList(pathParts));
-    uriParts.add(0, BASE_URI);
+    List<String> uriPartsArray = new ArrayList<>(Arrays.asList(pathParts));
+    uriPartsArray.add(0, BASE_URI);
+    return joinPath(uriPartsArray);
+  }
+
+  public static String toPath(String... pathParts) {
+    List<String> pathPartsArray = new ArrayList<>(Arrays.asList(pathParts));
+    return joinPath(pathPartsArray);
+  }
+
+  private static String joinPath(List<String> pathParts) {
     List<String> strippedUriParts =
-        uriParts.stream()
+        pathParts.stream()
             .map(uriPart -> StringUtils.strip(uriPart, "/"))
             .collect(Collectors.toList());
     return String.join("/", strippedUriParts);

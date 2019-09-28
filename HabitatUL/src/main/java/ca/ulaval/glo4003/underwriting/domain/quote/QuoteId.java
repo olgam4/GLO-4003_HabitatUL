@@ -8,7 +8,15 @@ public class QuoteId extends ValueObject {
   private UUID value;
 
   public QuoteId() {
-    this.value = UUID.randomUUID();
+    this(UUID.randomUUID());
+  }
+
+  public QuoteId(String value) {
+    this(UUID.fromString(value));
+  }
+
+  private QuoteId(UUID value) {
+    this.value = value;
   }
 
   public UUID getValue() {

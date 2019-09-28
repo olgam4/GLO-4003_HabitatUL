@@ -18,6 +18,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
+import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.PURCHASE_ROUTE;
 import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.QUOTE_PATH;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -52,13 +53,14 @@ public class QuoteResourceIT {
   public void postingQuotePath_withValidRequest_shouldHaveExpectedStatusCode() {
     JSONObject request = QuoteRequestBodyBuilder.aQuoteRequestView().build();
 
+    int expectedStatusCode = Response.Status.CREATED.getStatusCode();
     getBaseScenario()
         .given()
         .body(request.toString())
         .when()
         .post(QUOTE_PATH)
         .then()
-        .statusCode(Response.Status.CREATED.getStatusCode());
+        .statusCode(expectedStatusCode);
   }
 
   @Test
@@ -73,5 +75,13 @@ public class QuoteResourceIT {
         .post(QUOTE_PATH)
         .then()
         .header(HttpHeaders.LOCATION, expectedLocation);
+  }
+
+  @Test
+  public void postingPurchaseQuotePath_withValidQuoteId_shouldHaveExpectedStatusCode() {
+    String path = toPath(QUOTE_PATH, PURCHASE_ROUTE, quoteDto.getQuoteId().getValue().toString());
+
+    int expectedStatusCode = Response.Status.OK.getStatusCode();
+    getBaseScenario().when().post(path).then().statusCode(expectedStatusCode);
   }
 }
