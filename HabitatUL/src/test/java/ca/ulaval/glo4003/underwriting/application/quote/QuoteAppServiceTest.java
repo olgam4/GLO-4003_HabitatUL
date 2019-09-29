@@ -2,9 +2,9 @@ package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.generator.PremiumGenerator;
 import ca.ulaval.glo4003.generator.QuoteFormGenerator;
-import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.domain.Premium;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import org.junit.Before;

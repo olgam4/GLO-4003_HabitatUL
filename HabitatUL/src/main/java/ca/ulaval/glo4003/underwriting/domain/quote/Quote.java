@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.Premium;
+import ca.ulaval.glo4003.underwriting.domain.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
 

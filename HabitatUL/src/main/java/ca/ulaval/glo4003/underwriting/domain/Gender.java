@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.shared.domain;
+package ca.ulaval.glo4003.underwriting.domain;
 
 public enum Gender {
   MALE,

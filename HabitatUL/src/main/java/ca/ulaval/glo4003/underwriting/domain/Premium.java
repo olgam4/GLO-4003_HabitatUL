@@ -1,4 +1,6 @@
-package ca.ulaval.glo4003.shared.domain;
+package ca.ulaval.glo4003.underwriting.domain;
+
+import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 import java.math.BigDecimal;
 

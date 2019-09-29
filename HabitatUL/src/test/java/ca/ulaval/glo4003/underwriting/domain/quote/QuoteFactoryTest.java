@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.generator.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.FixedClockProvider;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.Premium;
+import ca.ulaval.glo4003.underwriting.domain.Premium;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

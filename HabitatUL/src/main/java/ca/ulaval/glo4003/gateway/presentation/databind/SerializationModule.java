@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.databind;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.DateDeserializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.GenderDeserializer;
 import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.Gender;
+import ca.ulaval.glo4003.underwriting.domain.Gender;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;

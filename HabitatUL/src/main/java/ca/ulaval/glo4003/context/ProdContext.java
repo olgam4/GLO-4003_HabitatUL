@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
+import ca.ulaval.glo4003.underwriting.domain.Premium;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;

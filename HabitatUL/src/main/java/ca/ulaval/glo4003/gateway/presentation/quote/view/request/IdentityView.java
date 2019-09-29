@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.view.request;
 
 import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.Gender;
+import ca.ulaval.glo4003.underwriting.domain.Gender;
 
 public class IdentityView {
   private String firstName;

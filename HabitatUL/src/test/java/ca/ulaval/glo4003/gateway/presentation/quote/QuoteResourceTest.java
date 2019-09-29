@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequest;
-import ca.ulaval.glo4003.generator.QuoteGenerator;
 import ca.ulaval.glo4003.generator.QuoteFormGenerator;
+import ca.ulaval.glo4003.generator.QuoteGenerator;
 import ca.ulaval.glo4003.matcher.QuoteFormDtoMatcher;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
