@@ -19,7 +19,6 @@ public class QuoteFactory {
     Date expirationDate =
         Date.now(clockProvider.getClock())
             .plus(quoteValidityPeriodProvider.getQuoteValidityPeriod());
-    Date purchaseDate = Date.nullDate();
-    return new Quote(quoteId, premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+    return new Quote(quoteId, premium, quoteRequest, expirationDate, false, clockProvider);
   }
 }

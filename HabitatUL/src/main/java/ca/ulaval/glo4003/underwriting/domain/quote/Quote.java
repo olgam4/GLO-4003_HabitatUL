@@ -11,7 +11,7 @@ public class Quote {
   private Premium premium;
   private QuoteRequest quoteRequest;
   private Date expirationDate;
-  private Date purchaseDate;
+  private Boolean purchased;
   private ClockProvider clockProvider;
 
   public Quote(
@@ -19,13 +19,13 @@ public class Quote {
       Premium premium,
       QuoteRequest quoteRequest,
       Date expirationDate,
-      Date purchaseDate,
+      Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
     this.premium = premium;
     this.quoteRequest = quoteRequest;
     this.expirationDate = expirationDate;
-    this.purchaseDate = purchaseDate;
+    this.purchased = purchased;
     this.clockProvider = clockProvider;
   }
 
@@ -41,11 +41,11 @@ public class Quote {
     if (isPurchased()) throw new QuoteAlreadyPurchasedException(quoteId);
     if (isExpired()) throw new QuoteExpiredException(quoteId);
 
-    purchaseDate = Date.now(clockProvider.getClock());
+    purchased = true;
   }
 
   public boolean isPurchased() {
-    return !purchaseDate.equals(Date.nullDate());
+    return purchased;
   }
 
   public boolean isExpired() {

@@ -19,13 +19,11 @@ public class Date extends ValueObject {
     return new Date(value);
   }
 
-  public static Date nullDate() {
-    return new Date(null);
+  public LocalDateTime getValue() {
+    return value;
   }
 
   public boolean isAfter(Date date) {
-    if (value == null || date.value == null) return false;
-
     return value.isAfter(date.value);
   }
 

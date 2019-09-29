@@ -31,29 +31,24 @@ public class QuoteGenerator {
     Premium premium = PremiumGenerator.create();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createFutureDate();
-    Date purchaseDate = Date.nullDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(quoteId, premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+    return new Quote(quoteId, premium, quoteRequest, expirationDate, false, clockProvider);
   }
 
   public static Quote createExpiredQuote() {
     Premium premium = PremiumGenerator.create();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createPastDate();
-    Date purchaseDate = Date.nullDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(
-        createQuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+    return new Quote(createQuoteId(), premium, quoteRequest, expirationDate, false, clockProvider);
   }
 
   public static Quote createPurchasedQuote() {
     Premium premium = PremiumGenerator.create();
     QuoteRequest quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
     Date expirationDate = createPastDate();
-    Date purchaseDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(
-        createQuoteId(), premium, quoteRequest, expirationDate, purchaseDate, clockProvider);
+    return new Quote(createQuoteId(), premium, quoteRequest, expirationDate, true, clockProvider);
   }
 
   private static QuoteId createQuoteId() {
