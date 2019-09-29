@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequestView;
+import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequest;
 import ca.ulaval.glo4003.generator.QuoteGenerator;
-import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
-import ca.ulaval.glo4003.matcher.QuoteRequestDtoMatcher;
+import ca.ulaval.glo4003.generator.QuoteFormGenerator;
+import ca.ulaval.glo4003.matcher.QuoteFormDtoMatcher;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -24,13 +24,13 @@ public class QuoteResourceTest {
   @Mock private QuoteAppService quoteAppService;
 
   private QuoteResource subject;
-  private QuoteRequestView quoteRequestView;
+  private QuoteRequest quoteRequest;
   private QuoteViewAssembler quoteViewAssembler;
   private QuoteDto quoteDto;
 
   @Before
   public void setUp() {
-    quoteRequestView = QuoteRequestGenerator.createQuoteRequestView();
+    quoteRequest = QuoteFormGenerator.createQuoteRequest();
     quoteViewAssembler = new QuoteViewAssembler();
     quoteDto = QuoteGenerator.createValidQuoteDto();
     subject = new QuoteResource(quoteAppService, quoteViewAssembler);
@@ -39,10 +39,10 @@ public class QuoteResourceTest {
 
   @Test
   public void requestingQuote_shouldCallQuoteAppService() {
-    subject.requestQuote(quoteRequestView);
+    subject.requestQuote(quoteRequest);
 
     verify(quoteAppService)
-        .requestQuote(QuoteRequestDtoMatcher.getQuoteRequestDtoMockitoMatcher(quoteRequestView));
+        .requestQuote(QuoteFormDtoMatcher.getQuoteFormDtoMockitoMatcher(quoteRequest));
   }
 
   @Test

@@ -9,7 +9,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredExcepti
 public class Quote {
   private QuoteId quoteId;
   private Premium premium;
-  private QuoteRequest quoteRequest;
+  private QuoteForm quoteForm;
   private Date expirationDate;
   private Boolean purchased;
   private ClockProvider clockProvider;
@@ -17,13 +17,13 @@ public class Quote {
   public Quote(
       QuoteId quoteId,
       Premium premium,
-      QuoteRequest quoteRequest,
+      QuoteForm quoteForm,
       Date expirationDate,
       Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
     this.premium = premium;
-    this.quoteRequest = quoteRequest;
+    this.quoteForm = quoteForm;
     this.expirationDate = expirationDate;
     this.purchased = purchased;
     this.clockProvider = clockProvider;

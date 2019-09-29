@@ -14,11 +14,11 @@ public class QuoteFactory {
     this.clockProvider = clockProvider;
   }
 
-  public Quote create(Premium premium, QuoteRequest quoteRequest) {
+  public Quote create(Premium premium, QuoteForm quoteForm) {
     QuoteId quoteId = new QuoteId();
     Date expirationDate =
         Date.now(clockProvider.getClock())
             .plus(quoteValidityPeriodProvider.getQuoteValidityPeriod());
-    return new Quote(quoteId, premium, quoteRequest, expirationDate, false, clockProvider);
+    return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);
   }
 }

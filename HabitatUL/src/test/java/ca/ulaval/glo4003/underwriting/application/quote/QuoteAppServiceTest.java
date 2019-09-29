@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.generator.PremiumGenerator;
-import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
+import ca.ulaval.glo4003.generator.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.matcher.QuoteDtoMatcher.matchesQuote;
-import static ca.ulaval.glo4003.matcher.QuoteRequestMatcher.getQuoteRequestDtoMockitoMatcher;
+import static ca.ulaval.glo4003.matcher.QuoteFormMatcher.getQuoteFormMockitoMatcher;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,7 +23,7 @@ public class QuoteAppServiceTest {
   private static final QuoteId QUOTE_ID = new QuoteId();
 
   private QuoteAppService subject;
-  private QuoteRequestDto quoteRequestDto;
+  private QuoteFormDto quoteFormDto;
 
   @Mock private PremiumCalculator premiumCalculator;
   @Mock private Quote quote;
@@ -32,10 +32,10 @@ public class QuoteAppServiceTest {
 
   @Before
   public void setUp() {
-    quoteRequestDto = QuoteRequestGenerator.createQuoteRequestDto();
+    quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
 
-    when(premiumCalculator.computeQuotePremium(any(QuoteRequest.class))).thenReturn(A_PREMIUM);
-    when(quoteFactory.create(any(Premium.class), any(QuoteRequest.class))).thenReturn(quote);
+    when(premiumCalculator.computeQuotePremium(any(QuoteForm.class))).thenReturn(A_PREMIUM);
+    when(quoteFactory.create(any(Premium.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
     subject = new QuoteAppService(premiumCalculator, quoteFactory, quoteRepository);
@@ -43,22 +43,21 @@ public class QuoteAppServiceTest {
 
   @Test
   public void requestingQuote_shouldComputeQuotePrice() {
-    subject.requestQuote(quoteRequestDto);
+    subject.requestQuote(quoteFormDto);
 
-    verify(premiumCalculator)
-        .computeQuotePremium(getQuoteRequestDtoMockitoMatcher(quoteRequestDto));
+    verify(premiumCalculator).computeQuotePremium(getQuoteFormMockitoMatcher(quoteFormDto));
   }
 
   @Test
   public void requestingQuote_shouldCreateQuote() {
-    subject.requestQuote(quoteRequestDto);
+    subject.requestQuote(quoteFormDto);
 
     verify(quoteRepository).create(quote);
   }
 
   @Test
   public void requestingQuote_shouldProduceCorrespondingQuoteDto() {
-    QuoteDto observedQuoteDto = subject.requestQuote(quoteRequestDto);
+    QuoteDto observedQuoteDto = subject.requestQuote(quoteFormDto);
 
     matchesQuote(quote, observedQuoteDto);
   }

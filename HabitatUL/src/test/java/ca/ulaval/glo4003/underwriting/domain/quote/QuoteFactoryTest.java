@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.generator.PremiumGenerator;
-import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
+import ca.ulaval.glo4003.generator.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.FixedClockProvider;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
@@ -39,7 +39,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
-    Quote quote = subject.create(A_PREMIUM, QuoteRequestGenerator.createValidQuoteRequest());
+    Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createValidQuoteForm());
 
     Date expectedExpirationDate =
         Date.from(LocalDateTime.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
@@ -48,7 +48,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(A_PREMIUM, QuoteRequestGenerator.createValidQuoteRequest());
+    Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createValidQuoteForm());
 
     assertFalse(quote.isPurchased());
   }

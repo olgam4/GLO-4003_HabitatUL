@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequestView;
+import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
 import javax.ws.rs.*;
@@ -35,9 +35,9 @@ public class QuoteResource {
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response requestQuote(QuoteRequestView quoteRequestView) {
-    QuoteRequestDto quoteRequestDto = quoteViewAssembler.from(quoteRequestView);
-    QuoteDto quoteDto = quoteAppService.requestQuote(quoteRequestDto);
+  public Response requestQuote(QuoteRequest quoteRequest) {
+    QuoteFormDto quoteFormDto = quoteViewAssembler.from(quoteRequest);
+    QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
     String quoteIdString = quoteDto.getQuoteId().getValue().toString();
     // TODO: create class to encapsulate the context path - quite easy to forget
     URI location = UriBuilder.fromPath(CONTEXT_PATH).path(QUOTE_PATH).path(quoteIdString).build();

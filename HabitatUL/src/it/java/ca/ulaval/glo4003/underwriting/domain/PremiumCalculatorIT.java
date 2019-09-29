@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain;
 
-import ca.ulaval.glo4003.generator.QuoteRequestGenerator;
+import ca.ulaval.glo4003.generator.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.Premium;
-import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRequest;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertNotNull;
 
 public abstract class PremiumCalculatorIT {
   private PremiumCalculator subject;
-  private QuoteRequest quoteRequest;
+  private QuoteForm quoteForm;
 
   @Before
   public void setUp() {
@@ -19,9 +19,9 @@ public abstract class PremiumCalculatorIT {
 
   @Test
   public void computingQuotePremium_shouldProducePremium() {
-    quoteRequest = QuoteRequestGenerator.createValidQuoteRequest();
+    quoteForm = QuoteFormGenerator.createValidQuoteForm();
 
-    Premium premium = subject.computeQuotePremium(quoteRequest);
+    Premium premium = subject.computeQuotePremium(quoteForm);
 
     assertNotNull(premium);
   }

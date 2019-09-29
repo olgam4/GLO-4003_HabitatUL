@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Premium;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteRequestDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 
@@ -31,10 +31,10 @@ public class QuoteAppService {
     this.quoteRepository = quoteRepository;
   }
 
-  public QuoteDto requestQuote(QuoteRequestDto quoteRequestDto) {
-    QuoteRequest quoteRequest = QuoteAssembler.from(quoteRequestDto);
-    Premium premium = premiumCalculator.computeQuotePremium(quoteRequest);
-    Quote quote = quoteFactory.create(premium, quoteRequest);
+  public QuoteDto requestQuote(QuoteFormDto quoteFormDto) {
+    QuoteForm quoteForm = QuoteAssembler.from(quoteFormDto);
+    Premium premium = premiumCalculator.computeQuotePremium(quoteForm);
+    Quote quote = quoteFactory.create(premium, quoteForm);
     quoteRepository.create(quote);
     return QuoteAssembler.from(quote);
   }

@@ -51,7 +51,7 @@ public class QuoteResourceIT {
 
   @Test
   public void postingQuotePath_withValidRequest_shouldHaveExpectedStatusCode() {
-    JSONObject request = QuoteRequestBodyBuilder.aQuoteRequestView().build();
+    JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
 
     int expectedStatusCode = Response.Status.CREATED.getStatusCode();
     getBaseScenario()
@@ -65,7 +65,7 @@ public class QuoteResourceIT {
 
   @Test
   public void postingQuotePath_withValidRequest_shouldProvideLocationCreatedQuote() {
-    JSONObject request = QuoteRequestBodyBuilder.aQuoteRequestView().build();
+    JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
 
     String expectedLocation = toUri(QUOTE_PATH, quoteDto.getQuoteId().getValue().toString());
     getBaseScenario()

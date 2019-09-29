@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 
-public class QuoteRequestBodyBuilder {
+public class QuoteRequestBuilder {
   private static final String DEFAULT_FIRST_NAME = Faker.instance().funnyName().name();
   private static final String DEFAULT_LAST_NAME = Faker.instance().funnyName().name();
   private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
@@ -19,13 +19,13 @@ public class QuoteRequestBodyBuilder {
   private String birthDate = DEFAULT_BIRTH_DATE;
   private String gender = DEFAULT_GENDER;
 
-  private QuoteRequestBodyBuilder() {}
+  private QuoteRequestBuilder() {}
 
-  public static QuoteRequestBodyBuilder aQuoteRequestView() {
-    return new QuoteRequestBodyBuilder();
+  public static QuoteRequestBuilder aQuoteRequest() {
+    return new QuoteRequestBuilder();
   }
 
-  public QuoteRequestBodyBuilder withBirthDate(String birthDate) {
+  public QuoteRequestBuilder withBirthDate(String birthDate) {
     this.birthDate = birthDate;
     return this;
   }
