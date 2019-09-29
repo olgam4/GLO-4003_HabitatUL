@@ -14,15 +14,10 @@ public class Main {
 
   public static void main(String[] args) {
     new ProdContext().execute();
-    Server server = createServer();
-    registerResources(server);
-  }
-
-  private static Server createServer() {
     Server server = new Server();
     server.start(retrievePortNumber());
+    registerResources(server);
     server.join();
-    return server;
   }
 
   private static Integer retrievePortNumber() {

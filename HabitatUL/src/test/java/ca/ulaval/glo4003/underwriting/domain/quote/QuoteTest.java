@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.generator.QuoteGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.ExpiredQuoteException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class QuoteTest {
     assertTrue(subject.isPurchased());
   }
 
-  @Test(expected = ExpiredQuoteException.class)
+  @Test(expected = QuoteExpiredException.class)
   public void purchasingQuote_withExpiredQuote_shouldThrow() {
     subject = QuoteGenerator.createExpiredQuote();
 

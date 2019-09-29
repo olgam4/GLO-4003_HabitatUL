@@ -2,13 +2,13 @@ package ca.ulaval.glo4003.underwriting.domain.quote.exception;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
-public class QuoteNotFoundException extends QuoteException {
-  private static final String ERROR = "QUOTE_NOT_FOUND";
-  private static final String MESSAGE = "can't find quote with id <%s>";
+public class QuoteExpiredException extends QuoteException {
+  private static final String ERROR = "EXPIRED_QUOTE";
+  private static final String MESSAGE = "quote with id <%s> is expired";
 
   private final QuoteId quoteId;
 
-  public QuoteNotFoundException(QuoteId quoteId) {
+  public QuoteExpiredException(QuoteId quoteId) {
     this.quoteId = quoteId;
   }
 

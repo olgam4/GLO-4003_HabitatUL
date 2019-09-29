@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.underwriting.domain.quote;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.Premium;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.ExpiredQuoteException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
 
 public class Quote {
   private QuoteId quoteId;
@@ -39,7 +39,7 @@ public class Quote {
 
   public void purchase() {
     if (isPurchased()) throw new QuoteAlreadyPurchasedException(quoteId);
-    if (isExpired()) throw new ExpiredQuoteException(quoteId);
+    if (isExpired()) throw new QuoteExpiredException(quoteId);
 
     purchaseDate = Date.now(clockProvider.getClock());
   }
