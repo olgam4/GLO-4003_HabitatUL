@@ -3,30 +3,29 @@ package ca.ulaval.glo4003.gateway.presentation.exception;
 import ca.ulaval.glo4003.shared.domain.BaseException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.*;
 
-import javax.ws.rs.core.Response;
-import java.util.Arrays;
-import java.util.List;
+import javax.ws.rs.core.Response.Status;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExceptionResponseFactory {
-  // TODO: might want to use enum instead?
-  private static final List<Class> NOT_FOUND = Arrays.asList(QuoteNotFoundException.class);
-  private static final List<Class> BAD_REQUEST =
-      Arrays.asList(
-          QuoteExpiredException.class,
-          QuoteAlreadyPersistedException.class,
-          QuoteAlreadyPurchasedException.class,
-          QuoteNotYetPersistedException.class);
+  private static final Map<Class<?>, Status> STATUS_MAP = new HashMap<Class<?>, Status>();
+  private static final Status DEFAULT_STATUS = Status.INTERNAL_SERVER_ERROR;
+
+  static {
+    STATUS_MAP.put(QuoteExpiredException.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteAlreadyPersistedException.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteAlreadyPurchasedException.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteNotYetPersistedException.class, Status.BAD_REQUEST);
+
+    STATUS_MAP.put(QuoteNotFoundException.class, Status.NOT_FOUND);
+  }
 
   public ExceptionResponse createExceptionView(BaseException exception) {
-    Response.Status status = getExceptionResponseStatus(exception);
+    Status status = getExceptionResponseStatus(exception);
     return new ExceptionResponse(status, exception.getError(), exception.getMessage());
   }
 
-  private Response.Status getExceptionResponseStatus(BaseException exception) {
-    Class exceptionClass = exception.getClass();
-
-    if (BAD_REQUEST.contains(exceptionClass)) return Response.Status.BAD_REQUEST;
-    if (NOT_FOUND.contains(exceptionClass)) return Response.Status.NOT_FOUND;
-    return Response.Status.INTERNAL_SERVER_ERROR;
+  private Status getExceptionResponseStatus(BaseException exception) {
+    return STATUS_MAP.getOrDefault(exception.getClass(), DEFAULT_STATUS);
   }
 }
