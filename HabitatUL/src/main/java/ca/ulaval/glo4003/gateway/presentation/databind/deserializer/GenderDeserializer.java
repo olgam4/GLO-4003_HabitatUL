@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.databind.deserializer;
 
-import ca.ulaval.glo4003.underwriting.domain.Gender;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;

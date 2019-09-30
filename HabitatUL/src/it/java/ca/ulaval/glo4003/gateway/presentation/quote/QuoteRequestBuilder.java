@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
-import ca.ulaval.glo4003.underwriting.domain.Gender;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import com.github.javafaker.Faker;
 import org.json.JSONObject;
 

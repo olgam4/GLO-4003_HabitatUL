@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.generator;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequest;
+import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.domain.quote.QuoteForm;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuoteFormGenerator {
   private QuoteFormGenerator() {}

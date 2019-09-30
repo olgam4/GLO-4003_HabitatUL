@@ -1,8 +1,8 @@
-package ca.ulaval.glo4003.underwriting.infrastructure;
+package ca.ulaval.glo4003.underwriting.infrastructure.premium;
 
-import ca.ulaval.glo4003.underwriting.domain.Premium;
-import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
-import ca.ulaval.glo4003.underwriting.domain.quote.QuoteForm;
+import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.premium.PremiumCalculator;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class DummyPremiumCalculator implements PremiumCalculator {
   private Premium premium;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.generator;
 
-import ca.ulaval.glo4003.underwriting.domain.Premium;
+import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;

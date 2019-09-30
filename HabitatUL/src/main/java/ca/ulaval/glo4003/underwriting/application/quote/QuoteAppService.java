@@ -4,9 +4,10 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.domain.Premium;
-import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
+import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.premium.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuoteAppService {
   private PremiumCalculator premiumCalculator;

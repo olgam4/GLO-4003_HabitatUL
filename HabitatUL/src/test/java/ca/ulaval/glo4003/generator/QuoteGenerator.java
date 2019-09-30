@@ -5,10 +5,10 @@ import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.domain.Premium;
+import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
-import ca.ulaval.glo4003.underwriting.domain.quote.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import com.github.javafaker.Faker;
 
 import java.time.Instant;

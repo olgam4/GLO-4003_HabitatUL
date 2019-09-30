@@ -2,11 +2,11 @@ package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
-import ca.ulaval.glo4003.underwriting.domain.Premium;
-import ca.ulaval.glo4003.underwriting.domain.PremiumCalculator;
+import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.premium.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
-import ca.ulaval.glo4003.underwriting.infrastructure.DummyPremiumCalculator;
+import ca.ulaval.glo4003.underwriting.infrastructure.premium.DummyPremiumCalculator;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
