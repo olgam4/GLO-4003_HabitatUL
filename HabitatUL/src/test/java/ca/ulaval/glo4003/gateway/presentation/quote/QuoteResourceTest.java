@@ -3,7 +3,6 @@ package ca.ulaval.glo4003.gateway.presentation.quote;
 import ca.ulaval.glo4003.gateway.presentation.quote.view.request.QuoteRequest;
 import ca.ulaval.glo4003.generator.QuoteFormGenerator;
 import ca.ulaval.glo4003.generator.QuoteGenerator;
-import ca.ulaval.glo4003.matcher.QuoteFormDtoMatcher;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -13,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.matcher.QuoteFormDtoMatcher.mockitoQuoteFormDtoMatcher;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,8 +41,7 @@ public class QuoteResourceTest {
   public void requestingQuote_shouldCallQuoteAppService() {
     subject.requestQuote(quoteRequest);
 
-    verify(quoteAppService)
-        .requestQuote(QuoteFormDtoMatcher.getQuoteFormDtoMockitoMatcher(quoteRequest));
+    verify(quoteAppService).requestQuote(mockitoQuoteFormDtoMatcher(quoteRequest));
   }
 
   @Test

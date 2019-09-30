@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuote;
+import static org.junit.Assert.assertThat;
 
 public abstract class QuoteRepositoryIT {
   private QuoteRepository subject;
@@ -30,7 +31,7 @@ public abstract class QuoteRepositoryIT {
   public void creatingQuote_shouldPersistQuoteAsIs() {
     subject.create(quote);
 
-    matchesQuote(quote, subject.getById(quoteId));
+    assertThat(subject.getById(quoteId), matchesQuote(quote));
   }
 
   @Test(expected = QuoteAlreadyPersistedException.class)
@@ -46,7 +47,7 @@ public abstract class QuoteRepositoryIT {
     Quote updatedQuote = QuoteGenerator.createValidQuoteWithId(quoteId);
     subject.update(updatedQuote);
 
-    matchesQuote(updatedQuote, subject.getById(quoteId));
+    assertThat(subject.getById(quoteId), matchesQuote(updatedQuote));
   }
 
   @Test(expected = QuoteNotYetPersistedException.class)

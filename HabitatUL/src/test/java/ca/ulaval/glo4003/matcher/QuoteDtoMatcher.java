@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.matcher;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 public class QuoteDtoMatcher extends TypeSafeMatcher<QuoteDto> {
@@ -12,8 +13,8 @@ public class QuoteDtoMatcher extends TypeSafeMatcher<QuoteDto> {
     this.quote = quote;
   }
 
-  public static boolean matchesQuote(final Quote quote, final QuoteDto quoteDto) {
-    return new QuoteDtoMatcher(quote).matchesSafely(quoteDto);
+  public static Matcher<QuoteDto> matchesQuote(final Quote quote) {
+    return new QuoteDtoMatcher(quote);
   }
 
   @Override
@@ -23,6 +24,6 @@ public class QuoteDtoMatcher extends TypeSafeMatcher<QuoteDto> {
 
   @Override
   public boolean matchesSafely(final QuoteDto quoteDto) {
-    return true;
+    return quoteDto.getQuoteId() == this.quote.getQuoteId();
   }
 }

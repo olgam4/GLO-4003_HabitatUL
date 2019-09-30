@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.matcher;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteForm;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.mockito.hamcrest.MockitoHamcrest;
 
@@ -13,11 +14,11 @@ public class QuoteFormMatcher extends TypeSafeMatcher<QuoteForm> {
     this.quoteFormDto = quoteFormDto;
   }
 
-  public static QuoteForm getQuoteFormMockitoMatcher(final QuoteFormDto quoteFormDto) {
-    return MockitoHamcrest.argThat(getQuoteFormMatcher(quoteFormDto));
+  public static QuoteForm mockitoQuoteFormMatcher(final QuoteFormDto quoteFormDto) {
+    return MockitoHamcrest.argThat(matchesQuoteForm(quoteFormDto));
   }
 
-  public static QuoteFormMatcher getQuoteFormMatcher(final QuoteFormDto quoteFormDto) {
+  public static Matcher<QuoteForm> matchesQuoteForm(final QuoteFormDto quoteFormDto) {
     return new QuoteFormMatcher(quoteFormDto);
   }
 

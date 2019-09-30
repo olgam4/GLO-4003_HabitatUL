@@ -14,7 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.matcher.QuoteDtoMatcher.matchesQuote;
-import static ca.ulaval.glo4003.matcher.QuoteFormMatcher.getQuoteFormMockitoMatcher;
+import static ca.ulaval.glo4003.matcher.QuoteFormMatcher.mockitoQuoteFormMatcher;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -45,7 +46,7 @@ public class QuoteAppServiceTest {
   public void requestingQuote_shouldComputeQuotePrice() {
     subject.requestQuote(quoteFormDto);
 
-    verify(premiumCalculator).computeQuotePremium(getQuoteFormMockitoMatcher(quoteFormDto));
+    verify(premiumCalculator).computeQuotePremium(mockitoQuoteFormMatcher(quoteFormDto));
   }
 
   @Test
@@ -59,7 +60,7 @@ public class QuoteAppServiceTest {
   public void requestingQuote_shouldProduceCorrespondingQuoteDto() {
     QuoteDto observedQuoteDto = subject.requestQuote(quoteFormDto);
 
-    matchesQuote(quote, observedQuoteDto);
+    assertThat(observedQuoteDto, matchesQuote(quote));
   }
 
   @Test
