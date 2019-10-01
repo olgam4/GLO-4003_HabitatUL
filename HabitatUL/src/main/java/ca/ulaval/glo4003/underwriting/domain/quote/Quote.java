@@ -52,4 +52,8 @@ public class Quote {
   public boolean isExpired() {
     return Date.now(clockProvider.getClock()).isAfter(expirationDate);
   }
+
+  public Premium getPremium() {
+    return premium;
+  }
 }

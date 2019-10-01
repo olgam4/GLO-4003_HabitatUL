@@ -1,9 +1,18 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
+import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
+import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.PURCHASE_ROUTE;
+import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.QUOTE_PATH;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
+
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;
 import org.junit.AfterClass;
@@ -13,15 +22,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
-
-import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
-import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.PURCHASE_ROUTE;
-import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.QUOTE_PATH;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteResourceIT {
@@ -75,6 +75,19 @@ public class QuoteResourceIT {
         .post(QUOTE_PATH)
         .then()
         .header(HttpHeaders.LOCATION, expectedLocation);
+  }
+
+  @Test
+  public void postingQuotePath_withValidRequest_shouldProvideQuotePremium() {
+    JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
+
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(QUOTE_PATH)
+        .then()
+        .body(matchesJsonSchemaInClasspath("QuoteRequestResponse.json"));
   }
 
   @Test
