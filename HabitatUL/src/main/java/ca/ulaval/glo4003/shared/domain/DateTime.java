@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.shared.domain;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public class DateTime extends ValueObject {
   private LocalDateTime value;
@@ -21,6 +22,10 @@ public class DateTime extends ValueObject {
 
   public LocalDateTime getValue() {
     return value;
+  }
+
+  public long toUnixEpochTimestamp() {
+    return value.toInstant(ZoneOffset.UTC).getEpochSecond();
   }
 
   public boolean isAfter(DateTime dateTime) {

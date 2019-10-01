@@ -42,7 +42,7 @@ public class EventTest {
     EventChannel mutatedChannel = subject.getChannel();
     mutatedChannel = ANOTHER_EVENT_CHANNEL;
     JSONObject mutatedPayload = subject.getPayload();
-    mutatedPayload.put("KEY", "VALUE");
+    mutatedPayload.put("KEY", "BEFORE_DATE_VALUE");
 
     assertNotEquals(subject.getTimestamp(), mutatedTimestamp);
     assertNotEquals(subject.getChannel(), mutatedChannel);

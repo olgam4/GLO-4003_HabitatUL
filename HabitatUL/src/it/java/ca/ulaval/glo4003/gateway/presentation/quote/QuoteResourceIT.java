@@ -19,8 +19,7 @@ import javax.ws.rs.core.Response;
 
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
 import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.PURCHASE_ROUTE;
-import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.QUOTE_PATH;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static ca.ulaval.glo4003.gateway.presentation.quote.QuoteResource.QUOTE_ROUTE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -42,6 +41,7 @@ public class QuoteResourceIT {
 
   @Before
   public void setUp() {
+    resetServer();
     QuoteResource quoteResource = new QuoteResource(quoteAppService, new QuoteViewAssembler());
     ResourceConfig resourceConfig =
         ResourceConfigBuilder.aResourceConfig().withResource(quoteResource).build();
@@ -59,7 +59,7 @@ public class QuoteResourceIT {
         .given()
         .body(request.toString())
         .when()
-        .post(QUOTE_PATH)
+        .post(QUOTE_ROUTE)
         .then()
         .statusCode(expectedStatusCode);
   }
@@ -68,32 +68,32 @@ public class QuoteResourceIT {
   public void postingQuotePath_withValidRequest_shouldProvideLocationCreatedQuote() {
     JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
 
-    String expectedLocation = toUri(QUOTE_PATH, quoteDto.getQuoteId().getValue().toString());
+    String expectedLocation = toUri(QUOTE_ROUTE, quoteDto.getQuoteId().getValue().toString());
     getBaseScenario()
         .given()
         .body(request.toString())
         .when()
-        .post(QUOTE_PATH)
+        .post(QUOTE_ROUTE)
         .then()
         .header(HttpHeaders.LOCATION, expectedLocation);
   }
 
   @Test
-  public void postingQuotePath_withValidRequest_shouldProvideQuotePremium() {
+  public void postingQuotePath_withValidRequest_shouldProvideProperlyFormattedResponse() {
     JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
 
     getBaseScenario()
         .given()
         .body(request.toString())
         .when()
-        .post(QUOTE_PATH)
+        .post(QUOTE_ROUTE)
         .then()
-        .body(matchesJsonSchemaInClasspath("QuoteRequestResponse.json"));
+        .body(matchesJsonSchema("quote/QuoteResponse"));
   }
 
   @Test
   public void postingPurchaseQuotePath_withValidQuoteId_shouldHaveExpectedStatusCode() {
-    String path = toPath(QUOTE_PATH, PURCHASE_ROUTE, quoteDto.getQuoteId().getValue().toString());
+    String path = toPath(QUOTE_ROUTE, PURCHASE_ROUTE, quoteDto.getQuoteId().getValue().toString());
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
     getBaseScenario().when().post(path).then().statusCode(expectedStatusCode);

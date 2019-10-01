@@ -2,6 +2,8 @@ package ca.ulaval.glo4003;
 
 import ca.ulaval.glo4003.gateway.presentation.databind.JacksonFeature;
 import ca.ulaval.glo4003.underwriting.infrastructure.http.CORSResponseFilter;
+
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -18,6 +20,16 @@ public class Server {
     contextHandlerCollection = new ContextHandlerCollection();
     server.setHandler(contextHandlerCollection);
     serverStart();
+  }
+
+  private void serverStart() {
+    try {
+      server.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      tryStopServer();
+    }
   }
 
   public void addResourceConfig(ResourceConfig resourceConfig) {
@@ -47,21 +59,7 @@ public class Server {
     return servletContextHandler;
   }
 
-  private void serverStart() {
-    try {
-      server.start();
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      tryStopServer();
-    }
-  }
-
   public void join() {
-    serverJoin();
-  }
-
-  private void serverJoin() {
     try {
       server.join();
     } catch (Exception e) {
@@ -79,11 +77,20 @@ public class Server {
     }
   }
 
-  public void stop() {
-    serverStop();
+  public void reset() {
+    Handler[] handlers = contextHandlerCollection.getHandlers();
+    if (handlers != null) {
+      for (Handler handler : handlers) {
+        try {
+          handler.stop();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
-  private void serverStop() {
+  public void stop() {
     try {
       server.stop();
     } catch (Exception e) {

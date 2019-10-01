@@ -4,7 +4,12 @@ import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.DateTimeDese
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.FloorDeserializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.GenderDeserializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.PostalCodeDeserializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.serializer.DateTimeSerializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.serializer.PremiumSerializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.serializer.QuoteIdSerializer;
 import ca.ulaval.glo4003.shared.domain.DateTime;
+import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
@@ -41,6 +46,9 @@ public class SerializationModule extends Module {
 
   private void setSerializers(SetupContext setupContext) {
     SimpleSerializers serializers = new SimpleSerializers();
+    serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
+    serializers.addSerializer(DateTime.class, new DateTimeSerializer());
+    serializers.addSerializer(Premium.class, new PremiumSerializer());
     setupContext.addSerializers(serializers);
   }
 }

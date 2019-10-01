@@ -11,8 +11,10 @@ import java.time.temporal.ChronoUnit;
 import static org.junit.Assert.*;
 
 public class DateTest {
-  private static final DateTime BEFORE_DATE = DateTime.from(LocalDateTime.now().minusDays(2));
-  private static final DateTime AFTER_DATE = DateTime.from(LocalDateTime.now().plusDays(2));
+  private static final LocalDateTime BEFORE_DATE_VALUE = LocalDateTime.now().minusDays(2);
+  private static final DateTime BEFORE_DATE = DateTime.from(BEFORE_DATE_VALUE);
+  private static final LocalDateTime AFTER_DATE_VALUE = LocalDateTime.now().plusDays(2);
+  private static final DateTime AFTER_DATE = DateTime.from(AFTER_DATE_VALUE);
 
   private DateTime subject;
   private ClockProvider clockProvider;
@@ -40,7 +42,7 @@ public class DateTest {
 
     DateTime observed = subject.plus(duration);
 
-    DateTime expected = DateTime.from(BEFORE_DATE.getValue().plus(duration));
+    DateTime expected = DateTime.from(BEFORE_DATE_VALUE.plus(duration));
     assertEquals(expected, observed);
   }
 }

@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation;
 
 import ca.ulaval.glo4003.Server;
 import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class RestITestHelper {
   private static final int TEST_SERVER_PORT = 9292;
@@ -34,6 +36,10 @@ public class RestITestHelper {
     server.addResourceConfig(resourceConfig);
   }
 
+  public static void resetServer() {
+    server.reset();
+  }
+
   public static void stopServer() {
     if (server != null) {
       server.stop();
@@ -46,6 +52,10 @@ public class RestITestHelper {
         .accept(ContentType.JSON)
         .contentType(ContentType.JSON)
         .basePath(CONTEXT_PATH);
+  }
+
+  public static JsonSchemaValidator matchesJsonSchema(String classpath) {
+    return matchesJsonSchemaInClasspath(String.format("%s.json", classpath));
   }
 
   public static String toUri(String... pathParts) {

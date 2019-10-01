@@ -153,6 +153,12 @@
     <build>
         <finalName>${jar-file-name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <!-- Integration Tests - Response Schema -->
+                <directory>src/it/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <!-- General -->
             <plugin>

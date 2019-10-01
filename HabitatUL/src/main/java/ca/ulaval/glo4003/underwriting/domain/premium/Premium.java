@@ -12,6 +12,6 @@ public class Premium extends ValueObject {
   }
 
   public BigDecimal getValue() {
-    return value;
+    return value.setScale(2, BigDecimal.ROUND_HALF_UP);
   }
 }
