@@ -3,7 +3,9 @@ package ca.ulaval.glo4003.gateway.presentation.quote.response;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"quoteId", "premium", "expirationDate"})
 public class QuoteResponse {
   private QuoteId quoteId;
   private Premium premium;
