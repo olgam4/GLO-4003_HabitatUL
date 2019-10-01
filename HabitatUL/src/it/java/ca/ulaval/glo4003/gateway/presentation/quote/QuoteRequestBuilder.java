@@ -5,6 +5,7 @@ import com.github.javafaker.Faker;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 public class QuoteRequestBuilder {
   private static final String DEFAULT_FIRST_NAME = Faker.instance().funnyName().name();
@@ -19,6 +20,9 @@ public class QuoteRequestBuilder {
   private static final int DEFAULT_APARTMENT_NUMBER = 2;
   private static final String DEFAULT_FLOOR = "1ST";
 
+  private static final String DEFAULT_EFFECTIVE_DATE =
+      SIMPLE_DATE_FORMAT.format(Faker.instance().date().future(50, TimeUnit.DAYS));
+
   private String firstName = DEFAULT_FIRST_NAME;
   private String lastName = DEFAULT_LAST_NAME;
   private String birthDate = DEFAULT_BIRTH_DATE;
@@ -28,6 +32,8 @@ public class QuoteRequestBuilder {
   private int streetNumber = DEFAULT_STREET_NUMBER;
   private int apartmentNumber = DEFAULT_APARTMENT_NUMBER;
   private String floor = DEFAULT_FLOOR;
+
+  private String effectiveDate = DEFAULT_EFFECTIVE_DATE;
 
   private QuoteRequestBuilder() {}
 
@@ -44,6 +50,7 @@ public class QuoteRequestBuilder {
     JSONObject json = new JSONObject();
     json.put("identity", buildIdentity());
     json.put("location", buildLocation());
+    json.put("effectiveDate", effectiveDate);
     return json;
   }
 

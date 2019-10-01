@@ -19,7 +19,10 @@ public class QuoteViewAssembler {
 
   private Identity from(IdentityView identityView) {
     return new Identity(
-        identityView.getFirstName(), identityView.getLastName(), identityView.getGender());
+        identityView.getFirstName(),
+        identityView.getLastName(),
+        identityView.getBirthDate(),
+        identityView.getGender());
   }
 
   private Location from(LocationView locationView) {

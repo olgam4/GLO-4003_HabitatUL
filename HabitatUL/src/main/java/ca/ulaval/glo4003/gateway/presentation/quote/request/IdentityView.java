@@ -1,15 +1,15 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.shared.domain.DateTime;
+import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 
 public class IdentityView {
   private String firstName;
   private String lastName;
-  private DateTime birthDate;
+  private Date birthDate;
   private Gender gender;
 
-  public IdentityView(String firstName, String lastName, DateTime birthDate, Gender gender) {
+  public IdentityView(String firstName, String lastName, Date birthDate, Gender gender) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.birthDate = birthDate;
@@ -27,7 +27,7 @@ public class IdentityView {
     return lastName;
   }
 
-  public DateTime getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 

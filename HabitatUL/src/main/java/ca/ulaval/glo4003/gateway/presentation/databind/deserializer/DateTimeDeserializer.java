@@ -7,17 +7,16 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class DateTimeDeserializer extends JsonDeserializer<DateTime> {
+  private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
   @Override
   public DateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    // TODO: should not override the time
-    // TODO: need to create a date class
-    return DateTime.from(LocalDateTime.of(LocalDate.parse(node.textValue()), LocalTime.MIN));
+    return DateTime.from(LocalDateTime.parse(node.textValue(), formatter));
   }
 }

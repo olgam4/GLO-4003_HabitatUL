@@ -1,12 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
-import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.DateTimeDeserializer;
-import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.FloorDeserializer;
-import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.GenderDeserializer;
-import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.PostalCodeDeserializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.DateTimeSerializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.PremiumSerializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.QuoteIdSerializer;
+import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -37,6 +35,7 @@ public class SerializationModule extends Module {
 
   private void setDeserializers(SetupContext setupContext) {
     SimpleDeserializers deserializers = new SimpleDeserializers();
+    deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
     deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
