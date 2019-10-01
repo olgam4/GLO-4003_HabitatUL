@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.generator.QuoteGenerator;
+import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
 import org.junit.Before;

@@ -1,5 +1,6 @@
-package ca.ulaval.glo4003.generator;
+package ca.ulaval.glo4003.generator.quote;
 
+import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;

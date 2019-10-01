@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.matcher;
+package ca.ulaval.glo4003.matcher.quote;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import org.hamcrest.Description;

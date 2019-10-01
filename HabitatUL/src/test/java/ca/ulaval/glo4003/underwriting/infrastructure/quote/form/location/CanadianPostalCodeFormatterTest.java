@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location;
 
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.InvalidPostalCodeException;
 import org.junit.Before;
 import org.junit.Test;
-
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.InvalidPostalCodeException;
 
 import static org.junit.Assert.assertEquals;
 

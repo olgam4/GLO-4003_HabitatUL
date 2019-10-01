@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.generator.QuoteGenerator;
+import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPersistedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotYetPersistedException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuote;
+import static ca.ulaval.glo4003.matcher.quote.QuoteMatcher.matchesQuote;
 import static org.junit.Assert.assertThat;
 
 public abstract class QuoteRepositoryIT {

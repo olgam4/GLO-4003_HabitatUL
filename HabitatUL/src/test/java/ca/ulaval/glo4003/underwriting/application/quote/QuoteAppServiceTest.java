@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.generator.PremiumGenerator;
-import ca.ulaval.glo4003.generator.QuoteFormGenerator;
+import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
+import ca.ulaval.glo4003.generator.quote.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
@@ -17,8 +17,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.matcher.QuoteDtoMatcher.matchesQuote;
-import static ca.ulaval.glo4003.matcher.QuoteFormMatcher.mockitoQuoteFormMatcher;
+import static ca.ulaval.glo4003.matcher.quote.QuoteDtoMatcher.matchesQuote;
+import static ca.ulaval.glo4003.matcher.quote.QuoteFormMatcher.mockitoQuoteFormMatcher;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 

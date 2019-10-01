@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.matcher;
+package ca.ulaval.glo4003.matcher.quote;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;

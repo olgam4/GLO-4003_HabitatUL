@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator;
+package ca.ulaval.glo4003.generator.premium;
 
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import com.github.javafaker.Faker;
