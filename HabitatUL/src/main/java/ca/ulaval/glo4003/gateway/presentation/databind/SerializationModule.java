@@ -1,9 +1,13 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
-import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.DateDeserializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.DateTimeDeserializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.FloorDeserializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.GenderDeserializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.PostalCodeDeserializer;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
@@ -28,7 +32,9 @@ public class SerializationModule extends Module {
 
   private void setDeserializers(SetupContext setupContext) {
     SimpleDeserializers deserializers = new SimpleDeserializers();
-    deserializers.addDeserializer(DateTime.class, new DateDeserializer());
+    deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
+    deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
+    deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     setupContext.addDeserializers(deserializers);
   }

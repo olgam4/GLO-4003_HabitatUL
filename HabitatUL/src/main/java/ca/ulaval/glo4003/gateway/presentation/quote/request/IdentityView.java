@@ -9,35 +9,29 @@ public class IdentityView {
   private DateTime birthDate;
   private Gender gender;
 
-  public String getFirstName() {
-    return firstName;
+  public IdentityView(String firstName, String lastName, DateTime birthDate, Gender gender) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.birthDate = birthDate;
+    this.gender = gender;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
+  private IdentityView() {}
+
+  public String getFirstName() {
+    return firstName;
   }
 
   public String getLastName() {
     return lastName;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
   public DateTime getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(DateTime birthDate) {
-    this.birthDate = birthDate;
-  }
-
   public Gender getGender() {
     return gender;
-  }
-
-  public void setGender(Gender gender) {
-    this.gender = gender;
   }
 }

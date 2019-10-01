@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.response;
 
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.UUID;

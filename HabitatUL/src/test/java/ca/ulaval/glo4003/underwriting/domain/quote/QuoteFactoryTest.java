@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
-import ca.ulaval.glo4003.generator.quote.QuoteFormGenerator;
+import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;

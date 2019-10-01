@@ -23,8 +23,8 @@ public class DateTime extends ValueObject {
     return value;
   }
 
-  public boolean isAfter(DateTime date) {
-    return value.isAfter(date.value);
+  public boolean isAfter(DateTime dateTime) {
+    return value.isAfter(dateTime.value);
   }
 
   public DateTime plus(Duration duration) {

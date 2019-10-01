@@ -14,10 +14,20 @@ public class QuoteRequestBuilder {
       SIMPLE_DATE_FORMAT.format(Faker.instance().date().birthday());
   private static final String DEFAULT_GENDER = Gender.MALE.toString();
 
+  private static final String DEFAULT_POSTAL_CODE = "G1V4L8";
+  private static final int DEFAULT_STREET_NUMBER = 13;
+  private static final int DEFAULT_APARTMENT_NUMBER = 2;
+  private static final String DEFAULT_FLOOR = "1ST";
+
   private String firstName = DEFAULT_FIRST_NAME;
   private String lastName = DEFAULT_LAST_NAME;
   private String birthDate = DEFAULT_BIRTH_DATE;
   private String gender = DEFAULT_GENDER;
+
+  private String postalCode = DEFAULT_POSTAL_CODE;
+  private int streetNumber = DEFAULT_STREET_NUMBER;
+  private int apartmentNumber = DEFAULT_APARTMENT_NUMBER;
+  private String floor = DEFAULT_FLOOR;
 
   private QuoteRequestBuilder() {}
 
@@ -33,6 +43,7 @@ public class QuoteRequestBuilder {
   public JSONObject build() {
     JSONObject json = new JSONObject();
     json.put("identity", buildIdentity());
+    json.put("location", buildLocation());
     return json;
   }
 
@@ -42,6 +53,15 @@ public class QuoteRequestBuilder {
     json.put("lastName", lastName);
     json.put("birthDate", birthDate);
     json.put("gender", gender);
+    return json;
+  }
+
+  private JSONObject buildLocation() {
+    JSONObject json = new JSONObject();
+    json.put("postalCode", postalCode);
+    json.put("streetNumber", streetNumber);
+    json.put("apartmentNumber", apartmentNumber);
+    json.put("floor", floor);
     return json;
   }
 }

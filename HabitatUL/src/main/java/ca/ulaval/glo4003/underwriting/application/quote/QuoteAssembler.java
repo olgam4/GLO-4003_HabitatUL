@@ -11,6 +11,6 @@ public class QuoteAssembler {
   }
 
   public static QuoteForm from(QuoteFormDto quoteFormDto) {
-    return new QuoteForm();
+    return new QuoteForm(quoteFormDto.getIdentity(), quoteFormDto.getLocation());
   }
 }
