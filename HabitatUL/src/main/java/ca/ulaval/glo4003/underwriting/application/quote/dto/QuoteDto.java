@@ -1,15 +1,15 @@
 package ca.ulaval.glo4003.underwriting.application.quote.dto;
 
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
 public class QuoteDto {
   private QuoteId quoteId;
   private Premium premium;
-  private Date expirationDate;
+  private DateTime expirationDate;
 
-  public QuoteDto(QuoteId quoteId, Premium premium, Date expirationDate) {
+  public QuoteDto(QuoteId quoteId, Premium premium, DateTime expirationDate) {
     this.quoteId = quoteId;
     this.premium = premium;
     this.expirationDate = expirationDate;
@@ -23,7 +23,7 @@ public class QuoteDto {
     return premium;
   }
 
-  public Date getExpirationDate() {
+  public DateTime getExpirationDate() {
     return expirationDate;
   }
 }

@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.databind;
 
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.DateDeserializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.GenderDeserializer;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
@@ -28,7 +28,7 @@ public class SerializationModule extends Module {
 
   private void setDeserializers(SetupContext setupContext) {
     SimpleDeserializers deserializers = new SimpleDeserializers();
-    deserializers.addDeserializer(Date.class, new DateDeserializer());
+    deserializers.addDeserializer(DateTime.class, new DateDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     setupContext.addDeserializers(deserializers);
   }

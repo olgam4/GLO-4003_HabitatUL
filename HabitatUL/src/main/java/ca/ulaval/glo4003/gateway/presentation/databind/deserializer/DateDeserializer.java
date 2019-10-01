@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.databind.deserializer;
 
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.DateTime;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -11,11 +11,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class DateDeserializer extends JsonDeserializer<Date> {
+public class DateDeserializer extends JsonDeserializer<DateTime> {
   @Override
-  public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+  public DateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    return Date.from(LocalDateTime.of(LocalDate.parse(node.textValue()), LocalTime.MIN));
+    return DateTime.from(LocalDateTime.of(LocalDate.parse(node.textValue()), LocalTime.MIN));
   }
 }

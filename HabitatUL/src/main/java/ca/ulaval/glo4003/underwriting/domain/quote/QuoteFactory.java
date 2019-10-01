@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
@@ -17,8 +17,8 @@ public class QuoteFactory {
 
   public Quote create(Premium premium, QuoteForm quoteForm) {
     QuoteId quoteId = new QuoteId();
-    Date expirationDate =
-        Date.now(clockProvider.getClock())
+    DateTime expirationDate =
+        DateTime.now(clockProvider.getClock())
             .plus(quoteValidityPeriodProvider.getQuoteValidityPeriod());
     return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);
   }

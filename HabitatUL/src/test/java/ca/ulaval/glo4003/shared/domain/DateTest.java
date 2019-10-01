@@ -11,16 +11,16 @@ import java.time.temporal.ChronoUnit;
 import static org.junit.Assert.*;
 
 public class DateTest {
-  private static final Date BEFORE_DATE = Date.from(LocalDateTime.now().minusDays(2));
-  private static final Date AFTER_DATE = Date.from(LocalDateTime.now().plusDays(2));
+  private static final DateTime BEFORE_DATE = DateTime.from(LocalDateTime.now().minusDays(2));
+  private static final DateTime AFTER_DATE = DateTime.from(LocalDateTime.now().plusDays(2));
 
-  private Date subject;
+  private DateTime subject;
   private ClockProvider clockProvider;
 
   @Before
   public void setUp() {
     clockProvider = new FixedClockProvider();
-    subject = Date.now(clockProvider.getClock());
+    subject = DateTime.now(clockProvider.getClock());
   }
 
   @Test
@@ -38,9 +38,9 @@ public class DateTest {
     subject = BEFORE_DATE;
     Duration duration = Duration.of(3, ChronoUnit.HOURS);
 
-    Date observed = subject.plus(duration);
+    DateTime observed = subject.plus(duration);
 
-    Date expected = Date.from(BEFORE_DATE.getValue().plus(duration));
+    DateTime expected = DateTime.from(BEFORE_DATE.getValue().plus(duration));
     assertEquals(expected, observed);
   }
 }

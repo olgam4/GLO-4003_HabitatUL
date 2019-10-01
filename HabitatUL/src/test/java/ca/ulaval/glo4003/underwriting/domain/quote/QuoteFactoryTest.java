@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.underwriting.domain.quote;
 import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
 import ca.ulaval.glo4003.generator.quote.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import org.junit.Before;
@@ -41,8 +41,8 @@ public class QuoteFactoryTest {
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
     Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createValidQuoteForm());
 
-    Date expectedExpirationDate =
-        Date.from(LocalDateTime.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
+    DateTime expectedExpirationDate =
+        DateTime.from(LocalDateTime.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
     assertEquals(expectedExpirationDate, quote.getExpirationDate());
   }
 

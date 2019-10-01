@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
@@ -11,7 +11,7 @@ public class Quote {
   private QuoteId quoteId;
   private Premium premium;
   private QuoteForm quoteForm;
-  private Date expirationDate;
+  private DateTime expirationDate;
   private Boolean purchased;
   private ClockProvider clockProvider;
 
@@ -19,7 +19,7 @@ public class Quote {
       QuoteId quoteId,
       Premium premium,
       QuoteForm quoteForm,
-      Date expirationDate,
+      DateTime expirationDate,
       Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
@@ -34,7 +34,7 @@ public class Quote {
     return quoteId;
   }
 
-  public Date getExpirationDate() {
+  public DateTime getExpirationDate() {
     return expirationDate;
   }
 
@@ -50,7 +50,7 @@ public class Quote {
   }
 
   public boolean isExpired() {
-    return Date.now(clockProvider.getClock()).isAfter(expirationDate);
+    return DateTime.now(clockProvider.getClock()).isAfter(expirationDate);
   }
 
   public Premium getPremium() {
