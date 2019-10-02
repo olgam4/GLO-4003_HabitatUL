@@ -12,4 +12,12 @@ public class QuoteForm extends ValueObject {
     this.identity = identity;
     this.location = location;
   }
+
+  public Identity getIdentity() {
+    return identity;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
 }

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.mediator;
 
-import org.json.JSONObject;
+import ca.ulaval.glo4003.generator.EventGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,9 +24,8 @@ public class BoundedContextTest {
   @Before
   public void setUp() {
     subject = new DummyBoundedContext(mediator);
-    firstEvent = new DummyEvent(EventChannel.QUOTES, new JSONObject().put("NAME", "FIRST EVENT"));
-    secondEvent =
-        new DummyEvent(EventChannel.POLICIES, new JSONObject().put("NAME", "SECOND EVENT"));
+    firstEvent = EventGenerator.createEvent();
+    secondEvent = EventGenerator.createEvent();
     events = Arrays.asList(firstEvent, secondEvent);
   }
 

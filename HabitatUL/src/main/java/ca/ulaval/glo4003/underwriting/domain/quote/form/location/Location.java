@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
 public class Location {
   private PostalCode postalCode;
-  private Integer streetNumber;
-  private Integer apartmentNumber;
+  private int streetNumber;
+  private int apartmentNumber;
   private Floor floor;
 
   public Location(
@@ -12,5 +12,21 @@ public class Location {
     this.streetNumber = streetNumber;
     this.apartmentNumber = apartmentNumber;
     this.floor = floor;
+  }
+
+  public PostalCode getPostalCode() {
+    return postalCode;
+  }
+
+  public int getStreetNumber() {
+    return streetNumber;
+  }
+
+  public int getApartmentNumber() {
+    return apartmentNumber;
+  }
+
+  public Floor getFloor() {
+    return floor;
   }
 }

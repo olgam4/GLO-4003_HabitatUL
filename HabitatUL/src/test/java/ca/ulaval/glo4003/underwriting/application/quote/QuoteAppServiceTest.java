@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.domain.QuotePremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
-import ca.ulaval.glo4003.underwriting.domain.premium.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteFactory;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -30,7 +30,7 @@ public class QuoteAppServiceTest {
   private QuoteAppService subject;
   private QuoteFormDto quoteFormDto;
 
-  @Mock private PremiumCalculator premiumCalculator;
+  @Mock private QuotePremiumCalculator quotePremiumCalculator;
   @Mock private Quote quote;
   @Mock private QuoteFactory quoteFactory;
   @Mock private QuoteRepository quoteRepository;
@@ -39,18 +39,18 @@ public class QuoteAppServiceTest {
   public void setUp() {
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
 
-    when(premiumCalculator.computeQuotePremium(any(QuoteForm.class))).thenReturn(A_PREMIUM);
+    when(quotePremiumCalculator.computeQuotePremium(any(QuoteForm.class))).thenReturn(A_PREMIUM);
     when(quoteFactory.create(any(Premium.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
-    subject = new QuoteAppService(premiumCalculator, quoteFactory, quoteRepository);
+    subject = new QuoteAppService(quotePremiumCalculator, quoteFactory, quoteRepository);
   }
 
   @Test
   public void requestingQuote_shouldComputeQuotePrice() {
     subject.requestQuote(quoteFormDto);
 
-    verify(premiumCalculator).computeQuotePremium(mockitoQuoteFormMatcher(quoteFormDto));
+    verify(quotePremiumCalculator).computeQuotePremium(mockitoQuoteFormMatcher(quoteFormDto));
   }
 
   @Test

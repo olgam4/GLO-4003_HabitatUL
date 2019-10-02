@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
+import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
@@ -7,7 +8,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchas
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
-public class Quote {
+public class Quote extends AggregateRoot {
   private QuoteId quoteId;
   private Premium premium;
   private QuoteForm quoteForm;
@@ -43,6 +44,11 @@ public class Quote {
     if (isExpired()) throw new QuoteExpiredException(quoteId);
 
     purchased = true;
+    registerQuotePurchaseEvent();
+  }
+
+  private void registerQuotePurchaseEvent() {
+    registerEvent(new QuotePurchasedEvent(quoteId, premium, quoteForm, clockProvider));
   }
 
   public boolean isPurchased() {

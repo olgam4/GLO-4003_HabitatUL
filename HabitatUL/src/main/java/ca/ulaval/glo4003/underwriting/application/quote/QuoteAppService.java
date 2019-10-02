@@ -4,19 +4,19 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.domain.QuotePremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
-import ca.ulaval.glo4003.underwriting.domain.premium.PremiumCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuoteAppService {
-  private PremiumCalculator premiumCalculator;
+  private QuotePremiumCalculator quotePremiumCalculator;
   private QuoteRepository quoteRepository;
   private QuoteFactory quoteFactory;
 
   public QuoteAppService() {
     this(
-        ServiceLocator.resolve(PremiumCalculator.class),
+        ServiceLocator.resolve(QuotePremiumCalculator.class),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
             ServiceLocator.resolve(ClockProvider.class)),
@@ -24,17 +24,17 @@ public class QuoteAppService {
   }
 
   public QuoteAppService(
-      PremiumCalculator premiumCalculator,
+      QuotePremiumCalculator quotePremiumCalculator,
       QuoteFactory quoteFactory,
       QuoteRepository quoteRepository) {
-    this.premiumCalculator = premiumCalculator;
+    this.quotePremiumCalculator = quotePremiumCalculator;
     this.quoteFactory = quoteFactory;
     this.quoteRepository = quoteRepository;
   }
 
   public QuoteDto requestQuote(QuoteFormDto quoteFormDto) {
     QuoteForm quoteForm = QuoteAssembler.from(quoteFormDto);
-    Premium premium = premiumCalculator.computeQuotePremium(quoteForm);
+    Premium premium = quotePremiumCalculator.computeQuotePremium(quoteForm);
     Quote quote = quoteFactory.create(premium, quoteForm);
     quoteRepository.create(quote);
     return QuoteAssembler.from(quote);

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.mediator;
 
-import org.json.JSONObject;
+import ca.ulaval.glo4003.generator.EventGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,20 +19,20 @@ public class ConcreteBoundedContextMediatorTest {
   @Mock private BoundedContext secondSubscriber;
 
   private ConcreteBoundedContextMediator subject;
-  private Event firstEvent;
-  private Event secondEvent;
-  private Event thirdEvent;
-  private Event fourthEvent;
+  private Event firstQuoteEvent;
+  private Event claimEvent;
+  private Event policyEvent;
+  private Event secondQuoteEvent;
   private List<Event> events;
 
   @Before
   public void setUp() {
     subject = new ConcreteBoundedContextMediator();
-    firstEvent = new DummyEvent(EventChannel.QUOTES, new JSONObject().put("NAME", "FIRST EVENT"));
-    secondEvent = new DummyEvent(EventChannel.CLAIMS, new JSONObject().put("NAME", "SECOND EVENT"));
-    thirdEvent = new DummyEvent(EventChannel.POLICIES, new JSONObject().put("NAME", "THIRD EVENT"));
-    fourthEvent = new DummyEvent(EventChannel.QUOTES, new JSONObject().put("NAME", "FOURTH EVENT"));
-    events = Arrays.asList(firstEvent, secondEvent, thirdEvent, fourthEvent);
+    firstQuoteEvent = EventGenerator.createEventWithChannel(EventChannel.QUOTES);
+    secondQuoteEvent = EventGenerator.createEventWithChannel(EventChannel.QUOTES);
+    claimEvent = EventGenerator.createEventWithChannel(EventChannel.CLAIMS);
+    policyEvent = EventGenerator.createEventWithChannel(EventChannel.POLICIES);
+    events = Arrays.asList(firstQuoteEvent, claimEvent, policyEvent, secondQuoteEvent);
   }
 
   @Test
@@ -41,8 +41,8 @@ public class ConcreteBoundedContextMediatorTest {
 
     subject.publish(events);
 
-    verify(firstSubscriber).process(firstEvent);
-    verify(firstSubscriber).process(fourthEvent);
+    verify(firstSubscriber).process(firstQuoteEvent);
+    verify(firstSubscriber).process(secondQuoteEvent);
   }
 
   @Test
@@ -51,8 +51,8 @@ public class ConcreteBoundedContextMediatorTest {
 
     subject.publish(events);
 
-    verify(firstSubscriber, never()).process(secondEvent);
-    verify(firstSubscriber, never()).process(thirdEvent);
+    verify(firstSubscriber, never()).process(claimEvent);
+    verify(firstSubscriber, never()).process(policyEvent);
   }
 
   @Test
@@ -62,9 +62,9 @@ public class ConcreteBoundedContextMediatorTest {
 
     subject.publish(events);
 
-    verify(firstSubscriber).process(firstEvent);
-    verify(firstSubscriber).process(thirdEvent);
-    verify(firstSubscriber).process(fourthEvent);
+    verify(firstSubscriber).process(firstQuoteEvent);
+    verify(firstSubscriber).process(policyEvent);
+    verify(firstSubscriber).process(secondQuoteEvent);
   }
 
   @Test
@@ -74,9 +74,9 @@ public class ConcreteBoundedContextMediatorTest {
 
     subject.publish(events);
 
-    verify(firstSubscriber).process(firstEvent);
-    verify(firstSubscriber).process(fourthEvent);
-    verify(secondSubscriber).process(firstEvent);
-    verify(secondSubscriber).process(fourthEvent);
+    verify(firstSubscriber).process(firstQuoteEvent);
+    verify(firstSubscriber).process(secondQuoteEvent);
+    verify(secondSubscriber).process(firstQuoteEvent);
+    verify(secondSubscriber).process(secondQuoteEvent);
   }
 }

@@ -13,7 +13,7 @@ public class Floor extends ValueObject {
   private static final String SECOND_FLOOR_ABBR = "2ND";
   private static final String THIRD_FLOOR_ABBR = "3RD";
   private static final String HIGHER_FLOOR_ABBR = "TH";
-  private static final Map<String, Integer> ABBR_VALUE_MAP = new HashMap<String, Integer>();
+  private static final Map<String, Integer> ABBR_VALUE_MAP = new HashMap<>();
 
   static {
     ABBR_VALUE_MAP.put(GROUND_FLOOR_ABBR, 0);
@@ -28,8 +28,7 @@ public class Floor extends ValueObject {
   public Floor(String value) throws InvalidFloorException {
     this.value = value;
     Optional<Integer> parsedFloorNumber = parse(value);
-    this.floorNumber =
-        parsedFloorNumber.orElseThrow(() -> new InvalidFloorException(value)).intValue();
+    this.floorNumber = parsedFloorNumber.orElseThrow(() -> new InvalidFloorException(value));
   }
 
   private Optional<Integer> parse(String value) {
