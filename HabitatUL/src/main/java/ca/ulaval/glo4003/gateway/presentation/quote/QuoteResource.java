@@ -45,7 +45,7 @@ public class QuoteResource {
   }
 
   @POST
-  @Path(PURCHASE_ROUTE + "/{" + QUOTE_ID_PARAM_NAME + "}")
+  @Path("/{" + QUOTE_ID_PARAM_NAME + "}" + PURCHASE_ROUTE)
   public Response purchaseQuote(@PathParam(QUOTE_ID_PARAM_NAME) QuoteId quoteId) {
     quoteAppService.purchaseQuote(quoteId);
     return Response.ok().build();

@@ -1,11 +1,12 @@
 package ca.ulaval.glo4003.underwriting.application.quote.dto;
 
+import ca.ulaval.glo4003.shared.application.DataTransferObject;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 
-public class QuoteFormDto {
+public class QuoteFormDto extends DataTransferObject {
   Identity identity;
   Location location;
   Date effectiveDate;

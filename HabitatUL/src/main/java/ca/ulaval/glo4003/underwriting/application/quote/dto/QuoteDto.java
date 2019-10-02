@@ -1,10 +1,11 @@
 package ca.ulaval.glo4003.underwriting.application.quote.dto;
 
+import ca.ulaval.glo4003.shared.application.DataTransferObject;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
-public class QuoteDto {
+public class QuoteDto extends DataTransferObject {
   private QuoteId quoteId;
   private Premium premium;
   private DateTime expirationDate;

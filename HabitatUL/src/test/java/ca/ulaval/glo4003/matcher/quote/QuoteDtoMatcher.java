@@ -13,7 +13,7 @@ public class QuoteDtoMatcher extends TypeSafeMatcher<QuoteDto> {
     this.quote = quote;
   }
 
-  public static Matcher<QuoteDto> matchesQuote(final Quote quote) {
+  public static Matcher<QuoteDto> matchesQuoteDto(final Quote quote) {
     return new QuoteDtoMatcher(quote);
   }
 

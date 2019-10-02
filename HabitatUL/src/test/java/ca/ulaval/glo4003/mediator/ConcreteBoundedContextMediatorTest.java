@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.mediator;
 
-import ca.ulaval.glo4003.generator.EventGenerator;
+import ca.ulaval.glo4003.builder.EventBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,10 +28,10 @@ public class ConcreteBoundedContextMediatorTest {
   @Before
   public void setUp() {
     subject = new ConcreteBoundedContextMediator();
-    firstQuoteEvent = EventGenerator.createEventWithChannel(EventChannel.QUOTES);
-    secondQuoteEvent = EventGenerator.createEventWithChannel(EventChannel.QUOTES);
-    claimEvent = EventGenerator.createEventWithChannel(EventChannel.CLAIMS);
-    policyEvent = EventGenerator.createEventWithChannel(EventChannel.POLICIES);
+    firstQuoteEvent = EventBuilder.anEvent().withEventChannel(EventChannel.QUOTES).build();
+    secondQuoteEvent = EventBuilder.anEvent().withEventChannel(EventChannel.QUOTES).build();
+    claimEvent = EventBuilder.anEvent().withEventChannel(EventChannel.CLAIMS).build();
+    policyEvent = EventBuilder.anEvent().withEventChannel(EventChannel.POLICIES).build();
     events = Arrays.asList(firstQuoteEvent, claimEvent, policyEvent, secondQuoteEvent);
   }
 

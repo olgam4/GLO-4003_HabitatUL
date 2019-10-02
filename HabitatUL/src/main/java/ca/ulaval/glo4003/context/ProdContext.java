@@ -1,11 +1,14 @@
 package ca.ulaval.glo4003.context;
 
+import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
 import ca.ulaval.glo4003.gateway.domain.user.PasswordValidator;
 import ca.ulaval.glo4003.gateway.domain.user.UserRepository;
 import ca.ulaval.glo4003.gateway.infrastructure.user.DummyPasswordValidator;
 import ca.ulaval.glo4003.gateway.persistence.user.InMemoryUserRepository;
 import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
+import ca.ulaval.glo4003.mediator.EventChannel;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.QuotePremiumCalculator;
@@ -26,6 +29,7 @@ public class ProdContext implements Context {
     registerGeneralServices();
     registerGatewayServices();
     registerUnderwritingServices(mediator);
+    registerCoverageServices(mediator);
   }
 
   private void registerGeneralServices() {
@@ -46,5 +50,11 @@ public class ProdContext implements Context {
     ServiceLocator.register(
         QuoteRepository.class,
         new EventPublisherQuoteRepositoryWrapper(new InMemoryQuoteRepository(), mediator));
+  }
+
+  private void registerCoverageServices(BoundedContextMediator mediator) {
+    PolicyAppService policyAppService = new PolicyAppService();
+    PolicyBoundedContext policyBoundedContext = new PolicyBoundedContext(policyAppService);
+    mediator.subscribe(policyBoundedContext, EventChannel.QUOTES);
   }
 }

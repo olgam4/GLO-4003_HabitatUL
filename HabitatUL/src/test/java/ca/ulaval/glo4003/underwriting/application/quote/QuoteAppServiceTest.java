@@ -24,7 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Period;
 
-import static ca.ulaval.glo4003.matcher.quote.QuoteDtoMatcher.matchesQuote;
+import static ca.ulaval.glo4003.matcher.quote.QuoteDtoMatcher.matchesQuoteDto;
 import static ca.ulaval.glo4003.matcher.quote.QuoteFormMatcher.mockitoQuoteFormMatcher;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
@@ -76,7 +76,7 @@ public class QuoteAppServiceTest {
   public void requestingQuote_shouldProduceCorrespondingQuoteDto() {
     QuoteDto observedQuoteDto = subject.requestQuote(quoteFormDto);
 
-    assertThat(observedQuoteDto, matchesQuote(quote));
+    assertThat(observedQuoteDto, matchesQuoteDto(quote));
   }
 
   @Test

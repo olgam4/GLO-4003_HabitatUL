@@ -93,7 +93,7 @@ public class QuoteResourceIT {
 
   @Test
   public void postingPurchaseQuotePath_withValidQuoteId_shouldHaveExpectedStatusCode() {
-    String path = toPath(QUOTE_ROUTE, PURCHASE_ROUTE, quoteDto.getQuoteId().getValue().toString());
+    String path = toPath(QUOTE_ROUTE, quoteDto.getQuoteId().getValue().toString(), PURCHASE_ROUTE);
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
     getBaseScenario().when().post(path).then().statusCode(expectedStatusCode);

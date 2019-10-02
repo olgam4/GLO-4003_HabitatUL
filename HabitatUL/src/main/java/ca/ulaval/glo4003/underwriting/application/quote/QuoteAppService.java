@@ -14,7 +14,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import java.time.Period;
 
 public class QuoteAppService {
-  public static final int NUMBER_OF_MONTHS_OF_COVERAGE = 12;
+  private static final int NUMBER_OF_MONTHS_OF_COVERAGE = 12;
   private QuoteAssembler quoteAssembler;
   private QuotePremiumCalculator quotePremiumCalculator;
   private QuoteRepository quoteRepository;
