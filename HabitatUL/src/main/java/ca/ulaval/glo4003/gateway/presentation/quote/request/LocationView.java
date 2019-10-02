@@ -6,10 +6,11 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
 public class LocationView {
   private PostalCode postalCode;
   private int streetNumber;
-  private int apartmentNumber;
+  private String apartmentNumber;
   private Floor floor;
 
-  public LocationView(PostalCode postalCode, int streetNumber, int apartmentNumber, Floor floor) {
+  public LocationView(
+      PostalCode postalCode, int streetNumber, String apartmentNumber, Floor floor) {
     this.postalCode = postalCode;
     this.streetNumber = streetNumber;
     this.apartmentNumber = apartmentNumber;
@@ -27,7 +28,7 @@ public class LocationView {
     return streetNumber;
   }
 
-  public int getApartmentNumber() {
+  public String getApartmentNumber() {
     return apartmentNumber;
   }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 import javax.ws.rs.Produces;
@@ -20,6 +21,7 @@ public class CustomJsonProvider extends JacksonJaxbJsonProvider {
     mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     mapper.enable(SerializationFeature.INDENT_OUTPUT);
     mapper.registerModule(new SerializationModule());
+    mapper.registerModule(new Jdk8Module());
     mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
   }
 

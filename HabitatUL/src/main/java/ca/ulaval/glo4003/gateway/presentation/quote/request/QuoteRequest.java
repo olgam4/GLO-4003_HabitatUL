@@ -6,11 +6,14 @@ public class QuoteRequest {
   private IdentityView identity;
   private LocationView location;
   private Date effectiveDate;
+  private BuildingView building;
 
-  public QuoteRequest(IdentityView identity, LocationView location, Date effectiveDate) {
+  public QuoteRequest(
+      IdentityView identity, LocationView location, Date effectiveDate, BuildingView building) {
     this.identity = identity;
     this.location = location;
     this.effectiveDate = effectiveDate;
+    this.building = building;
   }
 
   // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
@@ -26,5 +29,9 @@ public class QuoteRequest {
 
   public Date getEffectiveDate() {
     return effectiveDate;
+  }
+
+  public BuildingView getBuilding() {
+    return building;
   }
 }

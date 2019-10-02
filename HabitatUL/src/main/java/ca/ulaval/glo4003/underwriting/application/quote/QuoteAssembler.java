@@ -12,6 +12,9 @@ public class QuoteAssembler {
 
   public QuoteForm from(QuoteFormDto quoteFormDto) {
     return new QuoteForm(
-        quoteFormDto.getIdentity(), quoteFormDto.getLocation(), quoteFormDto.getEffectiveDate());
+        quoteFormDto.getIdentity(),
+        quoteFormDto.getLocation(),
+        quoteFormDto.getEffectiveDate(),
+        quoteFormDto.getBuilding());
   }
 }

@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
+import ca.ulaval.glo4003.gateway.presentation.quote.request.BuildingView;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityView;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationView;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
@@ -9,15 +10,19 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
+
+import java.util.Optional;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
     return new QuoteFormDto(
         from(quoteRequest.getIdentity()),
         from(quoteRequest.getLocation()),
-        quoteRequest.getEffectiveDate());
+        quoteRequest.getEffectiveDate(),
+        from(quoteRequest.getBuilding()));
   }
 
   private Identity from(IdentityView identityView) {
@@ -34,6 +39,11 @@ public class QuoteViewAssembler {
         locationView.getStreetNumber(),
         locationView.getApartmentNumber(),
         locationView.getFloor());
+  }
+
+  private Building from(BuildingView buildingView) {
+    return new Building(
+        buildingView.getNumberOfUnits(), buildingView.getPreventionSystems(), Optional.empty());
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {
