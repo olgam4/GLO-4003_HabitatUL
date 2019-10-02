@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.context.ProdContext;
+import ca.ulaval.glo4003.context.DemoContext;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.util.Optional;
@@ -9,11 +9,11 @@ import java.util.Optional;
 public class Main {
   private static final String PORT_ENV_VAR = "port";
   private static final String DEFAULT_PORT = "8080";
-  private static final ProdContext DEFAULT_CONTEXT = new ProdContext();
+  private static final DemoContext DEFAULT_CONTEXT = new DemoContext();
   private static final String RESOURCE_PACKAGE = "ca.ulaval.glo4003.gateway.presentation";
 
   public static void main(String[] args) {
-    new ProdContext().execute();
+    new DemoContext().execute();
     Server server = new Server();
     server.start(retrievePortNumber());
     registerResources(server);
