@@ -50,7 +50,7 @@ public class EventPublisherQuoteRepositoryWrapperTest {
 
   @Test
   public void creatingQuote_shouldPublishDomainEvents() {
-    int randomNumber = Faker.instance().number().numberBetween(0, 10);
+    int randomNumber = Faker.instance().number().randomDigitNotZero();
     List<Event> events = EventGenerator.createList(randomNumber);
     when(quote.getEvents()).thenReturn(events);
 

@@ -14,7 +14,10 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
-    return new QuoteFormDto(from(quoteRequest.getIdentity()), from(quoteRequest.getLocation()));
+    return new QuoteFormDto(
+        from(quoteRequest.getIdentity()),
+        from(quoteRequest.getLocation()),
+        quoteRequest.getEffectiveDate());
   }
 
   private Identity from(IdentityView identityView) {

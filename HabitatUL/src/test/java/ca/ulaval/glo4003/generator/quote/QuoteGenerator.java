@@ -22,7 +22,7 @@ public class QuoteGenerator {
   private QuoteGenerator() {}
 
   public static QuoteDto createValidQuoteDto() {
-    return QuoteAssembler.from(createValidQuote());
+    return new QuoteAssembler().from(createValidQuote());
   }
 
   public static Quote createValidQuote() {
@@ -31,7 +31,7 @@ public class QuoteGenerator {
 
   public static Quote createValidQuoteWithId(QuoteId quoteId) {
     Premium premium = PremiumGenerator.create();
-    QuoteForm quoteForm = QuoteFormGenerator.createValidQuoteForm();
+    QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);
@@ -39,7 +39,7 @@ public class QuoteGenerator {
 
   public static Quote createExpiredQuote() {
     Premium premium = PremiumGenerator.create();
-    QuoteForm quoteForm = QuoteFormGenerator.createValidQuoteForm();
+    QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(createQuoteId(), premium, quoteForm, expirationDate, false, clockProvider);
@@ -47,7 +47,7 @@ public class QuoteGenerator {
 
   public static Quote createPurchasedQuote() {
     Premium premium = PremiumGenerator.create();
-    QuoteForm quoteForm = QuoteFormGenerator.createValidQuoteForm();
+    QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(createQuoteId(), premium, quoteForm, expirationDate, true, clockProvider);

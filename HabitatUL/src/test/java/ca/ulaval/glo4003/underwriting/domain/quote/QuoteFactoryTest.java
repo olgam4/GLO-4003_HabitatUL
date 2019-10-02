@@ -39,7 +39,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
-    Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createValidQuoteForm());
+    Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createQuoteForm());
 
     DateTime expectedExpirationDate =
         DateTime.from(LocalDateTime.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
@@ -48,7 +48,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createValidQuoteForm());
+    Quote quote = subject.create(A_PREMIUM, QuoteFormGenerator.createQuoteForm());
 
     assertFalse(quote.isPurchased());
   }

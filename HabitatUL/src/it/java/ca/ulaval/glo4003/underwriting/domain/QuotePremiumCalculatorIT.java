@@ -19,7 +19,7 @@ public abstract class QuotePremiumCalculatorIT {
 
   @Test
   public void computingQuotePremium_shouldProducePremium() {
-    quoteForm = QuoteFormGenerator.createValidQuoteForm();
+    quoteForm = QuoteFormGenerator.createQuoteForm();
 
     Premium premium = subject.computeQuotePremium(quoteForm);
 

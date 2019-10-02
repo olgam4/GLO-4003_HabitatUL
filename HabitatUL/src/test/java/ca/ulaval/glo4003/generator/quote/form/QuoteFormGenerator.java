@@ -23,11 +23,15 @@ public class QuoteFormGenerator {
   }
 
   public static QuoteFormDto createQuoteFormDto() {
-    return new QuoteFormDto(createIdentity(), createLocation());
+    return new QuoteFormDto(createIdentity(), createLocation(), createEffectiveDate());
   }
 
-  public static QuoteForm createValidQuoteForm() {
-    return new QuoteForm(createIdentity(), createLocation());
+  public static QuoteFormDto createQuoteFormDtoWithEffectiveDate(Date effectiveDate) {
+    return new QuoteFormDto(createIdentity(), createLocation(), effectiveDate);
+  }
+
+  public static QuoteForm createQuoteForm() {
+    return new QuoteForm(createIdentity(), createLocation(), createEffectiveDate());
   }
 
   private static Date createEffectiveDate() {

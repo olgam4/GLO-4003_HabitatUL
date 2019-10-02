@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.shared.domain;
 
 import java.time.Clock;
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Date extends ValueObject {
   private LocalDate value;
@@ -23,11 +23,19 @@ public class Date extends ValueObject {
     return value;
   }
 
+  public boolean isBefore(Date dateTime) {
+    return !isAfter(dateTime);
+  }
+
   public boolean isAfter(Date dateTime) {
     return value.isAfter(dateTime.value);
   }
 
-  public Date plus(Duration duration) {
-    return new Date(value.plus(duration));
+  public Date minus(Period period) {
+    return new Date(value.minus(period));
+  }
+
+  public Date plus(Period period) {
+    return new Date(value.plus(period));
   }
 }

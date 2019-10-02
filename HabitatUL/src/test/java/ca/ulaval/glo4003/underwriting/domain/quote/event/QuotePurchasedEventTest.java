@@ -27,7 +27,7 @@ public class QuotePurchasedEventTest {
   public void setUp() {
     quoteId = new QuoteId();
     premium = PremiumGenerator.create();
-    quoteForm = QuoteFormGenerator.createValidQuoteForm();
+    quoteForm = QuoteFormGenerator.createQuoteForm();
     subject = new QuotePurchasedEvent(quoteId, premium, quoteForm, FIXED_CLOCK_PROVIDER);
   }
 

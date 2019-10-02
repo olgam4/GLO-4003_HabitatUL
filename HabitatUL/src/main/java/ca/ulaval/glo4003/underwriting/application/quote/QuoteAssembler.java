@@ -6,11 +6,12 @@ import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuoteAssembler {
-  public static QuoteDto from(Quote quote) {
+  public QuoteDto from(Quote quote) {
     return new QuoteDto(quote.getQuoteId(), quote.getPremium(), quote.getExpirationDate());
   }
 
-  public static QuoteForm from(QuoteFormDto quoteFormDto) {
-    return new QuoteForm(quoteFormDto.getIdentity(), quoteFormDto.getLocation());
+  public QuoteForm from(QuoteFormDto quoteFormDto) {
+    return new QuoteForm(
+        quoteFormDto.getIdentity(), quoteFormDto.getLocation(), quoteFormDto.getEffectiveDate());
   }
 }
