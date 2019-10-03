@@ -23,8 +23,8 @@ public class QuoteMatcher extends TypeSafeMatcher<Quote> {
 
   @Override
   public boolean matchesSafely(final Quote quote) {
-    return quote.getQuoteId() == this.quote.getQuoteId()
-        && quote.getExpirationDate() == this.quote.getExpirationDate()
+    return quote.getQuoteId().equals(quote.getQuoteId())
+        && quote.getExpirationDate().equals(this.quote.getExpirationDate())
         && quote.isPurchased() == this.quote.isPurchased();
   }
 }

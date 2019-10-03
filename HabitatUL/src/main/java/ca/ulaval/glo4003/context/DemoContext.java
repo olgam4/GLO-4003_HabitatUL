@@ -4,11 +4,13 @@ import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
-import ca.ulaval.glo4003.gateway.domain.user.PasswordValidator;
 import ca.ulaval.glo4003.gateway.domain.user.User;
 import ca.ulaval.glo4003.gateway.domain.user.UserId;
 import ca.ulaval.glo4003.gateway.domain.user.UserRepository;
+import ca.ulaval.glo4003.gateway.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.gateway.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.gateway.infrastructure.user.DummyPasswordValidator;
+import ca.ulaval.glo4003.gateway.infrastructure.user.JwtTokenTranslator;
 import ca.ulaval.glo4003.gateway.persistence.user.InMemoryUserRepository;
 import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
@@ -48,6 +50,9 @@ public class DemoContext implements Context {
     createAndRegisterAdminUser(userRepository, passwordValidator);
     ServiceLocator.register(PasswordValidator.class, passwordValidator);
     ServiceLocator.register(UserRepository.class, userRepository);
+    Properties properties = ConfigFileReader.readProperties("config.properties");
+    String jwtSecret = String.valueOf(properties.getProperty("jwt.secret"));
+    ServiceLocator.register(TokenTranslator.class, new JwtTokenTranslator(jwtSecret));
   }
 
   private void createAndRegisterAdminUser(

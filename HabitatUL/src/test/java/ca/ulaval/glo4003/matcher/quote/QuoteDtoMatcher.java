@@ -24,6 +24,6 @@ public class QuoteDtoMatcher extends TypeSafeMatcher<QuoteDto> {
 
   @Override
   public boolean matchesSafely(final QuoteDto quoteDto) {
-    return quoteDto.getQuoteId() == this.quote.getQuoteId();
+    return quoteDto.getQuoteId().equals(this.quote.getQuoteId());
   }
 }

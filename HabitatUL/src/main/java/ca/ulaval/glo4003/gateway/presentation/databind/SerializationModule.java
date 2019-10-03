@@ -1,9 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
+import ca.ulaval.glo4003.gateway.domain.user.UserId;
+import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.gateway.domain.user.token.Token;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
-import ca.ulaval.glo4003.gateway.presentation.databind.serializer.DateTimeSerializer;
-import ca.ulaval.glo4003.gateway.presentation.databind.serializer.PremiumSerializer;
-import ca.ulaval.glo4003.gateway.presentation.databind.serializer.QuoteIdSerializer;
+import ca.ulaval.glo4003.gateway.presentation.databind.serializer.*;
 import ca.ulaval.glo4003.shared.domain.Amount;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;
@@ -39,6 +40,7 @@ public class SerializationModule extends Module {
     SimpleDeserializers deserializers = new SimpleDeserializers();
     deserializers.addDeserializer(Amount.class, new AmountDeserializer());
     deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
+    deserializers.addDeserializer(Credentials.class, new CredentialsDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
@@ -52,6 +54,8 @@ public class SerializationModule extends Module {
     serializers.addSerializer(DateTime.class, new DateTimeSerializer());
     serializers.addSerializer(Premium.class, new PremiumSerializer());
     serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
+    serializers.addSerializer(Token.class, new TokenSerializer());
+    serializers.addSerializer(UserId.class, new UserIdSerializer());
     setupContext.addSerializers(serializers);
   }
 }

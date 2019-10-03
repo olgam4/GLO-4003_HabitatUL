@@ -26,10 +26,8 @@ public class RestITestHelper {
   private RestITestHelper() {}
 
   public static void startServer() {
-    if (server == null) {
-      server = new Server();
-      server.start(TEST_SERVER_PORT);
-    }
+    server = new Server();
+    server.start(TEST_SERVER_PORT);
   }
 
   public static void addResourceConfig(ResourceConfig resourceConfig) {

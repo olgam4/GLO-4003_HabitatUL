@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "authentication response",
+  "required": [
+    "accessToken"
+  ],
+  "properties": {
+    "accessToken": {
+      "description": "access token",
+      "type": "string"
+    }
+  }
+}

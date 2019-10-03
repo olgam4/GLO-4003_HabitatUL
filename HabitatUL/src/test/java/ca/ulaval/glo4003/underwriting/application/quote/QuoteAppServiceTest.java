@@ -49,6 +49,7 @@ public class QuoteAppServiceTest {
     quoteAssembler = new QuoteAssembler();
     clockProvider = new FixedClockProvider();
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
+    when(quote.getQuoteId()).thenReturn(QUOTE_ID);
     when(quotePremiumCalculator.computeQuotePremium(any(QuoteForm.class))).thenReturn(A_PREMIUM);
     when(quoteFactory.create(any(Premium.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);

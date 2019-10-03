@@ -17,6 +17,6 @@ public class InvalidPasswordException extends UserException {
   }
 
   public String getMessage() {
-    return String.format(MESSAGE, password);
+    return String.format(MESSAGE, password, reason);
   }
 }

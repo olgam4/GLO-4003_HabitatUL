@@ -6,10 +6,7 @@ import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -41,13 +38,17 @@ public class QuoteResourceIT {
 
   @Before
   public void setUp() {
-    resetServer();
     QuoteResource quoteResource = new QuoteResource(quoteAppService, new QuoteViewAssembler());
     ResourceConfig resourceConfig =
         ResourceConfigBuilder.aResourceConfig().withResource(quoteResource).build();
     addResourceConfig(resourceConfig);
     quoteDto = QuoteGenerator.createValidQuoteDto();
     when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
+  }
+
+  @After
+  public void tearDown() {
+    resetServer();
   }
 
   @Test

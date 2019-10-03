@@ -17,7 +17,7 @@ public abstract class UserRepositoryIT {
   @Before
   public void setUp() {
     subject = createSubject();
-    user = UserGenerator.createValidUser();
+    user = UserGenerator.createUser();
     userId = user.getUserId();
   }
 
@@ -26,16 +26,33 @@ public abstract class UserRepositoryIT {
     subject.getById(new UserId());
   }
 
+  @Test(expected = UserNotFoundException.class)
+  public void gettingUserByUsername_withUnknownUsername_shouldThrow() {
+    subject.getByUsername("bad username");
+  }
+
   @Test
   public void creatingUser_shouldPersistUserAsIs() {
     subject.create(user);
     assertThat(subject.getById(userId), matchesUser(user));
   }
 
+  @Test
+  public void createdUsers_canBeFoundByUsername() {
+    subject.create(user);
+    assertThat(subject.getByUsername(user.getUsername()), matchesUser(user));
+  }
+
   @Test(expected = UserAlreadyPersistedException.class)
-  public void creatingUser_withAlreadyPersistedUser_shouldThrow() {
+  public void creatingUser_withAlreadyPersistedUserId_shouldThrow() {
     subject.create(user);
+    subject.create(new User(userId, user.getUsername() + "bad"));
+  }
+
+  @Test(expected = UserAlreadyPersistedException.class)
+  public void creatingUser_withAlreadyPersistedUsername_shouldThrow() {
     subject.create(user);
+    subject.create(new User(new UserId(), user.getUsername()));
   }
 
   protected abstract UserRepository createSubject();

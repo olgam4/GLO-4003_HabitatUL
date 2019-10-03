@@ -38,14 +38,14 @@ public class QuoteResourceTest {
   }
 
   @Test
-  public void requestingQuote_shouldCallQuoteAppService() {
+  public void requestingQuote_shouldDelegateToQuoteAppService() {
     subject.requestQuote(quoteRequest);
 
     verify(quoteAppService).requestQuote(mockitoQuoteFormDtoMatcher(quoteRequest));
   }
 
   @Test
-  public void purchasingQuote_shouldCallQuoteAppService() {
+  public void purchasingQuote_shouldDelegateToQuoteAppService() {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quoteAppService).purchaseQuote(QUOTE_ID);
