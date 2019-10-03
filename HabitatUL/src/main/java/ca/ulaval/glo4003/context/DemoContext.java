@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
+import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
 import ca.ulaval.glo4003.gateway.domain.user.PasswordValidator;
 import ca.ulaval.glo4003.gateway.domain.user.User;
@@ -72,6 +74,7 @@ public class DemoContext implements Context {
   }
 
   private void registerCoverageServices(BoundedContextMediator mediator) {
+    ServiceLocator.register(PolicyRepository.class, new InMemoryPolicyRepository());
     PolicyAppService policyAppService = new PolicyAppService();
     PolicyBoundedContext policyBoundedContext = new PolicyBoundedContext(policyAppService);
     mediator.subscribe(policyBoundedContext, EventChannel.QUOTES);
