@@ -1,10 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.request.BuildingView;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityView;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationView;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
+import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
+import ca.ulaval.glo4003.shared.domain.Amount;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
@@ -13,6 +11,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 import java.util.Optional;
 
@@ -22,7 +22,8 @@ public class QuoteViewAssembler {
         from(quoteRequest.getIdentity()),
         from(quoteRequest.getLocation()),
         quoteRequest.getEffectiveDate(),
-        from(quoteRequest.getBuilding()));
+        from(quoteRequest.getBuilding()),
+        from(quoteRequest.getPersonalProperty()));
   }
 
   private Identity from(IdentityView identityView) {
@@ -44,6 +45,12 @@ public class QuoteViewAssembler {
   private Building from(BuildingView buildingView) {
     return new Building(
         buildingView.getNumberOfUnits(), buildingView.getPreventionSystems(), Optional.empty());
+  }
+
+  private PersonalProperty from(PersonalPropertyView personalPropertyView) {
+    Amount coverageAmount = personalPropertyView.getCoverageAmount();
+    Animals animals = personalPropertyView.getAnimals();
+    return new PersonalProperty(coverageAmount, animals);
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {

@@ -8,35 +8,32 @@ import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.Canadia
 import com.github.javafaker.Faker;
 
 public class LocationGenerator {
-  private static int MIN_STREET_NUMBER = 1;
-  private static int MAX_STREET_NUMBER = 1000;
+  private static final int MIN_STREET_NUMBER = 1;
+  private static final int MAX_STREET_NUMBER = 1000;
 
   public static LocationView createLocationView() {
-    // TODO: remove duplicate
-    // TODO: add createIdentityDto
-    // TODO: use assemblers to pass from entity to dto to view such as QuoteForm
-    Faker faker = Faker.instance();
     return new LocationView(
-        createPostalCode(), getRandomStreetNumber(), faker.number().digit(), createFloor());
+        createPostalCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
   }
 
   public static Location createLocation() {
     return new Location(
-        createPostalCode(),
-        getRandomStreetNumber(),
-        Faker.instance().number().digit(),
-        createFloor());
+        createPostalCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
   }
 
   private static PostalCode createPostalCode() {
     return new PostalCode("G1V4L3", new CanadianPostalCodeFormatter());
   }
 
-  private static Floor createFloor() {
-    return new Floor("1ST");
-  }
-
   private static int getRandomStreetNumber() {
     return Faker.instance().number().numberBetween(MIN_STREET_NUMBER, MAX_STREET_NUMBER);
+  }
+
+  private static String createApartmentNumber() {
+    return Faker.instance().number().digit();
+  }
+
+  private static Floor createFloor() {
+    return new Floor("1ST");
   }
 }

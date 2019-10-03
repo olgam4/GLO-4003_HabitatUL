@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.DateTimeSerializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.PremiumSerializer;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.QuoteIdSerializer;
+import ca.ulaval.glo4003.shared.domain.Amount;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
@@ -11,6 +12,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
@@ -35,19 +37,21 @@ public class SerializationModule extends Module {
 
   private void setDeserializers(SetupContext setupContext) {
     SimpleDeserializers deserializers = new SimpleDeserializers();
+    deserializers.addDeserializer(Amount.class, new AmountDeserializer());
+    deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
-    deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
+    deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
     setupContext.addDeserializers(deserializers);
   }
 
   private void setSerializers(SetupContext setupContext) {
     SimpleSerializers serializers = new SimpleSerializers();
-    serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
     serializers.addSerializer(DateTime.class, new DateTimeSerializer());
     serializers.addSerializer(Premium.class, new PremiumSerializer());
+    serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
     setupContext.addSerializers(serializers);
   }
 }

@@ -16,32 +16,55 @@ import static ca.ulaval.glo4003.generator.quote.form.identity.IdentityGenerator.
 import static ca.ulaval.glo4003.generator.quote.form.identity.IdentityGenerator.createIdentityView;
 import static ca.ulaval.glo4003.generator.quote.form.location.LocationGenerator.createLocation;
 import static ca.ulaval.glo4003.generator.quote.form.location.LocationGenerator.createLocationView;
+import static ca.ulaval.glo4003.generator.quote.form.personal.PersonalPropertyGenerator.createPersonalProperty;
+import static ca.ulaval.glo4003.generator.quote.form.personal.PersonalPropertyGenerator.createPersonalPropertyView;
 
 public class QuoteFormGenerator {
   private QuoteFormGenerator() {}
 
   public static QuoteRequest createQuoteRequest() {
     return new QuoteRequest(
-        createIdentityView(), createLocationView(), createEffectiveDate(), createBuildingView());
+        createIdentityView(),
+        createLocationView(),
+        createEffectiveDate(),
+        createBuildingView(),
+        createPersonalPropertyView());
   }
 
   public static QuoteFormDto createQuoteFormDto() {
     return new QuoteFormDto(
-        createIdentity(), createLocation(), createEffectiveDate(), createBuilding());
+        createIdentity(),
+        createLocation(),
+        createEffectiveDate(),
+        createBuilding(),
+        createPersonalProperty());
   }
 
   public static QuoteForm createValidQuoteForm() {
     return new QuoteForm(
-        createIdentity(), createLocation(), createEffectiveDate(), createBuilding());
+        createIdentity(),
+        createLocation(),
+        createEffectiveDate(),
+        createBuilding(),
+        createPersonalProperty());
   }
 
   public static QuoteFormDto createQuoteFormDtoWithEffectiveDate(Date effectiveDate) {
-    return new QuoteFormDto(createIdentity(), createLocation(), effectiveDate, createBuilding());
+    return new QuoteFormDto(
+        createIdentity(),
+        createLocation(),
+        effectiveDate,
+        createBuilding(),
+        createPersonalProperty());
   }
 
   public static QuoteForm createQuoteForm() {
     return new QuoteForm(
-        createIdentity(), createLocation(), createEffectiveDate(), createBuilding());
+        createIdentity(),
+        createLocation(),
+        createEffectiveDate(),
+        createBuilding(),
+        createPersonalProperty());
   }
 
   private static Date createEffectiveDate() {
