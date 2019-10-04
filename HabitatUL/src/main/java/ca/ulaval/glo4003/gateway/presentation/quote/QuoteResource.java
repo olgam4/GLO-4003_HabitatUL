@@ -54,10 +54,10 @@ public class QuoteResource {
   @Path("/{" + QUOTE_ID_PARAM_NAME + "}" + PURCHASE_ROUTE)
   public Response purchaseQuote(
       @Context SecurityContext securityContext, @PathParam(QUOTE_ID_PARAM_NAME) QuoteId quoteId) {
-    quoteAppService.purchaseQuote(quoteId);
     String userKey = securityContext.getUserPrincipal().getName();
     String quoteKey = quoteId.getValue().toString();
     userAppService.associateQuote(userKey, quoteKey);
+    quoteAppService.purchaseQuote(quoteId);
     return Response.ok().build();
   }
 }

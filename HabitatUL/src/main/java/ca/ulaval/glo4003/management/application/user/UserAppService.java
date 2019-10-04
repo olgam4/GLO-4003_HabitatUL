@@ -12,6 +12,8 @@ import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
 
+import java.util.List;
+
 public class UserAppService {
   private UsernameRegistry usernameRegistry;
   private QuoteRegistry quoteRegistry;
@@ -71,5 +73,9 @@ public class UserAppService {
   public void associatePolicy(String quoteKey, String policyKey) {
     String userKey = quoteRegistry.getUserKey(quoteKey);
     policyRegistry.register(userKey, policyKey);
+  }
+
+  public List<String> getPolicies(String userKey) {
+    return policyRegistry.getPolicyKeys(userKey);
   }
 }
