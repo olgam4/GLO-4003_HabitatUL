@@ -9,8 +9,8 @@ import org.hamcrest.TypeSafeMatcher;
 import org.mockito.hamcrest.MockitoHamcrest;
 
 public class UserMatcher extends TypeSafeMatcher<User> {
-  protected Credentials credentials;
-  protected UserDto userDto;
+  Credentials credentials;
+  UserDto userDto;
   private User user;
 
   private UserMatcher(final User user) {

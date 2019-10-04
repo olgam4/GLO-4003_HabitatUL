@@ -104,7 +104,8 @@ public class QuoteAppServiceTest {
 
   @Test(expected = InvalidEffectiveDateException.class)
   public void requestingQuoteWithEffectiveDateInThePast_shouldThrow() {
-    LocalDate date = LocalDate.now(clockProvider.getClock())
+    LocalDate date =
+        LocalDate.now(clockProvider.getClock())
             .minus(Period.ofYears(Faker.instance().number().randomDigitNotZero()));
     Date invalidEffectiveDate = Date.from(date);
 
@@ -115,7 +116,8 @@ public class QuoteAppServiceTest {
 
   @Test(expected = InvalidEffectiveDateException.class)
   public void requestingQuoteWithEffectiveDateTooFarInTheFuture_shouldThrow() {
-    LocalDate date = LocalDate.now(clockProvider.getClock())
+    LocalDate date =
+        LocalDate.now(clockProvider.getClock())
             .plus(Period.ofYears(Faker.instance().number().numberBetween(2, 10)));
     Date invalidEffectiveDate = Date.from(date);
     quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);

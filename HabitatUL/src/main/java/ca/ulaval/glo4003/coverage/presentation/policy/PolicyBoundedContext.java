@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.coverage.presentation.policy;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
 import ca.ulaval.glo4003.mediator.BoundedContext;
-import ca.ulaval.glo4003.mediator.Event;
-import ca.ulaval.glo4003.mediator.EventChannel;
+import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.event.EventChannel;
 
 public class PolicyBoundedContext implements BoundedContext {
   static final String QUOTE_PURCHASED_EVENT_TYPE = "quotePurchasedEvent";
@@ -23,7 +23,7 @@ public class PolicyBoundedContext implements BoundedContext {
   private void processQuoteEvent(Event event) {
     if (event.getType().equals(QUOTE_PURCHASED_EVENT_TYPE)) {
       QuotePurchasedDto quotePurchasedDto = PolicyEventMapper.mapToQuotePurchasedDto(event);
-      policyAppService.createPolicy(quotePurchasedDto);
+      policyAppService.issuePolicy(quotePurchasedDto);
     }
   }
 }

@@ -12,9 +12,11 @@ import java.time.ZoneOffset;
 import static org.junit.Assert.*;
 
 public class DateTimeTest {
-  private static final LocalDateTime BEFORE_DATETIME_VALUE = LocalDateTime.now(ZoneOffset.UTC).minusHours(1);
+  private static final LocalDateTime BEFORE_DATETIME_VALUE =
+      LocalDateTime.now(ZoneOffset.UTC).minusHours(1);
   private static final DateTime BEFORE_DATETIME = DateTime.from(BEFORE_DATETIME_VALUE);
-  private static final LocalDateTime AFTER_DATETIME_VALUE = LocalDateTime.now(ZoneOffset.UTC).plusHours(1);
+  private static final LocalDateTime AFTER_DATETIME_VALUE =
+      LocalDateTime.now(ZoneOffset.UTC).plusHours(1);
   private static final DateTime AFTER_DATETIME = DateTime.from(AFTER_DATETIME_VALUE);
 
   private DateTime subject;

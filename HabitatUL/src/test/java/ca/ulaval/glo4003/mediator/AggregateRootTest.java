@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.mediator;
 
 import ca.ulaval.glo4003.generator.EventGenerator;
+import ca.ulaval.glo4003.mediator.event.Event;
 import org.junit.Before;
 import org.junit.Test;
 

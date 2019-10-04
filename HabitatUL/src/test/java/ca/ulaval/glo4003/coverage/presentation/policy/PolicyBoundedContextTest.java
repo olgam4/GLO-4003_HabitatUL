@@ -2,8 +2,11 @@ package ca.ulaval.glo4003.coverage.presentation.policy;
 
 import ca.ulaval.glo4003.builder.EventBuilder;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.mediator.Event;
-import ca.ulaval.glo4003.mediator.EventChannel;
+import ca.ulaval.glo4003.coverage.domain.policy.QuoteId;
+import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.event.EventChannel;
+import ca.ulaval.glo4003.mediator.event.EventPayload;
+import ca.ulaval.glo4003.mediator.event.EventPayload.EventPayloadBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,15 +32,21 @@ public class PolicyBoundedContextTest {
 
   @Test
   public void processingEvent_withQuotePurchasedEvent_shouldDelegateToPolicyAppService() {
+    // TODO: add generator
+    EventPayload payload =
+        EventPayloadBuilder.anEventPayload()
+            .withEntry("quoteId", new QuoteId().getValue().toString())
+            .build();
     Event event =
         EventBuilder.anEvent()
             .withEventChannel(EventChannel.QUOTES)
             .withEventType(QUOTE_PURCHASED_EVENT_TYPE)
+            .withPayload(payload)
             .build();
 
     subject.process(event);
 
-    verify(policyAppService).createPolicy(mockitoQuotePurchasedDtoMatcher(event));
+    verify(policyAppService).issuePolicy(mockitoQuotePurchasedDtoMatcher(event));
   }
 
   @Test
@@ -50,6 +59,6 @@ public class PolicyBoundedContextTest {
 
     subject.process(event);
 
-    verify(policyAppService, never()).createPolicy(any());
+    verify(policyAppService, never()).issuePolicy(any());
   }
 }

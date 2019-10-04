@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.generator;
 
 import ca.ulaval.glo4003.builder.EventBuilder;
-import ca.ulaval.glo4003.mediator.Event;
+import ca.ulaval.glo4003.mediator.event.Event;
 
 import java.util.List;
 import java.util.stream.Collectors;

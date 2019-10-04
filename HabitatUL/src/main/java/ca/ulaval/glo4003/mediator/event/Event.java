@@ -1,20 +1,18 @@
-package ca.ulaval.glo4003.mediator;
+package ca.ulaval.glo4003.mediator.event;
 
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.ValueComparableObject;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Event extends ValueComparableObject {
   private final Instant timestamp;
   private final EventChannel channel;
   private final String type;
-  private final Map<String, Object> payload;
+  private final EventPayload payload;
 
   public Event(
-      EventChannel channel, String type, Map<String, Object> payload, ClockProvider clockProvider) {
+      EventChannel channel, String type, EventPayload payload, ClockProvider clockProvider) {
     this.timestamp = Instant.now(clockProvider.getClock());
     this.channel = channel;
     this.type = type;
@@ -33,7 +31,11 @@ public class Event extends ValueComparableObject {
     return type;
   }
 
-  public Map<String, Object> getPayload() {
-    return new HashMap<>(payload);
+  public EventPayload getPayload() {
+    return payload;
+  }
+
+  public Object get(String key) {
+    return payload.getValue().get(key);
   }
 }

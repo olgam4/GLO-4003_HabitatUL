@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.matcher.policy;
 
 import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
-import ca.ulaval.glo4003.mediator.Event;
+import ca.ulaval.glo4003.mediator.event.Event;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;

@@ -1,11 +1,13 @@
 package ca.ulaval.glo4003.mediator;
 
+import ca.ulaval.glo4003.builder.EventBuilder;
 import ca.ulaval.glo4003.generator.EventGenerator;
+import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.event.EventPayload;
 import ca.ulaval.glo4003.shared.domain.ValueComparableObject;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -29,9 +31,20 @@ public class EventTest {
 
   @Test
   public void events_shouldBeImmutable() {
-    Map<String, Object> mutatedPayload = subject.getPayload();
-    mutatedPayload.put("KEY", "BEFORE_DATE_VALUE");
+    JSONObject payload = subject.getPayload().getValue();
+    payload.put("KEY", "BEFORE_DATE_VALUE");
 
-    assertNotEquals(subject.getPayload(), mutatedPayload);
+    assertNotEquals(subject.getPayload(), payload);
+  }
+
+  @Test
+  public void gettingAttribute_shouldReturnCorrespondingValue() {
+    EventPayload payload =
+        EventPayload.EventPayloadBuilder.anEventPayload().withEntry("key", "value").build();
+    subject = EventBuilder.anEvent().withPayload(payload).build();
+
+    Object observedValue = subject.get("key");
+
+    assertEquals("value", observedValue);
   }
 }

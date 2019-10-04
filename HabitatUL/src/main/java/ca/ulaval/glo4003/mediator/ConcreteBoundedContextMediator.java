@@ -1,5 +1,8 @@
 package ca.ulaval.glo4003.mediator;
 
+import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.event.EventChannel;
+
 import java.util.*;
 
 public class ConcreteBoundedContextMediator implements BoundedContextMediator {

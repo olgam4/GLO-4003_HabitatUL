@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
+import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
 import ca.ulaval.glo4003.gateway.domain.user.User;
@@ -14,7 +15,7 @@ import ca.ulaval.glo4003.gateway.infrastructure.user.JwtTokenTranslator;
 import ca.ulaval.glo4003.gateway.persistence.user.InMemoryUserRepository;
 import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
-import ca.ulaval.glo4003.mediator.EventChannel;
+import ca.ulaval.glo4003.mediator.event.EventChannel;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
@@ -47,15 +48,13 @@ public class DemoContext implements Context {
   private void registerGatewayServices() {
     UserRepository userRepository = new InMemoryUserRepository();
     PasswordValidator passwordValidator = new DummyPasswordValidator();
-    createAndRegisterAdminUser(userRepository, passwordValidator);
+    registerAdminUser(userRepository, passwordValidator);
     ServiceLocator.register(PasswordValidator.class, passwordValidator);
     ServiceLocator.register(UserRepository.class, userRepository);
-    Properties properties = ConfigFileReader.readProperties("config.properties");
-    String jwtSecret = String.valueOf(properties.getProperty("jwt.secret"));
-    ServiceLocator.register(TokenTranslator.class, new JwtTokenTranslator(jwtSecret));
+    registerTokenTranslator();
   }
 
-  private void createAndRegisterAdminUser(
+  private void registerAdminUser(
       UserRepository userRepository, PasswordValidator passwordValidator) {
     Properties properties = ConfigFileReader.readProperties("config.properties");
     String adminKey = String.valueOf(properties.getProperty("admin.key"));
@@ -65,6 +64,12 @@ public class DemoContext implements Context {
     User adminUser = new User(adminId, adminName);
     passwordValidator.registerPassword(adminName, adminPassword);
     userRepository.create(adminUser);
+  }
+
+  private void registerTokenTranslator() {
+    Properties properties = ConfigFileReader.readProperties("config.properties");
+    String jwtSecret = String.valueOf(properties.getProperty("jwt.secret"));
+    ServiceLocator.register(TokenTranslator.class, new JwtTokenTranslator(jwtSecret));
   }
 
   private void registerUnderwritingServices(BoundedContextMediator mediator) {
@@ -79,7 +84,9 @@ public class DemoContext implements Context {
   }
 
   private void registerCoverageServices(BoundedContextMediator mediator) {
-    ServiceLocator.register(PolicyRepository.class, new InMemoryPolicyRepository());
+    ServiceLocator.register(
+        PolicyRepository.class,
+        new EventPublisherPolicyRepositoryWrapper(new InMemoryPolicyRepository(), mediator));
     PolicyAppService policyAppService = new PolicyAppService();
     PolicyBoundedContext policyBoundedContext = new PolicyBoundedContext(policyAppService);
     mediator.subscribe(policyBoundedContext, EventChannel.QUOTES);

@@ -1,33 +1,30 @@
 package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.application.policy.dto.PolicyDto;
 import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
-import ca.ulaval.glo4003.coverage.domain.policy.PolicyHolderId;
+import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-
-import java.util.List;
+import ca.ulaval.glo4003.shared.domain.ClockProvider;
 
 public class PolicyAppService {
   private PolicyRepository policyRepository;
-  private PolicyAssembler policyAssembler;
+  private PolicyFactory policyFactory;
 
   public PolicyAppService() {
-    this(ServiceLocator.resolve(PolicyRepository.class), new PolicyAssembler());
+    this(
+        ServiceLocator.resolve(PolicyRepository.class),
+        new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)));
   }
 
-  public PolicyAppService(PolicyRepository policyRepository, PolicyAssembler policyAssembler) {
+  public PolicyAppService(PolicyRepository policyRepository, PolicyFactory policyFactory) {
     this.policyRepository = policyRepository;
-    this.policyAssembler = policyAssembler;
+    this.policyFactory = policyFactory;
   }
 
-  public void createPolicy(QuotePurchasedDto quotePurchasedDto) {
-    System.out.println(quotePurchasedDto.toString());
-  }
-
-  public List<PolicyDto> getPoliciesByPolicyHolderId(PolicyHolderId policyHolderId) {
-    List<Policy> policies = policyRepository.getByPolicyHolderId(policyHolderId);
-    return policyAssembler.from(policies);
+  public void issuePolicy(QuotePurchasedDto quotePurchasedDto) {
+    Policy policy = policyFactory.create(quotePurchasedDto.getQuoteId());
+    policy.issue();
+    policyRepository.create(policy);
   }
 }

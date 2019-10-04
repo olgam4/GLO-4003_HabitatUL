@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.mediator;
 
 import ca.ulaval.glo4003.builder.EventBuilder;
+import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.event.EventChannel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,25 +1,25 @@
 package ca.ulaval.glo4003.builder;
 
-import ca.ulaval.glo4003.mediator.Event;
-import ca.ulaval.glo4003.mediator.EventChannel;
+import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.event.EventChannel;
+import ca.ulaval.glo4003.mediator.event.EventPayload;
+import ca.ulaval.glo4003.mediator.event.EventPayload.EventPayloadBuilder;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class EventBuilder {
   private static final FixedClockProvider FIXED_CLOCK_PROVIDER = new FixedClockProvider();
 
   private final EventChannel DEFAULT_EVENT_CHANNEL = createEventChannel();
   private final String DEFAULT_EVENT_TYPE = createEventType();
-  private final Map<String, Object> DEFAULT_PAYLOAD = createPayload();
+  private final EventPayload DEFAULT_PAYLOAD = createPayload();
 
   private EventChannel eventChannel = DEFAULT_EVENT_CHANNEL;
   private String eventType = DEFAULT_EVENT_TYPE;
-  private Map<String, Object> payload = DEFAULT_PAYLOAD;
+  private EventPayload payload = DEFAULT_PAYLOAD;
 
   private EventBuilder() {}
 
@@ -37,14 +37,12 @@ public class EventBuilder {
     return Faker.instance().name().title();
   }
 
-  private static HashMap<String, Object> createPayload() {
+  private static EventPayload createPayload() {
     Faker faker = Faker.instance();
-    return new HashMap<String, Object>() {
-      {
-        put(faker.book().author(), faker.lordOfTheRings().character());
-        put(faker.cat().breed(), faker.dog().coatLength());
-      }
-    };
+    return EventPayloadBuilder.anEventPayload()
+        .withEntry(faker.book().author(), faker.lordOfTheRings().character())
+        .withEntry(faker.cat().breed(), faker.dog().coatLength())
+        .build();
   }
 
   public EventBuilder withEventChannel(EventChannel eventChannel) {
@@ -54,6 +52,11 @@ public class EventBuilder {
 
   public EventBuilder withEventType(String eventType) {
     this.eventType = eventType;
+    return this;
+  }
+
+  public EventBuilder withPayload(EventPayload payload) {
+    this.payload = payload;
     return this;
   }
 

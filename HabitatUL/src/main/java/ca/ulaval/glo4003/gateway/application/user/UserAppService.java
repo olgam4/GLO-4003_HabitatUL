@@ -57,8 +57,10 @@ public class UserAppService {
   }
 
   private void validateCredentials(String userKey, Credentials credentials) {
-    if (!passwordValidator.validatePassword(userKey, credentials.getPassword())) {
-      throw new InvalidCredentialsException();
-    }
+    if (isInvalidCredentials(userKey, credentials)) throw new InvalidCredentialsException();
+  }
+
+  private boolean isInvalidCredentials(String userKey, Credentials credentials) {
+    return !passwordValidator.validatePassword(userKey, credentials.getPassword());
   }
 }
