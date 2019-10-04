@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.management.application.user;
 
 import ca.ulaval.glo4003.generator.user.CredentialsGenerator;
 import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
+import ca.ulaval.glo4003.management.domain.PaymentProcessor;
 import ca.ulaval.glo4003.management.domain.user.PolicyRegistry;
 import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
 import ca.ulaval.glo4003.management.domain.user.UserKeyGenerator;
@@ -33,6 +34,7 @@ public class UserAppServiceTest {
   @Mock PolicyRegistry policyRegistry;
   @Mock PasswordValidator passwordValidator;
   @Mock TokenTranslator tokenTranslator;
+  @Mock PaymentProcessor paymentProcessor;
   @Mock UserKeyGenerator userKeyGenerator;
 
   private UserAppService subject;
@@ -48,6 +50,7 @@ public class UserAppServiceTest {
             policyRegistry,
             passwordValidator,
             tokenTranslator,
+            paymentProcessor,
             userKeyGenerator);
   }
 

@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.management.application.user;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
+import ca.ulaval.glo4003.management.domain.PaymentProcessor;
 import ca.ulaval.glo4003.management.domain.user.PolicyRegistry;
 import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
 import ca.ulaval.glo4003.management.domain.user.UserKeyGenerator;
@@ -11,6 +12,7 @@ import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
+import ca.ulaval.glo4003.shared.domain.Money;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class UserAppService {
   private PolicyRegistry policyRegistry;
   private PasswordValidator passwordValidator;
   private TokenTranslator tokenTranslator;
+  private PaymentProcessor paymentProcessor;
   private UserKeyGenerator userKeyGenerator;
 
   public UserAppService() {
@@ -29,6 +32,7 @@ public class UserAppService {
         ServiceLocator.resolve(PolicyRegistry.class),
         ServiceLocator.resolve(PasswordValidator.class),
         ServiceLocator.resolve(TokenTranslator.class),
+        ServiceLocator.resolve(PaymentProcessor.class),
         new UserKeyGenerator());
   }
 
@@ -38,12 +42,14 @@ public class UserAppService {
       PolicyRegistry policyRegistry,
       PasswordValidator passwordValidator,
       TokenTranslator tokenTranslator,
+      PaymentProcessor paymentProcessor,
       UserKeyGenerator userKeyGenerator) {
     this.usernameRegistry = usernameRegistry;
     this.quoteRegistry = quoteRegistry;
     this.policyRegistry = policyRegistry;
     this.passwordValidator = passwordValidator;
     this.tokenTranslator = tokenTranslator;
+    this.paymentProcessor = paymentProcessor;
     this.userKeyGenerator = userKeyGenerator;
   }
 
@@ -81,5 +87,10 @@ public class UserAppService {
 
   public List<String> getPolicies(String userKey) {
     return policyRegistry.getPolicyKeys(userKey);
+  }
+
+  public void processPayment(String quoteKey, Money price) {
+    String userKey = quoteRegistry.getUserKey(quoteKey);
+    paymentProcessor.pay(userKey, price);
   }
 }

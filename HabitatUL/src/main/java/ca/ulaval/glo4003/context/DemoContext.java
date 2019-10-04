@@ -8,11 +8,13 @@ import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyReposit
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
+import ca.ulaval.glo4003.management.domain.PaymentProcessor;
 import ca.ulaval.glo4003.management.domain.user.PolicyRegistry;
 import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
 import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
+import ca.ulaval.glo4003.management.infrastructure.AlwaysTruePaymentProcessor;
 import ca.ulaval.glo4003.management.infrastructure.user.DummyPasswordValidator;
 import ca.ulaval.glo4003.management.infrastructure.user.JwtTokenTranslator;
 import ca.ulaval.glo4003.management.persistence.user.InMemoryPolicyRegistry;
@@ -56,12 +58,14 @@ public class DemoContext implements Context {
     ServiceLocator.register(UsernameRegistry.class, usernameRegistry);
     ServiceLocator.register(QuoteRegistry.class, new InMemoryQuoteRegistry());
     ServiceLocator.register(PolicyRegistry.class, new InMemoryPolicyRegistry());
+    ServiceLocator.register(PaymentProcessor.class, new AlwaysTruePaymentProcessor());
     PasswordValidator passwordValidator = new DummyPasswordValidator();
     ServiceLocator.register(PasswordValidator.class, passwordValidator);
     registerTokenTranslator();
     UserAppService userAppService = new UserAppService();
     UserBoundedContext userBoundedContext = new UserBoundedContext(userAppService);
     mediator.subscribe(userBoundedContext, EventChannel.POLICIES);
+    mediator.subscribe(userBoundedContext, EventChannel.QUOTES);
     registerAdminUser(usernameRegistry, passwordValidator);
   }
 
