@@ -31,10 +31,6 @@ public class Date extends ValueObject {
     return value.isAfter(dateTime.value);
   }
 
-  public Date minus(Period period) {
-    return new Date(value.minus(period));
-  }
-
   public Date plus(Period period) {
     return new Date(value.plus(period));
   }

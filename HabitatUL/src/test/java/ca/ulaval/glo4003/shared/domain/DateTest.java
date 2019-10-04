@@ -50,7 +50,7 @@ public class DateTest {
     subject = AFTER_DATE;
     Period period = Period.ofDays(Faker.instance().number().randomDigit());
 
-    Date observed = subject.minus(period);
+    Date observed = Date.from(subject.getValue().minus(period));
 
     Date expected = Date.from(AFTER_DATE_VALUE.minus(period));
     assertEquals(expected, observed);

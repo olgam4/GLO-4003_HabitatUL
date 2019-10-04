@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.time.Period;
 
 import static ca.ulaval.glo4003.matcher.quote.QuoteDtoMatcher.matchesQuoteDto;
@@ -103,9 +104,10 @@ public class QuoteAppServiceTest {
 
   @Test(expected = InvalidEffectiveDateException.class)
   public void requestingQuoteWithEffectiveDateInThePast_shouldThrow() {
-    Date invalidEffectiveDate =
-        Date.now(clockProvider.getClock())
+    LocalDate date = LocalDate.now(clockProvider.getClock())
             .minus(Period.ofYears(Faker.instance().number().randomDigitNotZero()));
+    Date invalidEffectiveDate = Date.from(date);
+
     quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);
 
     subject.requestQuote(quoteFormDto);
@@ -113,9 +115,9 @@ public class QuoteAppServiceTest {
 
   @Test(expected = InvalidEffectiveDateException.class)
   public void requestingQuoteWithEffectiveDateTooFarInTheFuture_shouldThrow() {
-    Date invalidEffectiveDate =
-        Date.now(clockProvider.getClock())
+    LocalDate date = LocalDate.now(clockProvider.getClock())
             .plus(Period.ofYears(Faker.instance().number().numberBetween(2, 10)));
+    Date invalidEffectiveDate = Date.from(date);
     quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);
 
     subject.requestQuote(quoteFormDto);
