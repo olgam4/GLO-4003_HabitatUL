@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
-import ca.ulaval.glo4003.gateway.domain.user.UserId;
-import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.*;
+import ca.ulaval.glo4003.management.domain.user.UserId;
+import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.shared.domain.Amount;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;

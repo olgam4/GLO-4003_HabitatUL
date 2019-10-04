@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
-import ca.ulaval.glo4003.gateway.application.user.UserAppService;
-import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.generator.user.UserGenerator;
+import ca.ulaval.glo4003.management.application.user.UserAppService;
+import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

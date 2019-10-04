@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.matcher.user;
 
-import ca.ulaval.glo4003.gateway.application.user.dto.UserDto;
-import ca.ulaval.glo4003.gateway.domain.user.User;
-import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.management.application.user.dto.UserDto;
+import ca.ulaval.glo4003.management.domain.user.User;
+import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;

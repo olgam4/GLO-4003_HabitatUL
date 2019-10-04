@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.user.response;
 
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
 
 public class AuthenticationResponse {
   private Token accessToken;

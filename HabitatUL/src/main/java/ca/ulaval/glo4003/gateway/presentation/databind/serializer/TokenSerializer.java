@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.databind.serializer;
 
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

@@ -5,14 +5,14 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
-import ca.ulaval.glo4003.gateway.domain.user.User;
-import ca.ulaval.glo4003.gateway.domain.user.UserId;
-import ca.ulaval.glo4003.gateway.domain.user.UserRepository;
-import ca.ulaval.glo4003.gateway.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.gateway.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.gateway.infrastructure.user.DummyPasswordValidator;
-import ca.ulaval.glo4003.gateway.infrastructure.user.JwtTokenTranslator;
-import ca.ulaval.glo4003.gateway.persistence.user.InMemoryUserRepository;
+import ca.ulaval.glo4003.management.domain.user.User;
+import ca.ulaval.glo4003.management.domain.user.UserId;
+import ca.ulaval.glo4003.management.domain.user.UserRepository;
+import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
+import ca.ulaval.glo4003.management.infrastructure.user.DummyPasswordValidator;
+import ca.ulaval.glo4003.management.infrastructure.user.JwtTokenTranslator;
+import ca.ulaval.glo4003.management.persistence.user.InMemoryUserRepository;
 import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
 import ca.ulaval.glo4003.mediator.event.EventChannel;
@@ -36,7 +36,7 @@ public class DemoContext implements Context {
   public void execute() {
     BoundedContextMediator mediator = new ConcreteBoundedContextMediator();
     registerGeneralServices();
-    registerGatewayServices();
+    registerManagementServices();
     registerUnderwritingServices(mediator);
     registerCoverageServices(mediator);
   }
@@ -45,7 +45,7 @@ public class DemoContext implements Context {
     ServiceLocator.register(ClockProvider.class, new SystemUtcClockProvider());
   }
 
-  private void registerGatewayServices() {
+  private void registerManagementServices() {
     UserRepository userRepository = new InMemoryUserRepository();
     PasswordValidator passwordValidator = new DummyPasswordValidator();
     registerAdminUser(userRepository, passwordValidator);

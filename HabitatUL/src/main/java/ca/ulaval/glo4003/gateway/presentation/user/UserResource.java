@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
-import ca.ulaval.glo4003.gateway.application.user.UserAppService;
-import ca.ulaval.glo4003.gateway.application.user.dto.UserDto;
-import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
+import ca.ulaval.glo4003.management.application.user.UserAppService;
+import ca.ulaval.glo4003.management.application.user.dto.UserDto;
+import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

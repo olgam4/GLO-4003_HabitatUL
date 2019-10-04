@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.filter;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.gateway.domain.user.exception.UserUnauthorizedException;
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
-import ca.ulaval.glo4003.gateway.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
+import ca.ulaval.glo4003.management.domain.user.exception.UserUnauthorizedException;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
+import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;

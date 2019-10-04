@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
-import ca.ulaval.glo4003.gateway.application.user.UserAppService;
-import ca.ulaval.glo4003.gateway.application.user.dto.UserDto;
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.generator.user.UserGenerator;
+import ca.ulaval.glo4003.management.application.user.UserAppService;
+import ca.ulaval.glo4003.management.application.user.dto.UserDto;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
 import com.github.javafaker.Faker;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;

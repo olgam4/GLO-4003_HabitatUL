@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.filter;
 
-import ca.ulaval.glo4003.gateway.domain.user.exception.InvalidTokenException;
-import ca.ulaval.glo4003.gateway.domain.user.exception.UserUnauthorizedException;
-import ca.ulaval.glo4003.gateway.domain.user.token.Token;
-import ca.ulaval.glo4003.gateway.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
+import ca.ulaval.glo4003.management.domain.user.exception.InvalidTokenException;
+import ca.ulaval.glo4003.management.domain.user.exception.UserUnauthorizedException;
+import ca.ulaval.glo4003.management.domain.user.token.Token;
+import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

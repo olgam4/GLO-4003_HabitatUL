@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.generator.user;
 
-import ca.ulaval.glo4003.gateway.application.user.UserAssembler;
-import ca.ulaval.glo4003.gateway.application.user.dto.UserDto;
-import ca.ulaval.glo4003.gateway.domain.user.User;
-import ca.ulaval.glo4003.gateway.domain.user.UserId;
-import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
-import ca.ulaval.glo4003.gateway.domain.user.token.TokenUser;
+import ca.ulaval.glo4003.management.application.user.UserAssembler;
+import ca.ulaval.glo4003.management.application.user.dto.UserDto;
+import ca.ulaval.glo4003.management.domain.user.User;
+import ca.ulaval.glo4003.management.domain.user.UserId;
+import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.management.domain.user.token.TokenUser;
 import com.github.javafaker.Faker;
 
 public class UserGenerator {

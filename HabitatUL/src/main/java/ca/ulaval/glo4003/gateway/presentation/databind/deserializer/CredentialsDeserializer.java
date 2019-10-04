@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.databind.deserializer;
 
-import ca.ulaval.glo4003.gateway.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
