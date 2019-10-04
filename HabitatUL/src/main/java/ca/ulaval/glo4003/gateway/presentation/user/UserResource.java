@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.management.application.user.UserAppService;
-import ca.ulaval.glo4003.management.application.user.dto.UserDto;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 
@@ -37,9 +36,8 @@ public class UserResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createUser(Credentials credentials) {
-    UserDto userDto = userAppService.createUser(credentials);
-    String userIdString = userDto.getUserId().getValue().toString();
-    URI location = UriBuilder.fromPath(CONTEXT_PATH).path(USER_ROUTE).path(userIdString).build();
+    String userKey = userAppService.createUser(credentials);
+    URI location = UriBuilder.fromPath(CONTEXT_PATH).path(USER_ROUTE).path(userKey).build();
     return Response.created(location).build();
   }
 

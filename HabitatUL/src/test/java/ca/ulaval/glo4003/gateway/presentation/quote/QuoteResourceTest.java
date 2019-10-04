@@ -5,8 +5,6 @@ import ca.ulaval.glo4003.generator.SecurityContextGenerator;
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
-import ca.ulaval.glo4003.management.domain.user.QuoteKey;
-import ca.ulaval.glo4003.management.domain.user.UserId;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -62,11 +60,11 @@ public class QuoteResourceTest {
 
   @Test
   public void purchasingQuote_shouldAssociateQuoteToUser() {
-    UserId userId = new UserId(SECURITY_CONTEXT.getUserPrincipal().getName());
-    QuoteKey quoteKey = new QuoteKey(QUOTE_ID.getValue().toString());
+    String userKey = SECURITY_CONTEXT.getUserPrincipal().getName();
+    String quoteKey = QUOTE_ID.getValue().toString();
 
     subject.purchaseQuote(SECURITY_CONTEXT, QUOTE_ID);
 
-    verify(userAppService).associateQuote(userId, quoteKey);
+    verify(userAppService).associateQuote(userKey, quoteKey);
   }
 }

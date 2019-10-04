@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
-import ca.ulaval.glo4003.generator.user.UserGenerator;
+import ca.ulaval.glo4003.generator.user.CredentialsGenerator;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
+import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceTest {
-  private static final Credentials CREDENTIALS = UserGenerator.createCredentials();
+  private static final Credentials CREDENTIALS = CredentialsGenerator.createCredentials();
+  private static final String USER_KEY = Faker.instance().internet().uuid();
 
   @Mock private UserAppService userAppService;
 
@@ -24,7 +26,7 @@ public class UserResourceTest {
   @Before
   public void setUp() {
     userViewAssembler = new UserViewAssembler();
-    when(userAppService.createUser(CREDENTIALS)).thenReturn(UserGenerator.createUserDto());
+    when(userAppService.createUser(CREDENTIALS)).thenReturn(USER_KEY);
     subject = new UserResource(userAppService, userViewAssembler);
   }
 

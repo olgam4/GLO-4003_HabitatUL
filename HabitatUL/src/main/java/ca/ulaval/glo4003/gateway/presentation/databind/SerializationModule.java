@@ -2,7 +2,6 @@ package ca.ulaval.glo4003.gateway.presentation.databind;
 
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.*;
-import ca.ulaval.glo4003.management.domain.user.UserId;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.shared.domain.Amount;
@@ -56,7 +55,6 @@ public class SerializationModule extends Module {
     serializers.addSerializer(Premium.class, new PremiumSerializer());
     serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
     serializers.addSerializer(Token.class, new TokenSerializer());
-    serializers.addSerializer(UserId.class, new UserIdSerializer());
     setupContext.addSerializers(serializers);
   }
 }

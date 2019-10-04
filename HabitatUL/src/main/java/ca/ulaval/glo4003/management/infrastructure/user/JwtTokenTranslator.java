@@ -1,10 +1,9 @@
 package ca.ulaval.glo4003.management.infrastructure.user;
 
-import ca.ulaval.glo4003.management.domain.user.UserId;
 import ca.ulaval.glo4003.management.domain.user.exception.InvalidTokenException;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
+import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.management.domain.user.token.TokenUser;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -30,23 +29,23 @@ public class JwtTokenTranslator implements TokenTranslator {
   }
 
   @Override
-  public Token encodeToken(TokenUser tokenUser) {
+  public Token encodeToken(TokenPayload tokenPayload) {
     String token =
         JWT.create()
             .withIssuer(ISSUER)
-            .withClaim("userId", tokenUser.getUserId().getValue().toString())
-            .withClaim("username", tokenUser.getUsername())
+            .withClaim("userId", tokenPayload.getUserKey())
+            .withClaim("username", tokenPayload.getUsername())
             .sign(signingAlgorithm);
     return new Token(token);
   }
 
   @Override
-  public TokenUser decodeToken(Token token) {
+  public TokenPayload decodeToken(Token token) {
     try {
       DecodedJWT jwt = verifier.verify(token.getValue());
-      UserId userId = new UserId(jwt.getClaim("userId").asString());
+      String userKey = jwt.getClaim("userId").asString();
       String username = jwt.getClaim("username").asString();
-      return new TokenUser(userId, username);
+      return new TokenPayload(userKey, username);
     } catch (JWTVerificationException exception) {
       throw new InvalidTokenException();
     }

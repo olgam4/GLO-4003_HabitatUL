@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
 import ca.ulaval.glo4003.management.domain.user.exception.UserUnauthorizedException;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
+import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.management.domain.user.token.TokenUser;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -46,24 +46,25 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     Method resourceMethod = resourceInfo.getResourceMethod();
     if (resourceMethod.getAnnotation(Secured.class) == null) return;
 
-    TokenUser tokenUser = extractTokenUser(requestContext);
-    setSecurityContext(requestContext, tokenUser);
+    TokenPayload tokenPayload = extractTokenUser(requestContext);
+    setSecurityContext(requestContext, tokenPayload);
   }
 
-  private TokenUser extractTokenUser(ContainerRequestContext requestContext) {
+  private TokenPayload extractTokenUser(ContainerRequestContext requestContext) {
     String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
     if (authHeader == null) throw new UserUnauthorizedException();
     Token token = new Token(authHeader.replace(AUTHORIZATION_HEADER_SCHEME, "").trim());
     return tokenTranslator.decodeToken(token);
   }
 
-  private void setSecurityContext(ContainerRequestContext requestContext, TokenUser tokenUser) {
+  private void setSecurityContext(
+      ContainerRequestContext requestContext, TokenPayload tokenPayload) {
     final SecurityContext currentSecurityContext = requestContext.getSecurityContext();
     requestContext.setSecurityContext(
         new SecurityContext() {
           @Override
           public Principal getUserPrincipal() {
-            return () -> tokenUser.getUserId().getValue().toString();
+            return () -> tokenPayload.getUserKey();
           }
 
           @Override

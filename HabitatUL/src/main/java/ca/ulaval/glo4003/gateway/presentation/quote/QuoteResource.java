@@ -3,8 +3,6 @@ package ca.ulaval.glo4003.gateway.presentation.quote;
 import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
-import ca.ulaval.glo4003.management.domain.user.QuoteKey;
-import ca.ulaval.glo4003.management.domain.user.UserId;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
@@ -57,9 +55,9 @@ public class QuoteResource {
   public Response purchaseQuote(
       @Context SecurityContext securityContext, @PathParam(QUOTE_ID_PARAM_NAME) QuoteId quoteId) {
     quoteAppService.purchaseQuote(quoteId);
-    UserId userId = new UserId(securityContext.getUserPrincipal().getName());
-    QuoteKey quoteKey = new QuoteKey(quoteId.getValue().toString());
-    userAppService.associateQuote(userId, quoteKey);
+    String userKey = securityContext.getUserPrincipal().getName();
+    String quoteKey = quoteId.getValue().toString();
+    userAppService.associateQuote(userKey, quoteKey);
     return Response.ok().build();
   }
 }

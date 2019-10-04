@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
-import ca.ulaval.glo4003.generator.user.UserGenerator;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
-import ca.ulaval.glo4003.management.application.user.dto.UserDto;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import com.github.javafaker.Faker;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -24,11 +22,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceIT {
-  private static Token A_TOKEN = new Token(Faker.instance().internet().uuid());
+  private static final String USER_KEY = Faker.instance().internet().uuid();
+  private static Token TOKEN = new Token(Faker.instance().internet().uuid());
 
   @Mock private UserAppService userAppService;
 
-  private UserDto userDto;
   private UserViewAssembler userViewAssembler;
 
   @BeforeClass
@@ -48,9 +46,8 @@ public class UserResourceIT {
     ResourceConfig resourceConfig =
         ResourceConfigBuilder.aResourceConfig().withResource(userResource).build();
     addResourceConfig(resourceConfig);
-    userDto = UserGenerator.createUserDto();
-    when(userAppService.createUser(any())).thenReturn(userDto);
-    when(userAppService.authenticateUser(any())).thenReturn(A_TOKEN);
+    when(userAppService.createUser(any())).thenReturn(USER_KEY);
+    when(userAppService.authenticateUser(any())).thenReturn(TOKEN);
   }
 
   @After
@@ -75,7 +72,7 @@ public class UserResourceIT {
   public void postingUserPath_withValidRequest_shouldProvideLocationCreatedUser() {
     JSONObject request = CredentialsBuilder.aCredentialsRequest().build();
 
-    String expectedLocation = toUri(USER_ROUTE, userDto.getUserId().getValue().toString());
+    String expectedLocation = toUri(USER_ROUTE, USER_KEY);
     getBaseScenario()
         .given()
         .body(request.toString())

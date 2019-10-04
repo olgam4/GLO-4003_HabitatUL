@@ -5,14 +5,14 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
-import ca.ulaval.glo4003.management.domain.user.User;
-import ca.ulaval.glo4003.management.domain.user.UserId;
-import ca.ulaval.glo4003.management.domain.user.UserRepository;
+import ca.ulaval.glo4003.management.application.user.UserAppService;
+import ca.ulaval.glo4003.management.domain.user.PolicyRegistry;
+import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
+import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.management.infrastructure.user.DummyPasswordValidator;
-import ca.ulaval.glo4003.management.infrastructure.user.JwtTokenTranslator;
-import ca.ulaval.glo4003.management.persistence.user.InMemoryUserRepository;
+import ca.ulaval.glo4003.management.infrastructure.user.*;
+import ca.ulaval.glo4003.management.presentation.user.UserBoundedContext;
 import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
 import ca.ulaval.glo4003.mediator.event.EventChannel;
@@ -36,7 +36,7 @@ public class DemoContext implements Context {
   public void execute() {
     BoundedContextMediator mediator = new ConcreteBoundedContextMediator();
     registerGeneralServices();
-    registerManagementServices();
+    registerManagementServices(mediator);
     registerUnderwritingServices(mediator);
     registerCoverageServices(mediator);
   }
@@ -45,25 +45,28 @@ public class DemoContext implements Context {
     ServiceLocator.register(ClockProvider.class, new SystemUtcClockProvider());
   }
 
-  private void registerManagementServices() {
-    UserRepository userRepository = new InMemoryUserRepository();
+  private void registerManagementServices(BoundedContextMediator mediator) {
+    InMemoryUsernameRegistry usernameRegistry = new InMemoryUsernameRegistry();
+    ServiceLocator.register(UsernameRegistry.class, usernameRegistry);
+    ServiceLocator.register(QuoteRegistry.class, new InMemoryQuoteRegistry());
+    ServiceLocator.register(PolicyRegistry.class, new InMemoryPolicyRegistry());
     PasswordValidator passwordValidator = new DummyPasswordValidator();
-    registerAdminUser(userRepository, passwordValidator);
     ServiceLocator.register(PasswordValidator.class, passwordValidator);
-    ServiceLocator.register(UserRepository.class, userRepository);
     registerTokenTranslator();
+    UserAppService userAppService = new UserAppService();
+    UserBoundedContext userBoundedContext = new UserBoundedContext(userAppService);
+    mediator.subscribe(userBoundedContext, EventChannel.POLICIES);
+    registerAdminUser(usernameRegistry, passwordValidator);
   }
 
   private void registerAdminUser(
-      UserRepository userRepository, PasswordValidator passwordValidator) {
+      UsernameRegistry usernameRegistry, PasswordValidator passwordValidator) {
     Properties properties = ConfigFileReader.readProperties("config.properties");
     String adminKey = String.valueOf(properties.getProperty("admin.key"));
     String adminName = String.valueOf(properties.getProperty("admin.username"));
     String adminPassword = String.valueOf(properties.getProperty("admin.password"));
-    UserId adminId = new UserId(adminKey);
-    User adminUser = new User(adminId, adminName);
+    usernameRegistry.register(adminKey, adminName);
     passwordValidator.registerPassword(adminName, adminPassword);
-    userRepository.create(adminUser);
   }
 
   private void registerTokenTranslator() {
