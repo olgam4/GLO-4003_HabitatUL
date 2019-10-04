@@ -12,4 +12,8 @@ public class Amount extends ValueObject {
   public BigDecimal getValue() {
     return value.setScale(2, BigDecimal.ROUND_HALF_UP);
   }
+
+  public Amount add(Amount newValue) {
+    return new Amount(value.add(newValue.value));
+  }
 }

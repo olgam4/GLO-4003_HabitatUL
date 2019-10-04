@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
+import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.databind.serializer.*;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
@@ -45,6 +47,8 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
+    deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
+    deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
     setupContext.addDeserializers(deserializers);
   }
 

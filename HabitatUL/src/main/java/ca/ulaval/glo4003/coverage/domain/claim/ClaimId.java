@@ -1,21 +1,21 @@
-package ca.ulaval.glo4003.coverage.domain.policy;
+package ca.ulaval.glo4003.coverage.domain.claim;
 
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 import java.util.UUID;
 
-public class PolicyId extends ValueObject {
+public class ClaimId extends ValueObject {
   private UUID value;
 
-  public PolicyId() {
+  public ClaimId() {
     this(UUID.randomUUID());
   }
 
-  public PolicyId(String value) {
+  public ClaimId(String value) {
     this(UUID.fromString(value));
   }
 
-  private PolicyId(UUID value) {
+  private ClaimId(UUID value) {
     this.value = value;
   }
 

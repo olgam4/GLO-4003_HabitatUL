@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.management.infrastructure.user;
+package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
 

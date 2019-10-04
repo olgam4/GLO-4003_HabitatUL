@@ -44,7 +44,6 @@ public class QuoteResource {
     QuoteFormDto quoteFormDto = quoteViewAssembler.from(quoteRequest);
     QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
     String quoteIdString = quoteDto.getQuoteId().getValue().toString();
-    // TODO: create class to encapsulate the context path - quite easy to forget
     URI location = UriBuilder.fromPath(CONTEXT_PATH).path(QUOTE_ROUTE).path(quoteIdString).build();
     return Response.created(location).entity(quoteViewAssembler.from(quoteDto)).build();
   }

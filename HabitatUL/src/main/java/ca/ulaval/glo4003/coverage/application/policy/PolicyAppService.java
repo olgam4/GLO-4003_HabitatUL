@@ -2,29 +2,53 @@ package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
+import ca.ulaval.glo4003.coverage.domain.claim.Claim;
+import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
+import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
+import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
+import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
+import ca.ulaval.glo4003.coverage.presentation.claim.ClaimDto;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 
 public class PolicyAppService {
-  private PolicyRepository policyRepository;
   private PolicyFactory policyFactory;
+  private PolicyRepository policyRepository;
+  private ClaimFactory claimFactory;
+  private ClaimRepository claimRepository;
 
   public PolicyAppService() {
     this(
+        new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
-        new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)));
+        new ClaimFactory(),
+        ServiceLocator.resolve(ClaimRepository.class));
   }
 
-  public PolicyAppService(PolicyRepository policyRepository, PolicyFactory policyFactory) {
-    this.policyRepository = policyRepository;
+  public PolicyAppService(
+      PolicyFactory policyFactory,
+      PolicyRepository policyRepository,
+      ClaimFactory claimFactory,
+      ClaimRepository claimRepository) {
     this.policyFactory = policyFactory;
+    this.policyRepository = policyRepository;
+    this.claimFactory = claimFactory;
+    this.claimRepository = claimRepository;
   }
 
   public void issuePolicy(QuotePurchasedDto quotePurchasedDto) {
     Policy policy = policyFactory.create(quotePurchasedDto.getQuoteId());
     policy.issue();
     policyRepository.create(policy);
+  }
+
+  public ClaimId openClaim(PolicyId policyId, ClaimDto claimDto) {
+    Policy policy = policyRepository.getById(policyId);
+    Claim claim =
+        policy.openClaim(claimDto.getSinisterType(), claimDto.getLossDeclarations(), claimFactory);
+    claimRepository.create(claim);
+    return claim.getClaimId();
   }
 }

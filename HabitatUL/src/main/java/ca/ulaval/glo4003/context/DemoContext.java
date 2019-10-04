@@ -1,7 +1,9 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
+import ca.ulaval.glo4003.coverage.persistence.claim.InMemoryClaimRepository;
 import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
@@ -11,7 +13,11 @@ import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
 import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.management.infrastructure.user.*;
+import ca.ulaval.glo4003.management.infrastructure.user.DummyPasswordValidator;
+import ca.ulaval.glo4003.management.infrastructure.user.JwtTokenTranslator;
+import ca.ulaval.glo4003.management.persistence.user.InMemoryPolicyRegistry;
+import ca.ulaval.glo4003.management.persistence.user.InMemoryQuoteRegistry;
+import ca.ulaval.glo4003.management.persistence.user.InMemoryUsernameRegistry;
 import ca.ulaval.glo4003.management.presentation.user.UserBoundedContext;
 import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
@@ -93,5 +99,6 @@ public class DemoContext implements Context {
     PolicyAppService policyAppService = new PolicyAppService();
     PolicyBoundedContext policyBoundedContext = new PolicyBoundedContext(policyAppService);
     mediator.subscribe(policyBoundedContext, EventChannel.QUOTES);
+    ServiceLocator.register(ClaimRepository.class, new InMemoryClaimRepository());
   }
 }

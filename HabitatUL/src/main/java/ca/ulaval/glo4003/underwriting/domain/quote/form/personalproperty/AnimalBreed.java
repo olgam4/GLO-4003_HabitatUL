@@ -9,6 +9,7 @@ public enum AnimalBreed {
   FISH,
   SNAKE,
   OTHER;
+
   private static final Map<String, AnimalBreed> LOOKUP_MAP = new HashMap<>();
 
   static {
