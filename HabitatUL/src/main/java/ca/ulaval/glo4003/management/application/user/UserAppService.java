@@ -3,9 +3,7 @@ package ca.ulaval.glo4003.management.application.user;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.management.application.user.dto.UserDto;
 import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
-import ca.ulaval.glo4003.management.domain.user.User;
-import ca.ulaval.glo4003.management.domain.user.UserFactory;
-import ca.ulaval.glo4003.management.domain.user.UserRepository;
+import ca.ulaval.glo4003.management.domain.user.*;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
@@ -62,5 +60,11 @@ public class UserAppService {
 
   private boolean isInvalidCredentials(String userKey, Credentials credentials) {
     return !passwordValidator.validatePassword(userKey, credentials.getPassword());
+  }
+
+  public void associateQuote(UserId userId, QuoteKey quoteKey) {
+    User user = userRepository.getById(userId);
+    user.associate(quoteKey);
+    userRepository.update(user);
   }
 }

@@ -6,4 +6,6 @@ public interface UserRepository {
   User getById(UserId userId);
 
   User getByUsername(String username);
+
+  void update(User user);
 }

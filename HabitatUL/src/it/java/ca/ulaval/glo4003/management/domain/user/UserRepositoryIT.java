@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.management.domain.user;
 import ca.ulaval.glo4003.generator.user.UserGenerator;
 import ca.ulaval.glo4003.management.domain.user.exception.UserAlreadyPersistedException;
 import ca.ulaval.glo4003.management.domain.user.exception.UserNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.UserNotYetPersistedException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +63,27 @@ public abstract class UserRepositoryIT {
     subject.create(user);
 
     subject.create(new User(new UserId(), user.getUsername()));
+  }
+
+  @Test
+  public void updatingUser_shouldChangeAssociatedUser() {
+    subject.create(user);
+
+    User updatedUser = new User(user.getUserId(), user.getUsername());
+    subject.update(updatedUser);
+
+    assertThat(subject.getById(user.getUserId()), matchesUser(updatedUser));
+    assertThat(subject.getByUsername(user.getUsername()), matchesUser(updatedUser));
+  }
+
+  @Test(expected = UserNotYetPersistedException.class)
+  public void updatingUser_withNotYetPersistedUserId_shouldThrow() {
+    subject.update(new User(userId, user.getUsername()));
+  }
+
+  @Test(expected = UserNotYetPersistedException.class)
+  public void updatingUser_withNotYetPersistedUsername_shouldThrow() {
+    subject.update(new User(new UserId(), user.getUsername()));
   }
 
   protected abstract UserRepository createSubject();

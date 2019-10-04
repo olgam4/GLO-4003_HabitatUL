@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.management.domain.user.UserId;
 import ca.ulaval.glo4003.management.domain.user.UserRepository;
 import ca.ulaval.glo4003.management.domain.user.exception.UserAlreadyPersistedException;
 import ca.ulaval.glo4003.management.domain.user.exception.UserNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.UserNotYetPersistedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,18 @@ public class InMemoryUserRepository implements UserRepository {
 
     if (isExistingUser(userId)) throw new UserAlreadyPersistedException(userId);
     if (isExistingUser(username)) throw new UserAlreadyPersistedException(username);
+
+    usersByUserId.put(userId, user);
+    usersByUserName.put(username, user);
+  }
+
+  @Override
+  public void update(User user) {
+    UserId userId = user.getUserId();
+    String username = user.getUsername();
+
+    if (!isExistingUser(userId)) throw new UserNotYetPersistedException(userId);
+    if (!isExistingUser(username)) throw new UserNotYetPersistedException(username);
 
     usersByUserId.put(userId, user);
     usersByUserName.put(username, user);

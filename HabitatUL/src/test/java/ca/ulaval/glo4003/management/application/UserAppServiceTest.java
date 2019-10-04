@@ -5,10 +5,7 @@ import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.management.application.user.UserAssembler;
 import ca.ulaval.glo4003.management.application.user.dto.UserDto;
 import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
-import ca.ulaval.glo4003.management.domain.user.User;
-import ca.ulaval.glo4003.management.domain.user.UserFactory;
-import ca.ulaval.glo4003.management.domain.user.UserId;
-import ca.ulaval.glo4003.management.domain.user.UserRepository;
+import ca.ulaval.glo4003.management.domain.user.*;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
@@ -29,11 +26,11 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserAppServiceTest {
+  public static final QuoteKey QUOTE_KEY = new QuoteKey(Faker.instance().internet().uuid());
   private static final UserId USER_ID = new UserId();
   private static final Credentials CREDENTIALS = UserGenerator.createCredentials();
   private static final Token A_TOKEN = new Token(Faker.instance().internet().uuid());
   private static final TokenUser TOKEN_USER = new TokenUser(USER_ID, CREDENTIALS.getUsername());
-
   @Mock private User user;
   @Mock private UserFactory userFactory;
   @Mock private PasswordValidator passwordValidator;
@@ -50,7 +47,8 @@ public class UserAppServiceTest {
     when(user.getUserId()).thenReturn(USER_ID);
     when(user.getUsername()).thenReturn(CREDENTIALS.getUsername());
     when(userFactory.create(any())).thenReturn(user);
-    when(userRepository.getByUsername(anyString())).thenReturn(user);
+    when(userRepository.getById(any())).thenReturn(user);
+    when(userRepository.getByUsername(any())).thenReturn(user);
     when(passwordValidator.validatePassword(
             USER_ID.getValue().toString(), CREDENTIALS.getPassword()))
         .thenReturn(true);
@@ -102,5 +100,26 @@ public class UserAppServiceTest {
     Token token = subject.authenticateUser(CREDENTIALS);
 
     assertEquals(token, A_TOKEN);
+  }
+
+  @Test
+  public void associatingQuote_shouldGetUser() {
+    subject.associateQuote(USER_ID, QUOTE_KEY);
+
+    verify(userRepository).getById(USER_ID);
+  }
+
+  @Test
+  public void associatingQuote_shouldAssociateUserToQuote() {
+    subject.associateQuote(USER_ID, QUOTE_KEY);
+
+    verify(user).associate(QUOTE_KEY);
+  }
+
+  @Test
+  public void associatingQuote_shouldUpdateUser() {
+    subject.associateQuote(USER_ID, QUOTE_KEY);
+
+    verify(userRepository).update(user);
   }
 }
