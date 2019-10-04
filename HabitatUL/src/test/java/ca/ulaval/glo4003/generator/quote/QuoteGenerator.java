@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.generator.quote;
 import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
@@ -32,6 +33,15 @@ public class QuoteGenerator {
   public static Quote createValidQuoteWithId(QuoteId quoteId) {
     Premium premium = PremiumGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
+    DateTime expirationDate = createFutureDate();
+    ClockProvider clockProvider = new FixedClockProvider();
+    return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);
+  }
+
+  public static Quote createValidQuoteWithEffectiveDate(Date effectiveDate) {
+    QuoteId quoteId = createQuoteId();
+    Premium premium = PremiumGenerator.create();
+    QuoteForm quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(effectiveDate);
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);

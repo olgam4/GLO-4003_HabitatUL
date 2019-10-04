@@ -58,6 +58,15 @@ public class QuoteFormGenerator {
         createPersonalProperty());
   }
 
+  public static QuoteForm createQuoteFormWithEffectiveDate(Date effectiveDate) {
+    return new QuoteForm(
+        createIdentity(),
+        createLocation(),
+        effectiveDate,
+        createBuilding(),
+        createPersonalProperty());
+  }
+
   public static QuoteForm createQuoteForm() {
     return new QuoteForm(
         createIdentity(),

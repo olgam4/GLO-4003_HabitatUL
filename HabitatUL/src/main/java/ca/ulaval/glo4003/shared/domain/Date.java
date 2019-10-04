@@ -23,12 +23,12 @@ public class Date extends ValueObject {
     return value;
   }
 
-  public boolean isBefore(Date dateTime) {
-    return !isAfter(dateTime);
+  public boolean isBefore(Date date) {
+    return !isAfter(date);
   }
 
-  public boolean isAfter(Date dateTime) {
-    return value.isAfter(dateTime.value);
+  public boolean isAfter(Date date) {
+    return value.isAfter(date.value);
   }
 
   public Date plus(Period period) {

@@ -51,6 +51,7 @@ public class SerializationModule extends Module {
 
   private void setSerializers(SetupContext setupContext) {
     SimpleSerializers serializers = new SimpleSerializers();
+    serializers.addSerializer(Date.class, new DateSerializer());
     serializers.addSerializer(DateTime.class, new DateTimeSerializer());
     serializers.addSerializer(Premium.class, new PremiumSerializer());
     serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
