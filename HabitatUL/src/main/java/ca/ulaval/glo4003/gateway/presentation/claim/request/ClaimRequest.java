@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.policy.request;
+package ca.ulaval.glo4003.gateway.presentation.claim.request;
 
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;

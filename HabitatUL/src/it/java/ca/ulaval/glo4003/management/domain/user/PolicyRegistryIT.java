@@ -1,16 +1,14 @@
 package ca.ulaval.glo4003.management.domain.user;
 
-import static org.junit.Assert.assertEquals;
+import ca.ulaval.glo4003.management.domain.user.exception.PolicyKeyNotFoundException;
+import com.github.javafaker.Faker;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.github.javafaker.Faker;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import ca.ulaval.glo4003.management.domain.user.exception.PolicyKeyNotFoundException;
+import static org.junit.Assert.assertEquals;
 
 public abstract class PolicyRegistryIT {
   private static final String NOT_EXISTING_POLICY_KEY = Faker.instance().dragonBall().character();

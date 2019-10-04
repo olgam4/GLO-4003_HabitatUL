@@ -1,11 +1,12 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
+import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
-import ca.ulaval.glo4003.coverage.presentation.claim.ClaimDto;
 import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
-import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
+import ca.ulaval.glo4003.gateway.presentation.claim.ClaimViewAssembler;
+import ca.ulaval.glo4003.gateway.presentation.claim.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.policy.response.PoliciesResponse;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
 
@@ -15,29 +16,29 @@ import java.net.URI;
 import java.util.List;
 
 import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
+import static ca.ulaval.glo4003.gateway.presentation.claim.ClaimResource.CLAIM_ROUTE;
 
 @Path(PolicyResource.POLICY_ROUTE)
 @Produces(MediaType.APPLICATION_JSON)
 public class PolicyResource {
   public static final String POLICY_ROUTE = "/policies";
-  public static final String CLAIM_ROUTE = "/claims";
   private static final String POLICY_ID_PARAM_NAME = "policyId";
 
   private PolicyAppService policyAppService;
   private UserAppService userAppService;
-  private ClaimAssembler claimAssembler;
+  private ClaimViewAssembler claimViewAssembler;
 
   public PolicyResource() {
-    this(new PolicyAppService(), new UserAppService(), new ClaimAssembler());
+    this(new PolicyAppService(), new UserAppService(), new ClaimViewAssembler());
   }
 
   public PolicyResource(
       PolicyAppService policyAppService,
       UserAppService userAppService,
-      ClaimAssembler claimAssembler) {
+      ClaimViewAssembler claimViewAssembler) {
     this.policyAppService = policyAppService;
     this.userAppService = userAppService;
-    this.claimAssembler = claimAssembler;
+    this.claimViewAssembler = claimViewAssembler;
   }
 
   @GET
@@ -56,8 +57,8 @@ public class PolicyResource {
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       ClaimRequest claimRequest) {
-    ClaimDto claimDto = claimAssembler.from(claimRequest);
-    ClaimId claimId = policyAppService.openClaim(policyId, claimDto);
+    ClaimCreationDto claimCreationDto = claimViewAssembler.from(claimRequest);
+    ClaimId claimId = policyAppService.openClaim(policyId, claimCreationDto);
     URI location =
         UriBuilder.fromPath(CONTEXT_PATH)
             .path(CLAIM_ROUTE)

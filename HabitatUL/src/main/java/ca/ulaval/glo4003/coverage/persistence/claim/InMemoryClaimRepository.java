@@ -14,4 +14,9 @@ public class InMemoryClaimRepository implements ClaimRepository {
   public void create(Claim claim) {
     claims.put(claim.getClaimId(), claim);
   }
+
+  @Override
+  public Claim getById(ClaimId claimId) {
+    return claims.get(claimId);
+  }
 }

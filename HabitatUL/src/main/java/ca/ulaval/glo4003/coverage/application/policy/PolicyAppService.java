@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
@@ -10,7 +11,6 @@ import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.coverage.presentation.claim.ClaimDto;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 
 public class PolicyAppService {
@@ -44,10 +44,13 @@ public class PolicyAppService {
     policyRepository.create(policy);
   }
 
-  public ClaimId openClaim(PolicyId policyId, ClaimDto claimDto) {
+  public ClaimId openClaim(PolicyId policyId, ClaimCreationDto claimCreationDto) {
     Policy policy = policyRepository.getById(policyId);
     Claim claim =
-        policy.openClaim(claimDto.getSinisterType(), claimDto.getLossDeclarations(), claimFactory);
+        policy.openClaim(
+            claimCreationDto.getSinisterType(),
+            claimCreationDto.getLossDeclarations(),
+            claimFactory);
     claimRepository.create(claim);
     return claim.getClaimId();
   }

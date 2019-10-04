@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
+import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
 import ca.ulaval.glo4003.gateway.presentation.databind.deserializer.*;
@@ -46,14 +47,15 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
-    deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
+    deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
     deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
     setupContext.addDeserializers(deserializers);
   }
 
   private void setSerializers(SetupContext setupContext) {
     SimpleSerializers serializers = new SimpleSerializers();
+    serializers.addSerializer(ClaimId.class, new ClaimIdSerializer());
     serializers.addSerializer(Date.class, new DateSerializer());
     serializers.addSerializer(DateTime.class, new DateTimeSerializer());
     serializers.addSerializer(Premium.class, new PremiumSerializer());

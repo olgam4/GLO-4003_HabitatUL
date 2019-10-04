@@ -22,9 +22,11 @@ public class InMemoryPolicyRegistry implements PolicyRegistry {
 
   @Override
   public String getUserKey(String policyKey) {
-    return userKeyByPolicyKey.computeIfAbsent(policyKey, (String newKey) -> {
-      throw new PolicyKeyNotFoundException(policyKey);
-    });
+    return userKeyByPolicyKey.computeIfAbsent(
+        policyKey,
+        (String newKey) -> {
+          throw new PolicyKeyNotFoundException(policyKey);
+        });
   }
 
   @Override

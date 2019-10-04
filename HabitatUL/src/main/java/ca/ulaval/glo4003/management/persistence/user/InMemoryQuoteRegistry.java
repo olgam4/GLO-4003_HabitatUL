@@ -22,9 +22,11 @@ public class InMemoryQuoteRegistry implements QuoteRegistry {
 
   @Override
   public String getUserKey(String quoteKey) {
-    return userKeyByQuoteKey.computeIfAbsent(quoteKey, (String newKey) -> {
-      throw new QuoteKeyNotFoundException(quoteKey);
-    });
+    return userKeyByQuoteKey.computeIfAbsent(
+        quoteKey,
+        (String newKey) -> {
+          throw new QuoteKeyNotFoundException(quoteKey);
+        });
   }
 
   @Override

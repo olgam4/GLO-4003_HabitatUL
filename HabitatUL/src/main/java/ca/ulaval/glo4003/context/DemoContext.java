@@ -96,9 +96,9 @@ public class DemoContext implements Context {
     ServiceLocator.register(
         PolicyRepository.class,
         new EventPublisherPolicyRepositoryWrapper(new InMemoryPolicyRepository(), mediator));
+    ServiceLocator.register(ClaimRepository.class, new InMemoryClaimRepository());
     PolicyAppService policyAppService = new PolicyAppService();
     PolicyBoundedContext policyBoundedContext = new PolicyBoundedContext(policyAppService);
     mediator.subscribe(policyBoundedContext, EventChannel.QUOTES);
-    ServiceLocator.register(ClaimRepository.class, new InMemoryClaimRepository());
   }
 }
