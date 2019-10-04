@@ -20,6 +20,7 @@ public class UserAppService {
   private PolicyRegistry policyRegistry;
   private PasswordValidator passwordValidator;
   private TokenTranslator tokenTranslator;
+  private UserKeyGenerator userKeyGenerator;
 
   public UserAppService() {
     this(
@@ -27,7 +28,8 @@ public class UserAppService {
         ServiceLocator.resolve(QuoteRegistry.class),
         ServiceLocator.resolve(PolicyRegistry.class),
         ServiceLocator.resolve(PasswordValidator.class),
-        ServiceLocator.resolve(TokenTranslator.class));
+        ServiceLocator.resolve(TokenTranslator.class),
+        new UserKeyGenerator());
   }
 
   public UserAppService(
@@ -35,16 +37,18 @@ public class UserAppService {
       QuoteRegistry quoteRegistry,
       PolicyRegistry policyRegistry,
       PasswordValidator passwordValidator,
-      TokenTranslator tokenTranslator) {
+      TokenTranslator tokenTranslator,
+      UserKeyGenerator userKeyGenerator) {
     this.usernameRegistry = usernameRegistry;
     this.quoteRegistry = quoteRegistry;
     this.policyRegistry = policyRegistry;
     this.passwordValidator = passwordValidator;
     this.tokenTranslator = tokenTranslator;
+    this.userKeyGenerator = userKeyGenerator;
   }
 
   public String createUser(Credentials credentials) {
-    String userKey = UserKeyGenerator.generateUserKey();
+    String userKey = userKeyGenerator.generateUserKey();
     usernameRegistry.register(userKey, credentials.getUsername());
     passwordValidator.registerPassword(userKey, credentials.getPassword());
     return userKey;
