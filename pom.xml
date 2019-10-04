@@ -23,6 +23,7 @@
         <checkstyle.suppressions>checkstyle-suppressions.xml</checkstyle.suppressions>
         <google-java-format.version>1.7</google-java-format.version>
         <puppycrawl.version>8.3</puppycrawl.version>
+        <exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
         <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
     </properties>
 
@@ -37,6 +38,17 @@
 
     <build>
         <plugins>
+            <!-- Exec -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                    <mainClass>none</mainClass>
+                </configuration>
+            </plugin>
+
             <!-- Style Check -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

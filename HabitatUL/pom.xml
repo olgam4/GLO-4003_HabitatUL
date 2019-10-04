@@ -186,6 +186,7 @@
                 <version>${exec-maven-plugin.version}</version>
                 <configuration>
                     <mainClass>${main-class}</mainClass>
+                    <skip>false</skip>
                 </configuration>
             </plugin>
 
