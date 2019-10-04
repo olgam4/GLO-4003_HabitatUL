@@ -18,6 +18,10 @@ public class Period extends ValueObject {
     }
   }
 
+  public Date getStartDate() {
+    return startDate;
+  }
+
   public Date getEndDate() {
     return endDate;
   }
