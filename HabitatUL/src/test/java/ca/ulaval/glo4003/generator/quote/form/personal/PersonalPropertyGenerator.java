@@ -45,7 +45,7 @@ public class PersonalPropertyGenerator {
 
   private static List<AnimalBreed> getRandomAnimalList() {
     return Stream.generate(PersonalPropertyGenerator::getRandomAnimal)
-        .limit(Faker.instance().number().randomDigit())
+        .limit(Faker.instance().number().randomDigitNotZero())
         .collect(Collectors.toList());
   }
 

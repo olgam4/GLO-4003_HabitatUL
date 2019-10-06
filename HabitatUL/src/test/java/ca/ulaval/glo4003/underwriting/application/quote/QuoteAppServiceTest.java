@@ -25,10 +25,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.LocalDate;
 import java.time.Period;
 
-import static ca.ulaval.glo4003.matcher.quote.QuoteDtoMatcher.matchesQuoteDto;
-import static ca.ulaval.glo4003.matcher.quote.QuoteFormMatcher.mockitoQuoteFormMatcher;
+import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteDto;
+import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteForm;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
@@ -64,7 +65,7 @@ public class QuoteAppServiceTest {
   public void requestingQuote_shouldComputeQuotePrice() {
     subject.requestQuote(quoteFormDto);
 
-    verify(quotePremiumCalculator).computeQuotePremium(mockitoQuoteFormMatcher(quoteFormDto));
+    verify(quotePremiumCalculator).computeQuotePremium(argThat(matchesQuoteForm(quoteFormDto)));
   }
 
   @Test

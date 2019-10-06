@@ -1,8 +1,10 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
+import ca.ulaval.glo4003.shared.domain.ValueObject;
+
 import java.util.UUID;
 
-public class QuoteId {
+public class QuoteId extends ValueObject {
   private UUID value;
 
   public QuoteId() {

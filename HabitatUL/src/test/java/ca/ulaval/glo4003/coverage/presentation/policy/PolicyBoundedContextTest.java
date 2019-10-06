@@ -14,10 +14,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext.QUOTE_PURCHASED_EVENT_TYPE;
-import static ca.ulaval.glo4003.matcher.policy.QuotePurchasedDtoMatcher.mockitoQuotePurchasedDtoMatcher;
+import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesQuotePurchasedDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyBoundedContextTest {
@@ -46,7 +47,7 @@ public class PolicyBoundedContextTest {
 
     subject.process(event);
 
-    verify(policyAppService).issuePolicy(mockitoQuotePurchasedDtoMatcher(event));
+    verify(policyAppService).issuePolicy(argThat(matchesQuotePurchasedDto(event)));
   }
 
   @Test

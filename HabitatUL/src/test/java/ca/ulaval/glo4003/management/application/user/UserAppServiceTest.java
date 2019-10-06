@@ -25,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -115,7 +116,12 @@ public class UserAppServiceTest {
   public void authenticatingUser_shouldEncodeToken() {
     subject.authenticateUser(credentials);
 
-    verify(tokenTranslator).encodeToken(any(TokenPayload.class));
+    TokenPayload expectedTokenPayload =
+        new TokenPayload(
+            USER_KEY,
+            credentials.getUsername(),
+            Instant.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
+    verify(tokenTranslator).encodeToken(expectedTokenPayload);
   }
 
   @Test

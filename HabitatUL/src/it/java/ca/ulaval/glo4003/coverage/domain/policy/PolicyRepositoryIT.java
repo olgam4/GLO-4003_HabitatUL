@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.generator.policy.PolicyGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.matcher.policy.PolicyMatcher.matchesPolicy;
+import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesPolicy;
 import static org.junit.Assert.assertThat;
 
 public abstract class PolicyRepositoryIT {

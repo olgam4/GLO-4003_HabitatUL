@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.matcher.policy.PolicyMatcher.mockitoPolicyMatcher;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -47,6 +46,6 @@ public class PolicyAppServiceTest {
   public void issuingPolicy_shouldCreatePolicy() {
     subject.issuePolicy(quotePurchasedDto);
 
-    verify(policyRepository).create(mockitoPolicyMatcher(quotePurchasedDto));
+    verify(policyRepository).create(policy);
   }
 }

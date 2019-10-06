@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotYetPersiste
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.matcher.quote.QuoteMatcher.matchesQuote;
+import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuote;
 import static org.junit.Assert.assertThat;
 
 public abstract class QuoteRepositoryIT {

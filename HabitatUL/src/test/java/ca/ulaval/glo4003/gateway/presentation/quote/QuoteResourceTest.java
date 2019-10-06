@@ -16,10 +16,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.core.SecurityContext;
 
-import static ca.ulaval.glo4003.matcher.quote.QuoteFormDtoMatcher.mockitoQuoteFormDtoMatcher;
+import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteFormDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteResourceTest {
@@ -48,7 +49,7 @@ public class QuoteResourceTest {
   public void requestingQuote_shouldDelegateToQuoteAppService() {
     subject.requestQuote(quoteRequest);
 
-    verify(quoteAppService).requestQuote(mockitoQuoteFormDtoMatcher(quoteRequest));
+    verify(quoteAppService).requestQuote(argThat(matchesQuoteFormDto(quoteRequest)));
   }
 
   @Test
