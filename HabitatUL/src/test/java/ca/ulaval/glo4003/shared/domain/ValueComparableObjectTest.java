@@ -8,10 +8,10 @@ import java.util.Date;
 import static org.junit.Assert.*;
 
 public class ValueComparableObjectTest {
-  private static final String A_STRING = new Faker().dragonBall().character();
-  private static final String ANOTHER_STRING = new Faker().dragonBall().character();
-  private static final int AN_INTEGER = new Faker().number().randomDigit();
-  private static final int ANOTHER_INTEGER = new Faker().number().randomDigit();
+  private static final String A_STRING = new Faker().internet().uuid();
+  private static final String ANOTHER_STRING = new Faker().internet().uuid();
+  private static final long AN_INTEGER = new Faker().number().randomNumber();
+  private static final long ANOTHER_INTEGER = new Faker().number().randomNumber();
   private static final Date A_DATE = new Faker().date().birthday();
 
   @Test
@@ -150,8 +150,8 @@ public class ValueComparableObjectTest {
   @Test
   public void
       comparingValueComparableObjects_withObjectsOfSameClassButDifferentAttributes_shouldOrderObjectsBasedOnAttributeOrder() {
-    ValueComparableObject ValueComparableObject1 = new FirstValueComparableObject(A_STRING, 65);
-    ValueComparableObject ValueComparableObject2 = new FirstValueComparableObject(A_STRING, 56);
+    ValueComparableObject ValueComparableObject1 = new FirstValueComparableObject(A_STRING, 65l);
+    ValueComparableObject ValueComparableObject2 = new FirstValueComparableObject(A_STRING, 56l);
 
     assertTrue(ValueComparableObject1.compareTo(ValueComparableObject2) > 0);
   }
@@ -216,9 +216,9 @@ public class ValueComparableObjectTest {
 
   class FirstValueComparableObject extends ValueComparableObject {
     private String attr1;
-    private Integer attr2;
+    private Long attr2;
 
-    FirstValueComparableObject(String attr1, Integer attr2) {
+    FirstValueComparableObject(String attr1, Long attr2) {
       this.attr1 = attr1;
       this.attr2 = attr2;
     }
@@ -240,7 +240,7 @@ public class ValueComparableObjectTest {
     private FirstValueComparableObject attr1;
     private SecondValueComparableObject attr2;
 
-    public NestedValueComparableObject(
+    NestedValueComparableObject(
         FirstValueComparableObject attr1, SecondValueComparableObject attr2) {
       this.attr1 = attr1;
       this.attr2 = attr2;
