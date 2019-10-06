@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
+import ca.ulaval.glo4003.gateway.presentation.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
@@ -42,16 +43,21 @@ public class QuoteResourceIT {
   public void setUp() {
     QuoteResource quoteResource =
         new QuoteResource(quoteAppService, new QuoteViewAssembler(), userAppService);
-    ResourceConfig resourceConfig =
-        ResourceConfigBuilder.aResourceConfig().withResource(quoteResource).build();
-    addResourceConfig(resourceConfig);
     quoteDto = QuoteGenerator.createValidQuoteDto();
     when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
+    registerResource(quoteResource);
   }
 
   @After
   public void tearDown() {
     resetServer();
+  }
+
+  private void registerResource(QuoteResource quoteResource) {
+    ResourceConfig resourceConfig =
+        ResourceConfigBuilder.aResourceConfig().withResource(quoteResource).build();
+    resourceConfig.register(AuthFilterBuilder.anAuthFilter().build());
+    addResourceConfig(resourceConfig);
   }
 
   @Test
@@ -96,7 +102,6 @@ public class QuoteResourceIT {
   }
 
   @Test
-  @Ignore
   public void postingPurchaseQuotePath_withValidQuoteId_shouldHaveExpectedStatusCode() {
     String path = toPath(QUOTE_ROUTE, quoteDto.getQuoteId().getValue().toString(), PURCHASE_ROUTE);
 
