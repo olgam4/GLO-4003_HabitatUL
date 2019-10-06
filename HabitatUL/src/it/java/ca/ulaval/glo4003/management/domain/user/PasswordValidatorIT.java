@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.domain.user;
 
+import ca.ulaval.glo4003.management.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.management.domain.user.exception.InvalidPasswordException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

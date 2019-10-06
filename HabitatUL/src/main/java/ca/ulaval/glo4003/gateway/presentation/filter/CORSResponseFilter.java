@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.underwriting.infrastructure.http;
+package ca.ulaval.glo4003.gateway.presentation.filter;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;

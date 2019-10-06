@@ -2,7 +2,8 @@ package ca.ulaval.glo4003.gateway.presentation.filter;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
-import ca.ulaval.glo4003.management.domain.user.exception.UserUnauthorizedException;
+import ca.ulaval.glo4003.management.application.user.AccessController;
+import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedException;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
@@ -27,17 +28,24 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   @Context private ResourceInfo resourceInfo;
 
   private TokenTranslator tokenTranslator;
+  private AccessController accessController;
 
   public AuthorizationFilter() {
-    this(ServiceLocator.resolve(TokenTranslator.class));
+    this(
+        ServiceLocator.resolve(TokenTranslator.class),
+        ServiceLocator.resolve(AccessController.class));
   }
 
-  public AuthorizationFilter(TokenTranslator tokenTranslator) {
+  public AuthorizationFilter(TokenTranslator tokenTranslator, AccessController accessController) {
     this.tokenTranslator = tokenTranslator;
+    this.accessController = accessController;
   }
 
-  public AuthorizationFilter(TokenTranslator tokenTranslator, ResourceInfo resourceInfo) {
-    this(tokenTranslator);
+  public AuthorizationFilter(
+      TokenTranslator tokenTranslator,
+      ResourceInfo resourceInfo,
+      AccessController accessController) {
+    this(tokenTranslator, accessController);
     this.resourceInfo = resourceInfo;
   }
 
@@ -47,12 +55,13 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     if (resourceMethod.getAnnotation(Secured.class) == null) return;
 
     TokenPayload tokenPayload = extractTokenUser(requestContext);
+    accessController.controlAccess(tokenPayload);
     setSecurityContext(requestContext, tokenPayload);
   }
 
   private TokenPayload extractTokenUser(ContainerRequestContext requestContext) {
     String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-    if (authHeader == null) throw new UserUnauthorizedException();
+    if (authHeader == null) throw new UnauthorizedException();
     Token token = new Token(authHeader.replace(AUTHORIZATION_HEADER_SCHEME, "").trim());
     return tokenTranslator.decodeToken(token);
   }
@@ -64,7 +73,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         new SecurityContext() {
           @Override
           public Principal getUserPrincipal() {
-            return () -> tokenPayload.getUserKey();
+            return tokenPayload::getUserKey;
           }
 
           @Override

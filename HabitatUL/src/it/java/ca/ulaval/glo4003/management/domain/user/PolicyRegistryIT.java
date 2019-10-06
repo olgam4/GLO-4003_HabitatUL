@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.management.domain.user;
 
-import ca.ulaval.glo4003.management.domain.user.exception.PolicyKeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +11,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public abstract class PolicyRegistryIT {
-  private static final String NOT_EXISTING_POLICY_KEY = Faker.instance().dragonBall().character();
-  private static final String UNKNOWN_USER_KEY = Faker.instance().aviation().aircraft();
   private static final String USER_KEY = Faker.instance().book().author();
+  private static final String NOT_EXISTING_USER_KEY = Faker.instance().aviation().aircraft();
   private static final String POLICY_KEY = Faker.instance().cat().name();
+  private static final String NOT_EXISTING_POLICY_KEY = Faker.instance().dragonBall().character();
 
   private PolicyRegistry subject;
 
@@ -24,14 +24,14 @@ public abstract class PolicyRegistryIT {
     subject.register(USER_KEY, POLICY_KEY);
   }
 
-  @Test(expected = PolicyKeyNotFoundException.class)
-  public void gettingUserKey_withoutExistingPolicyId_shouldThrow() {
-    subject.getUserKey(NOT_EXISTING_POLICY_KEY);
-  }
-
   @Test
   public void gettingUserKey_withRegisteredPolicyKey_shouldReturnMappedUserKey() {
     assertEquals(USER_KEY, subject.getUserKey(POLICY_KEY));
+  }
+
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUserKey_withNotExistingPolicyKey_shouldThrow() {
+    subject.getUserKey(NOT_EXISTING_POLICY_KEY);
   }
 
   @Test
@@ -42,8 +42,8 @@ public abstract class PolicyRegistryIT {
   }
 
   @Test
-  public void gettingPolicyKeys_withUnkownUserKey_shouldReturnEmptyList() {
-    List<String> quoteKeys = subject.getPolicyKeys(UNKNOWN_USER_KEY);
+  public void gettingPolicyKeys_withNotExistingUserKey_shouldReturnEmptyList() {
+    List<String> quoteKeys = subject.getPolicyKeys(NOT_EXISTING_USER_KEY);
 
     assertEquals(0, quoteKeys.size());
   }

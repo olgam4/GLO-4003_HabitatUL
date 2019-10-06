@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.PolicyRegistry;
-import ca.ulaval.glo4003.management.domain.user.exception.PolicyKeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class InMemoryPolicyRegistry implements PolicyRegistry {
     return userKeyByPolicyKey.computeIfAbsent(
         policyKey,
         (String newKey) -> {
-          throw new PolicyKeyNotFoundException(policyKey);
+          throw new KeyNotFoundException(policyKey);
         });
   }
 

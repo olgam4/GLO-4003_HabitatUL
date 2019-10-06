@@ -1,8 +1,7 @@
-package ca.ulaval.glo4003.management.infrastructure.user;
+package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
 import ca.ulaval.glo4003.management.domain.user.UsernameRegistryIT;
-import ca.ulaval.glo4003.management.persistence.user.InMemoryUsernameRegistry;
 
 ;
 

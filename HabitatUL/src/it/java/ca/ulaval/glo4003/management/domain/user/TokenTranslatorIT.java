@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.domain.user;
 
 import ca.ulaval.glo4003.generator.user.TokenPayloadGenerator;
-import ca.ulaval.glo4003.management.domain.user.exception.InvalidTokenException;
+import ca.ulaval.glo4003.management.domain.user.token.InvalidTokenSignatureException;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public abstract class TokenTranslatorIT {
-  private static final TokenPayload TOKEN_USER = TokenPayloadGenerator.createTokenPayload();
+  private static final TokenPayload TOKEN_PAYLOAD = TokenPayloadGenerator.createValidTokenPayload();
   private static final Token AN_INVALID_TOKEN = new Token(Faker.instance().internet().uuid());
 
   private TokenTranslator subject;
@@ -22,18 +22,18 @@ public abstract class TokenTranslatorIT {
     subject = createSubject();
   }
 
-  @Test(expected = InvalidTokenException.class)
-  public void decodingToken_withInvalidToken_shouldThrow() {
-    subject.decodeToken(AN_INVALID_TOKEN);
-  }
-
   @Test
-  public void decodingToken_withValidToken_shouldRetrieveEncodedUser() {
-    Token token = subject.encodeToken(TOKEN_USER);
+  public void decodingToken_withValidToken_shouldRetrieveEncodedToken() {
+    Token token = subject.encodeToken(TOKEN_PAYLOAD);
 
     TokenPayload tokenPayload = subject.decodeToken(token);
 
-    assertEquals(tokenPayload, TOKEN_USER);
+    assertEquals(TOKEN_PAYLOAD, tokenPayload);
+  }
+
+  @Test(expected = InvalidTokenSignatureException.class)
+  public void decodingToken_withInvalidToken_shouldThrow() {
+    subject.decodeToken(AN_INVALID_TOKEN);
   }
 
   protected abstract TokenTranslator createSubject();

@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
-import ca.ulaval.glo4003.management.domain.user.exception.UserKeyNotFoundException;
-import ca.ulaval.glo4003.management.domain.user.exception.UsernameKeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class InMemoryUsernameRegistry implements UsernameRegistry {
     return userKeyByUsername.computeIfAbsent(
         username,
         (String newKey) -> {
-          throw new UsernameKeyNotFoundException(username);
+          throw new KeyNotFoundException(username);
         });
   }
 
@@ -31,7 +30,7 @@ public class InMemoryUsernameRegistry implements UsernameRegistry {
     return usernameByUserKey.computeIfAbsent(
         userKey,
         (String newKey) -> {
-          throw new UserKeyNotFoundException(userKey);
+          throw new KeyNotFoundException(userKey);
         });
   }
 }

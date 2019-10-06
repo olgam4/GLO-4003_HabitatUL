@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
-import ca.ulaval.glo4003.management.domain.user.exception.QuoteKeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class InMemoryQuoteRegistry implements QuoteRegistry {
     return userKeyByQuoteKey.computeIfAbsent(
         quoteKey,
         (String newKey) -> {
-          throw new QuoteKeyNotFoundException(quoteKey);
+          throw new KeyNotFoundException(quoteKey);
         });
   }
 

@@ -1,4 +1,6 @@
-package ca.ulaval.glo4003.management.domain.user.exception;
+package ca.ulaval.glo4003.management.domain.user.credential;
+
+import ca.ulaval.glo4003.management.domain.user.exception.UserException;
 
 public class InvalidPasswordException extends UserException {
   private static final String ERROR = "INVALID_PASSWORD";

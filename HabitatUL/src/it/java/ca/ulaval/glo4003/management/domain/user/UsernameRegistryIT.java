@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.management.domain.user;
 
-import ca.ulaval.glo4003.management.domain.user.exception.UserKeyNotFoundException;
-import ca.ulaval.glo4003.management.domain.user.exception.UsernameKeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,24 +21,24 @@ public abstract class UsernameRegistryIT {
     subject.register(USER_KEY, USERNAME_KEY);
   }
 
-  @Test(expected = UsernameKeyNotFoundException.class)
-  public void gettingUserKey_withoutExistingUsernameKey_shouldThrow() {
-    subject.getUserKey(NOT_EXISTING_USERNAME_KEY);
-  }
-
-  @Test(expected = UserKeyNotFoundException.class)
-  public void gettingUsernameKey_withoutExistingUserKey_shouldThrow() {
-    subject.getUsername(NOT_EXISTING_USER_KEY);
-  }
-
   @Test
   public void gettingUserKey_withRegisteredUsernameKey_shouldReturnMappedUserKey() {
     assertEquals(USER_KEY, subject.getUserKey(USERNAME_KEY));
   }
 
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUserKey_withNotExistingUsername_shouldThrow() {
+    subject.getUserKey(NOT_EXISTING_USERNAME_KEY);
+  }
+
   @Test
-  public void gettingPolicyKeys_withRegisteredUserKey_shouldReturnAllMappedPolicyKeys() {
+  public void gettingUsername_withRegisteredUserKey_shouldReturnMappedUsername() {
     assertEquals(USERNAME_KEY, subject.getUsername(USER_KEY));
+  }
+
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUsername_withNotExistingUserKey_shouldThrow() {
+    subject.getUsername(NOT_EXISTING_USER_KEY);
   }
 
   protected abstract UsernameRegistry createSubject();

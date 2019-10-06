@@ -2,26 +2,30 @@ package ca.ulaval.glo4003.management.application.user;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
-import ca.ulaval.glo4003.management.domain.PaymentProcessor;
-import ca.ulaval.glo4003.management.domain.user.PolicyRegistry;
-import ca.ulaval.glo4003.management.domain.user.QuoteRegistry;
-import ca.ulaval.glo4003.management.domain.user.UserKeyGenerator;
-import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
+import ca.ulaval.glo4003.management.domain.user.*;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedException;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
+import ca.ulaval.glo4003.management.domain.user.token.TokenValidityPeriodProvider;
+import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Money;
 
+import java.time.Instant;
 import java.util.List;
 
-public class UserAppService {
+public class UserAppService implements AccessController {
   private UsernameRegistry usernameRegistry;
   private QuoteRegistry quoteRegistry;
   private PolicyRegistry policyRegistry;
   private PasswordValidator passwordValidator;
   private TokenTranslator tokenTranslator;
+  private ClockProvider clockProvider;
+  private TokenValidityPeriodProvider tokenValidityPeriodProvider;
+  private TokenRegistry tokenRegistry;
   private PaymentProcessor paymentProcessor;
   private UserKeyGenerator userKeyGenerator;
 
@@ -32,6 +36,9 @@ public class UserAppService {
         ServiceLocator.resolve(PolicyRegistry.class),
         ServiceLocator.resolve(PasswordValidator.class),
         ServiceLocator.resolve(TokenTranslator.class),
+        ServiceLocator.resolve(ClockProvider.class),
+        ServiceLocator.resolve(TokenValidityPeriodProvider.class),
+        ServiceLocator.resolve(TokenRegistry.class),
         ServiceLocator.resolve(PaymentProcessor.class),
         new UserKeyGenerator());
   }
@@ -42,6 +49,9 @@ public class UserAppService {
       PolicyRegistry policyRegistry,
       PasswordValidator passwordValidator,
       TokenTranslator tokenTranslator,
+      ClockProvider clockProvider,
+      TokenValidityPeriodProvider tokenValidityPeriodProvider,
+      TokenRegistry tokenRegistry,
       PaymentProcessor paymentProcessor,
       UserKeyGenerator userKeyGenerator) {
     this.usernameRegistry = usernameRegistry;
@@ -49,6 +59,9 @@ public class UserAppService {
     this.policyRegistry = policyRegistry;
     this.passwordValidator = passwordValidator;
     this.tokenTranslator = tokenTranslator;
+    this.clockProvider = clockProvider;
+    this.tokenValidityPeriodProvider = tokenValidityPeriodProvider;
+    this.tokenRegistry = tokenRegistry;
     this.paymentProcessor = paymentProcessor;
     this.userKeyGenerator = userKeyGenerator;
   }
@@ -64,8 +77,9 @@ public class UserAppService {
     String username = credentials.getUsername();
     String userKey = usernameRegistry.getUserKey(username);
     validateCredentials(userKey, credentials.getPassword());
-    TokenPayload tokenPayload = new TokenPayload(userKey, username);
-    return tokenTranslator.encodeToken(tokenPayload);
+    Token token = createToken(username, userKey);
+    tokenRegistry.register(userKey, token.getValue());
+    return token;
   }
 
   private void validateCredentials(String userKey, String password) {
@@ -74,6 +88,34 @@ public class UserAppService {
 
   private boolean isInvalidCredentials(String userKey, String password) {
     return !passwordValidator.validatePassword(userKey, password);
+  }
+
+  private Token createToken(String username, String userKey) {
+    Instant tokenExpiration =
+        Instant.now(clockProvider.getClock())
+            .plus(tokenValidityPeriodProvider.getTokenValidityPeriod());
+    TokenPayload tokenPayload = new TokenPayload(userKey, username, tokenExpiration);
+    return tokenTranslator.encodeToken(tokenPayload);
+  }
+
+  @Override
+  public void controlAccess(TokenPayload tokenPayload) {
+    checkTokenExpiry(tokenPayload);
+    checkTokenRegistration(tokenPayload);
+  }
+
+  private void checkTokenExpiry(TokenPayload tokenPayload) {
+    if (Instant.now(clockProvider.getClock()).isAfter(tokenPayload.getExpiration())) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  private void checkTokenRegistration(TokenPayload tokenPayload) {
+    try {
+      tokenRegistry.getToken(tokenPayload.getUserKey());
+    } catch (KeyNotFoundException e) {
+      throw new UnauthorizedException();
+    }
   }
 
   public void associateQuote(String userKey, String quoteKey) {
@@ -89,8 +131,8 @@ public class UserAppService {
     return policyRegistry.getPolicyKeys(userKey);
   }
 
-  public void processPayment(String quoteKey, Money price) {
+  public void processQuotePayment(String quoteKey, Money payment) {
     String userKey = quoteRegistry.getUserKey(quoteKey);
-    paymentProcessor.pay(userKey, price);
+    paymentProcessor.process(userKey, payment);
   }
 }

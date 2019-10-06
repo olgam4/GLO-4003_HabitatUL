@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.infrastructure.user;
 
+import ca.ulaval.glo4003.management.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.management.domain.user.exception.InvalidPasswordException;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.management.domain.user.exception;
 
-public class UserUnauthorizedException extends UserException {
+public class UnauthorizedException extends UserException {
   private static final String ERROR = "UNAUTHORIZED";
-  private static final String MESSAGE = "you must be signed in to access this resource";
+  private static final String MESSAGE = "you do not have necessary rights to access this resource";
 
   public String getError() {
     return ERROR;
