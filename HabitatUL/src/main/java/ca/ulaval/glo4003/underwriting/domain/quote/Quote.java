@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.domain.Period;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
@@ -14,7 +14,7 @@ public class Quote extends AggregateRoot {
   static final int COVERAGE_PERIOD_IN_MONTHS = 12;
 
   private QuoteId quoteId;
-  private Premium premium;
+  private Price price;
   private QuoteForm quoteForm;
   private Period effectivePeriod;
   private DateTime expirationDate;
@@ -23,13 +23,13 @@ public class Quote extends AggregateRoot {
 
   public Quote(
       QuoteId quoteId,
-      Premium premium,
+      Price price,
       QuoteForm quoteForm,
       DateTime expirationDate,
       Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
-    this.premium = premium;
+    this.price = price;
     this.quoteForm = quoteForm;
     this.effectivePeriod = computeEffectivePeriod(quoteForm);
     this.expirationDate = expirationDate;
@@ -48,8 +48,8 @@ public class Quote extends AggregateRoot {
     return quoteId;
   }
 
-  public Premium getPremium() {
-    return premium;
+  public Price getPrice() {
+    return price;
   }
 
   public Period getEffectivePeriod() {
@@ -69,7 +69,7 @@ public class Quote extends AggregateRoot {
   }
 
   private void registerQuotePurchaseEvent() {
-    registerEvent(new QuotePurchasedEvent(quoteId, premium, quoteForm, clockProvider));
+    registerEvent(new QuotePurchasedEvent(quoteId, price, quoteForm, clockProvider));
   }
 
   public boolean isPurchased() {

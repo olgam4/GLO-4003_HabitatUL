@@ -6,8 +6,8 @@ import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.application.quote.exception.InvalidEffectiveDateException;
-import ca.ulaval.glo4003.underwriting.domain.QuotePremiumCalculator;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.QuotePriceCalculator;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
@@ -16,7 +16,7 @@ import java.time.Period;
 public class QuoteAppService {
   private static final int NUMBER_OF_MONTHS_OF_COVERAGE = 12;
   private QuoteAssembler quoteAssembler;
-  private QuotePremiumCalculator quotePremiumCalculator;
+  private QuotePriceCalculator quotePriceCalculator;
   private QuoteRepository quoteRepository;
   private QuoteFactory quoteFactory;
   private ClockProvider clockProvider;
@@ -24,7 +24,7 @@ public class QuoteAppService {
   public QuoteAppService() {
     this(
         new QuoteAssembler(),
-        ServiceLocator.resolve(QuotePremiumCalculator.class),
+        ServiceLocator.resolve(QuotePriceCalculator.class),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
             ServiceLocator.resolve(ClockProvider.class)),
@@ -34,12 +34,12 @@ public class QuoteAppService {
 
   public QuoteAppService(
       QuoteAssembler quoteAssembler,
-      QuotePremiumCalculator quotePremiumCalculator,
+      QuotePriceCalculator quotePriceCalculator,
       QuoteFactory quoteFactory,
       QuoteRepository quoteRepository,
       ClockProvider clockProvider) {
     this.quoteAssembler = quoteAssembler;
-    this.quotePremiumCalculator = quotePremiumCalculator;
+    this.quotePriceCalculator = quotePriceCalculator;
     this.quoteFactory = quoteFactory;
     this.quoteRepository = quoteRepository;
     this.clockProvider = clockProvider;
@@ -48,8 +48,8 @@ public class QuoteAppService {
   public QuoteDto requestQuote(QuoteFormDto quoteFormDto) {
     validateEffectiveDate(quoteFormDto.getEffectiveDate());
     QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
-    Premium premium = quotePremiumCalculator.computeQuotePremium(quoteForm);
-    Quote quote = quoteFactory.create(premium, quoteForm);
+    Price price = quotePriceCalculator.computeQuotePrice(quoteForm);
+    Quote quote = quoteFactory.create(price, quoteForm);
     quoteRepository.create(quote);
     return quoteAssembler.from(quote);
   }

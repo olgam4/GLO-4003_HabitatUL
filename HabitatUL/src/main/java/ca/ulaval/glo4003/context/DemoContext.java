@@ -28,11 +28,11 @@ import ca.ulaval.glo4003.mediator.event.EventChannel;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
-import ca.ulaval.glo4003.underwriting.domain.QuotePremiumCalculator;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.QuotePriceCalculator;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
-import ca.ulaval.glo4003.underwriting.infrastructure.DummyQuotePremiumCalculator;
+import ca.ulaval.glo4003.underwriting.infrastructure.DummyQuotePriceCalculator;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryWrapper;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
@@ -90,9 +90,9 @@ public class DemoContext implements Context {
   }
 
   private void registerUnderwritingServices(BoundedContextMediator mediator) {
-    Premium hardCodedPremium = new Premium(BigDecimal.valueOf(200));
+    Price hardCodedPrice = new Price(BigDecimal.valueOf(200));
     ServiceLocator.register(
-        QuotePremiumCalculator.class, new DummyQuotePremiumCalculator(hardCodedPremium));
+        QuotePriceCalculator.class, new DummyQuotePriceCalculator(hardCodedPrice));
     ServiceLocator.register(
         QuoteValidityPeriodProvider.class, new ConfigBasedQuoteValidityPeriodProvider());
     ServiceLocator.register(

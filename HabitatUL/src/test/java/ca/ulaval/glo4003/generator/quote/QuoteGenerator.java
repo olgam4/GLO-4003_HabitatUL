@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.generator.quote;
 
-import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
+import ca.ulaval.glo4003.generator.price.PriceGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
@@ -8,7 +8,7 @@ import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
@@ -31,36 +31,36 @@ public class QuoteGenerator {
   }
 
   public static Quote createValidQuoteWithId(QuoteId quoteId) {
-    Premium premium = PremiumGenerator.create();
+    Price price = PriceGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);
+    return new Quote(quoteId, price, quoteForm, expirationDate, false, clockProvider);
   }
 
   public static Quote createValidQuoteWithEffectiveDate(Date effectiveDate) {
     QuoteId quoteId = createQuoteId();
-    Premium premium = PremiumGenerator.create();
+    Price price = PriceGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(effectiveDate);
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(quoteId, premium, quoteForm, expirationDate, false, clockProvider);
+    return new Quote(quoteId, price, quoteForm, expirationDate, false, clockProvider);
   }
 
   public static Quote createExpiredQuote() {
-    Premium premium = PremiumGenerator.create();
+    Price price = PriceGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(createQuoteId(), premium, quoteForm, expirationDate, false, clockProvider);
+    return new Quote(createQuoteId(), price, quoteForm, expirationDate, false, clockProvider);
   }
 
   public static Quote createPurchasedQuote() {
-    Premium premium = PremiumGenerator.create();
+    Price price = PriceGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(createQuoteId(), premium, quoteForm, expirationDate, true, clockProvider);
+    return new Quote(createQuoteId(), price, quoteForm, expirationDate, true, clockProvider);
   }
 
   private static QuoteId createQuoteId() {

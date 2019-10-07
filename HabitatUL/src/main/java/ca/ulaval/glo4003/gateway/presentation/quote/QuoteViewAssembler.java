@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.domain.Period;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
@@ -56,9 +56,9 @@ public class QuoteViewAssembler {
 
   public QuoteResponse from(QuoteDto quoteDto) {
     QuoteId quoteId = quoteDto.getQuoteId();
-    Premium premium = quoteDto.getPremium();
+    Price price = quoteDto.getPrice();
     Period effectivePeriod = quoteDto.getEffectivePeriod();
     DateTime expirationDate = quoteDto.getExpirationDate();
-    return new QuoteResponse(quoteId, premium, effectivePeriod, expirationDate);
+    return new QuoteResponse(quoteId, price, effectivePeriod, expirationDate);
   }
 }

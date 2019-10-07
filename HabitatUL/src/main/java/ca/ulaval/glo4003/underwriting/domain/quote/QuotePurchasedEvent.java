@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.mediator.event.Event;
 import ca.ulaval.glo4003.mediator.event.EventChannel;
 import ca.ulaval.glo4003.mediator.event.EventPayload;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
@@ -13,7 +13,7 @@ public class QuotePurchasedEvent extends Event {
   private static final String QUOTE_PURCHASE_EVENT_TYPE = "quotePurchasedEvent";
 
   private static final String QUOTE_ID_PAYLOAD_KEY = "quoteId";
-  private static final String PREMIUM_PAYLOAD_KEY = "premium";
+  private static final String PRICE_PAYLOAD_KEY = "price";
   private static final String IDENTITY_PAYLOAD_KEY = "identity";
   private static final String LOCATION_PAYLOAD_KEY = "location";
 
@@ -28,18 +28,18 @@ public class QuotePurchasedEvent extends Event {
   private static final String LOCATION_FLOOR_PAYLOAD_KEY = "floor";
 
   public QuotePurchasedEvent(
-      QuoteId quoteId, Premium premium, QuoteForm quoteForm, ClockProvider clockProvider) {
+      QuoteId quoteId, Price price, QuoteForm quoteForm, ClockProvider clockProvider) {
     super(
         EventChannel.QUOTES,
         QUOTE_PURCHASE_EVENT_TYPE,
-        createPayload(quoteId, premium, quoteForm),
+        createPayload(quoteId, price, quoteForm),
         clockProvider);
   }
 
-  private static EventPayload createPayload(QuoteId quoteId, Premium premium, QuoteForm quoteForm) {
+  private static EventPayload createPayload(QuoteId quoteId, Price price, QuoteForm quoteForm) {
     return EventPayload.EventPayloadBuilder.anEventPayload()
         .withEntry(QUOTE_ID_PAYLOAD_KEY, quoteId.getValue().toString())
-        .withEntry(PREMIUM_PAYLOAD_KEY, premium.getValue())
+        .withEntry(PRICE_PAYLOAD_KEY, price.getValue())
         .withObject(IDENTITY_PAYLOAD_KEY, createIdentityPayload(quoteForm.getIdentity()))
         .withObject(LOCATION_PAYLOAD_KEY, createLocationPayload(quoteForm.getLocation()))
         .build();

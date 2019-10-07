@@ -1,14 +1,15 @@
-package ca.ulaval.glo4003.underwriting.domain.premium;
+package ca.ulaval.glo4003.underwriting.domain;
 
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
-public abstract class PremiumCalculatorIT {
-  private PremiumCalculator subject;
+public abstract class QuotePriceCalculatorIT {
+  private QuotePriceCalculator subject;
   private QuoteForm quoteForm;
 
   @Before
@@ -17,13 +18,13 @@ public abstract class PremiumCalculatorIT {
   }
 
   @Test
-  public void computingQuotePremium_shouldProducePremium() {
+  public void computingQuotePrice_shouldProducePrice() {
     quoteForm = QuoteFormGenerator.createQuoteForm();
 
-    Premium premium = subject.computeQuotePremium(quoteForm);
+    Price price = subject.computeQuotePrice(quoteForm);
 
-    assertNotNull(premium);
+    assertNotNull(price);
   }
 
-  public abstract PremiumCalculator createSubject();
+  public abstract QuotePriceCalculator createSubject();
 }

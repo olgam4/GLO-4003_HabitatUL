@@ -4,7 +4,7 @@
   "title": "quote response",
   "required": [
     "quoteId",
-    "premium",
+    "price",
     "effectivePeriod",
     "expirationDate"
   ],
@@ -14,8 +14,8 @@
       "type": "string",
       "$ref": "../Shared.json#/definitions/uuid"
     },
-    "premium": {
-      "description": "quote premium",
+    "price": {
+      "description": "quote price",
       "$ref": "../Shared.json#/definitions/money"
     },
     "effectivePeriod": {

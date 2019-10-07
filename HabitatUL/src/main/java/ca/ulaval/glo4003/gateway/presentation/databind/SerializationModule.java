@@ -10,7 +10,7 @@ import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.shared.domain.Amount;
 import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.DateTime;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
@@ -58,7 +58,7 @@ public class SerializationModule extends Module {
     serializers.addSerializer(ClaimId.class, new ClaimIdSerializer());
     serializers.addSerializer(Date.class, new DateSerializer());
     serializers.addSerializer(DateTime.class, new DateTimeSerializer());
-    serializers.addSerializer(Premium.class, new PremiumSerializer());
+    serializers.addSerializer(Price.class, new PriceSerializer());
     serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
     serializers.addSerializer(Token.class, new TokenSerializer());
     setupContext.addSerializers(serializers);

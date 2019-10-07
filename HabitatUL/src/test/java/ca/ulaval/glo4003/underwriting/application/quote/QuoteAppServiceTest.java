@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.generator.premium.PremiumGenerator;
+import ca.ulaval.glo4003.generator.price.PriceGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.Date;
@@ -8,8 +8,8 @@ import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.application.quote.exception.InvalidEffectiveDateException;
-import ca.ulaval.glo4003.underwriting.domain.QuotePremiumCalculator;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.QuotePriceCalculator;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteFactory;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -33,10 +33,10 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Premium A_PREMIUM = PremiumGenerator.create();
+  private static final Price A_PRICE = PriceGenerator.create();
   private static final QuoteId QUOTE_ID = new QuoteId();
 
-  @Mock private QuotePremiumCalculator quotePremiumCalculator;
+  @Mock private QuotePriceCalculator quotePriceCalculator;
   @Mock private Quote quote;
   @Mock private QuoteFactory quoteFactory;
   @Mock private QuoteRepository quoteRepository;
@@ -52,20 +52,20 @@ public class QuoteAppServiceTest {
     clockProvider = new FixedClockProvider();
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
-    when(quotePremiumCalculator.computeQuotePremium(any(QuoteForm.class))).thenReturn(A_PREMIUM);
-    when(quoteFactory.create(any(Premium.class), any(QuoteForm.class))).thenReturn(quote);
+    when(quotePriceCalculator.computeQuotePrice(any(QuoteForm.class))).thenReturn(A_PRICE);
+    when(quoteFactory.create(any(Price.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
     subject =
         new QuoteAppService(
-            quoteAssembler, quotePremiumCalculator, quoteFactory, quoteRepository, clockProvider);
+            quoteAssembler, quotePriceCalculator, quoteFactory, quoteRepository, clockProvider);
   }
 
   @Test
   public void requestingQuote_shouldComputeQuotePrice() {
     subject.requestQuote(quoteFormDto);
 
-    verify(quotePremiumCalculator).computeQuotePremium(argThat(matchesQuoteForm(quoteFormDto)));
+    verify(quotePriceCalculator).computeQuotePrice(argThat(matchesQuoteForm(quoteFormDto)));
   }
 
   @Test

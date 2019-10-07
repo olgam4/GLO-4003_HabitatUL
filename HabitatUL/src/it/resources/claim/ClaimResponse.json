@@ -14,7 +14,12 @@
     "status": {
       "description": "claim status",
       "type": "string",
-      "enum": ["RECEIVED", "UNDER_ANALYSIS", "ACCEPTED", "PAID"]
+      "enum": [
+        "RECEIVED",
+        "UNDER_ANALYSIS",
+        "ACCEPTED",
+        "PAID"
+      ]
     }
   }
 }

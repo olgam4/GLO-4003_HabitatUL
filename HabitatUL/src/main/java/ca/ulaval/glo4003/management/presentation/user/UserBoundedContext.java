@@ -35,7 +35,7 @@ public class UserBoundedContext implements BoundedContext {
   private void processQuoteEvent(Event event) {
     if (event.getType().equals(QUOTE_PURCHASED_EVENT_TYPE)) {
       String quoteKey = (String) event.get("quoteId");
-      Money price = new Money(BigDecimal.valueOf((Double) event.get("premium")));
+      Money price = new Money(BigDecimal.valueOf((Double) event.get("price")));
       userAppService.processQuotePayment(quoteKey, price);
     }
   }

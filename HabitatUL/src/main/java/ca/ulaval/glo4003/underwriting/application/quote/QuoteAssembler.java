@@ -9,7 +9,7 @@ public class QuoteAssembler {
   public QuoteDto from(Quote quote) {
     return new QuoteDto(
         quote.getQuoteId(),
-        quote.getPremium(),
+        quote.getPrice(),
         quote.getEffectivePeriod(),
         quote.getExpirationDate());
   }

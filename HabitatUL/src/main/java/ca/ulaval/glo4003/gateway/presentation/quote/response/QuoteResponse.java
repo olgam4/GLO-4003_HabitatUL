@@ -2,21 +2,21 @@ package ca.ulaval.glo4003.gateway.presentation.quote.response;
 
 import ca.ulaval.glo4003.shared.domain.DateTime;
 import ca.ulaval.glo4003.shared.domain.Period;
-import ca.ulaval.glo4003.underwriting.domain.premium.Premium;
+import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"quoteId", "premium", "effectivePeriod", "expirationDate"})
+@JsonPropertyOrder({"quoteId", "price", "effectivePeriod", "expirationDate"})
 public class QuoteResponse {
   private QuoteId quoteId;
-  private Premium premium;
+  private Price price;
   private Period effectivePeriod;
   private DateTime expirationDate;
 
   public QuoteResponse(
-      QuoteId quoteId, Premium premium, Period effectivePeriod, DateTime expirationDate) {
+      QuoteId quoteId, Price price, Period effectivePeriod, DateTime expirationDate) {
     this.quoteId = quoteId;
-    this.premium = premium;
+    this.price = price;
     this.effectivePeriod = effectivePeriod;
     this.expirationDate = expirationDate;
   }
@@ -25,8 +25,8 @@ public class QuoteResponse {
     return quoteId;
   }
 
-  public Premium getPremium() {
-    return premium;
+  public Price getPrice() {
+    return price;
   }
 
   public Period getEffectivePeriod() {
