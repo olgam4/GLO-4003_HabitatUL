@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "claim response",
+  "required": [
+    "id",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "description": "claim id",
+      "$ref": "../Shared.json#/definitions/uuid"
+    },
+    "status": {
+      "description": "claim status",
+      "type": "string",
+      "enum": ["RECEIVED", "UNDER_ANALYSIS", "ACCEPTED", "PAID"]
+    }
+  }
+}

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
+import ca.ulaval.glo4003.generator.user.TokenGenerator;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import com.github.javafaker.Faker;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceIT {
   private static final String USER_KEY = Faker.instance().internet().uuid();
-  private static Token TOKEN = new Token(Faker.instance().internet().uuid());
+  private static final Token TOKEN = TokenGenerator.createToken();
 
   @Mock private UserAppService userAppService;
 

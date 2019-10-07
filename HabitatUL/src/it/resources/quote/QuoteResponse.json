@@ -5,22 +5,34 @@
   "required": [
     "quoteId",
     "premium",
+    "effectivePeriod",
     "expirationDate"
   ],
   "properties": {
     "quoteId": {
       "description": "quote id",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "$ref": "../Shared.json#/definitions/uuid"
     },
     "premium": {
       "description": "quote premium",
-      "type": "number"
+      "$ref": "../Shared.json#/definitions/money"
+    },
+    "effectivePeriod": {
+      "description": "effective period",
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "$ref": "../Shared.json#/definitions/date"
+        },
+        "endDate": {
+          "$ref": "../Shared.json#/definitions/date"
+        }
+      }
     },
     "expirationDate": {
-      "description": "quote expiration date - unix epoch timestamp",
-      "type": "number",
-      "pattern": "^\\d{10}$"
+      "description": "quote expiration",
+      "$ref": "../Shared.json#/definitions/epochTime"
     }
   }
 }

@@ -8,7 +8,7 @@
   "properties": {
     "accessToken": {
       "description": "access token",
-      "type": "string"
+      "$ref": "../Shared.json#/definitions/jwt"
     }
   }
 }

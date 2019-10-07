@@ -60,7 +60,6 @@ public class QuoteMatcher {
   }
 
   public static Matcher<Building> matchesBuilding(final BuildingView buildingView) {
-    System.out.println(buildingView.getNumberOfUnits());
     return allOf(
         hasProperty("numberOfUnits", equalTo(buildingView.getNumberOfUnits())),
         hasProperty("preventionSystems", equalTo(buildingView.getPreventionSystems())),
