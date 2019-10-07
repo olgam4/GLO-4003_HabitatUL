@@ -90,7 +90,7 @@ public class DemoContext implements Context {
   }
 
   private void registerUnderwritingServices(BoundedContextMediator mediator) {
-    Premium hardCodedPremium = new Premium(BigDecimal.valueOf(534.32423423423));
+    Premium hardCodedPremium = new Premium(BigDecimal.valueOf(200));
     ServiceLocator.register(
         QuotePremiumCalculator.class, new DummyQuotePremiumCalculator(hardCodedPremium));
     ServiceLocator.register(
