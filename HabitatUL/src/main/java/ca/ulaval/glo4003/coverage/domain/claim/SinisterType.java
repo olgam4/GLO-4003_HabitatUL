@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum SinisterType {
+  FIRE,
   THEFT;
 
   private static final Map<String, SinisterType> LOOKUP_MAP = new HashMap<>();
