@@ -1,27 +1,21 @@
 language: java
-
 branches:
   only:
   - master
-
 stages:
 - name: All
-
 jobs:
   include:
   - stage: All
     script:
     - mvn verify
-
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-
 deploy:
   provider: script
   script:
   - bash scripts/deploy.sh
   on:
     branch: master
-
 notifications:
   email: false
