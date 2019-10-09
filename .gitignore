@@ -230,5 +230,3 @@ buildNumber.properties
 
 ### Deployment Key ###
 id_rsa
-id_rsa_repo
-id_rsa_wiki

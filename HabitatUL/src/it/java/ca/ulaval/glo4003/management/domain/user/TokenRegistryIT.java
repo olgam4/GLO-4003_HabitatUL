@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.management.domain.user;
 
+import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -9,8 +10,10 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class TokenRegistryIT {
   private static final String USER_KEY = Faker.instance().book().author();
+  private static final String ANOTHER_USER_KEY = Faker.instance().ancient().god();
   private static final String NOT_EXISTING_USER_KEY = Faker.instance().dog().breed();
   private static final String TOKEN = Faker.instance().cat().name();
+  private static final String ANOTHER_TOKEN = Faker.instance().color().name();
   private static final String NOT_EXISTING_TOKEN = Faker.instance().dragonBall().character();
 
   private TokenRegistry subject;
@@ -19,6 +22,16 @@ public abstract class TokenRegistryIT {
   public void setUp() {
     subject = createSubject();
     subject.register(USER_KEY, TOKEN);
+  }
+
+  @Test(expected = KeyAlreadyExistException.class)
+  public void registeringToken_withAlreadyExistingUserKey_shouldThrow() {
+    subject.register(USER_KEY, ANOTHER_TOKEN);
+  }
+
+  @Test(expected = KeyAlreadyExistException.class)
+  public void registeringToken_withAlreadyExistingToken_shouldThrow() {
+    subject.register(ANOTHER_USER_KEY, TOKEN);
   }
 
   @Test
