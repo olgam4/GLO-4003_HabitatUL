@@ -8,4 +8,8 @@ public class Money extends ValueObject {
   public Money(BigDecimal value) {
     amount = new Amount(value);
   }
+
+  public Amount getAmount() {
+    return amount;
+  }
 }

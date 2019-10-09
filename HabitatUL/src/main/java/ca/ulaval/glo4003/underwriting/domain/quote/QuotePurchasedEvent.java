@@ -39,7 +39,7 @@ public class QuotePurchasedEvent extends Event {
   private static EventPayload createPayload(QuoteId quoteId, Price price, QuoteForm quoteForm) {
     return EventPayload.EventPayloadBuilder.anEventPayload()
         .withEntry(QUOTE_ID_PAYLOAD_KEY, quoteId.getValue().toString())
-        .withEntry(PRICE_PAYLOAD_KEY, price.getValue())
+        .withEntry(PRICE_PAYLOAD_KEY, price.getValue().toString())
         .withObject(IDENTITY_PAYLOAD_KEY, createIdentityPayload(quoteForm.getIdentity()))
         .withObject(LOCATION_PAYLOAD_KEY, createLocationPayload(quoteForm.getLocation()))
         .build();

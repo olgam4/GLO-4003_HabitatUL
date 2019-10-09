@@ -5,7 +5,10 @@ import ca.ulaval.glo4003.shared.domain.Money;
 
 public class AlwaysOkPaymentProcessor implements PaymentProcessor {
   @Override
-  public void process(String userKey, Money price) {
-    System.out.println("Payment processed");
+  public void process(String userKey, Money payment) {
+    System.out.println(
+        String.format(
+            "Payment processed for user: <%s> with amount of <%s>",
+            userKey, payment.getAmount().getValue().toString()));
   }
 }
