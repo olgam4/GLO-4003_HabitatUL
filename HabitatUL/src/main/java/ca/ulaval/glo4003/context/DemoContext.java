@@ -7,6 +7,8 @@ import ca.ulaval.glo4003.coverage.persistence.claim.InMemoryClaimRepository;
 import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
+import ca.ulaval.glo4003.gateway.presentation.databind.ConfigBasedLocalZoneIdProvider;
+import ca.ulaval.glo4003.gateway.presentation.databind.LocalZoneIdProvider;
 import ca.ulaval.glo4003.management.application.user.AccessController;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.management.domain.user.*;
@@ -41,6 +43,10 @@ import java.math.BigDecimal;
 import java.util.Properties;
 
 public class DemoContext implements Context {
+  public DemoContext() {
+    ServiceLocator.reset();
+  }
+
   @Override
   public void execute() {
     Properties properties = ConfigFileReader.readProperties("config.properties");
@@ -53,6 +59,7 @@ public class DemoContext implements Context {
 
   private void registerCommonServices() {
     ServiceLocator.register(ClockProvider.class, new SystemUtcClockProvider());
+    ServiceLocator.register(LocalZoneIdProvider.class, new ConfigBasedLocalZoneIdProvider());
   }
 
   private void registerManagementServices(Properties properties, BoundedContextMediator mediator) {

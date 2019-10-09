@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.databind;
 
+import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
@@ -20,6 +21,8 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
+
+import java.time.ZoneId;
 
 public class SerializationModule extends Module {
   @Override
@@ -57,10 +60,15 @@ public class SerializationModule extends Module {
     SimpleSerializers serializers = new SimpleSerializers();
     serializers.addSerializer(ClaimId.class, new ClaimIdSerializer());
     serializers.addSerializer(Date.class, new DateSerializer());
-    serializers.addSerializer(DateTime.class, new DateTimeSerializer());
+    serializers.addSerializer(DateTime.class, new DateTimeSerializer(getLocalZoneId()));
     serializers.addSerializer(Price.class, new PriceSerializer());
     serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
     serializers.addSerializer(Token.class, new TokenSerializer());
     setupContext.addSerializers(serializers);
+  }
+
+  private ZoneId getLocalZoneId() {
+    LocalZoneIdProvider provider = ServiceLocator.resolve(LocalZoneIdProvider.class);
+    return provider.getLocalZoneId();
   }
 }

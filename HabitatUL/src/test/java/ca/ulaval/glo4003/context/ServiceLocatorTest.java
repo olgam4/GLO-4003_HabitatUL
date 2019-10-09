@@ -35,6 +35,15 @@ public class ServiceLocatorTest {
     ServiceLocator.register(TestContract.class, new TestImplementation());
   }
 
+  @Test
+  public void resettingServiceLocator_shouldForgetAllRegisteredContractsAndServices() {
+    ServiceLocator.register(TestContract.class, new TestImplementation());
+
+    ServiceLocator.reset();
+
+    ServiceLocator.register(TestContract.class, new TestImplementation());
+  }
+
   private interface TestContract {}
 
   private class TestImplementation implements TestContract {}

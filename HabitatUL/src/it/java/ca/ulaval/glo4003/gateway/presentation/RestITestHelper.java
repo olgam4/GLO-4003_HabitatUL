@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
 import ca.ulaval.glo4003.Server;
+import ca.ulaval.glo4003.context.TestContext;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.specification.RequestSpecification;
@@ -26,6 +27,7 @@ public class RestITestHelper {
   private RestITestHelper() {}
 
   public static void startServer() {
+    new TestContext().execute();
     server = new Server();
     server.start(TEST_SERVER_PORT);
   }

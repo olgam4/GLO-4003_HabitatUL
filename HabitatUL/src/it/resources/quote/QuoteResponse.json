@@ -32,7 +32,7 @@
     },
     "expirationDate": {
       "description": "quote expiration",
-      "$ref": "../Shared.json#/definitions/epochTime"
+      "$ref": "../Shared.json#/definitions/dateTime"
     }
   }
 }
