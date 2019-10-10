@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.generator;
 
-import ca.ulaval.glo4003.shared.domain.Money;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;

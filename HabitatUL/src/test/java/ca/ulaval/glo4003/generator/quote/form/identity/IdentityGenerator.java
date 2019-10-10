@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.generator.quote.form.identity;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityView;
 import ca.ulaval.glo4003.generator.EnumSampler;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import com.github.javafaker.Faker;

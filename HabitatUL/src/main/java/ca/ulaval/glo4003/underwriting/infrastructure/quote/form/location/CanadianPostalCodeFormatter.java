@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.InvalidPostalCodeException;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.InvalidPostalCodeError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCodeFormatter;
 
 public class CanadianPostalCodeFormatter implements PostalCodeFormatter {
@@ -11,6 +11,6 @@ public class CanadianPostalCodeFormatter implements PostalCodeFormatter {
     String upperCasePostalCode = value.toUpperCase().replaceAll("\\s+", "");
 
     if (upperCasePostalCode.matches(CANADIAN_POSTAL_CODE_REGEX)) return upperCasePostalCode;
-    else throw new InvalidPostalCodeException(value);
+    else throw new InvalidPostalCodeError(value);
   }
 }

@@ -7,6 +7,8 @@ import ca.ulaval.glo4003.mediator.event.Event;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,21 +37,21 @@ public class EventPublisherQuoteRepositoryWrapperTest {
   }
 
   @Test
-  public void gettingQuoteById_shouldDelegateToQuoteRepository() {
+  public void gettingQuoteById_shouldDelegateToQuoteRepository() throws QuoteNotFoundException {
     subject.getById(QUOTE_ID);
 
     verify(quoteRepository).getById(QUOTE_ID);
   }
 
   @Test
-  public void creatingQuote_shouldDelegateToQuoteRepository() {
+  public void creatingQuote_shouldDelegateToQuoteRepository() throws QuoteAlreadyCreatedException {
     subject.create(quote);
 
     verify(quoteRepository).create(quote);
   }
 
   @Test
-  public void creatingQuote_shouldPublishDomainEvents() {
+  public void creatingQuote_shouldPublishDomainEvents() throws QuoteAlreadyCreatedException {
     int randomNumber = Faker.instance().number().randomDigitNotZero();
     List<Event> events = EventGenerator.createList(randomNumber);
     when(quote.getEvents()).thenReturn(events);
@@ -60,7 +62,7 @@ public class EventPublisherQuoteRepositoryWrapperTest {
   }
 
   @Test
-  public void updatingQuote_shouldDelegateToQuoteRepository() {
+  public void updatingQuote_shouldDelegateToQuoteRepository() throws QuoteNotFoundException {
     Quote quote = QuoteGenerator.createValidQuote();
 
     subject.update(quote);
@@ -69,7 +71,7 @@ public class EventPublisherQuoteRepositoryWrapperTest {
   }
 
   @Test
-  public void updatingQuote_shouldPublishDomainEvents() {
+  public void updatingQuote_shouldPublishDomainEvents() throws QuoteNotFoundException {
     int randomNumber = Faker.instance().number().randomDigitNotZero();
     List<Event> events = EventGenerator.createList(randomNumber);
     when(quote.getEvents()).thenReturn(events);

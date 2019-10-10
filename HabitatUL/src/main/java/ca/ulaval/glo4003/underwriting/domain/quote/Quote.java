@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.mediator.AggregateRoot;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.DateTime;
-import ca.ulaval.glo4003.shared.domain.Period;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.price.Price;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class Quote extends AggregateRoot {
@@ -61,8 +61,8 @@ public class Quote extends AggregateRoot {
   }
 
   public void purchase() {
-    if (isPurchased()) throw new QuoteAlreadyPurchasedException(quoteId);
-    if (isExpired()) throw new QuoteExpiredException(quoteId);
+    if (isPurchased()) throw new QuoteAlreadyPurchasedError(quoteId);
+    if (isExpired()) throw new QuoteExpiredError(quoteId);
 
     purchased = true;
     registerQuotePurchaseEvent();

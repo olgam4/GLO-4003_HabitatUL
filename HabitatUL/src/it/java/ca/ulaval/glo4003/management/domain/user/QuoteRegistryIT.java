@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.management.domain.user;
 
-import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundError;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public abstract class QuoteRegistryIT {
     assertEquals(USER_KEY, subject.getUserKey(QUOTE_KEY));
   }
 
-  @Test(expected = KeyNotFoundException.class)
+  @Test(expected = KeyNotFoundError.class)
   public void gettingUserKey_withNotExistingQuoteKey_shouldThrow() {
     subject.getUserKey(NOT_EXISTING_QUOTE_KEY);
   }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.response;
 
-import ca.ulaval.glo4003.shared.domain.DateTime;
-import ca.ulaval.glo4003.shared.domain.Period;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

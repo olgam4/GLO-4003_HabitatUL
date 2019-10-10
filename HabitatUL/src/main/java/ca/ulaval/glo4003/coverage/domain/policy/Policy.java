@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
 import ca.ulaval.glo4003.coverage.domain.claim.*;
-import ca.ulaval.glo4003.coverage.domain.policy.exception.NotDeclaredBicycleException;
+import ca.ulaval.glo4003.coverage.domain.policy.exception.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Policy extends AggregateRoot {
 
   private void checkIfLossDeclarationContainsNotDeclaredBicycle(LossDeclarations lossDeclarations) {
     if (lossDeclarations.getLossDeclarations().containsKey(LossCategory.BICYCLE)) {
-      throw new NotDeclaredBicycleException();
+      throw new NotDeclaredBicycleError();
     }
   }
 }

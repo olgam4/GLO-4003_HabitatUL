@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form;
 
-import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;

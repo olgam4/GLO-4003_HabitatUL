@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.shared.domain;
 
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -46,17 +48,6 @@ public class DateTest {
   }
 
   @Test
-  public void subtractingDates_shouldSubtract() {
-    subject = AFTER_DATE;
-    Period period = Period.ofDays(Faker.instance().number().randomDigit());
-
-    Date observed = Date.from(subject.getValue().minus(period));
-
-    Date expected = Date.from(AFTER_DATE_VALUE.minus(period));
-    assertEquals(expected, observed);
-  }
-
-  @Test
   public void addingDates_shouldAdd() {
     subject = BEFORE_DATE;
     Period period = Period.ofDays(Faker.instance().number().randomDigit());
@@ -64,6 +55,17 @@ public class DateTest {
     Date observed = subject.plus(period);
 
     Date expected = Date.from(BEFORE_DATE_VALUE.plus(period));
+    assertEquals(expected, observed);
+  }
+
+  @Test
+  public void subtractingDates_shouldSubtract() {
+    subject = AFTER_DATE;
+    Period period = Period.ofDays(Faker.instance().number().randomDigit());
+
+    Date observed = subject.minus(period);
+
+    Date expected = Date.from(AFTER_DATE_VALUE.minus(period));
     assertEquals(expected, observed);
   }
 }

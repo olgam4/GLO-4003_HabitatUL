@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.gateway.presentation.claim;
 import ca.ulaval.glo4003.coverage.application.claim.ClaimAppService;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
-import ca.ulaval.glo4003.gateway.presentation.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.claim.response.ClaimResponse;
+import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

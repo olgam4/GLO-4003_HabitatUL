@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.domain.user;
 
-import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistException;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistError;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundError;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,12 +24,12 @@ public abstract class UsernameRegistryIT {
     subject.register(USER_KEY, USERNAME);
   }
 
-  @Test(expected = KeyAlreadyExistException.class)
+  @Test(expected = KeyAlreadyExistError.class)
   public void registeringUsername_withAlreadyExistingUserKey_shouldThrow() {
     subject.register(USER_KEY, ANOTHER_USERNAME);
   }
 
-  @Test(expected = KeyAlreadyExistException.class)
+  @Test(expected = KeyAlreadyExistError.class)
   public void registeringUsername_withAlreadyExistingUsername_shouldThrow() {
     subject.register(ANOTHER_USER_KEY, USERNAME);
   }
@@ -39,7 +39,7 @@ public abstract class UsernameRegistryIT {
     assertEquals(USER_KEY, subject.getUserKey(USERNAME));
   }
 
-  @Test(expected = KeyNotFoundException.class)
+  @Test(expected = KeyNotFoundError.class)
   public void gettingUserKey_withNotExistingUsername_shouldThrow() {
     subject.getUserKey(NOT_EXISTING_USERNAME);
   }
@@ -49,7 +49,7 @@ public abstract class UsernameRegistryIT {
     assertEquals(USERNAME, subject.getUsername(USER_KEY));
   }
 
-  @Test(expected = KeyNotFoundException.class)
+  @Test(expected = KeyNotFoundError.class)
   public void gettingUsername_withNotExistingUserKey_shouldThrow() {
     subject.getUsername(NOT_EXISTING_USER_KEY);
   }

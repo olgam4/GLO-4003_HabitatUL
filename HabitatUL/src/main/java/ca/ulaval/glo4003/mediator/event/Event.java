@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.mediator.event;
 
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.ValueComparableObject;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 import java.time.Instant;
 

@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.generator.quote.form.personal;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.PersonalPropertyView;
 import ca.ulaval.glo4003.generator.EnumSampler;
-import ca.ulaval.glo4003.shared.domain.Amount;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;

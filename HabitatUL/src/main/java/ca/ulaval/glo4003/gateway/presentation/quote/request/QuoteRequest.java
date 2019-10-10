@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
 public class QuoteRequest {
   private IdentityView identity;

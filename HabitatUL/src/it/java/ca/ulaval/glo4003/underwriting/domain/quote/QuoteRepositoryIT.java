@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPersistedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotYetPersistedException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,25 +22,28 @@ public abstract class QuoteRepositoryIT {
   }
 
   @Test(expected = QuoteNotFoundException.class)
-  public void gettingQuoteById_withUnknownQuoteId_shouldThrow() {
+  public void gettingQuoteById_withUnknownQuoteId_shouldThrow() throws QuoteNotFoundException {
     subject.getById(new QuoteId());
   }
 
   @Test
-  public void creatingQuote_shouldPersistQuoteAsIs() {
+  public void creatingQuote_shouldPersistQuoteAsIs()
+      throws QuoteAlreadyCreatedException, QuoteNotFoundException {
     subject.create(quote);
 
     assertThat(subject.getById(quoteId), matchesQuote(quote));
   }
 
-  @Test(expected = QuoteAlreadyPersistedException.class)
-  public void creatingQuote_withAlreadyPersistedQuote_shouldThrow() {
+  @Test(expected = QuoteAlreadyCreatedException.class)
+  public void creatingQuote_withAlreadyPersistedQuote_shouldThrow()
+      throws QuoteAlreadyCreatedException {
     subject.create(quote);
     subject.create(quote);
   }
 
   @Test
-  public void updatingQuote_shouldChangeAssociatedQuote() {
+  public void updatingQuote_shouldChangeAssociatedQuote()
+      throws QuoteNotFoundException, QuoteAlreadyCreatedException {
     subject.create(quote);
 
     Quote updatedQuote = QuoteGenerator.createValidQuoteWithId(quoteId);
@@ -50,8 +52,8 @@ public abstract class QuoteRepositoryIT {
     assertThat(subject.getById(quoteId), matchesQuote(updatedQuote));
   }
 
-  @Test(expected = QuoteNotYetPersistedException.class)
-  public void updatingQuote_withNotYetPersistedQuote_shouldThrow() {
+  @Test(expected = QuoteNotFoundException.class)
+  public void updatingQuote_withNotYetPersistedQuote_shouldThrow() throws QuoteNotFoundException {
     subject.update(quote);
   }
 

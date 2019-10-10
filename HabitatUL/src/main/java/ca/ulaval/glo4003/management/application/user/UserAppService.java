@@ -1,18 +1,18 @@
 package ca.ulaval.glo4003.management.application.user;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
+import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsError;
 import ca.ulaval.glo4003.management.domain.user.*;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
-import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundError;
+import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedError;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.management.domain.user.token.TokenValidityPeriodProvider;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Money;
+import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 import java.time.Instant;
 import java.util.List;
@@ -83,7 +83,7 @@ public class UserAppService implements AccessController {
   }
 
   private void validateCredentials(String userKey, String password) {
-    if (isInvalidCredentials(userKey, password)) throw new InvalidCredentialsException();
+    if (isInvalidCredentials(userKey, password)) throw new InvalidCredentialsError();
   }
 
   private boolean isInvalidCredentials(String userKey, String password) {
@@ -106,15 +106,15 @@ public class UserAppService implements AccessController {
 
   private void checkTokenExpiry(TokenPayload tokenPayload) {
     if (Instant.now(clockProvider.getClock()).isAfter(tokenPayload.getExpiration())) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedError();
     }
   }
 
   private void checkTokenRegistration(TokenPayload tokenPayload) {
     try {
       tokenRegistry.getToken(tokenPayload.getUserKey());
-    } catch (KeyNotFoundException e) {
-      throw new UnauthorizedException();
+    } catch (KeyNotFoundError e) {
+      throw new UnauthorizedError();
     }
   }
 

@@ -53,17 +53,17 @@ public class FloorTest {
     assertEquals(-floorNumber, subject.getFloorNumber());
   }
 
-  @Test(expected = InvalidFloorException.class)
+  @Test(expected = InvalidFloorError.class)
   public void parsingFloor_withInvalidFloor_shouldThrow() {
     new Floor("invalid floor");
   }
 
-  @Test(expected = InvalidFloorException.class)
+  @Test(expected = InvalidFloorError.class)
   public void parsingFloor_withBasementNumberInferiorTo1() {
     new Floor("SS0");
   }
 
-  @Test(expected = InvalidFloorException.class)
+  @Test(expected = InvalidFloorError.class)
   public void parsingFloor_withSubsequentFloorNumberInferiorTo3_shouldThrow() {
     new Floor("2TH");
   }

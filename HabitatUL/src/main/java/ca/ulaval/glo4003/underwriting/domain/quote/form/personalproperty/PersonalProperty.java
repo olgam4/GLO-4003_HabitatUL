@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty;
 
-import ca.ulaval.glo4003.shared.domain.Amount;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 public class PersonalProperty {
   private Amount coverageAmount;

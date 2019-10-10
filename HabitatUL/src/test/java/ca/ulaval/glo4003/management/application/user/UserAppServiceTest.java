@@ -4,18 +4,18 @@ import ca.ulaval.glo4003.generator.MoneyGenerator;
 import ca.ulaval.glo4003.generator.user.CredentialsGenerator;
 import ca.ulaval.glo4003.generator.user.TokenGenerator;
 import ca.ulaval.glo4003.generator.user.TokenPayloadGenerator;
-import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsException;
+import ca.ulaval.glo4003.management.application.user.exception.InvalidCredentialsError;
 import ca.ulaval.glo4003.management.domain.user.*;
 import ca.ulaval.glo4003.management.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
-import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundError;
+import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedError;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.management.domain.user.token.TokenValidityPeriodProvider;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Money;
+import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -131,7 +131,7 @@ public class UserAppServiceTest {
     verify(tokenRegistry).register(USER_KEY, TOKEN.getValue());
   }
 
-  @Test(expected = InvalidCredentialsException.class)
+  @Test(expected = InvalidCredentialsError.class)
   public void authenticatingUser_withInvalidCredentials_shouldThrow() {
     when(passwordValidator.validatePassword(any(), any())).thenReturn(false);
 
@@ -143,16 +143,16 @@ public class UserAppServiceTest {
     subject.controlAccess(TOKEN_PAYLAOD);
   }
 
-  @Test(expected = UnauthorizedException.class)
+  @Test(expected = UnauthorizedError.class)
   public void controllingAccess_withExpiredTokenPayload_shouldThrow() {
     TokenPayload expiredTokenPayload = TokenPayloadGenerator.createExpiredTokenPayload();
 
     subject.controlAccess(expiredTokenPayload);
   }
 
-  @Test(expected = UnauthorizedException.class)
+  @Test(expected = UnauthorizedError.class)
   public void controllingAccess_withUnregisteredToken_shouldThrow() {
-    when(tokenRegistry.getToken(TOKEN_PAYLAOD.getUserKey())).thenThrow(KeyNotFoundException.class);
+    when(tokenRegistry.getToken(TOKEN_PAYLAOD.getUserKey())).thenThrow(KeyNotFoundError.class);
 
     subject.controlAccess(TOKEN_PAYLAOD);
   }

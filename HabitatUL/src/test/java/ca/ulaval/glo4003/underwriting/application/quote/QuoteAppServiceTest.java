@@ -2,24 +2,29 @@ package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.generator.price.PriceGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.application.quote.exception.InvalidEffectiveDateException;
-import ca.ulaval.glo4003.underwriting.domain.QuotePriceCalculator;
+import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
+import ca.ulaval.glo4003.underwriting.application.quote.error.InvalidEffectiveDateError;
+import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
 import ca.ulaval.glo4003.underwriting.domain.price.Price;
+import ca.ulaval.glo4003.underwriting.domain.price.QuotePriceCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteFactory;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
@@ -47,7 +52,7 @@ public class QuoteAppServiceTest {
   private QuoteFormDto quoteFormDto;
 
   @Before
-  public void setUp() {
+  public void setUp() throws QuoteNotFoundException {
     quoteAssembler = new QuoteAssembler();
     clockProvider = new FixedClockProvider();
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
@@ -69,7 +74,7 @@ public class QuoteAppServiceTest {
   }
 
   @Test
-  public void requestingQuote_shouldCreateQuote() {
+  public void requestingQuote_shouldCreateQuote() throws QuoteAlreadyCreatedException {
     subject.requestQuote(quoteFormDto);
 
     verify(quoteRepository).create(quote);
@@ -82,8 +87,39 @@ public class QuoteAppServiceTest {
     assertThat(observedQuoteDto, matchesQuoteDto(quote));
   }
 
+  @Test(expected = InvalidEffectiveDateError.class)
+  public void requestingQuote_withEffectiveDateInThePast_shouldThrow() {
+    LocalDate date =
+        LocalDate.now(clockProvider.getClock())
+            .minus(Period.ofYears(Faker.instance().number().randomDigitNotZero()));
+    Date invalidEffectiveDate = Date.from(date);
+
+    quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);
+
+    subject.requestQuote(quoteFormDto);
+  }
+
+  @Test(expected = InvalidEffectiveDateError.class)
+  public void requestingQuote_withEffectiveDateTooFarInTheFuture_shouldThrow() {
+    LocalDate date =
+        LocalDate.now(clockProvider.getClock())
+            .plus(Period.ofYears(Faker.instance().number().randomDigitNotZero() + 1));
+    Date invalidEffectiveDate = Date.from(date);
+    quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);
+
+    subject.requestQuote(quoteFormDto);
+  }
+
+  @Test(expected = CouldNotRequestQuoteError.class)
+  public void requestingQuote_withQuoteAlreadyCreated_shouldThrow()
+      throws QuoteAlreadyCreatedException {
+    Mockito.doThrow(QuoteAlreadyCreatedException.class).when(quoteRepository).create(quote);
+
+    subject.requestQuote(quoteFormDto);
+  }
+
   @Test
-  public void purchasingQuote_shouldGetQuoteById() {
+  public void purchasingQuote_shouldGetQuoteById() throws QuoteNotFoundException {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quoteRepository).getById(QUOTE_ID);
@@ -97,32 +133,16 @@ public class QuoteAppServiceTest {
   }
 
   @Test
-  public void purchasingQuote_shouldUpdateQuote() {
+  public void purchasingQuote_shouldUpdateQuote() throws QuoteNotFoundException {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quoteRepository).update(quote);
   }
 
-  @Test(expected = InvalidEffectiveDateException.class)
-  public void requestingQuoteWithEffectiveDateInThePast_shouldThrow() {
-    LocalDate date =
-        LocalDate.now(clockProvider.getClock())
-            .minus(Period.ofYears(Faker.instance().number().randomDigitNotZero()));
-    Date invalidEffectiveDate = Date.from(date);
+  @Test(expected = QuoteNotFoundError.class)
+  public void purchasingQuote_withNotExistingQuote_shouldThrow() throws QuoteNotFoundException {
+    when(quoteRepository.getById(QUOTE_ID)).thenThrow(QuoteNotFoundException.class);
 
-    quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);
-
-    subject.requestQuote(quoteFormDto);
-  }
-
-  @Test(expected = InvalidEffectiveDateException.class)
-  public void requestingQuoteWithEffectiveDateTooFarInTheFuture_shouldThrow() {
-    LocalDate date =
-        LocalDate.now(clockProvider.getClock())
-            .plus(Period.ofYears(Faker.instance().number().numberBetween(2, 10)));
-    Date invalidEffectiveDate = Date.from(date);
-    quoteFormDto = QuoteFormGenerator.createQuoteFormDtoWithEffectiveDate(invalidEffectiveDate);
-
-    subject.requestQuote(quoteFormDto);
+    subject.purchaseQuote(QUOTE_ID);
   }
 }

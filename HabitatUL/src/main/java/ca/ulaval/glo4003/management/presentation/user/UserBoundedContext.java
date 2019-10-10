@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.mediator.BoundedContext;
 import ca.ulaval.glo4003.mediator.event.Event;
 import ca.ulaval.glo4003.mediator.event.EventChannel;
-import ca.ulaval.glo4003.shared.domain.Money;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.math.BigDecimal;
 

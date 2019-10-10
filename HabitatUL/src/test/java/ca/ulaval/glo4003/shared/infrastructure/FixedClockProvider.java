@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.shared.infrastructure;
 
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 import java.time.Clock;
 import java.time.Instant;

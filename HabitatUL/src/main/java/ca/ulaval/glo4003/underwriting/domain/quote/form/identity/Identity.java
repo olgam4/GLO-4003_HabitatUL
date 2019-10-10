@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
 
-import ca.ulaval.glo4003.shared.domain.Date;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
 public class Identity extends ValueObject {
   private String firstName;

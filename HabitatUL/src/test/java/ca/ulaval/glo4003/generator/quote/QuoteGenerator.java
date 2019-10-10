@@ -2,9 +2,9 @@ package ca.ulaval.glo4003.generator.quote;
 
 import ca.ulaval.glo4003.generator.price.PriceGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.DateTime;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;

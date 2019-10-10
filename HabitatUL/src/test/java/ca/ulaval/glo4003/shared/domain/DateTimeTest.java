@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.shared.domain;
 
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 import org.junit.Before;

@@ -4,6 +4,8 @@ import ca.ulaval.glo4003.mediator.BoundedContextMediator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 
 public class EventPublisherQuoteRepositoryWrapper implements QuoteRepository {
   private QuoteRepository quoteRepository;
@@ -16,18 +18,18 @@ public class EventPublisherQuoteRepositoryWrapper implements QuoteRepository {
   }
 
   @Override
-  public Quote getById(QuoteId quoteId) {
+  public Quote getById(QuoteId quoteId) throws QuoteNotFoundException {
     return quoteRepository.getById(quoteId);
   }
 
   @Override
-  public void create(Quote quote) {
+  public void create(Quote quote) throws QuoteAlreadyCreatedException {
     quoteRepository.create(quote);
     publishEvents(quote);
   }
 
   @Override
-  public void update(Quote quote) {
+  public void update(Quote quote) throws QuoteNotFoundException {
     quoteRepository.update(quote);
     publishEvents(quote);
   }

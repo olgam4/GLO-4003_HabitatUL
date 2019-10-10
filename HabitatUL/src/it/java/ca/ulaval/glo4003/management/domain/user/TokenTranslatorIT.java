@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.domain.user;
 
 import ca.ulaval.glo4003.generator.user.TokenPayloadGenerator;
-import ca.ulaval.glo4003.management.domain.user.token.InvalidTokenSignatureException;
+import ca.ulaval.glo4003.management.domain.user.token.InvalidTokenSignatureError;
 import ca.ulaval.glo4003.management.domain.user.token.Token;
 import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
@@ -31,7 +31,7 @@ public abstract class TokenTranslatorIT {
     assertEquals(TOKEN_PAYLOAD, tokenPayload);
   }
 
-  @Test(expected = InvalidTokenSignatureException.class)
+  @Test(expected = InvalidTokenSignatureError.class)
   public void decodingToken_withInvalidToken_shouldThrow() {
     subject.decodeToken(AN_INVALID_TOKEN);
   }

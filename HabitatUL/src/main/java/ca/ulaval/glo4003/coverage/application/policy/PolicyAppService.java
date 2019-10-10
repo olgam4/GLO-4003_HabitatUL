@@ -11,7 +11,7 @@ import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
   private PolicyFactory policyFactory;

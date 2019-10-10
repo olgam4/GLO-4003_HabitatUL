@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.gateway.presentation.databind.JacksonFeature;
-import ca.ulaval.glo4003.gateway.presentation.filter.CORSResponseFilter;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.JacksonFeature;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.CORSResponseFilter;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;

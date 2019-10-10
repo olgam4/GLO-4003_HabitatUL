@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.UsernameRegistry;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistException;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistError;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,13 +21,13 @@ public class InMemoryUsernameRegistry implements UsernameRegistry {
 
   private void checkIfUserKeyAlreadyExist(String userKey) {
     if (usernameByUserKey.containsKey(userKey)) {
-      throw new KeyAlreadyExistException(userKey);
+      throw new KeyAlreadyExistError(userKey);
     }
   }
 
   private void checkIfUsernameAlreadyExist(String username) {
     if (userKeyByUsername.containsKey(username)) {
-      throw new KeyAlreadyExistException(username);
+      throw new KeyAlreadyExistError(username);
     }
   }
 
@@ -36,7 +36,7 @@ public class InMemoryUsernameRegistry implements UsernameRegistry {
     return userKeyByUsername.computeIfAbsent(
         username,
         (String newKey) -> {
-          throw new KeyNotFoundException(username);
+          throw new KeyNotFoundError(username);
         });
   }
 
@@ -45,7 +45,7 @@ public class InMemoryUsernameRegistry implements UsernameRegistry {
     return usernameByUserKey.computeIfAbsent(
         userKey,
         (String newKey) -> {
-          throw new KeyNotFoundException(userKey);
+          throw new KeyNotFoundError(userKey);
         });
   }
 }

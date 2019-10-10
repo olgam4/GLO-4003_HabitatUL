@@ -25,10 +25,10 @@ public class Floor extends ValueObject {
   private String value;
   private int floorNumber;
 
-  public Floor(String value) throws InvalidFloorException {
+  public Floor(String value) throws InvalidFloorError {
     this.value = value;
     Optional<Integer> parsedFloorNumber = parse(value);
-    this.floorNumber = parsedFloorNumber.orElseThrow(() -> new InvalidFloorException(value));
+    this.floorNumber = parsedFloorNumber.orElseThrow(() -> new InvalidFloorError(value));
   }
 
   private Optional<Integer> parse(String value) {

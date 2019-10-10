@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyFactory {
   private ClockProvider clockProvider;

@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.mediator.event.Event;
 import ca.ulaval.glo4003.mediator.event.EventChannel;
 import ca.ulaval.glo4003.mediator.event.EventPayload;
-import ca.ulaval.glo4003.shared.domain.Money;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

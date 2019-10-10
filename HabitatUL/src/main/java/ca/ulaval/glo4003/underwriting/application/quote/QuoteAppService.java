@@ -1,20 +1,25 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.application.quote.exception.InvalidEffectiveDateException;
-import ca.ulaval.glo4003.underwriting.domain.QuotePriceCalculator;
+import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
+import ca.ulaval.glo4003.underwriting.application.quote.error.InvalidEffectiveDateError;
+import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
 import ca.ulaval.glo4003.underwriting.domain.price.Price;
+import ca.ulaval.glo4003.underwriting.domain.price.QuotePriceCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
+import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 import java.time.Period;
 
 public class QuoteAppService {
   private static final int NUMBER_OF_MONTHS_OF_COVERAGE = 12;
+
   private QuoteAssembler quoteAssembler;
   private QuotePriceCalculator quotePriceCalculator;
   private QuoteRepository quoteRepository;
@@ -46,31 +51,39 @@ public class QuoteAppService {
   }
 
   public QuoteDto requestQuote(QuoteFormDto quoteFormDto) {
-    validateEffectiveDate(quoteFormDto.getEffectiveDate());
-    QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
-    Price price = quotePriceCalculator.computeQuotePrice(quoteForm);
-    Quote quote = quoteFactory.create(price, quoteForm);
-    quoteRepository.create(quote);
-    return quoteAssembler.from(quote);
-  }
-
-  public void purchaseQuote(QuoteId quoteId) {
-    Quote quote = quoteRepository.getById(quoteId);
-    quote.purchase();
-    quoteRepository.update(quote);
-  }
-
-  private void validateEffectiveDate(Date effectiveDate) {
-    if (checkValidEffectiveDate(effectiveDate)) {
-      throw new InvalidEffectiveDateException();
+    try {
+      validateEffectiveDate(quoteFormDto.getEffectiveDate());
+      QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
+      Price price = quotePriceCalculator.computeQuotePrice(quoteForm);
+      Quote quote = quoteFactory.create(price, quoteForm);
+      quoteRepository.create(quote);
+      return quoteAssembler.from(quote);
+    } catch (QuoteAlreadyCreatedException e) {
+      throw new CouldNotRequestQuoteError();
     }
   }
 
-  private boolean checkValidEffectiveDate(Date effectiveDate) {
+  private void validateEffectiveDate(Date effectiveDate) {
+    if (isInvalidEffectiveDate(effectiveDate)) {
+      throw new InvalidEffectiveDateError();
+    }
+  }
+
+  private boolean isInvalidEffectiveDate(Date effectiveDate) {
     Date now = Date.now(clockProvider.getClock());
     boolean tooLate = now.isAfter(effectiveDate);
     boolean tooSoon =
         now.plus(Period.ofMonths(NUMBER_OF_MONTHS_OF_COVERAGE)).isBefore(effectiveDate);
     return tooLate || tooSoon;
+  }
+
+  public void purchaseQuote(QuoteId quoteId) {
+    try {
+      Quote quote = quoteRepository.getById(quoteId);
+      quote.purchase();
+      quoteRepository.update(quote);
+    } catch (QuoteNotFoundException e) {
+      throw new QuoteNotFoundError(quoteId);
+    }
   }
 }

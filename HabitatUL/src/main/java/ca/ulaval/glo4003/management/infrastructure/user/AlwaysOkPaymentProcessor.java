@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.management.infrastructure.user;
 
 import ca.ulaval.glo4003.management.domain.user.PaymentProcessor;
-import ca.ulaval.glo4003.shared.domain.Money;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 
 public class AlwaysOkPaymentProcessor implements PaymentProcessor {
   @Override

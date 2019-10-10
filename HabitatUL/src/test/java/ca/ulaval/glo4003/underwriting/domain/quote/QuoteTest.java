@@ -2,10 +2,10 @@ package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.mediator.event.Event;
-import ca.ulaval.glo4003.shared.domain.Date;
-import ca.ulaval.glo4003.shared.domain.Period;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyPurchasedException;
-import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteExpiredException;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,14 +40,14 @@ public class QuoteTest {
     assertTrue(subject.isPurchased());
   }
 
-  @Test(expected = QuoteExpiredException.class)
+  @Test(expected = QuoteExpiredError.class)
   public void purchasingQuote_withExpiredQuote_shouldThrow() {
     subject = QuoteGenerator.createExpiredQuote();
 
     subject.purchase();
   }
 
-  @Test(expected = QuoteAlreadyPurchasedException.class)
+  @Test(expected = QuoteAlreadyPurchasedError.class)
   public void purchasingQuote_withAlreadyPurchasedQuote_shouldThrow() {
     subject = QuoteGenerator.createPurchasedQuote();
 

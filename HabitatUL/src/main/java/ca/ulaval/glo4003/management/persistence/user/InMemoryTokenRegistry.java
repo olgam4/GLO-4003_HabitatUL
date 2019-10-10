@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.management.persistence.user;
 
 import ca.ulaval.glo4003.management.domain.user.TokenRegistry;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistException;
-import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyAlreadyExistError;
+import ca.ulaval.glo4003.management.domain.user.exception.KeyNotFoundError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,13 +21,13 @@ public class InMemoryTokenRegistry implements TokenRegistry {
 
   private void checkIfUserKeyAlreadyExist(String userKey) {
     if (tokenByUserKey.containsKey(userKey)) {
-      throw new KeyAlreadyExistException(userKey);
+      throw new KeyAlreadyExistError(userKey);
     }
   }
 
   private void checkIfTokenAlreadyExist(String token) {
     if (userKeyByToken.containsKey(token)) {
-      throw new KeyAlreadyExistException(token);
+      throw new KeyAlreadyExistError(token);
     }
   }
 
@@ -36,7 +36,7 @@ public class InMemoryTokenRegistry implements TokenRegistry {
     return userKeyByToken.computeIfAbsent(
         token,
         (String ignored) -> {
-          throw new KeyNotFoundException(token);
+          throw new KeyNotFoundError(token);
         });
   }
 
@@ -45,7 +45,7 @@ public class InMemoryTokenRegistry implements TokenRegistry {
     return tokenByUserKey.computeIfAbsent(
         userKey,
         (String ignored) -> {
-          throw new KeyNotFoundException(userKey);
+          throw new KeyNotFoundError(userKey);
         });
   }
 }

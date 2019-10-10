@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.coverage.domain.policy;
 import ca.ulaval.glo4003.mediator.event.Event;
 import ca.ulaval.glo4003.mediator.event.EventChannel;
 import ca.ulaval.glo4003.mediator.event.EventPayload;
-import ca.ulaval.glo4003.shared.domain.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyIssuedEvent extends Event {
   private static final String POLICY_ISSUED_EVENT_TYPE = "policyIssuedEvent";

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.claim;
 
-import ca.ulaval.glo4003.shared.domain.Amount;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.util.Map;
 

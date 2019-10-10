@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.context;
 
-import ca.ulaval.glo4003.gateway.presentation.databind.LocalZoneIdProvider;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
 
 import java.time.ZoneId;
 

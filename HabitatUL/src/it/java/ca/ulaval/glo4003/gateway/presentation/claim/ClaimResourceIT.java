@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.claim;
 import ca.ulaval.glo4003.coverage.application.claim.ClaimAppService;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
-import ca.ulaval.glo4003.gateway.presentation.filter.AuthFilterBuilder;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.generator.claim.ClaimGenerator;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.*;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.management.infrastructure.user;
 
-import ca.ulaval.glo4003.management.domain.user.credential.InvalidPasswordException;
+import ca.ulaval.glo4003.management.domain.user.credential.InvalidPasswordError;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public class DummyPasswordValidator implements PasswordValidator {
 
   @Override
   public void registerPassword(String userKey, String password) {
-    if (password == null) throw new InvalidPasswordException(null, "NULL PASSWORD");
+    if (password == null) throw new InvalidPasswordError(null, "NULL PASSWORD");
 
     passwords.put(userKey, password);
   }
