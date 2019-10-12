@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
 import ca.ulaval.glo4003.generator.policy.PolicyGenerator;
-import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.Event;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,12 +18,12 @@ public class PolicyTest {
   }
 
   @Test
-  public void issuingPolicy_withoutEvent_shouldRegisterPolicyIssuedEvent() {
+  public void issuingPolicy_shouldRegisterPolicyIssuedEvent() {
     subject.issue();
 
     List<Event> events = subject.getEvents();
 
     assertEquals(1, events.size());
-    assertEquals("policyIssuedEvent", events.get(0).getType());
+    assertEquals(PolicyIssuedEvent.class, events.get(0).getClass());
   }
 }

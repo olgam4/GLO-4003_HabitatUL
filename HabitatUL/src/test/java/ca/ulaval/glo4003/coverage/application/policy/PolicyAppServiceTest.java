@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.application.policy;
 
-import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
+import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequestedEvent;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
@@ -26,25 +26,25 @@ public class PolicyAppServiceTest {
   @Mock private ClaimRepository claimRepository;
 
   private PolicyAppService subject;
-  private QuotePurchasedDto quotePurchasedDto;
+  private PolicyCreationRequestedEvent policyCreationRequestedEvent;
 
   @Before
   public void setUp() {
-    quotePurchasedDto = PolicyGenerator.createQuotePurchasedDto();
+    policyCreationRequestedEvent = PolicyGenerator.createQuotePurchasedDto();
     when(policyFactory.create(any())).thenReturn(policy);
     subject = new PolicyAppService(policyFactory, policyRepository, claimFactory, claimRepository);
   }
 
   @Test
   public void issuingPolicy_shouldIssuePolicy() {
-    subject.issuePolicy(quotePurchasedDto);
+    subject.issuePolicy(policyCreationRequestedEvent);
 
     verify(policy).issue();
   }
 
   @Test
   public void issuingPolicy_shouldCreatePolicy() {
-    subject.issuePolicy(quotePurchasedDto);
+    subject.issuePolicy(policyCreationRequestedEvent);
 
     verify(policyRepository).create(policy);
   }

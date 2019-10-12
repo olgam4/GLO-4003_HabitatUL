@@ -4,6 +4,6 @@ public class CannotRegisterContractTwiceException extends ServiceLocatorExceptio
   public CannotRegisterContractTwiceException(Class<?> contract) {
     super(
         String.format(
-            "You've tried to register this contract twice : '%s'", contract.getCanonicalName()));
+            "You've tried to register this contract twice: <%s>", contract.getCanonicalName()));
   }
 }

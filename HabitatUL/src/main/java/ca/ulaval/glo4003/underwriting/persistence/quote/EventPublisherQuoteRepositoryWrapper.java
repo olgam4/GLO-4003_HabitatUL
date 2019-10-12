@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.persistence.quote;
 
-import ca.ulaval.glo4003.mediator.BoundedContextMediator;
+import ca.ulaval.glo4003.mediator.Mediator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
@@ -9,10 +9,9 @@ import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundExcept
 
 public class EventPublisherQuoteRepositoryWrapper implements QuoteRepository {
   private QuoteRepository quoteRepository;
-  private BoundedContextMediator mediator;
+  private Mediator mediator;
 
-  public EventPublisherQuoteRepositoryWrapper(
-      QuoteRepository quoteRepository, BoundedContextMediator mediator) {
+  public EventPublisherQuoteRepositoryWrapper(QuoteRepository quoteRepository, Mediator mediator) {
     this.quoteRepository = quoteRepository;
     this.mediator = mediator;
   }

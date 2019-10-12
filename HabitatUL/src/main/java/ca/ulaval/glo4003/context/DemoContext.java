@@ -1,16 +1,17 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.coverage.communication.policy.PolicyBoundedContextEventHandler;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.persistence.claim.InMemoryClaimRepository;
 import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
-import ca.ulaval.glo4003.coverage.presentation.policy.PolicyBoundedContext;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.ConfigBasedLocalZoneIdProvider;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
 import ca.ulaval.glo4003.management.application.user.AccessController;
 import ca.ulaval.glo4003.management.application.user.UserAppService;
+import ca.ulaval.glo4003.management.communication.user.UserBoundedContextEventHandler;
 import ca.ulaval.glo4003.management.domain.user.*;
 import ca.ulaval.glo4003.management.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
@@ -23,10 +24,7 @@ import ca.ulaval.glo4003.management.persistence.user.InMemoryPolicyRegistry;
 import ca.ulaval.glo4003.management.persistence.user.InMemoryQuoteRegistry;
 import ca.ulaval.glo4003.management.persistence.user.InMemoryTokenRegistry;
 import ca.ulaval.glo4003.management.persistence.user.InMemoryUsernameRegistry;
-import ca.ulaval.glo4003.management.presentation.user.UserBoundedContext;
-import ca.ulaval.glo4003.mediator.BoundedContextMediator;
-import ca.ulaval.glo4003.mediator.ConcreteBoundedContextMediator;
-import ca.ulaval.glo4003.mediator.event.EventChannel;
+import ca.ulaval.glo4003.mediator.Mediator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
@@ -43,26 +41,30 @@ import java.math.BigDecimal;
 import java.util.Properties;
 
 public class DemoContext implements Context {
+  private Properties properties;
+  private Mediator mediator;
+
   public DemoContext() {
     ServiceLocator.reset();
+    properties = ConfigFileReader.readProperties("config.properties");
+    mediator = new Mediator();
   }
 
   @Override
   public void execute() {
-    Properties properties = ConfigFileReader.readProperties("config.properties");
-    BoundedContextMediator mediator = new ConcreteBoundedContextMediator();
     registerCommonServices();
-    registerManagementServices(properties, mediator);
-    registerUnderwritingServices(mediator);
-    registerCoverageServices(mediator);
+    registerManagementServices();
+    registerUnderwritingServices();
+    registerCoverageServices();
   }
 
   private void registerCommonServices() {
+    MediatorChanneler.registerChannels(mediator);
     ServiceLocator.register(ClockProvider.class, new SystemUtcClockProvider());
     ServiceLocator.register(LocalZoneIdProvider.class, new ConfigBasedLocalZoneIdProvider());
   }
 
-  private void registerManagementServices(Properties properties, BoundedContextMediator mediator) {
+  private void registerManagementServices() {
     InMemoryUsernameRegistry usernameRegistry = new InMemoryUsernameRegistry();
     PasswordValidator passwordValidator = new DummyPasswordValidator();
     registerAdminUser(properties, usernameRegistry, passwordValidator);
@@ -80,9 +82,9 @@ public class DemoContext implements Context {
 
     UserAppService userAppService = new UserAppService();
     ServiceLocator.register(AccessController.class, userAppService);
-    UserBoundedContext userBoundedContext = new UserBoundedContext(userAppService);
-    mediator.subscribe(userBoundedContext, EventChannel.POLICIES);
-    mediator.subscribe(userBoundedContext, EventChannel.QUOTES);
+    UserBoundedContextEventHandler userBoundedContextEventHandler =
+        new UserBoundedContextEventHandler(userAppService);
+    userBoundedContextEventHandler.register(mediator);
   }
 
   private void registerAdminUser(
@@ -96,7 +98,7 @@ public class DemoContext implements Context {
     passwordValidator.registerPassword(adminName, adminPassword);
   }
 
-  private void registerUnderwritingServices(BoundedContextMediator mediator) {
+  private void registerUnderwritingServices() {
     Price hardCodedPrice = new Price(BigDecimal.valueOf(200));
     ServiceLocator.register(
         QuotePriceCalculator.class, new DummyQuotePriceCalculator(hardCodedPrice));
@@ -107,14 +109,15 @@ public class DemoContext implements Context {
         new EventPublisherQuoteRepositoryWrapper(new InMemoryQuoteRepository(), mediator));
   }
 
-  private void registerCoverageServices(BoundedContextMediator mediator) {
+  private void registerCoverageServices() {
     ServiceLocator.register(
         PolicyRepository.class,
         new EventPublisherPolicyRepositoryWrapper(new InMemoryPolicyRepository(), mediator));
     ServiceLocator.register(ClaimRepository.class, new InMemoryClaimRepository());
 
     PolicyAppService policyAppService = new PolicyAppService();
-    PolicyBoundedContext policyBoundedContext = new PolicyBoundedContext(policyAppService);
-    mediator.subscribe(policyBoundedContext, EventChannel.QUOTES);
+    PolicyBoundedContextEventHandler policyBoundedContextEventHandler =
+        new PolicyBoundedContextEventHandler(policyAppService);
+    policyBoundedContextEventHandler.register(mediator);
   }
 }

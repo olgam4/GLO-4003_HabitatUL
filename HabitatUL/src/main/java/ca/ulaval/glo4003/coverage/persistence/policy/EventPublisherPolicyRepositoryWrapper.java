@@ -3,14 +3,14 @@ package ca.ulaval.glo4003.coverage.persistence.policy;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.mediator.BoundedContextMediator;
+import ca.ulaval.glo4003.mediator.Mediator;
 
 public class EventPublisherPolicyRepositoryWrapper implements PolicyRepository {
   private PolicyRepository policyRepository;
-  private BoundedContextMediator mediator;
+  private Mediator mediator;
 
   public EventPublisherPolicyRepositoryWrapper(
-      PolicyRepository policyRepository, BoundedContextMediator mediator) {
+      PolicyRepository policyRepository, Mediator mediator) {
     this.policyRepository = policyRepository;
     this.mediator = mediator;
   }

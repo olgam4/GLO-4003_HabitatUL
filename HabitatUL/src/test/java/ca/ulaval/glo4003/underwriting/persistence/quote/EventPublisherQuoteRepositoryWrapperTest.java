@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.underwriting.persistence.quote;
 
 import ca.ulaval.glo4003.generator.EventGenerator;
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
-import ca.ulaval.glo4003.mediator.BoundedContextMediator;
-import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.Event;
+import ca.ulaval.glo4003.mediator.Mediator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
@@ -27,7 +27,7 @@ public class EventPublisherQuoteRepositoryWrapperTest {
 
   @Mock private Quote quote;
   @Mock private QuoteRepository quoteRepository;
-  @Mock private BoundedContextMediator mediator;
+  @Mock private Mediator mediator;
 
   private EventPublisherQuoteRepositoryWrapper subject;
 

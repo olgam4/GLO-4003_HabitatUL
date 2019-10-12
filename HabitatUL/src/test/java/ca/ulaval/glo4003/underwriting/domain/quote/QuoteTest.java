@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
-import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
@@ -55,12 +55,12 @@ public class QuoteTest {
   }
 
   @Test
-  public void purchasingQuote_withoutEvent_shouldRegisterQuotePurchasedEvent() {
+  public void purchasingQuote_shouldRegisterQuotePurchasedEvent() {
     subject.purchase();
 
     List<Event> events = subject.getEvents();
 
     assertEquals(1, events.size());
-    assertEquals("quotePurchasedEvent", events.get(0).getType());
+    assertEquals(QuotePurchasedEvent.class, events.get(0).getClass());
   }
 }

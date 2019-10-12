@@ -69,7 +69,7 @@ public class Quote extends AggregateRoot {
   }
 
   private void registerQuotePurchaseEvent() {
-    registerEvent(new QuotePurchasedEvent(quoteId, price, quoteForm, clockProvider));
+    registerEvent(new QuotePurchasedEvent(quoteId, price, quoteForm));
   }
 
   public boolean isPurchased() {

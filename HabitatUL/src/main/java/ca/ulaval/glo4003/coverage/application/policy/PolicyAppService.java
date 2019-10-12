@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
-import ca.ulaval.glo4003.coverage.application.policy.dto.QuotePurchasedDto;
+import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequestedEvent;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
@@ -11,7 +11,6 @@ import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
   private PolicyFactory policyFactory;
@@ -21,7 +20,7 @@ public class PolicyAppService {
 
   public PolicyAppService() {
     this(
-        new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
+        new PolicyFactory(),
         ServiceLocator.resolve(PolicyRepository.class),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));
@@ -38,8 +37,8 @@ public class PolicyAppService {
     this.claimRepository = claimRepository;
   }
 
-  public void issuePolicy(QuotePurchasedDto quotePurchasedDto) {
-    Policy policy = policyFactory.create(quotePurchasedDto.getQuoteId());
+  public void issuePolicy(PolicyCreationRequestedEvent policyCreationRequestedEvent) {
+    Policy policy = policyFactory.create(policyCreationRequestedEvent.getQuoteId());
     policy.issue();
     policyRepository.create(policy);
   }

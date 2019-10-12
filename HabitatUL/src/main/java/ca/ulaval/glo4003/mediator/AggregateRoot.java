@@ -1,7 +1,5 @@
 package ca.ulaval.glo4003.mediator;
 
-import ca.ulaval.glo4003.mediator.event.Event;
-
 import java.util.ArrayList;
 import java.util.List;
 

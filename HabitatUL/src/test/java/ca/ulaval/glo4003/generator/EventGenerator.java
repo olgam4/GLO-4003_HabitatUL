@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.generator;
 
-import ca.ulaval.glo4003.builder.EventBuilder;
-import ca.ulaval.glo4003.mediator.event.Event;
+import ca.ulaval.glo4003.mediator.Event;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +12,8 @@ public class EventGenerator {
   }
 
   public static Event createEvent() {
-    return EventBuilder.anEvent().build();
+    return new DummyEvent();
   }
+
+  private static class DummyEvent extends Event {}
 }
