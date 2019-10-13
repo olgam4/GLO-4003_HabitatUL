@@ -23,7 +23,7 @@ public class QuoteRequestBuilder {
   private final String DEFAULT_BIRTH_DATE = createBirthDate();
   private final String DEFAULT_GENDER = createGender();
 
-  private final String DEFAULT_POSTAL_CODE = "G1V4L8";
+  private final String DEFAULT_ZIP_CODE = createZipCode();
   private final int DEFAULT_STREET_NUMBER = 13;
   private final int DEFAULT_APARTMENT_NUMBER = 2;
   private final String DEFAULT_FLOOR = "1ST";
@@ -38,15 +38,15 @@ public class QuoteRequestBuilder {
   private final List<JSONObject> DEFAULT_ANIMALS = createAnimals();
 
   private String firstName = DEFAULT_FIRST_NAME;
-
   private String lastName = DEFAULT_LAST_NAME;
   private String birthDate = DEFAULT_BIRTH_DATE;
   private String gender = DEFAULT_GENDER;
-  private String postalCode = DEFAULT_POSTAL_CODE;
 
+  private String zipCode = DEFAULT_ZIP_CODE;
   private int streetNumber = DEFAULT_STREET_NUMBER;
   private int apartmentNumber = DEFAULT_APARTMENT_NUMBER;
   private String floor = DEFAULT_FLOOR;
+
   private String effectiveDate = DEFAULT_EFFECTIVE_DATE;
 
   private int numberOfUnits = DEFAULT_NUMBER_OF_UNITS;
@@ -57,6 +57,10 @@ public class QuoteRequestBuilder {
   private List<JSONObject> animals = DEFAULT_ANIMALS;
 
   private QuoteRequestBuilder() {}
+
+  private String createZipCode() {
+    return "G3A0G4";
+  }
 
   private static HashSet<String> createPreventionSystems() {
     int size = Faker.instance().number().numberBetween(0, PreventionSystem.values().length);
@@ -124,7 +128,7 @@ public class QuoteRequestBuilder {
 
   private JSONObject buildLocation() {
     JSONObject json = new JSONObject();
-    json.put("postalCode", postalCode);
+    json.put("zipCode", zipCode);
     json.put("streetNumber", streetNumber);
     json.put("apartmentNumber", apartmentNumber);
     json.put("floor", floor);

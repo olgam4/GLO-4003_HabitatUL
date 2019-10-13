@@ -4,8 +4,7 @@ import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationView;
 import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
-import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.CanadianPostalCodeFormatter;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
 import com.github.javafaker.Faker;
 
 public class LocationGenerator {
@@ -14,17 +13,18 @@ public class LocationGenerator {
 
   public static LocationView createLocationView() {
     return new LocationView(
-        createPostalCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
+        createZipCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
   }
 
   public static Location createLocation() {
     return new Location(
-        createPostalCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
+        createZipCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
   }
 
-  private static PostalCode createPostalCode() {
+  private static ZipCode createZipCode() {
     try {
-      return new PostalCode("G1V4L3", new CanadianPostalCodeFormatter());
+      String zipCodeValue = Faker.instance().address().zipCode();
+      return new ZipCode(zipCodeValue, zipCode -> zipCode);
     } catch (InvalidArgumentException e) {
       e.printStackTrace();
       return null;
@@ -41,7 +41,9 @@ public class LocationGenerator {
 
   private static Floor createFloor() {
     try {
-      return new Floor("1ST");
+      Faker faker = Faker.instance();
+      String floorValue = faker.lordOfTheRings().location();
+      return new Floor(floorValue, floor -> faker.number().randomDigit());
     } catch (InvalidArgumentException e) {
       e.printStackTrace();
       return null;

@@ -37,7 +37,7 @@ public class QuoteViewAssembler {
 
   private Location from(LocationView locationView) {
     return new Location(
-        locationView.getPostalCode(),
+        locationView.getZipCode(),
         locationView.getStreetNumber(),
         locationView.getApartmentNumber(),
         locationView.getFloor());

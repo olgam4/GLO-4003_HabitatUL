@@ -1,17 +1,16 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
 
 public class LocationView {
-  private PostalCode postalCode;
+  private ZipCode zipCode;
   private int streetNumber;
   private String apartmentNumber;
   private Floor floor;
 
-  public LocationView(
-      PostalCode postalCode, int streetNumber, String apartmentNumber, Floor floor) {
-    this.postalCode = postalCode;
+  public LocationView(ZipCode zipCode, int streetNumber, String apartmentNumber, Floor floor) {
+    this.zipCode = zipCode;
     this.streetNumber = streetNumber;
     this.apartmentNumber = apartmentNumber;
     this.floor = floor;
@@ -20,8 +19,8 @@ public class LocationView {
   // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
   private LocationView() {}
 
-  public PostalCode getPostalCode() {
-    return postalCode;
+  public ZipCode getZipCode() {
+    return zipCode;
   }
 
   public int getStreetNumber() {

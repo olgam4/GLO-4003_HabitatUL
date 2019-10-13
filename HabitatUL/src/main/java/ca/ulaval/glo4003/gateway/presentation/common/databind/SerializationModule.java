@@ -16,7 +16,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
@@ -52,7 +52,7 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
-    deserializers.addDeserializer(PostalCode.class, new PostalCodeDeserializer());
+    deserializers.addDeserializer(ZipCode.class, new ZipCodeDeserializer());
     deserializers.addDeserializer(PreventionSystem.class, new PreventionSystemDeserializer());
     deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
     setupContext.addDeserializers(deserializers);

@@ -53,7 +53,7 @@ public class QuoteMatcher {
 
   public static Matcher<Location> matchesLocation(final LocationView locationView) {
     return allOf(
-        hasProperty("postalCode", equalTo(locationView.getPostalCode())),
+        hasProperty("zipCode", equalTo(locationView.getZipCode())),
         hasProperty("streetNumber", equalTo(locationView.getStreetNumber())),
         hasProperty("apartmentNumber", equalTo(locationView.getApartmentNumber())),
         hasProperty("floor", equalTo(locationView.getFloor())));

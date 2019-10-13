@@ -1,78 +1,41 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
 import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import com.github.javafaker.Faker;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class FloorTest {
-  private Floor subject;
+  private static final String FLOOR = Faker.instance().address().buildingNumber();
+  private static final int FORMATTED_FLOOR = Faker.instance().number().randomDigit();
 
-  @Test
-  public void parsingFloor_withGroundFloorValue_shouldIndicateProperFloorNumber()
-      throws InvalidArgumentException {
-    subject = new Floor("RC");
+  @Mock private FloorFormatter floorFormatter;
 
-    assertEquals(0, subject.getFloorNumber());
+  @Before
+  public void setUp() throws InvalidArgumentException {
+    when(floorFormatter.format(any(String.class))).thenReturn(FORMATTED_FLOOR);
   }
 
   @Test
-  public void parsingFloor_withFirstFloorValue_shouldIndicateProperFloorNumber()
-      throws InvalidArgumentException {
-    subject = new Floor("1ST");
+  public void creatingFloor_shouldFormatFloorUsingFloorFormatter() throws InvalidArgumentException {
+    new Floor(FLOOR, floorFormatter);
 
-    assertEquals(1, subject.getFloorNumber());
+    verify(floorFormatter).format(FLOOR);
   }
 
   @Test
-  public void parsingFloor_withSecondFloorValue_shouldIndicateProperFloorNumber()
-      throws InvalidArgumentException {
-    subject = new Floor("2ND");
+  public void gettingFloorValue_shouldReturnFormattedFloor() throws InvalidArgumentException {
+    Floor floor = new Floor(FLOOR, floorFormatter);
 
-    assertEquals(2, subject.getFloorNumber());
-  }
-
-  @Test
-  public void parsingFloor_withThirdFloorValue_shouldIndicateProperFloorNumber()
-      throws InvalidArgumentException {
-    subject = new Floor("3RD");
-
-    assertEquals(3, subject.getFloorNumber());
-  }
-
-  @Test
-  public void parsingFloor_withSubsequentFloorValue_shouldIndicateProperFloorNumber()
-      throws InvalidArgumentException {
-    int floorNumber = 571;
-
-    subject = new Floor(String.format("%sTH", floorNumber));
-
-    assertEquals(floorNumber, subject.getFloorNumber());
-  }
-
-  @Test
-  public void parsingFloor_withBasementFloorValue_shouldIndicateProperFloorNumber()
-      throws InvalidArgumentException {
-    int floorNumber = 221;
-
-    subject = new Floor(String.format("SS%s", floorNumber));
-
-    assertEquals(-floorNumber, subject.getFloorNumber());
-  }
-
-  @Test(expected = InvalidArgumentException.class)
-  public void parsingFloor_withInvalidFloor_shouldThrow() throws InvalidArgumentException {
-    new Floor("invalid floor");
-  }
-
-  @Test(expected = InvalidArgumentException.class)
-  public void parsingFloor_withBasementNumberInferiorTo1() throws InvalidArgumentException {
-    new Floor("SS0");
-  }
-
-  @Test(expected = InvalidArgumentException.class)
-  public void parsingFloor_withSubsequentFloorNumberInferiorTo3_shouldThrow()
-      throws InvalidArgumentException {
-    new Floor("2TH");
+    assertEquals(FORMATTED_FLOOR, floor.getValue());
   }
 }
