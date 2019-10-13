@@ -40,24 +40,6 @@ public class QuoteFormGenerator {
         createPersonalProperty());
   }
 
-  public static QuoteForm createValidQuoteForm() {
-    return new QuoteForm(
-        createIdentity(),
-        createLocation(),
-        createEffectiveDate(),
-        createBuilding(),
-        createPersonalProperty());
-  }
-
-  public static QuoteFormDto createQuoteFormDtoWithEffectiveDate(Date effectiveDate) {
-    return new QuoteFormDto(
-        createIdentity(),
-        createLocation(),
-        effectiveDate,
-        createBuilding(),
-        createPersonalProperty());
-  }
-
   public static QuoteForm createQuoteFormWithEffectiveDate(Date effectiveDate) {
     return new QuoteForm(
         createIdentity(),
