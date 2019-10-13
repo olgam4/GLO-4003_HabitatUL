@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.generator.quote;
 
-import ca.ulaval.glo4003.generator.price.PriceGenerator;
+import ca.ulaval.glo4003.generator.money.MoneyGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
@@ -31,7 +31,7 @@ public class QuoteGenerator {
   }
 
   public static Quote createValidQuoteWithId(QuoteId quoteId) {
-    Price price = PriceGenerator.create();
+    Money price = MoneyGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
@@ -40,7 +40,7 @@ public class QuoteGenerator {
 
   public static Quote createValidQuoteWithEffectiveDate(Date effectiveDate) {
     QuoteId quoteId = createQuoteId();
-    Price price = PriceGenerator.create();
+    Money price = MoneyGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(effectiveDate);
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
@@ -48,7 +48,7 @@ public class QuoteGenerator {
   }
 
   public static Quote createExpiredQuote() {
-    Price price = PriceGenerator.create();
+    Money price = MoneyGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
@@ -56,7 +56,7 @@ public class QuoteGenerator {
   }
 
   public static Quote createPurchasedQuote() {
-    Price price = PriceGenerator.create();
+    Money price = MoneyGenerator.create();
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();

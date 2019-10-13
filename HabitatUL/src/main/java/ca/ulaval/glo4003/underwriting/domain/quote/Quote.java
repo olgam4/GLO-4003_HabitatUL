@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.mediator.AggregateRoot;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
@@ -14,7 +14,7 @@ public class Quote extends AggregateRoot {
   static final int COVERAGE_PERIOD_IN_MONTHS = 12;
 
   private QuoteId quoteId;
-  private Price price;
+  private Money price;
   private QuoteForm quoteForm;
   private Period effectivePeriod;
   private DateTime expirationDate;
@@ -23,7 +23,7 @@ public class Quote extends AggregateRoot {
 
   public Quote(
       QuoteId quoteId,
-      Price price,
+      Money price,
       QuoteForm quoteForm,
       DateTime expirationDate,
       Boolean purchased,
@@ -48,7 +48,7 @@ public class Quote extends AggregateRoot {
     return quoteId;
   }
 
-  public Price getPrice() {
+  public Money getPrice() {
     return price;
   }
 

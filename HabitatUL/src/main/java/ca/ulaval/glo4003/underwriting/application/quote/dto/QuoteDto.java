@@ -1,18 +1,18 @@
 package ca.ulaval.glo4003.underwriting.application.quote.dto;
 
 import ca.ulaval.glo4003.shared.application.DataTransferObject;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
 public class QuoteDto extends DataTransferObject {
   private QuoteId quoteId;
-  private Price price;
+  private Money price;
   private DateTime expirationDate;
   private Period effectivePeriod;
 
-  public QuoteDto(QuoteId quoteId, Price price, Period effectivePeriod, DateTime expirationDate) {
+  public QuoteDto(QuoteId quoteId, Money price, Period effectivePeriod, DateTime expirationDate) {
     this.quoteId = quoteId;
     this.price = price;
     this.effectivePeriod = effectivePeriod;
@@ -23,7 +23,7 @@ public class QuoteDto extends DataTransferObject {
     return quoteId;
   }
 
-  public Price getPrice() {
+  public Money getPrice() {
     return price;
   }
 

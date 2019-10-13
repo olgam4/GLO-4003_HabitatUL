@@ -3,11 +3,11 @@ package ca.ulaval.glo4003.gateway.presentation.quote;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
@@ -56,7 +56,7 @@ public class QuoteViewAssembler {
 
   public QuoteResponse from(QuoteDto quoteDto) {
     QuoteId quoteId = quoteDto.getQuoteId();
-    Price price = quoteDto.getPrice();
+    Money price = quoteDto.getPrice();
     Period effectivePeriod = quoteDto.getEffectivePeriod();
     DateTime expirationDate = quoteDto.getExpirationDate();
     return new QuoteResponse(quoteId, price, effectivePeriod, expirationDate);

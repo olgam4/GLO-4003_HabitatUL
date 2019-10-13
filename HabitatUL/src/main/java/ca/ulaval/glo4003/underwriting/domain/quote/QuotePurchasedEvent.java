@@ -1,15 +1,15 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.mediator.Event;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuotePurchasedEvent extends Event {
   private QuoteId quoteId;
-  private Price price;
+  private Money price;
   private QuoteForm quoteForm;
 
-  public QuotePurchasedEvent(QuoteId quoteId, Price price, QuoteForm quoteForm) {
+  public QuotePurchasedEvent(QuoteId quoteId, Money price, QuoteForm quoteForm) {
     this.quoteId = quoteId;
     this.price = price;
     this.quoteForm = quoteForm;
@@ -19,7 +19,7 @@ public class QuotePurchasedEvent extends Event {
     return quoteId;
   }
 
-  public Price getPrice() {
+  public Money getPrice() {
     return price;
   }
 

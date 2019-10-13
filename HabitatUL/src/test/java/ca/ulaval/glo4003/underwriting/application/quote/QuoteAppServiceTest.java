@@ -1,7 +1,8 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.generator.price.PriceGenerator;
+import ca.ulaval.glo4003.generator.money.MoneyGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
@@ -10,8 +11,6 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.InvalidEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
-import ca.ulaval.glo4003.underwriting.domain.price.QuotePriceCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteFactory;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
@@ -38,7 +37,7 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Price A_PRICE = PriceGenerator.create();
+  private static final Money A_PRICE = MoneyGenerator.create();
   private static final QuoteId QUOTE_ID = new QuoteId();
 
   @Mock private QuotePriceCalculator quotePriceCalculator;
@@ -57,8 +56,8 @@ public class QuoteAppServiceTest {
     clockProvider = new FixedClockProvider();
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
-    when(quotePriceCalculator.computeQuotePrice(any(QuoteForm.class))).thenReturn(A_PRICE);
-    when(quoteFactory.create(any(Price.class), any(QuoteForm.class))).thenReturn(quote);
+    when(quotePriceCalculator.compute(any(QuoteForm.class))).thenReturn(A_PRICE);
+    when(quoteFactory.create(any(Money.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
     subject =
@@ -70,7 +69,7 @@ public class QuoteAppServiceTest {
   public void requestingQuote_shouldComputeQuotePrice() {
     subject.requestQuote(quoteFormDto);
 
-    verify(quotePriceCalculator).computeQuotePrice(argThat(matchesQuoteForm(quoteFormDto)));
+    verify(quotePriceCalculator).compute(argThat(matchesQuoteForm(quoteFormDto)));
   }
 
   @Test

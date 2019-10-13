@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -8,8 +9,6 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.InvalidEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
-import ca.ulaval.glo4003.underwriting.domain.price.Price;
-import ca.ulaval.glo4003.underwriting.domain.price.QuotePriceCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
@@ -29,7 +28,7 @@ public class QuoteAppService {
   public QuoteAppService() {
     this(
         new QuoteAssembler(),
-        ServiceLocator.resolve(QuotePriceCalculator.class),
+        new QuotePriceCalculator(),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
             ServiceLocator.resolve(ClockProvider.class)),
@@ -54,7 +53,7 @@ public class QuoteAppService {
     try {
       validateEffectiveDate(quoteFormDto.getEffectiveDate());
       QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
-      Price price = quotePriceCalculator.computeQuotePrice(quoteForm);
+      Money price = quotePriceCalculator.compute(quoteForm);
       Quote quote = quoteFactory.create(price, quoteForm);
       quoteRepository.create(quote);
       return quoteAssembler.from(quote);
