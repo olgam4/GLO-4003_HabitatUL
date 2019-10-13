@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.coverage.domain.policy.exception.NotDeclaredBicycleErro
 import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedError;
 import ca.ulaval.glo4003.shared.domain.BaseError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
-import ca.ulaval.glo4003.underwriting.application.quote.error.InvalidEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.InvalidEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 

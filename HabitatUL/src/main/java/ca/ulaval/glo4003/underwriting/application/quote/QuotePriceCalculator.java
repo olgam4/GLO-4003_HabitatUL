@@ -13,15 +13,15 @@ public class QuotePriceCalculator {
     this(assembleFormula());
   }
 
+  public QuotePriceCalculator(QuotePriceFormula quotePriceFormula) {
+    this.quotePriceFormula = quotePriceFormula;
+  }
+
   private static QuotePriceFormula assembleFormula() {
     QuotePriceFormula quotePriceFormula =
         new QuotePriceFormula(ServiceLocator.resolve(QuoteIndicatedPriceCalculator.class));
     // TODO: add formula parts here
     return quotePriceFormula;
-  }
-
-  public QuotePriceCalculator(QuotePriceFormula quotePriceFormula) {
-    this.quotePriceFormula = quotePriceFormula;
   }
 
   public Money compute(QuoteForm quoteForm) {

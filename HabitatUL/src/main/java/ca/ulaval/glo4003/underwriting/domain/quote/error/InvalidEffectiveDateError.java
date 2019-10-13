@@ -1,6 +1,6 @@
-package ca.ulaval.glo4003.underwriting.application.quote.error;
+package ca.ulaval.glo4003.underwriting.domain.quote.error;
 
-public class InvalidEffectiveDateError extends QuoteAppServiceError {
+public class InvalidEffectiveDateError extends QuoteError {
   private static final String ERROR = "INVALID_EFFECTIVE_DATE";
   private static final String MESSAGE = "sorry, quote can only be issued for the incoming year";
 
