@@ -10,7 +10,7 @@ public class Main {
   private static final DemoContext DEFAULT_CONTEXT = new DemoContext();
   private static final String PORT_ENV_VAR = "port";
   private static final String DEFAULT_PORT = "8080";
-  private static final String RESOURCE_PACKAGE = "ca.ulaval.glo4003.gateway.communication";
+  private static final String RESOURCE_PACKAGE = "ca.ulaval.glo4003.gateway.presentation";
 
   public static void main(String[] args) {
     new DemoContext().execute();

@@ -8,16 +8,16 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class ErrorMapper implements ExceptionMapper<Throwable> {
+public class CatchAllMapper implements ExceptionMapper<Throwable> {
   private ErrorResponseFactory errorResponseFactory;
 
-  public ErrorMapper() {
+  public CatchAllMapper() {
     errorResponseFactory = new ErrorResponseFactory();
   }
 
   @Override
   public Response toResponse(Throwable throwable) {
-    BaseError error = throwable instanceof BaseError ? (BaseError) throwable : new BaseError();
+    BaseError error = new BaseError();
     ErrorResponse errorResponse = errorResponseFactory.createExceptionView(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())
