@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
+import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.generator.SecurityContextGenerator;
 import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;

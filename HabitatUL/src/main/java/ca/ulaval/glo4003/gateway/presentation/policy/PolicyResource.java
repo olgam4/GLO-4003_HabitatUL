@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
+import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
@@ -8,7 +9,6 @@ import ca.ulaval.glo4003.gateway.presentation.claim.ClaimViewAssembler;
 import ca.ulaval.glo4003.gateway.presentation.claim.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.policy.response.PoliciesResponse;
-import ca.ulaval.glo4003.management.application.user.UserAppService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;

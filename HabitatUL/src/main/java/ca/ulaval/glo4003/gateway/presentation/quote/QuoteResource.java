@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
+import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
-import ca.ulaval.glo4003.management.application.user.UserAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;

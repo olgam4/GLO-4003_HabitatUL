@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.common.filter;
 
+import ca.ulaval.glo4003.administration.application.user.AccessController;
+import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureError;
+import ca.ulaval.glo4003.administration.domain.user.token.Token;
+import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
+import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.generator.user.TokenGenerator;
 import ca.ulaval.glo4003.generator.user.TokenPayloadGenerator;
-import ca.ulaval.glo4003.management.application.user.AccessController;
-import ca.ulaval.glo4003.management.domain.user.exception.UnauthorizedError;
-import ca.ulaval.glo4003.management.domain.user.token.InvalidTokenSignatureError;
-import ca.ulaval.glo4003.management.domain.user.token.Token;
-import ca.ulaval.glo4003.management.domain.user.token.TokenPayload;
-import ca.ulaval.glo4003.management.domain.user.token.TokenTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
