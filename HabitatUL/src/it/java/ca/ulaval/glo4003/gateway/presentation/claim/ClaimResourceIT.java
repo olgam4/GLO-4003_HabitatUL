@@ -57,7 +57,7 @@ public class ClaimResourceIT {
 
   @Test
   public void gettingClaimPath_withValidRequest_shouldHaveExpectedStatusCode() {
-    String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().getValue().toString());
+    String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().toRepresentation());
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
 
@@ -66,7 +66,7 @@ public class ClaimResourceIT {
 
   @Test
   public void gettingClaimPath_withValidRequest_shouldProvideProperlyFormattedResponse() {
-    String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().getValue().toString());
+    String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().toRepresentation());
 
     getBaseScenario()
         .given()

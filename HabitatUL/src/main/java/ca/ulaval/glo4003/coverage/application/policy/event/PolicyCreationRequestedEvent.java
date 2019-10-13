@@ -1,16 +1,15 @@
 package ca.ulaval.glo4003.coverage.application.policy.event;
 
-import ca.ulaval.glo4003.coverage.domain.policy.QuoteId;
 import ca.ulaval.glo4003.mediator.Event;
 
 public class PolicyCreationRequestedEvent extends Event {
-  @Deprecated private QuoteId quoteId;
+  private String quoteKey;
 
-  public PolicyCreationRequestedEvent(QuoteId quoteId) {
-    this.quoteId = quoteId;
+  public PolicyCreationRequestedEvent(String quoteKey) {
+    this.quoteKey = quoteKey;
   }
 
-  public QuoteId getQuoteId() {
-    return quoteId;
+  public String getQuoteKey() {
+    return quoteKey;
   }
 }

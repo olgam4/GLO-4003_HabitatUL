@@ -62,7 +62,7 @@ public class QuoteResourceTest {
   @Test
   public void purchasingQuote_shouldAssociateQuoteToUser() {
     String userKey = SECURITY_CONTEXT.getUserPrincipal().getName();
-    String quoteKey = QUOTE_ID.getValue().toString();
+    String quoteKey = QUOTE_ID.toRepresentation();
 
     subject.purchaseQuote(SECURITY_CONTEXT, QUOTE_ID);
 

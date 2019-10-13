@@ -12,10 +12,10 @@ public class PolicyMatcher {
   public static Matcher<Policy> matchesPolicy(final Policy policy) {
     return allOf(
         hasProperty("policyId", equalTo(policy.getPolicyId())),
-        hasProperty("quoteId", equalTo(policy.getQuoteId())));
+        hasProperty("quoteKey", equalTo(policy.getQuoteKey())));
   }
 
   public static Matcher<Policy> matchesPolicy(final PolicyCreationRequestedEvent event) {
-    return hasProperty("quoteId", equalTo(event.getQuoteId()));
+    return hasProperty("quoteKey", equalTo(event.getQuoteKey()));
   }
 }

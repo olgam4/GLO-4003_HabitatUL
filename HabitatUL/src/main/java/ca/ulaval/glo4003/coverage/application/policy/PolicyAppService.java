@@ -38,7 +38,7 @@ public class PolicyAppService {
   }
 
   public void issuePolicy(PolicyCreationRequestedEvent policyCreationRequestedEvent) {
-    Policy policy = policyFactory.create(policyCreationRequestedEvent.getQuoteId());
+    Policy policy = policyFactory.create(policyCreationRequestedEvent.getQuoteKey());
     policy.issue();
     policyRepository.create(policy);
   }

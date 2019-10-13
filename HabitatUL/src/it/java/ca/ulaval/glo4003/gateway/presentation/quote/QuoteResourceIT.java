@@ -78,7 +78,7 @@ public class QuoteResourceIT {
   public void postingQuotePath_withValidRequest_shouldProvideLocationCreatedQuote() {
     JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
 
-    String expectedLocation = toUri(QUOTE_ROUTE, quoteDto.getQuoteId().getValue().toString());
+    String expectedLocation = toUri(QUOTE_ROUTE, quoteDto.getQuoteId().toRepresentation());
     getBaseScenario()
         .given()
         .body(request.toString())
@@ -103,7 +103,7 @@ public class QuoteResourceIT {
 
   @Test
   public void postingPurchaseQuotePath_withValidQuoteId_shouldHaveExpectedStatusCode() {
-    String path = toPath(QUOTE_ROUTE, quoteDto.getQuoteId().getValue().toString(), PURCHASE_ROUTE);
+    String path = toPath(QUOTE_ROUTE, quoteDto.getQuoteId().toRepresentation(), PURCHASE_ROUTE);
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
     getBaseScenario().when().post(path).then().statusCode(expectedStatusCode);

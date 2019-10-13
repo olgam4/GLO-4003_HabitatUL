@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.communication.policy;
 
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequestedEvent;
-import ca.ulaval.glo4003.coverage.domain.policy.QuoteId;
+import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyBoundedContextEventHandlerTest {
-  private static final QuoteId QUOTE_ID = new QuoteId();
+  private static final String QUOTE_KEY = Faker.instance().internet().uuid();
 
   @Mock private PolicyAppService policyAppService;
 
@@ -26,7 +26,7 @@ public class PolicyBoundedContextEventHandlerTest {
 
   @Test
   public void handlingPolicyCreationRequestedEvent_shouldDelegateToPolicyAppService() {
-    PolicyCreationRequestedEvent event = new PolicyCreationRequestedEvent(QUOTE_ID);
+    PolicyCreationRequestedEvent event = new PolicyCreationRequestedEvent(QUOTE_KEY);
 
     subject.handlePolicyCreationRequestedEvent(event);
 

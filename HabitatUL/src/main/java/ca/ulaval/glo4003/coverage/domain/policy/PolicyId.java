@@ -22,4 +22,8 @@ public class PolicyId extends ValueObject {
   public UUID getValue() {
     return value;
   }
+
+  public String toRepresentation() {
+    return value.toString();
+  }
 }

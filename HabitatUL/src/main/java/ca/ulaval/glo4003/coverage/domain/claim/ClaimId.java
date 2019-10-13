@@ -22,4 +22,8 @@ public class ClaimId extends ValueObject {
   public UUID getValue() {
     return value;
   }
+
+  public String toRepresentation() {
+    return value.toString();
+  }
 }

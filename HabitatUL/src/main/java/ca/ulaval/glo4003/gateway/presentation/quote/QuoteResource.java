@@ -43,7 +43,7 @@ public class QuoteResource {
   public Response requestQuote(QuoteRequest quoteRequest) {
     QuoteFormDto quoteFormDto = quoteViewAssembler.from(quoteRequest);
     QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
-    String quoteIdString = quoteDto.getQuoteId().getValue().toString();
+    String quoteIdString = quoteDto.getQuoteId().toRepresentation();
     URI location = UriBuilder.fromPath(CONTEXT_PATH).path(QUOTE_ROUTE).path(quoteIdString).build();
     return Response.created(location).entity(quoteViewAssembler.from(quoteDto)).build();
   }
@@ -54,7 +54,7 @@ public class QuoteResource {
   public Response purchaseQuote(
       @Context SecurityContext securityContext, @PathParam(QUOTE_ID_PARAM_NAME) QuoteId quoteId) {
     String userKey = securityContext.getUserPrincipal().getName();
-    String quoteKey = quoteId.getValue().toString();
+    String quoteKey = quoteId.toRepresentation();
     userAppService.associateQuote(userKey, quoteKey);
     quoteAppService.purchaseQuote(quoteId);
     return Response.ok().build();

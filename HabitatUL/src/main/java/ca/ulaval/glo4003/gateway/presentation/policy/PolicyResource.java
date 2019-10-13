@@ -62,7 +62,7 @@ public class PolicyResource {
     URI location =
         UriBuilder.fromPath(CONTEXT_PATH)
             .path(CLAIM_ROUTE)
-            .path(claimId.getValue().toString())
+            .path(claimId.toRepresentation())
             .build();
     return Response.created(location).build();
   }

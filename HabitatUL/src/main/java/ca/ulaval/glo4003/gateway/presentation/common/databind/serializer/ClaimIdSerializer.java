@@ -12,7 +12,7 @@ public class ClaimIdSerializer extends JsonSerializer<ClaimId> {
   public void serialize(
       ClaimId claimId, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
       throws IOException {
-    String value = claimId.getValue().toString();
+    String value = claimId.toRepresentation();
     jsonGenerator.writeString(value);
   }
 }

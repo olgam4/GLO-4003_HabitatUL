@@ -9,24 +9,24 @@ import java.util.List;
 
 public class Policy extends AggregateRoot {
   private PolicyId policyId;
-  private QuoteId quoteId;
+  private String quoteKey;
   private List<ClaimId> claims = new ArrayList<>();
 
-  public Policy(PolicyId policyId, QuoteId quoteId) {
+  public Policy(PolicyId policyId, String quoteKey) {
     this.policyId = policyId;
-    this.quoteId = quoteId;
+    this.quoteKey = quoteKey;
   }
 
   public PolicyId getPolicyId() {
     return policyId;
   }
 
-  public QuoteId getQuoteId() {
-    return quoteId;
+  public String getQuoteKey() {
+    return quoteKey;
   }
 
   public void issue() {
-    registerEvent(new PolicyIssuedEvent(policyId, quoteId));
+    registerEvent(new PolicyIssuedEvent(policyId, quoteKey));
   }
 
   public Claim openClaim(
