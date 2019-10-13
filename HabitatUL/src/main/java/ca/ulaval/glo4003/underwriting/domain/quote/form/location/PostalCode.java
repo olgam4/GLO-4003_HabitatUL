@@ -1,11 +1,13 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
+import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 public class PostalCode extends ValueObject {
   private String value;
 
-  public PostalCode(String value, PostalCodeFormatter postalCodeFormatter) {
+  public PostalCode(String value, PostalCodeFormatter postalCodeFormatter)
+      throws InvalidArgumentException {
     this.value = postalCodeFormatter.format(value);
   }
 

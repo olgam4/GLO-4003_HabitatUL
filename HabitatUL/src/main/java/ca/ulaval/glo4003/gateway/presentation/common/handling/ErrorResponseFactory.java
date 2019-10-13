@@ -1,8 +1,12 @@
-package ca.ulaval.glo4003.gateway.presentation.common.error;
+package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.NotDeclaredBicycleError;
-import ca.ulaval.glo4003.shared.domain.BaseError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidFloorError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidPostalCodeError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidPreventionSystemError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidSinisterTypeError;
+import ca.ulaval.glo4003.shared.domain.Error;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.InvalidEffectiveDateError;
@@ -37,6 +41,10 @@ public class ErrorResponseFactory {
     // 400
     STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidEffectiveDateError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidPostalCodeError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidPreventionSystemError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);
 
@@ -44,12 +52,12 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(QuoteNotFoundError.class, Status.NOT_FOUND);
   }
 
-  public ErrorResponse createExceptionView(BaseError exception) {
-    Status status = getExceptionResponseStatus(exception);
-    return new ErrorResponse(status, exception.getError(), exception.getMessage());
+  public ErrorResponse createExceptionView(Error error) {
+    Status status = getErrorResponseStatus(error);
+    return new ErrorResponse(status, error.getError(), error.getMessage());
   }
 
-  private Status getExceptionResponseStatus(BaseError exception) {
-    return STATUS_MAP.getOrDefault(exception.getClass(), DEFAULT_STATUS);
+  private Status getErrorResponseStatus(Error error) {
+    return STATUS_MAP.getOrDefault(error.getClass(), DEFAULT_STATUS);
   }
 }

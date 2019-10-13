@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.error;
+package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import javax.ws.rs.core.Response.Status;
 

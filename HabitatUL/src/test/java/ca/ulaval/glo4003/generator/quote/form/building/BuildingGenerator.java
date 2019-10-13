@@ -15,15 +15,22 @@ public class BuildingGenerator {
 
   public static BuildingView createBuildingView() {
     return new BuildingView(
-        Faker.instance().number().numberBetween(MIN_NUMBER_OF_UNITS, MAX_NUMBER_OF_UNITS),
-        new HashSet<>(Arrays.asList(PreventionSystem.SPRINKLER)),
-        Optional.empty());
+        createNumberOfUnits(), createPreventionSystems(), createCommercialUse());
   }
 
   public static Building createBuilding() {
-    return new Building(
-        Faker.instance().number().numberBetween(MIN_NUMBER_OF_UNITS, MAX_NUMBER_OF_UNITS),
-        new HashSet<>(Arrays.asList(PreventionSystem.SPRINKLER)),
-        Optional.empty());
+    return new Building(createNumberOfUnits(), createPreventionSystems(), createCommercialUse());
+  }
+
+  private static int createNumberOfUnits() {
+    return Faker.instance().number().numberBetween(MIN_NUMBER_OF_UNITS, MAX_NUMBER_OF_UNITS);
+  }
+
+  private static HashSet<PreventionSystem> createPreventionSystems() {
+    return new HashSet<>(Arrays.asList(PreventionSystem.SPRINKLER));
+  }
+
+  private static Optional<String> createCommercialUse() {
+    return Optional.empty();
   }
 }

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AnimalBreedTest {
   @Test
-  public void gettingEnum_withKnownAnimal_shouldReturnCorrespondingAnimal() {
+  public void gettingEnum_withKnownAnimalBreed_shouldReturnCorrespondingAnimalBreed() {
     assertEquals(AnimalBreed.CAT, AnimalBreed.getEnum("CAT"));
     assertEquals(AnimalBreed.DOG, AnimalBreed.getEnum("DOG"));
     assertEquals(AnimalBreed.FISH, AnimalBreed.getEnum("FISH"));
@@ -19,7 +19,7 @@ public class AnimalBreedTest {
   }
 
   @Test
-  public void gettingEnum_withUnknownAnimal_shouldReturnDefaultValue() {
-    assertEquals(AnimalBreed.OTHER, AnimalBreed.getEnum("WAPITI"));
+  public void gettingEnum_withUnknownAnimalBreed_shouldReturnDefaultValue() {
+    assertEquals(AnimalBreed.OTHER, AnimalBreed.getEnum("UNKNOWN_ANIMAL_BREED"));
   }
 }

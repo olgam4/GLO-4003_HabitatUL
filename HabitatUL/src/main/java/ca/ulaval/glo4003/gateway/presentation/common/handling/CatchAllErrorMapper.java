@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.error;
+package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import ca.ulaval.glo4003.shared.domain.BaseError;
 
@@ -8,10 +8,10 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class CatchAllMapper implements ExceptionMapper<Throwable> {
+public class CatchAllErrorMapper implements ExceptionMapper<Throwable> {
   private ErrorResponseFactory errorResponseFactory;
 
-  public CatchAllMapper() {
+  public CatchAllErrorMapper() {
     errorResponseFactory = new ErrorResponseFactory();
   }
 

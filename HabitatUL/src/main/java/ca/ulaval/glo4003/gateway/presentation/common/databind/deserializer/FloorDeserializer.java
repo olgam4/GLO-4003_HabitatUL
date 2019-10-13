@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidFloorError;
+import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -13,6 +15,15 @@ public class FloorDeserializer extends JsonDeserializer<Floor> {
   public Floor deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    return new Floor(node.textValue());
+    String value = node.textValue();
+    return convertValueSafely(value);
+  }
+
+  private Floor convertValueSafely(String value) throws InvalidFloorError {
+    try {
+      return new Floor(value);
+    } catch (InvalidArgumentException e) {
+      throw new InvalidFloorError(value);
+    }
   }
 }

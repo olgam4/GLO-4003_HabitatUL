@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
+import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 import java.util.HashMap;
@@ -25,10 +26,10 @@ public class Floor extends ValueObject {
   private String value;
   private int floorNumber;
 
-  public Floor(String value) throws InvalidFloorError {
+  public Floor(String value) throws InvalidArgumentException {
     this.value = value;
     Optional<Integer> parsedFloorNumber = parse(value);
-    this.floorNumber = parsedFloorNumber.orElseThrow(() -> new InvalidFloorError(value));
+    this.floorNumber = parsedFloorNumber.orElseThrow(InvalidArgumentException::new);
   }
 
   private Optional<Integer> parse(String value) {

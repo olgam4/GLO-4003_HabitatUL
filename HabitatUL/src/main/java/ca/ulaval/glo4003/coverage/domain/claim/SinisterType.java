@@ -1,7 +1,10 @@
 package ca.ulaval.glo4003.coverage.domain.claim;
 
+import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public enum SinisterType {
   FIRE,
@@ -15,7 +18,8 @@ public enum SinisterType {
     }
   }
 
-  public static SinisterType getEnum(String rawValue) {
-    return LOOKUP_MAP.get(rawValue.toLowerCase());
+  public static SinisterType getEnum(String rawValue) throws InvalidArgumentException {
+    return Optional.ofNullable(LOOKUP_MAP.get(rawValue.toLowerCase()))
+        .orElseThrow(InvalidArgumentException::new);
   }
 }

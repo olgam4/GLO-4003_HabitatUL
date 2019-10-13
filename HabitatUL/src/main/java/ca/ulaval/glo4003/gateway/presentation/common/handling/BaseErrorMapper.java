@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.error;
+package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import ca.ulaval.glo4003.shared.domain.BaseError;
 
@@ -16,8 +16,8 @@ public class BaseErrorMapper implements ExceptionMapper<BaseError> {
   }
 
   @Override
-  public Response toResponse(BaseError baseError) {
-    ErrorResponse errorResponse = errorResponseFactory.createExceptionView(baseError);
+  public Response toResponse(BaseError error) {
+    ErrorResponse errorResponse = errorResponseFactory.createExceptionView(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())
         .type(MediaType.APPLICATION_JSON_TYPE)

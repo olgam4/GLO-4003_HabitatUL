@@ -71,4 +71,4 @@ In order to keep the conversation clear and transparent, please limit discussion
 
 ## Code of Conduct
 
-This project has adopted the Contributor Covenant Code of Conduct. For more information see the [CODE_OF_CONDUCT.md].
+This project has adopted the Contributor Covenant Code of Conduct. For more information see the [code of conduct](CODE_OF_CONDUCT.md).

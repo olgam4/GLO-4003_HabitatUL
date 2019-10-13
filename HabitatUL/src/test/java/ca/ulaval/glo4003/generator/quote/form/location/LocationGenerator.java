@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.generator.quote.form.location;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationView;
+import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.PostalCode;
@@ -22,7 +23,12 @@ public class LocationGenerator {
   }
 
   private static PostalCode createPostalCode() {
-    return new PostalCode("G1V4L3", new CanadianPostalCodeFormatter());
+    try {
+      return new PostalCode("G1V4L3", new CanadianPostalCodeFormatter());
+    } catch (InvalidArgumentException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   private static int getRandomStreetNumber() {
@@ -34,6 +40,11 @@ public class LocationGenerator {
   }
 
   private static Floor createFloor() {
-    return new Floor("1ST");
+    try {
+      return new Floor("1ST");
+    } catch (InvalidArgumentException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }

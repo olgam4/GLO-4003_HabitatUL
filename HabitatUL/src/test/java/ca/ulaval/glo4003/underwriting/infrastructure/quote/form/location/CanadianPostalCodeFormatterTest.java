@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.InvalidPostalCodeError;
+import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,15 +18,17 @@ public class CanadianPostalCodeFormatterTest {
   }
 
   @Test
-  public void formattingPostalCode_withValidPostalCode_shouldFormatPostalCode() {
+  public void formattingPostalCode_withValidPostalCode_shouldFormatPostalCode()
+      throws InvalidArgumentException {
     String observed = subject.format(VALID_POSTAL_CODE);
 
     String expected = "G3A0G4";
     assertEquals(expected, observed);
   }
 
-  @Test(expected = InvalidPostalCodeError.class)
-  public void formattingPostalCode_withInvalidPostalCode_shouldThrow() {
+  @Test(expected = InvalidArgumentException.class)
+  public void formattingPostalCode_withInvalidPostalCode_shouldThrow()
+      throws InvalidArgumentException {
     subject.format(INVALID_POSTAL_CODE);
   }
 }

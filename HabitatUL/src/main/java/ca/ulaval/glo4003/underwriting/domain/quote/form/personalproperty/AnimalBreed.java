@@ -13,8 +13,8 @@ public enum AnimalBreed {
   private static final Map<String, AnimalBreed> LOOKUP_MAP = new HashMap<>();
 
   static {
-    for (AnimalBreed breed : values()) {
-      LOOKUP_MAP.put(breed.toString().toLowerCase(), breed);
+    for (AnimalBreed animalBreed : values()) {
+      LOOKUP_MAP.put(animalBreed.toString().toLowerCase(), animalBreed);
     }
   }
 
