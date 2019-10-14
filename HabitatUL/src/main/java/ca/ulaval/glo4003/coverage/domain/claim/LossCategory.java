@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum LossCategory {
-  FURNITURE_AND_HOUSEHOLD,
-  ELECTRONICS,
+  BICYCLE,
   CLOTHES,
   COMPUTER_EQUIPMENT,
-  BICYCLE,
-  OTHER_GOODS;
+  ELECTRONICS,
+  FURNITURE_AND_HOUSEHOLD,
+  OTHER;
 
   private static final Map<String, LossCategory> LOOKUP_MAP = new HashMap<>();
 
@@ -20,6 +20,6 @@ public enum LossCategory {
   }
 
   public static LossCategory getEnum(String rawValue) {
-    return LOOKUP_MAP.getOrDefault(rawValue.toLowerCase(), OTHER_GOODS);
+    return LOOKUP_MAP.getOrDefault(rawValue.toLowerCase(), OTHER);
   }
 }
