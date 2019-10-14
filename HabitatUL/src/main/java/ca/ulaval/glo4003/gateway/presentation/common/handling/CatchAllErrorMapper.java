@@ -18,7 +18,7 @@ public class CatchAllErrorMapper implements ExceptionMapper<Throwable> {
   @Override
   public Response toResponse(Throwable throwable) {
     BaseError error = new BaseError();
-    ErrorResponse errorResponse = errorResponseFactory.createExceptionView(error);
+    ErrorResponse errorResponse = errorResponseFactory.createErrorResponse(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())
         .type(MediaType.APPLICATION_JSON_TYPE)

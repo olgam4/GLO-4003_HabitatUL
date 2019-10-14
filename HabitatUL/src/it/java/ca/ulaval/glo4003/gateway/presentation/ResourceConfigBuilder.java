@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class ResourceConfigBuilder {
   private Set<Object> resources = new HashSet<>();
+  private Set<Class> errorMappers = new HashSet<>();
 
   private ResourceConfigBuilder() {}
 
@@ -19,10 +20,18 @@ public class ResourceConfigBuilder {
     return this;
   }
 
+  public ResourceConfigBuilder withErrorMapper(Class errorMapper) {
+    errorMappers.add(errorMapper);
+    return this;
+  }
+
   public ResourceConfig build() {
     ResourceConfig resourceConfig = new ResourceConfig();
     for (Object resource : resources) {
       resourceConfig.register(resource);
+    }
+    for (Class errorMapper : errorMappers) {
+      resourceConfig.register(errorMapper);
     }
     return resourceConfig;
   }

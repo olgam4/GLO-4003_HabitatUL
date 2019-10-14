@@ -37,10 +37,12 @@ public class ClaimResourceIT {
   @Before
   public void setUp() {
     ClaimResource claimResource = new ClaimResource(claimAppService, new ClaimViewAssembler());
-
     claimDto = ClaimGenerator.createClaimDto();
     when(claimAppService.getClaim(any())).thenReturn(claimDto);
-    registerResource(claimResource);
+    ResourceConfig resourceConfig =
+        ResourceConfigBuilder.aResourceConfig().withResource(claimResource).build();
+    resourceConfig.register(AuthFilterBuilder.anAuthFilter().build());
+    addResourceConfig(resourceConfig);
   }
 
   @After
@@ -48,19 +50,11 @@ public class ClaimResourceIT {
     resetServer();
   }
 
-  private void registerResource(ClaimResource claimResource) {
-    ResourceConfig resourceConfig =
-        ResourceConfigBuilder.aResourceConfig().withResource(claimResource).build();
-    resourceConfig.register(AuthFilterBuilder.anAuthFilter().build());
-    addResourceConfig(resourceConfig);
-  }
-
   @Test
   public void gettingClaimPath_withValidRequest_shouldHaveExpectedStatusCode() {
     String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().toRepresentation());
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
-
     getBaseScenario().given().when().get(path).then().statusCode(expectedStatusCode);
   }
 

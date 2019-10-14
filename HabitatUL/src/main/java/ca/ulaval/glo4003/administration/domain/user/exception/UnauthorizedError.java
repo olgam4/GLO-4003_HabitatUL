@@ -2,7 +2,8 @@ package ca.ulaval.glo4003.administration.domain.user.exception;
 
 public class UnauthorizedError extends UserError {
   private static final String ERROR = "UNAUTHORIZED";
-  private static final String MESSAGE = "you do not have necessary rights to access this resource";
+  private static final String MESSAGE =
+      "sorry, you do not have necessary rights to access this resource";
 
   public String getError() {
     return ERROR;

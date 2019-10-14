@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.erro
 
 public class InvalidFloorError extends DeserializationError {
   private static final String ERROR = "INVALID_FLOOR";
-  private static final String MESSAGE = "<%s> is not a valid floor value";
+  private static final String MESSAGE = "sorry, <%s> is not a valid floor value";
 
   public InvalidFloorError(String invalidFloor) {
     super(ERROR, String.format(MESSAGE, invalidFloor));

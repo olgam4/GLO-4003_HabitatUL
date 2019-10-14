@@ -28,17 +28,14 @@ public class ErrorResponseFactory {
   }
 
   private static void registerGenericErrors() {
-    // 401
     STATUS_MAP.put(UnauthorizedError.class, Status.UNAUTHORIZED);
   }
 
   private static void registerCoverageErrors() {
-    // 400
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);
   }
 
   private static void registerUnderwritingErrors() {
-    // 400
     STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidEffectiveDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
@@ -47,12 +44,10 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(InvalidZipCodeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);
-
-    // 404
     STATUS_MAP.put(QuoteNotFoundError.class, Status.NOT_FOUND);
   }
 
-  public ErrorResponse createExceptionView(Error error) {
+  public ErrorResponse createErrorResponse(Error error) {
     Status status = getErrorResponseStatus(error);
     return new ErrorResponse(status, error.getError(), error.getMessage());
   }

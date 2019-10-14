@@ -21,7 +21,7 @@ public class DeserializationErrorMapper implements ExceptionMapper<JsonProcessin
   @Override
   public Response toResponse(JsonProcessingException jpe) {
     Error error = convertError(jpe);
-    ErrorResponse errorResponse = errorResponseFactory.createExceptionView(error);
+    ErrorResponse errorResponse = errorResponseFactory.createErrorResponse(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())
         .type(MediaType.APPLICATION_JSON_TYPE)

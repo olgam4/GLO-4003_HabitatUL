@@ -17,7 +17,7 @@ public class BaseErrorMapper implements ExceptionMapper<BaseError> {
 
   @Override
   public Response toResponse(BaseError error) {
-    ErrorResponse errorResponse = errorResponseFactory.createExceptionView(error);
+    ErrorResponse errorResponse = errorResponseFactory.createErrorResponse(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())
         .type(MediaType.APPLICATION_JSON_TYPE)
