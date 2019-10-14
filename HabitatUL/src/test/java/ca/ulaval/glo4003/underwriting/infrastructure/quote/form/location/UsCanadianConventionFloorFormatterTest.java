@@ -37,6 +37,28 @@ public class UsCanadianConventionFloorFormatterTest {
     subject.format(INVALID_FLOOR);
   }
 
+  @Test(expected = InvalidArgumentException.class)
+  public void formattingFloor_withInvalidHigherFloor_shouldThrow() throws InvalidArgumentException {
+    subject.format("1TH");
+  }
+
+  @Test(expected = InvalidArgumentException.class)
+  public void formattingFloor_withoutNumberedHigherFloor_shouldThrow()
+      throws InvalidArgumentException {
+    subject.format("INVALID-TH");
+  }
+
+  @Test(expected = InvalidArgumentException.class)
+  public void formattingFloor_withInvalidLowerFloor_shouldThrow() throws InvalidArgumentException {
+    subject.format("B0");
+  }
+
+  @Test(expected = InvalidArgumentException.class)
+  public void formattingFloor_withoutNumberedLowerFloor_shouldThrow()
+      throws InvalidArgumentException {
+    subject.format("B-INVALID");
+  }
+
   private void assertCorrespondingFormattedFloor(int expectedFloor, String floor)
       throws InvalidArgumentException {
     assertEquals(expectedFloor, subject.format(floor));
