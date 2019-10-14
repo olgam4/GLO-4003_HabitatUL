@@ -1,5 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"error", "description"})
 public class ErrorMessage {
   private final String error;
   private final String description;

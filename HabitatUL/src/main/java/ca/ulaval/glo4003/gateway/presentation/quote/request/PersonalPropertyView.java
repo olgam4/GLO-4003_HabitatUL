@@ -7,13 +7,12 @@ public class PersonalPropertyView {
   private Amount coverageAmount;
   private Animals animals;
 
+  private PersonalPropertyView() {}
+
   public PersonalPropertyView(Amount coverageAmount, Animals animals) {
     this.coverageAmount = coverageAmount;
     this.animals = animals;
   }
-
-  // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
-  private PersonalPropertyView() {}
 
   public Amount getCoverageAmount() {
     return coverageAmount;

@@ -10,15 +10,14 @@ public class BuildingView {
   private Set<PreventionSystem> preventionSystems;
   private Optional<String> commercialUse;
 
+  private BuildingView() {}
+
   public BuildingView(
       int numberOfUnits, Set<PreventionSystem> preventionSystems, Optional<String> commercialUse) {
     this.numberOfUnits = numberOfUnits;
     this.preventionSystems = preventionSystems;
     this.commercialUse = commercialUse;
   }
-
-  // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
-  private BuildingView() {}
 
   public int getNumberOfUnits() {
     return numberOfUnits;

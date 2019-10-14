@@ -9,6 +9,8 @@ public class QuoteRequest {
   private BuildingView building;
   private PersonalPropertyView personalProperty;
 
+  private QuoteRequest() {}
+
   public QuoteRequest(
       IdentityView identity,
       LocationView location,
@@ -21,9 +23,6 @@ public class QuoteRequest {
     this.building = building;
     this.personalProperty = personalProperty;
   }
-
-  // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
-  private QuoteRequest() {}
 
   public IdentityView getIdentity() {
     return identity;

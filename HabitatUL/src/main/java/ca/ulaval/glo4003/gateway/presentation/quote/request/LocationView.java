@@ -9,15 +9,14 @@ public class LocationView {
   private String apartmentNumber;
   private Floor floor;
 
+  private LocationView() {}
+
   public LocationView(ZipCode zipCode, int streetNumber, String apartmentNumber, Floor floor) {
     this.zipCode = zipCode;
     this.streetNumber = streetNumber;
     this.apartmentNumber = apartmentNumber;
     this.floor = floor;
   }
-
-  // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
-  private LocationView() {}
 
   public ZipCode getZipCode() {
     return zipCode;

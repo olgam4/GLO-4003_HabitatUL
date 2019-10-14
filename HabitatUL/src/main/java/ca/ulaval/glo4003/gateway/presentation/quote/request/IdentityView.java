@@ -9,15 +9,14 @@ public class IdentityView {
   private Date birthDate;
   private Gender gender;
 
+  private IdentityView() {}
+
   public IdentityView(String firstName, String lastName, Date birthDate, Gender gender) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.birthDate = birthDate;
     this.gender = gender;
   }
-
-  // IMPORTANT - KEEP FOR JACKSON SERIALIZATION
-  private IdentityView() {}
 
   public String getFirstName() {
     return firstName;
