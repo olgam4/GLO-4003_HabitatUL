@@ -55,7 +55,7 @@ public class RestITestHelper {
   }
 
   public static JsonSchemaValidator matchesJsonSchema(String classpath) {
-    return matchesJsonSchemaInClasspath(String.format("%s.json", classpath));
+    return matchesJsonSchemaInClasspath(String.format("schema/%s.json", classpath));
   }
 
   public static String toUri(String... pathParts) {

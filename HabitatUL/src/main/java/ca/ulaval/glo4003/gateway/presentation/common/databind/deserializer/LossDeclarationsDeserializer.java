@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class LossDeclarationsDeserializer extends JsonDeserializer<LossDeclarati
     Map<LossCategory, Amount> lossesMap = new EnumMap<>(LossCategory.class);
     for (JsonNode node : nodes) {
       LossCategory lossCategory = getLossCategory(node);
-      Amount actualLossAmount = lossesMap.getOrDefault(lossCategory, new Amount(BigDecimal.ZERO));
+      Amount actualLossAmount = lossesMap.getOrDefault(lossCategory, Amount.ZERO);
       Amount lossAmount = new Amount(node.get("amount").decimalValue());
       lossesMap.put(lossCategory, actualLossAmount.add(lossAmount));
     }

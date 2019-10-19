@@ -7,9 +7,9 @@ import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
-import ca.ulaval.glo4003.administration.infrastructure.user.AlwaysOkPaymentProcessor;
 import ca.ulaval.glo4003.administration.infrastructure.user.ConfigBasedTokenValidityPeriodProvider;
 import ca.ulaval.glo4003.administration.infrastructure.user.DummyPasswordValidator;
+import ca.ulaval.glo4003.administration.infrastructure.user.DummyPaymentProcessor;
 import ca.ulaval.glo4003.administration.infrastructure.user.JwtTokenTranslator;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryPolicyRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryQuoteRegistry;
@@ -25,15 +25,20 @@ import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.ConfigBasedLocalZoneIdProvider;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
 import ca.ulaval.glo4003.mediator.Mediator;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteIndicatedPriceCalculator;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOffice;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculator;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
-import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.DummyQuoteIndicatedPriceCalculator;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.DummyQuoteBasePriceCalculator;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.JsonPreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryWrapper;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
@@ -46,7 +51,7 @@ public class DemoContext implements Context {
 
   public DemoContext() {
     ServiceLocator.reset();
-    properties = ConfigFileReader.readProperties("config.properties");
+    properties = new ConfigFileReader().read("config.properties");
     mediator = new Mediator();
   }
 
@@ -70,7 +75,7 @@ public class DemoContext implements Context {
     registerAdminUser(properties, usernameRegistry, passwordValidator);
 
     ServiceLocator.register(PasswordValidator.class, passwordValidator);
-    ServiceLocator.register(PaymentProcessor.class, new AlwaysOkPaymentProcessor());
+    ServiceLocator.register(PaymentProcessor.class, new DummyPaymentProcessor());
     ServiceLocator.register(PolicyRegistry.class, new InMemoryPolicyRegistry());
     ServiceLocator.register(QuoteRegistry.class, new InMemoryQuoteRegistry());
     ServiceLocator.register(UsernameRegistry.class, usernameRegistry);
@@ -99,12 +104,15 @@ public class DemoContext implements Context {
   }
 
   private void registerUnderwritingServices() {
-    Money hardCodedPrice = new Money(BigDecimal.valueOf(200));
-    ServiceLocator.register(
-        QuoteIndicatedPriceCalculator.class,
-        new DummyQuoteIndicatedPriceCalculator(hardCodedPrice));
+    Money hardCodedPrice = new Money(new Amount(BigDecimal.valueOf(200)));
     ServiceLocator.register(
         QuoteValidityPeriodProvider.class, new ConfigBasedQuoteValidityPeriodProvider());
+    ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
+    ServiceLocator.register(
+        QuoteBasePriceCalculator.class, new DummyQuoteBasePriceCalculator(hardCodedPrice));
+    ServiceLocator.register(
+        PreferentialProgramAdjustmentProvider.class,
+        new JsonPreferentialProgramAdjustmentProvider());
     ServiceLocator.register(
         QuoteRepository.class,
         new EventPublisherQuoteRepositoryWrapper(new InMemoryQuoteRepository(), mediator));

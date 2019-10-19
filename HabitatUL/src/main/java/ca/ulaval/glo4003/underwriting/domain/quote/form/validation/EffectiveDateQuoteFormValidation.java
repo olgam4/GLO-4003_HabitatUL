@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.InvalidEffectiveDateError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 import java.time.Period;
@@ -18,7 +18,7 @@ public class EffectiveDateQuoteFormValidation implements QuoteFormValidation {
   @Override
   public void validate(QuoteForm quoteForm) {
     if (isInvalidEffectiveDate(quoteForm.getEffectiveDate())) {
-      throw new InvalidEffectiveDateError();
+      throw new QuoteEffectiveDateError();
     }
   }
 

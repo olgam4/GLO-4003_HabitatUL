@@ -22,7 +22,7 @@ public class Main {
 
   private static Integer retrievePortNumber() {
     String portNumber = Optional.ofNullable(System.getProperty(PORT_ENV_VAR)).orElse(DEFAULT_PORT);
-    return Integer.valueOf(portNumber);
+    return Integer.parseInt(portNumber);
   }
 
   private static void registerResources(Server server) {

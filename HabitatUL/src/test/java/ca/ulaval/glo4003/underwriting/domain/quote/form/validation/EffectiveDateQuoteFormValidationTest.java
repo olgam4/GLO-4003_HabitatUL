@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.InvalidEffectiveDateError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -42,14 +42,14 @@ public class EffectiveDateQuoteFormValidationTest {
     subject.validate(quoteForm);
   }
 
-  @Test(expected = InvalidEffectiveDateError.class)
+  @Test(expected = QuoteEffectiveDateError.class)
   public void validatingQuoteForm_withInvalidPastEffectiveDate_shouldThrow() {
     quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(INVALID_PAST_EFFECTIVE_DATE);
 
     subject.validate(quoteForm);
   }
 
-  @Test(expected = InvalidEffectiveDateError.class)
+  @Test(expected = QuoteEffectiveDateError.class)
   public void validatingQuoteForm_withInvalidFutureEffectiveDate_shouldThrow() {
     quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(INVALID_FUTURE_EFFECTIVE_DATE);
 

@@ -1,0 +1,13 @@
+{
+  "key1": "value1",
+  "key2": 0.15,
+  "key3": [
+    "arrayValue1",
+    "arrayValue2",
+    "arrayValue3"
+  ],
+  "key4": {
+    "subKey1": "subValue1",
+    "subKey2": "subValue2"
+  }
+}

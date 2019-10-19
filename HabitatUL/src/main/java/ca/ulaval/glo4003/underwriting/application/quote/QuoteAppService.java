@@ -11,7 +11,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.QuoteFormValidator;
 
 public class QuoteAppService {
   private QuoteAssembler quoteAssembler;
@@ -23,7 +22,7 @@ public class QuoteAppService {
   public QuoteAppService() {
     this(
         new QuoteAssembler(),
-        new QuoteFormValidator(ServiceLocator.resolve(ClockProvider.class)),
+        new QuoteFormValidator(),
         new QuotePriceCalculator(),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),

@@ -14,6 +14,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation.StudentInformation;
 
 import java.util.Optional;
 
@@ -24,7 +25,8 @@ public class QuoteViewAssembler {
         from(quoteRequest.getLocation()),
         quoteRequest.getEffectiveDate(),
         from(quoteRequest.getBuilding()),
-        from(quoteRequest.getPersonalProperty()));
+        from(quoteRequest.getPersonalProperty()),
+        from(quoteRequest.getStudentInformation()));
   }
 
   private Identity from(IdentityView identityView) {
@@ -52,6 +54,13 @@ public class QuoteViewAssembler {
     Amount coverageAmount = personalPropertyView.getCoverageAmount();
     Animals animals = personalPropertyView.getAnimals();
     return new PersonalProperty(coverageAmount, animals);
+  }
+
+  private StudentInformation from(StudentInformationView studentInformationView) {
+    String idul = studentInformationView.getIdul();
+    String identificationNumber = studentInformationView.getNi();
+    String program = studentInformationView.getProgram();
+    return new StudentInformation(idul, identificationNumber, program);
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {

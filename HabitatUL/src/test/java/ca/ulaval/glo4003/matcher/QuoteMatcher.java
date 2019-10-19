@@ -10,6 +10,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation.StudentInformation;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -40,7 +41,8 @@ public class QuoteMatcher {
         hasProperty("location", equalTo(quoteFormDto.getLocation())),
         hasProperty("effectiveDate", equalTo(quoteFormDto.getEffectiveDate())),
         hasProperty("building", equalTo(quoteFormDto.getBuilding())),
-        hasProperty("personalProperty", equalTo(quoteFormDto.getPersonalProperty())));
+        hasProperty("personalProperty", equalTo(quoteFormDto.getPersonalProperty())),
+        hasProperty("studentInformation", equalTo(quoteFormDto.getStudentInformation())));
   }
 
   public static Matcher<Identity> matchesIdentity(final IdentityView identityView) {
@@ -77,6 +79,14 @@ public class QuoteMatcher {
         hasProperty("animals", matchesAnimal(personalPropertyView.getAnimals())));
   }
 
+  public static Matcher<StudentInformation> matchesStudentInformation(
+      final StudentInformationView studentInformationView) {
+    return allOf(
+        hasProperty("idul", equalTo(studentInformationView.getIdul())),
+        hasProperty("identificationNumber", equalTo(studentInformationView.getNi())),
+        hasProperty("program", equalTo(studentInformationView.getProgram())));
+  }
+
   public static Matcher<QuoteFormDto> matchesQuoteFormDto(final QuoteRequest quoteRequest) {
     return allOf(
         hasProperty("identity", matchesIdentity(quoteRequest.getIdentity())),
@@ -84,6 +94,8 @@ public class QuoteMatcher {
         hasProperty("effectiveDate", equalTo(quoteRequest.getEffectiveDate())),
         hasProperty("building", matchesBuilding(quoteRequest.getBuilding())),
         hasProperty(
-            "personalProperty", matchesPersonalProperty(quoteRequest.getPersonalProperty())));
+            "personalProperty", matchesPersonalProperty(quoteRequest.getPersonalProperty())),
+        hasProperty(
+            "studentInformation", matchesStudentInformation(quoteRequest.getStudentInformation())));
   }
 }

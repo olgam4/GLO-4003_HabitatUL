@@ -55,8 +55,10 @@ public class QuoteResourceIT {
 
   private void registerResource(QuoteResource quoteResource) {
     ResourceConfig resourceConfig =
-        ResourceConfigBuilder.aResourceConfig().withResource(quoteResource).build();
-    resourceConfig.register(AuthFilterBuilder.anAuthFilter().build());
+        ResourceConfigBuilder.aResourceConfig()
+            .withResource(quoteResource)
+            .withRequestFilter(AuthFilterBuilder.anAuthFilter().build())
+            .build();
     addResourceConfig(resourceConfig);
   }
 

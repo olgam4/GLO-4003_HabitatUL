@@ -12,7 +12,8 @@ public class QuoteAssembler {
         quoteFormDto.getLocation(),
         quoteFormDto.getEffectiveDate(),
         quoteFormDto.getBuilding(),
-        quoteFormDto.getPersonalProperty());
+        quoteFormDto.getPersonalProperty(),
+        quoteFormDto.getStudentInformation());
   }
 
   public QuoteDto from(Quote quote) {

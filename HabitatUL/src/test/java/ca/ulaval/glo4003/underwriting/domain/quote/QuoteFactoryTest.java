@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.generator.money.MoneyGenerator;
+import ca.ulaval.glo4003.generator.MoneyGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;

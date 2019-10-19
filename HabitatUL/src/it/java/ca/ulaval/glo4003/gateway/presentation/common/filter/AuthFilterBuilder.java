@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.filter;
 
+import com.github.javafaker.Faker;
+
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
@@ -7,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthFilterBuilder {
-  private String DEFAULT_USER_KEY = "e2d6f7c6-9e35-4db4-be53-0327f00a15c2";
+  private String DEFAULT_USER_KEY = Faker.instance().internet().uuid();
   private List<String> DEFAULT_USER_ROLES = new ArrayList<>();
+
   private String userKey = DEFAULT_USER_KEY;
   private List<String> userRoles = DEFAULT_USER_ROLES;
 

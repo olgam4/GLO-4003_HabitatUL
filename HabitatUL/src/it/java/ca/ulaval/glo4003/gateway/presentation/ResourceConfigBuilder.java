@@ -2,12 +2,14 @@ package ca.ulaval.glo4003.gateway.presentation;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
+import javax.ws.rs.container.ContainerRequestFilter;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ResourceConfigBuilder {
   private Set<Object> resources = new HashSet<>();
   private Set<Class> errorMappers = new HashSet<>();
+  private Set<ContainerRequestFilter> requestFilters = new HashSet<>();
 
   private ResourceConfigBuilder() {}
 
@@ -25,14 +27,16 @@ public class ResourceConfigBuilder {
     return this;
   }
 
+  public ResourceConfigBuilder withRequestFilter(ContainerRequestFilter requestFilter) {
+    requestFilters.add(requestFilter);
+    return this;
+  }
+
   public ResourceConfig build() {
     ResourceConfig resourceConfig = new ResourceConfig();
-    for (Object resource : resources) {
-      resourceConfig.register(resource);
-    }
-    for (Class errorMapper : errorMappers) {
-      resourceConfig.register(errorMapper);
-    }
+    resources.forEach(resourceConfig::register);
+    errorMappers.forEach(resourceConfig::register);
+    requestFilters.forEach(resourceConfig::register);
     return resourceConfig;
   }
 }

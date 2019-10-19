@@ -8,6 +8,7 @@ public class QuoteRequest {
   private Date effectiveDate;
   private BuildingView building;
   private PersonalPropertyView personalProperty;
+  private StudentInformationView studentInformation;
 
   private QuoteRequest() {}
 
@@ -16,12 +17,14 @@ public class QuoteRequest {
       LocationView location,
       Date effectiveDate,
       BuildingView building,
-      PersonalPropertyView personalProperty) {
+      PersonalPropertyView personalProperty,
+      StudentInformationView studentInformation) {
     this.identity = identity;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
     this.personalProperty = personalProperty;
+    this.studentInformation = studentInformation;
   }
 
   public IdentityView getIdentity() {
@@ -42,5 +45,9 @@ public class QuoteRequest {
 
   public PersonalPropertyView getPersonalProperty() {
     return personalProperty;
+  }
+
+  public StudentInformationView getStudentInformation() {
+    return studentInformation;
   }
 }

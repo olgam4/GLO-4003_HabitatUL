@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class QuoteRequestBuilder {
-  private final String DEFAULT_FIRST_NAME = createName();
-  private final String DEFAULT_LAST_NAME = createName();
+  private final String DEFAULT_FIRST_NAME = Faker.instance().funnyName().name();
+  private final String DEFAULT_LAST_NAME = Faker.instance().funnyName().name();
   private final String DEFAULT_BIRTH_DATE = createBirthDate();
   private final String DEFAULT_GENDER = createGender();
 
-  private final String DEFAULT_ZIP_CODE = createZipCode();
+  private final String DEFAULT_ZIP_CODE = "G3A0G4";
   private final int DEFAULT_STREET_NUMBER = 13;
   private final int DEFAULT_APARTMENT_NUMBER = 2;
   private final String DEFAULT_FLOOR = "1ST";
@@ -36,6 +36,10 @@ public class QuoteRequestBuilder {
 
   private final double DEFAULT_COVERAGE_AMOUNT = createCoverageAmount();
   private final List<JSONObject> DEFAULT_ANIMALS = createAnimals();
+
+  private final String DEFAULT_IDUL = Faker.instance().university().name();
+  private final String DEFAULT_IDENTIFICATION_NUMBER = Faker.instance().educator().university();
+  private final String DEFAULT_PROGRAM = Faker.instance().educator().course();
 
   private String firstName = DEFAULT_FIRST_NAME;
   private String lastName = DEFAULT_LAST_NAME;
@@ -56,11 +60,11 @@ public class QuoteRequestBuilder {
   private double coverageAmount = DEFAULT_COVERAGE_AMOUNT;
   private List<JSONObject> animals = DEFAULT_ANIMALS;
 
-  private QuoteRequestBuilder() {}
+  private String idul = DEFAULT_IDUL;
+  private String identificationNumber = DEFAULT_IDENTIFICATION_NUMBER;
+  private String program = DEFAULT_PROGRAM;
 
-  private String createZipCode() {
-    return "G3A0G4";
-  }
+  private QuoteRequestBuilder() {}
 
   private static HashSet<String> createPreventionSystems() {
     int size = Faker.instance().number().numberBetween(0, PreventionSystem.values().length);
@@ -90,10 +94,6 @@ public class QuoteRequestBuilder {
     return new QuoteRequestBuilder();
   }
 
-  private String createName() {
-    return Faker.instance().funnyName().name();
-  }
-
   private String createBirthDate() {
     return new SimpleDateFormat("yyyy-MM-dd").format(Faker.instance().date().birthday());
   }
@@ -114,6 +114,7 @@ public class QuoteRequestBuilder {
     json.put("effectiveDate", effectiveDate);
     json.put("building", buildBuilding());
     json.put("personalProperty", buildPersonalProperty());
+    json.put("studentInformation", buildStudentInformation());
     return json;
   }
 
@@ -147,6 +148,14 @@ public class QuoteRequestBuilder {
     JSONObject json = new JSONObject();
     json.put("coverageAmount", coverageAmount);
     json.put("animals", new JSONArray(animals));
+    return json;
+  }
+
+  private JSONObject buildStudentInformation() {
+    JSONObject json = new JSONObject();
+    json.put("idul", idul);
+    json.put("ni", identificationNumber);
+    json.put("program", program);
     return json;
   }
 }

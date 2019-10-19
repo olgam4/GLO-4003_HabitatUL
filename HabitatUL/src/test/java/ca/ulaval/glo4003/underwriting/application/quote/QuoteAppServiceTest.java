@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.generator.money.MoneyGenerator;
+import ca.ulaval.glo4003.generator.MoneyGenerator;
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -14,7 +14,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.QuoteFormValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

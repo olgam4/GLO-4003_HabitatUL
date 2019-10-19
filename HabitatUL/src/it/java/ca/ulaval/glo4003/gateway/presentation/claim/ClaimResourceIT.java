@@ -40,8 +40,10 @@ public class ClaimResourceIT {
     claimDto = ClaimGenerator.createClaimDto();
     when(claimAppService.getClaim(any())).thenReturn(claimDto);
     ResourceConfig resourceConfig =
-        ResourceConfigBuilder.aResourceConfig().withResource(claimResource).build();
-    resourceConfig.register(AuthFilterBuilder.anAuthFilter().build());
+        ResourceConfigBuilder.aResourceConfig()
+            .withResource(claimResource)
+            .withRequestFilter(AuthFilterBuilder.anAuthFilter().build())
+            .build();
     addResourceConfig(resourceConfig);
   }
 

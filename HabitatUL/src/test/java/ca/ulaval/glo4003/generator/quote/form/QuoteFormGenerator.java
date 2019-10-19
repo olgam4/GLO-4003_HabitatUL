@@ -10,14 +10,16 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.concurrent.TimeUnit;
 
-import static ca.ulaval.glo4003.generator.quote.form.building.BuildingGenerator.createBuilding;
-import static ca.ulaval.glo4003.generator.quote.form.building.BuildingGenerator.createBuildingView;
-import static ca.ulaval.glo4003.generator.quote.form.identity.IdentityGenerator.createIdentity;
-import static ca.ulaval.glo4003.generator.quote.form.identity.IdentityGenerator.createIdentityView;
-import static ca.ulaval.glo4003.generator.quote.form.location.LocationGenerator.createLocation;
-import static ca.ulaval.glo4003.generator.quote.form.location.LocationGenerator.createLocationView;
-import static ca.ulaval.glo4003.generator.quote.form.personal.PersonalPropertyGenerator.createPersonalProperty;
-import static ca.ulaval.glo4003.generator.quote.form.personal.PersonalPropertyGenerator.createPersonalPropertyView;
+import static ca.ulaval.glo4003.generator.quote.form.BuildingGenerator.createBuilding;
+import static ca.ulaval.glo4003.generator.quote.form.BuildingGenerator.createBuildingView;
+import static ca.ulaval.glo4003.generator.quote.form.IdentityGenerator.createIdentity;
+import static ca.ulaval.glo4003.generator.quote.form.IdentityGenerator.createIdentityView;
+import static ca.ulaval.glo4003.generator.quote.form.LocationGenerator.createLocation;
+import static ca.ulaval.glo4003.generator.quote.form.LocationGenerator.createLocationView;
+import static ca.ulaval.glo4003.generator.quote.form.PersonalPropertyGenerator.createPersonalProperty;
+import static ca.ulaval.glo4003.generator.quote.form.PersonalPropertyGenerator.createPersonalPropertyView;
+import static ca.ulaval.glo4003.generator.quote.form.StudentInformationGenerator.createStudentInformation;
+import static ca.ulaval.glo4003.generator.quote.form.StudentInformationGenerator.createStudentInformationView;
 
 public class QuoteFormGenerator {
   private QuoteFormGenerator() {}
@@ -28,7 +30,8 @@ public class QuoteFormGenerator {
         createLocationView(),
         createEffectiveDate(),
         createBuildingView(),
-        createPersonalPropertyView());
+        createPersonalPropertyView(),
+        createStudentInformationView());
   }
 
   public static QuoteFormDto createQuoteFormDto() {
@@ -37,7 +40,8 @@ public class QuoteFormGenerator {
         createLocation(),
         createEffectiveDate(),
         createBuilding(),
-        createPersonalProperty());
+        createPersonalProperty(),
+        createStudentInformation());
   }
 
   public static QuoteForm createQuoteFormWithEffectiveDate(Date effectiveDate) {
@@ -46,7 +50,8 @@ public class QuoteFormGenerator {
         createLocation(),
         effectiveDate,
         createBuilding(),
-        createPersonalProperty());
+        createPersonalProperty(),
+        createStudentInformation());
   }
 
   public static QuoteForm createQuoteForm() {
@@ -55,7 +60,8 @@ public class QuoteFormGenerator {
         createLocation(),
         createEffectiveDate(),
         createBuilding(),
-        createPersonalProperty());
+        createPersonalProperty(),
+        createStudentInformation());
   }
 
   private static Date createEffectiveDate() {
