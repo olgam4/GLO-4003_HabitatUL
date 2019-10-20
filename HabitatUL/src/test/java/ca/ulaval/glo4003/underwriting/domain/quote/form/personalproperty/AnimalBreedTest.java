@@ -9,7 +9,7 @@ public class AnimalBreedTest {
   public void gettingEnum_withKnownAnimalBreed_shouldReturnCorrespondingAnimalBreed() {
     assertEquals(AnimalBreed.CAT, AnimalBreed.getEnum("CAT"));
     assertEquals(AnimalBreed.DOG, AnimalBreed.getEnum("DOG"));
-    assertEquals(AnimalBreed.FISH, AnimalBreed.getEnum("FISH"));
+    assertEquals(AnimalBreed.GOLD_FISH, AnimalBreed.getEnum("GOLD_FISH"));
     assertEquals(AnimalBreed.SNAKE, AnimalBreed.getEnum("SNAKE"));
   }
 

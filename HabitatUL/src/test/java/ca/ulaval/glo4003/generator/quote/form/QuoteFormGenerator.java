@@ -67,15 +67,15 @@ public class QuoteFormGenerator {
   }
 
   public static QuoteForm createQuoteFormWithCivilLiabilityAmount(
-          CivilLiabilityAmount civilLiabilityAmount) {
+      CivilLiabilityAmount civilLiabilityAmount) {
     return new QuoteForm(
-            createIdentity(),
-            createLocation(),
-            createEffectiveDate(),
-            createBuilding(),
-            createPersonalProperty(),
-            createCivilLiabilityWithAmount(civilLiabilityAmount),
-            createStudentInformation());
+        createIdentity(),
+        createLocation(),
+        createEffectiveDate(),
+        createBuilding(),
+        createPersonalProperty(),
+        createCivilLiabilityWithAmount(civilLiabilityAmount),
+        createStudentInformation());
   }
 
   public static QuoteForm createQuoteFormWithCivilLiabilityAmountAndNumberOfUnits(

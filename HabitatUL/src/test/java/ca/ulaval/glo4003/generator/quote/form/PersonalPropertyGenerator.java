@@ -39,7 +39,8 @@ public class PersonalPropertyGenerator {
 
   private static Map<AnimalBreed, Integer> getRandomAnimalMap() {
     Map<AnimalBreed, Integer> animals = new HashMap<>();
-    getRandomAnimalList().forEach(animal -> animals.put(animal, animals.getOrDefault(animal, 0)));
+    getRandomAnimalList()
+        .forEach(animal -> animals.put(animal, animals.getOrDefault(animal, 0) + 1));
     return animals;
   }
 

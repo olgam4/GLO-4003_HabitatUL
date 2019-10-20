@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 
 public abstract class QuoteBasePriceCalculatorIT {
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
+
   private QuoteBasePriceCalculator subject;
 
   @Before
@@ -18,7 +19,7 @@ public abstract class QuoteBasePriceCalculatorIT {
   }
 
   @Test
-  public void computingQuoteBasePrice_shouldReturnBasesPrice() {
+  public void computingQuoteBasePrice_shouldReturnBasePrice() {
     Money price = subject.computeQuoteBasePrice(QUOTE_FORM);
 
     assertNotNull(price);

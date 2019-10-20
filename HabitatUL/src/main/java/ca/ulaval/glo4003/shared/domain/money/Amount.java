@@ -16,6 +16,14 @@ public class Amount extends ValueObject {
     this.value = value.setScale(DECIMAL_PRECISION, ROUNDING);
   }
 
+  public static Amount min(Amount first, Amount second) {
+    return new Amount(first.value.min(second.value));
+  }
+
+  public static Amount max(Amount first, Amount second) {
+    return new Amount(first.value.max(second.value));
+  }
+
   public BigDecimal getValue() {
     return value;
   }

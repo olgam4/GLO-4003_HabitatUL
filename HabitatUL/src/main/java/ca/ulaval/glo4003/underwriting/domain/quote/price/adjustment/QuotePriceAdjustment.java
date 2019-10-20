@@ -1,7 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment;
 
+import ca.ulaval.glo4003.shared.domain.ValueComparableObject;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
-public interface QuotePriceAdjustment {
-  Money apply(Money price);
+public abstract class QuotePriceAdjustment extends ValueComparableObject {
+  public abstract Money apply(Money price);
 }

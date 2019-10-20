@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PreferentialProgramFormulaPartTest {
   private static final Money BASE_PRICE = MoneyGenerator.create();
-  private static final Money PRICE_ADJUSTMENT_AMOUNT = MoneyGenerator.create();
+  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.create();
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
 
   @Mock private PreferentialProgramAdjustmentProvider preferentialProgramAdjustmentProvider;
@@ -32,13 +32,13 @@ public class PreferentialProgramFormulaPartTest {
   public void setUp() {
     when(preferentialProgramAdjustmentProvider.getAdjustment(any(String.class)))
         .thenReturn(quotePriceAdjustment);
-    when(quotePriceAdjustment.apply(any(Money.class))).thenReturn(PRICE_ADJUSTMENT_AMOUNT);
+    when(quotePriceAdjustment.apply(any(Money.class))).thenReturn(PRICE_ADJUSTMENT);
     subject = new PreferentialProgramFormulaPart(preferentialProgramAdjustmentProvider);
   }
 
   @Test
   public void computingFormulaPart_shouldGetPreferentialProgramAdjustment() {
-    subject.computeAdjustmentAmount(QUOTE_FORM, BASE_PRICE);
+    subject.compute(QUOTE_FORM, BASE_PRICE);
 
     verify(preferentialProgramAdjustmentProvider)
         .getAdjustment(QUOTE_FORM.getStudentInformation().getProgram());
@@ -46,15 +46,15 @@ public class PreferentialProgramFormulaPartTest {
 
   @Test
   public void computingFormulaPart_shouldComputeAdjustmentAmount() {
-    subject.computeAdjustmentAmount(QUOTE_FORM, BASE_PRICE);
+    subject.compute(QUOTE_FORM, BASE_PRICE);
 
     verify(quotePriceAdjustment).apply(BASE_PRICE);
   }
 
   @Test
   public void computingFormulaPart_shouldReturnAdjustmentAmount() {
-    Money adjustmentAmount = subject.computeAdjustmentAmount(QUOTE_FORM, BASE_PRICE);
+    Money adjustmentAmount = subject.compute(QUOTE_FORM, BASE_PRICE);
 
-    assertEquals(PRICE_ADJUSTMENT_AMOUNT, adjustmentAmount);
+    assertEquals(PRICE_ADJUSTMENT, adjustmentAmount);
   }
 }

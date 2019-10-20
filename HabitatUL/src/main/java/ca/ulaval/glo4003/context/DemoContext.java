@@ -33,11 +33,13 @@ import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOffice;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculator;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.DummyQuoteBasePriceCalculator;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.HardCodedAnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.JsonPreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryWrapper;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
@@ -110,6 +112,8 @@ public class DemoContext implements Context {
     ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
     ServiceLocator.register(
         QuoteBasePriceCalculator.class, new DummyQuoteBasePriceCalculator(hardCodedPrice));
+    ServiceLocator.register(
+        AnimalsAdjustmentProvider.class, new HardCodedAnimalsAdjustmentProvider());
     ServiceLocator.register(
         PreferentialProgramAdjustmentProvider.class,
         new JsonPreferentialProgramAdjustmentProvider());

@@ -32,10 +32,9 @@ public class QuotePriceFormulaTest {
   public void setUp() {
     when(quoteBasePriceCalculator.computeQuoteBasePrice(any(QuoteForm.class)))
         .thenReturn(BASE_PRICE);
-    when(quotePriceFormulaPart.computeAdjustmentAmount(any(QuoteForm.class), any(Money.class)))
+    when(quotePriceFormulaPart.compute(any(QuoteForm.class), any(Money.class)))
         .thenReturn(PRICE_ADJUSTMENT_AMOUNT);
-    when(anotherQuotePriceFormulaPart.computeAdjustmentAmount(
-            any(QuoteForm.class), any(Money.class)))
+    when(anotherQuotePriceFormulaPart.compute(any(QuoteForm.class), any(Money.class)))
         .thenReturn(ANOTHER_PRICE_ADJUSTMENT_AMOUNT);
     subject = new QuotePriceFormula(quoteBasePriceCalculator);
   }

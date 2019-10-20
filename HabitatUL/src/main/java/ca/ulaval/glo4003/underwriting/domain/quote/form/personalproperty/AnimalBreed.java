@@ -6,7 +6,7 @@ import java.util.Map;
 public enum AnimalBreed {
   CAT,
   DOG,
-  FISH,
+  GOLD_FISH,
   SNAKE,
   OTHER;
 

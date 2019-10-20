@@ -24,8 +24,7 @@ public class QuotePriceFormula {
     Money price = basePrice;
 
     for (QuotePriceFormulaPart quotePriceFormulaPart : quotePriceFormulaParts) {
-      Money priceAdjustmentAmount =
-          quotePriceFormulaPart.computeAdjustmentAmount(quoteForm, basePrice);
+      Money priceAdjustmentAmount = quotePriceFormulaPart.compute(quoteForm, basePrice);
       price = price.add(priceAdjustmentAmount);
     }
 

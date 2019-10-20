@@ -23,13 +23,15 @@ public class JsonPreferentialProgramAdjustmentProvider
   public JsonPreferentialProgramAdjustmentProvider(JsonFileReader jsonFileReader) {
     JSONObject parsedAdjustments = jsonFileReader.read(FILE_PATH);
     Map<String, Object> parsedAdjustmentsMap = parsedAdjustments.toMap();
-    for (Map.Entry<String, Object> parsedAdjustment : parsedAdjustmentsMap.entrySet()) {
-      double parsedAdjustmentValue = (double) parsedAdjustment.getValue();
-      MultiplicativeQuotePriceAdjustment adjustment =
-          new MultiplicativeQuotePriceAdjustment(parsedAdjustmentValue);
-      String program = parsedAdjustment.getKey();
-      adjustments.put(program, adjustment);
-    }
+    parsedAdjustmentsMap.entrySet().forEach(this::addProgramAdjustment);
+  }
+
+  private void addProgramAdjustment(Map.Entry<String, Object> parsedAdjustment) {
+    double parsedAdjustmentValue = (double) parsedAdjustment.getValue();
+    MultiplicativeQuotePriceAdjustment adjustment =
+        new MultiplicativeQuotePriceAdjustment(parsedAdjustmentValue);
+    String program = parsedAdjustment.getKey();
+    adjustments.put(program, adjustment);
   }
 
   @Override

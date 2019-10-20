@@ -14,7 +14,7 @@ public class PreferentialProgramFormulaPart implements QuotePriceFormulaPart {
   }
 
   @Override
-  public Money computeAdjustmentAmount(QuoteForm quoteForm, Money basePrice) {
+  public Money compute(QuoteForm quoteForm, Money basePrice) {
     QuotePriceAdjustment adjustment =
         preferentialProgramAdjustmentProvider.getAdjustment(
             quoteForm.getStudentInformation().getProgram());
