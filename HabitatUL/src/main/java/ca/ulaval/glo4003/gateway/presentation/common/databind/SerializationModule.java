@@ -14,6 +14,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
@@ -46,20 +47,23 @@ public class SerializationModule extends Module {
     SimpleDeserializers deserializers = new SimpleDeserializers();
     deserializers.addDeserializer(Amount.class, new AmountDeserializer());
     deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
+    deserializers.addDeserializer(
+        CivilLiabilityAmount.class, new CivilLiabilityAmountDeserializer());
     deserializers.addDeserializer(Credentials.class, new CredentialsDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
-    deserializers.addDeserializer(ZipCode.class, new ZipCodeDeserializer());
     deserializers.addDeserializer(PreventionSystem.class, new PreventionSystemDeserializer());
     deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
+    deserializers.addDeserializer(ZipCode.class, new ZipCodeDeserializer());
     setupContext.addDeserializers(deserializers);
   }
 
   private void setSerializers(SetupContext setupContext) {
     SimpleSerializers serializers = new SimpleSerializers();
+    serializers.addSerializer(Amount.class, new AmountSerializer());
     serializers.addSerializer(ClaimId.class, new ClaimIdSerializer());
     serializers.addSerializer(Date.class, new DateSerializer());
     serializers.addSerializer(DateTime.class, new DateTimeSerializer(getLocalZoneId()));

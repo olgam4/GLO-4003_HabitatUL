@@ -5,14 +5,14 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSyste
 import java.util.Optional;
 import java.util.Set;
 
-public class BuildingView {
+public class BuildingRequest {
   private int numberOfUnits;
   private Set<PreventionSystem> preventionSystems;
   private Optional<String> commercialUse;
 
-  private BuildingView() {}
+  private BuildingRequest() {}
 
-  public BuildingView(
+  public BuildingRequest(
       int numberOfUnits, Set<PreventionSystem> preventionSystems, Optional<String> commercialUse) {
     this.numberOfUnits = numberOfUnits;
     this.preventionSystems = preventionSystems;

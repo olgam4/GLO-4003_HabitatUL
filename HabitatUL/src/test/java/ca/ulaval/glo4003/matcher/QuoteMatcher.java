@@ -6,12 +6,15 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation.StudentInformation;
 import org.hamcrest.Matcher;
+
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
@@ -42,30 +45,31 @@ public class QuoteMatcher {
         hasProperty("effectiveDate", equalTo(quoteFormDto.getEffectiveDate())),
         hasProperty("building", equalTo(quoteFormDto.getBuilding())),
         hasProperty("personalProperty", equalTo(quoteFormDto.getPersonalProperty())),
+        hasProperty("civilLiability", equalTo(quoteFormDto.getCivilLiability())),
         hasProperty("studentInformation", equalTo(quoteFormDto.getStudentInformation())));
   }
 
-  public static Matcher<Identity> matchesIdentity(final IdentityView identityView) {
+  public static Matcher<Identity> matchesIdentity(final IdentityRequest identityRequest) {
     return allOf(
-        hasProperty("firstName", equalTo(identityView.getFirstName())),
-        hasProperty("lastName", equalTo(identityView.getLastName())),
-        hasProperty("birthDate", equalTo(identityView.getBirthDate())),
-        hasProperty("gender", equalTo(identityView.getGender())));
+        hasProperty("firstName", equalTo(identityRequest.getFirstName())),
+        hasProperty("lastName", equalTo(identityRequest.getLastName())),
+        hasProperty("birthDate", equalTo(identityRequest.getBirthDate())),
+        hasProperty("gender", equalTo(identityRequest.getGender())));
   }
 
-  public static Matcher<Location> matchesLocation(final LocationView locationView) {
+  public static Matcher<Location> matchesLocation(final LocationRequest locationRequest) {
     return allOf(
-        hasProperty("zipCode", equalTo(locationView.getZipCode())),
-        hasProperty("streetNumber", equalTo(locationView.getStreetNumber())),
-        hasProperty("apartmentNumber", equalTo(locationView.getApartmentNumber())),
-        hasProperty("floor", equalTo(locationView.getFloor())));
+        hasProperty("zipCode", equalTo(locationRequest.getZipCode())),
+        hasProperty("streetNumber", equalTo(locationRequest.getStreetNumber())),
+        hasProperty("apartmentNumber", equalTo(locationRequest.getApartmentNumber())),
+        hasProperty("floor", equalTo(locationRequest.getFloor())));
   }
 
-  public static Matcher<Building> matchesBuilding(final BuildingView buildingView) {
+  public static Matcher<Building> matchesBuilding(final BuildingRequest buildingRequest) {
     return allOf(
-        hasProperty("numberOfUnits", equalTo(buildingView.getNumberOfUnits())),
-        hasProperty("preventionSystems", equalTo(buildingView.getPreventionSystems())),
-        hasProperty("commercialUse", equalTo(buildingView.getCommercialUse())));
+        hasProperty("numberOfUnits", equalTo(buildingRequest.getNumberOfUnits())),
+        hasProperty("preventionSystems", equalTo(buildingRequest.getPreventionSystems())),
+        hasProperty("commercialUse", equalTo(buildingRequest.getCommercialUse())));
   }
 
   public static Matcher<Animals> matchesAnimal(final Animals animals) {
@@ -73,21 +77,29 @@ public class QuoteMatcher {
   }
 
   public static Matcher<PersonalProperty> matchesPersonalProperty(
-      final PersonalPropertyView personalPropertyView) {
+      final PersonalPropertyRequest personalPropertyRequest) {
     return allOf(
-        hasProperty("coverageAmount", equalTo(personalPropertyView.getCoverageAmount())),
-        hasProperty("animals", matchesAnimal(personalPropertyView.getAnimals())));
+        hasProperty("coverageAmount", equalTo(personalPropertyRequest.getCoverageAmount())),
+        hasProperty("animals", matchesAnimal(personalPropertyRequest.getAnimals())));
+  }
+
+  public static Matcher<CivilLiability> matchesCivilLiability(
+      final Optional<CivilLiabilityRequest> civilLiabilityRequest) {
+    return allOf(
+        hasProperty(
+            "coverageAmount", equalTo(civilLiabilityRequest.get().getCoverageAmount().getValue())));
   }
 
   public static Matcher<StudentInformation> matchesStudentInformation(
-      final StudentInformationView studentInformationView) {
+      final StudentInformationRequest studentInformationRequest) {
     return allOf(
-        hasProperty("idul", equalTo(studentInformationView.getIdul())),
-        hasProperty("identificationNumber", equalTo(studentInformationView.getNi())),
-        hasProperty("program", equalTo(studentInformationView.getProgram())));
+        hasProperty("idul", equalTo(studentInformationRequest.getIdul())),
+        hasProperty("identificationNumber", equalTo(studentInformationRequest.getNi())),
+        hasProperty("program", equalTo(studentInformationRequest.getProgram())));
   }
 
   public static Matcher<QuoteFormDto> matchesQuoteFormDto(final QuoteRequest quoteRequest) {
+    System.out.println(quoteRequest);
     return allOf(
         hasProperty("identity", matchesIdentity(quoteRequest.getIdentity())),
         hasProperty("location", matchesLocation(quoteRequest.getLocation())),
@@ -95,6 +107,7 @@ public class QuoteMatcher {
         hasProperty("building", matchesBuilding(quoteRequest.getBuilding())),
         hasProperty(
             "personalProperty", matchesPersonalProperty(quoteRequest.getPersonalProperty())),
+        hasProperty("civilLiability", matchesCivilLiability(quoteRequest.getCivilLiability())),
         hasProperty(
             "studentInformation", matchesStudentInformation(quoteRequest.getStudentInformation())));
   }

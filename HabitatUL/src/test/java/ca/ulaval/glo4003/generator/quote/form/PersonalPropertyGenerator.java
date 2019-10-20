@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.generator.quote.form;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.request.PersonalPropertyView;
+import ca.ulaval.glo4003.gateway.presentation.quote.request.PersonalPropertyRequest;
 import ca.ulaval.glo4003.generator.EnumSampler;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
@@ -19,8 +19,8 @@ public class PersonalPropertyGenerator {
   private static final int MIN_COVERAGE_AMOUNT = 8000;
   private static final int MAX_COVERAGE_AMOUNT = 100000;
 
-  public static PersonalPropertyView createPersonalPropertyView() {
-    return new PersonalPropertyView(createCoverageAmount(), createAnimals());
+  public static PersonalPropertyRequest createPersonalPropertyRequest() {
+    return new PersonalPropertyRequest(createCoverageAmount(), createAnimals());
   }
 
   public static PersonalProperty createPersonalProperty() {

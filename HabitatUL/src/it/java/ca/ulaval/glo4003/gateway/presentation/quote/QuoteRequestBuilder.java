@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.quote;
 
 import ca.ulaval.glo4003.generator.EnumSampler;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import com.github.javafaker.Faker;
@@ -34,8 +35,11 @@ public class QuoteRequestBuilder {
   private final Set<String> DEFAULT_PREVENTION_SYSTEMS = createPreventionSystems();
   private final String DEFAULT_COMMERCIAL_USE = "other";
 
-  private final double DEFAULT_COVERAGE_AMOUNT = createCoverageAmount();
+  private final double DEFAULT_PERSONAL_PROPERTY_COVERAGE_AMOUNT = createCoverageAmount();
   private final List<JSONObject> DEFAULT_ANIMALS = createAnimals();
+
+  private final String DEFAULT_CIVIL_LIABILITY_COVERAGE_AMOUNT =
+      EnumSampler.sample(CivilLiabilityAmount.class).getRepresentation();
 
   private final String DEFAULT_IDUL = Faker.instance().university().name();
   private final String DEFAULT_IDENTIFICATION_NUMBER = Faker.instance().educator().university();
@@ -57,8 +61,10 @@ public class QuoteRequestBuilder {
   private Set<String> preventionSystems = DEFAULT_PREVENTION_SYSTEMS;
   private String commercialUse = DEFAULT_COMMERCIAL_USE;
 
-  private double coverageAmount = DEFAULT_COVERAGE_AMOUNT;
+  private double personalPropertyCoverageAmount = DEFAULT_PERSONAL_PROPERTY_COVERAGE_AMOUNT;
   private List<JSONObject> animals = DEFAULT_ANIMALS;
+
+  private String civilLiabilityCoverageAmount = DEFAULT_CIVIL_LIABILITY_COVERAGE_AMOUNT;
 
   private String idul = DEFAULT_IDUL;
   private String identificationNumber = DEFAULT_IDENTIFICATION_NUMBER;
@@ -114,6 +120,7 @@ public class QuoteRequestBuilder {
     json.put("effectiveDate", effectiveDate);
     json.put("building", buildBuilding());
     json.put("personalProperty", buildPersonalProperty());
+    json.put("civilLiability", buildCivilLiability());
     json.put("studentInformation", buildStudentInformation());
     return json;
   }
@@ -146,8 +153,14 @@ public class QuoteRequestBuilder {
 
   private JSONObject buildPersonalProperty() {
     JSONObject json = new JSONObject();
-    json.put("coverageAmount", coverageAmount);
+    json.put("coverageAmount", personalPropertyCoverageAmount);
     json.put("animals", new JSONArray(animals));
+    return json;
+  }
+
+  private JSONObject buildCivilLiability() {
+    JSONObject json = new JSONObject();
+    json.put("coverageAmount", civilLiabilityCoverageAmount);
     return json;
   }
 

@@ -2,36 +2,41 @@ package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
+import java.util.Optional;
+
 public class QuoteRequest {
-  private IdentityView identity;
-  private LocationView location;
+  private IdentityRequest identity;
+  private LocationRequest location;
   private Date effectiveDate;
-  private BuildingView building;
-  private PersonalPropertyView personalProperty;
-  private StudentInformationView studentInformation;
+  private BuildingRequest building;
+  private PersonalPropertyRequest personalProperty;
+  private CivilLiabilityRequest civilLiability;
+  private StudentInformationRequest studentInformation;
 
   private QuoteRequest() {}
 
   public QuoteRequest(
-      IdentityView identity,
-      LocationView location,
+      IdentityRequest identity,
+      LocationRequest location,
       Date effectiveDate,
-      BuildingView building,
-      PersonalPropertyView personalProperty,
-      StudentInformationView studentInformation) {
+      BuildingRequest building,
+      PersonalPropertyRequest personalProperty,
+      CivilLiabilityRequest civilLiability,
+      StudentInformationRequest studentInformation) {
     this.identity = identity;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
     this.personalProperty = personalProperty;
+    this.civilLiability = civilLiability;
     this.studentInformation = studentInformation;
   }
 
-  public IdentityView getIdentity() {
+  public IdentityRequest getIdentity() {
     return identity;
   }
 
-  public LocationView getLocation() {
+  public LocationRequest getLocation() {
     return location;
   }
 
@@ -39,15 +44,19 @@ public class QuoteRequest {
     return effectiveDate;
   }
 
-  public BuildingView getBuilding() {
+  public BuildingRequest getBuilding() {
     return building;
   }
 
-  public PersonalPropertyView getPersonalProperty() {
+  public PersonalPropertyRequest getPersonalProperty() {
     return personalProperty;
   }
 
-  public StudentInformationView getStudentInformation() {
+  public Optional<CivilLiabilityRequest> getCivilLiability() {
+    return Optional.ofNullable(civilLiability);
+  }
+
+  public StudentInformationRequest getStudentInformation() {
     return studentInformation;
   }
 }

@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-public class StudentInformationView {
+public class StudentInformationRequest {
   private String idul;
   private String ni;
   private String program;
 
-  private StudentInformationView() {}
+  private StudentInformationRequest() {}
 
-  public StudentInformationView(String idul, String ni, String program) {
+  public StudentInformationRequest(String idul, String ni, String program) {
     this.idul = idul;
     this.ni = ni;
     this.program = program;

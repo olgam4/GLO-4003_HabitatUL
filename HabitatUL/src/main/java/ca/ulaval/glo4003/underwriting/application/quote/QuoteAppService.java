@@ -16,8 +16,8 @@ public class QuoteAppService {
   private QuoteAssembler quoteAssembler;
   private QuoteFormValidator quoteFormValidator;
   private QuotePriceCalculator quotePriceCalculator;
-  private QuoteRepository quoteRepository;
   private QuoteFactory quoteFactory;
+  private QuoteRepository quoteRepository;
 
   public QuoteAppService() {
     this(
@@ -47,8 +47,8 @@ public class QuoteAppService {
     try {
       QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
       quoteFormValidator.validate(quoteForm);
-      Money price = quotePriceCalculator.compute(quoteForm);
-      Quote quote = quoteFactory.create(price, quoteForm);
+      Money quotePrice = quotePriceCalculator.compute(quoteForm);
+      Quote quote = quoteFactory.create(quotePrice, quoteForm);
       quoteRepository.create(quote);
       return quoteAssembler.from(quote);
     } catch (QuoteAlreadyCreatedException e) {

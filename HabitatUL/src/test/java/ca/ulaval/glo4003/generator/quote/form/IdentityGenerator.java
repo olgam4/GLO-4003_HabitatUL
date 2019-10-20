@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.generator.quote.form;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityView;
+import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityRequest;
 import ca.ulaval.glo4003.generator.EnumSampler;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
@@ -11,8 +11,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 public class IdentityGenerator {
-  public static IdentityView createIdentityView() {
-    return new IdentityView(createFirstName(), createLastName(), createBirthDate(), createGender());
+  public static IdentityRequest createIdentityRequest() {
+    return new IdentityRequest(
+        createFirstName(), createLastName(), createBirthDate(), createGender());
   }
 
   public static Identity createIdentity() {

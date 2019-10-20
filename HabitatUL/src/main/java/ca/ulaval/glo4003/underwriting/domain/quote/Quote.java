@@ -31,8 +31,8 @@ public class Quote extends AggregateRoot {
     this.quoteId = quoteId;
     this.price = price;
     this.quoteForm = quoteForm;
-    this.effectivePeriod = computeEffectivePeriod(quoteForm);
     this.expirationDate = expirationDate;
+    this.effectivePeriod = computeEffectivePeriod(quoteForm);
     this.purchased = purchased;
     this.clockProvider = clockProvider;
   }
@@ -52,12 +52,16 @@ public class Quote extends AggregateRoot {
     return price;
   }
 
-  public Period getEffectivePeriod() {
-    return effectivePeriod;
+  public QuoteForm getQuoteForm() {
+    return quoteForm;
   }
 
   public DateTime getExpirationDate() {
     return expirationDate;
+  }
+
+  public Period getEffectivePeriod() {
+    return effectivePeriod;
   }
 
   public void purchase() {

@@ -47,6 +47,7 @@ public class QuoteAppServiceTest {
     quoteAssembler = new QuoteAssembler();
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
+    when(quote.getQuoteForm()).thenReturn(QuoteFormGenerator.createQuoteForm());
     when(quotePriceCalculator.compute(any(QuoteForm.class))).thenReturn(A_PRICE);
     when(quoteFactory.create(any(Money.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);

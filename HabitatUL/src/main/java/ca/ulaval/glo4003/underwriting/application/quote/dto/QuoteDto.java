@@ -11,12 +11,19 @@ public class QuoteDto extends DataTransferObject {
   private Money price;
   private DateTime expirationDate;
   private Period effectivePeriod;
+  private QuoteCoverageOverviewDto coverageOverview;
 
-  public QuoteDto(QuoteId quoteId, Money price, Period effectivePeriod, DateTime expirationDate) {
+  public QuoteDto(
+      QuoteId quoteId,
+      Money price,
+      Period effectivePeriod,
+      DateTime expirationDate,
+      QuoteCoverageOverviewDto coverageOverview) {
     this.quoteId = quoteId;
     this.price = price;
     this.effectivePeriod = effectivePeriod;
     this.expirationDate = expirationDate;
+    this.coverageOverview = coverageOverview;
   }
 
   public QuoteId getQuoteId() {
@@ -33,5 +40,9 @@ public class QuoteDto extends DataTransferObject {
 
   public DateTime getExpirationDate() {
     return expirationDate;
+  }
+
+  public QuoteCoverageOverviewDto getCoverageOverview() {
+    return coverageOverview;
   }
 }

@@ -6,7 +6,8 @@
     "quoteId",
     "price",
     "effectivePeriod",
-    "expirationDate"
+    "expirationDate",
+    "coverageOverview"
   ],
   "properties": {
     "quoteId": {
@@ -19,7 +20,7 @@
       "$ref": "../Shared.json#/definitions/money"
     },
     "effectivePeriod": {
-      "description": "effective period",
+      "description": "quote effective period",
       "type": "object",
       "properties": {
         "startDate": {
@@ -33,6 +34,17 @@
     "expirationDate": {
       "description": "quote expiration",
       "$ref": "../Shared.json#/definitions/dateTime"
+    },
+    "coverageOverview": {
+      "description": "quote coverage overview",
+      "properties": {
+        "personalProperty": {
+          "$ref": "../Shared.json#/definitions/amount"
+        },
+        "civilLiability": {
+          "$ref": "../Shared.json#/definitions/amount"
+        }
+      }
     }
   }
 }

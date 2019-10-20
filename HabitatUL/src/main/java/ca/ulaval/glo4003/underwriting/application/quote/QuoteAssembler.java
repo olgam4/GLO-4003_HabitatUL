@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.shared.domain.money.Amount;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteCoverageOverviewDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
@@ -13,6 +15,7 @@ public class QuoteAssembler {
         quoteFormDto.getEffectiveDate(),
         quoteFormDto.getBuilding(),
         quoteFormDto.getPersonalProperty(),
+        quoteFormDto.getCivilLiability(),
         quoteFormDto.getStudentInformation());
   }
 
@@ -21,6 +24,13 @@ public class QuoteAssembler {
         quote.getQuoteId(),
         quote.getPrice(),
         quote.getEffectivePeriod(),
-        quote.getExpirationDate());
+        quote.getExpirationDate(),
+        from(quote.getQuoteForm()));
+  }
+
+  private QuoteCoverageOverviewDto from(QuoteForm quoteForm) {
+    Amount personalPropertyAmount = quoteForm.getPersonalProperty().getCoverageAmount();
+    Amount civilLiabilityAmount = quoteForm.getCivilLiability().getCoverageAmount();
+    return new QuoteCoverageOverviewDto(personalPropertyAmount, civilLiabilityAmount);
   }
 }

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.generator.quote.form;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationView;
+import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationRequest;
 import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
@@ -11,8 +11,8 @@ public class LocationGenerator {
   private static final int MIN_STREET_NUMBER = 1;
   private static final int MAX_STREET_NUMBER = 1000;
 
-  public static LocationView createLocationView() {
-    return new LocationView(
+  public static LocationRequest createLocationRequest() {
+    return new LocationRequest(
         createZipCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
   }
 
