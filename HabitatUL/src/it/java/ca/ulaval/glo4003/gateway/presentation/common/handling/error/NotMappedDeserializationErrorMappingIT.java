@@ -22,7 +22,7 @@ public class NotMappedDeserializationErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return "sorry, something wrong happened";
   }
 }

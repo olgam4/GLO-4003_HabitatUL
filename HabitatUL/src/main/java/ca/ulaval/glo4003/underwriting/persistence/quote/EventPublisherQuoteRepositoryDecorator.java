@@ -7,11 +7,12 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 
-public class EventPublisherQuoteRepositoryWrapper implements QuoteRepository {
+public class EventPublisherQuoteRepositoryDecorator implements QuoteRepository {
   private QuoteRepository quoteRepository;
   private Mediator mediator;
 
-  public EventPublisherQuoteRepositoryWrapper(QuoteRepository quoteRepository, Mediator mediator) {
+  public EventPublisherQuoteRepositoryDecorator(
+      QuoteRepository quoteRepository, Mediator mediator) {
     this.quoteRepository = quoteRepository;
     this.mediator = mediator;
   }

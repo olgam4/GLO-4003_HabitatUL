@@ -22,7 +22,7 @@ public class CouldNotRequestQuoteErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return "sorry, something went wrong while trying to request your quote";
   }
 }

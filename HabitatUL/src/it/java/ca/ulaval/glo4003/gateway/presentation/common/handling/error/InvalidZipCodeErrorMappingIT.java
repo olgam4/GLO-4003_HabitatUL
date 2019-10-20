@@ -26,7 +26,7 @@ public class InvalidZipCodeErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format("sorry, <%s> is not a valid zip code value", INVALID_ZIP_CODE_VALUE);
   }
 }

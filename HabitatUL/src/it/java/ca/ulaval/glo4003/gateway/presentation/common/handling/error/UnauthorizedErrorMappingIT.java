@@ -22,7 +22,7 @@ public class UnauthorizedErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return "sorry, you do not have necessary rights to access this resource";
   }
 }

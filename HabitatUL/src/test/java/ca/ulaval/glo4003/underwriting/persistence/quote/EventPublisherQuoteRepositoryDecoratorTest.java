@@ -22,18 +22,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EventPublisherQuoteRepositoryWrapperTest {
+public class EventPublisherQuoteRepositoryDecoratorTest {
   private static final QuoteId QUOTE_ID = new QuoteId();
 
   @Mock private Quote quote;
   @Mock private QuoteRepository quoteRepository;
   @Mock private Mediator mediator;
 
-  private EventPublisherQuoteRepositoryWrapper subject;
+  private EventPublisherQuoteRepositoryDecorator subject;
 
   @Before
   public void setUp() {
-    subject = new EventPublisherQuoteRepositoryWrapper(quoteRepository, mediator);
+    subject = new EventPublisherQuoteRepositoryDecorator(quoteRepository, mediator);
   }
 
   @Test

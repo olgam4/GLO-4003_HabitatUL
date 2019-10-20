@@ -25,7 +25,7 @@ public class QuoteExpiredErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format("sorry, quote with id <%s> is expired", QUOTE_ID.toRepresentation());
   }
 }

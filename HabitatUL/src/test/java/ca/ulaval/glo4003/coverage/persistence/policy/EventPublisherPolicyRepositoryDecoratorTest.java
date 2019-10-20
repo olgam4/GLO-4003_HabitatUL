@@ -19,18 +19,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EventPublisherPolicyRepositoryWrapperTest {
+public class EventPublisherPolicyRepositoryDecoratorTest {
   private static final PolicyId POLICY_ID = new PolicyId();
 
   @Mock private Policy policy;
   @Mock private PolicyRepository policyRepository;
   @Mock private Mediator mediator;
 
-  private EventPublisherPolicyRepositoryWrapper subject;
+  private EventPublisherPolicyRepositoryDecorator subject;
 
   @Before
   public void setUp() {
-    subject = new EventPublisherPolicyRepositoryWrapper(policyRepository, mediator);
+    subject = new EventPublisherPolicyRepositoryDecorator(policyRepository, mediator);
   }
 
   @Test

@@ -25,7 +25,7 @@ public class QuoteNotFoundErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format("sorry, can't find quote with id <%s>", QUOTE_ID.toRepresentation());
   }
 }

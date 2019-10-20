@@ -26,7 +26,7 @@ public class InvalidFloorErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format("sorry, <%s> is not a valid floor value", INVALID_FLOOR_VALUE);
   }
 }

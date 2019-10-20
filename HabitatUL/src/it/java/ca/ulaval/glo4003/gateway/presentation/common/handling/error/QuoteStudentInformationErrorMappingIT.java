@@ -22,7 +22,7 @@ public class QuoteStudentInformationErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return "sorry, we have not been able to confirm your student information";
   }
 }

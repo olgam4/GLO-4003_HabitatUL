@@ -22,7 +22,7 @@ public class QuoteEffectiveDateErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return "sorry, quote can only be issued for the incoming year";
   }
 }

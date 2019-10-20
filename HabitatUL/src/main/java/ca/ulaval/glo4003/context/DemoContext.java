@@ -20,7 +20,7 @@ import ca.ulaval.glo4003.coverage.communication.policy.PolicyBoundedContextEvent
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.persistence.claim.InMemoryClaimRepository;
-import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryWrapper;
+import ca.ulaval.glo4003.coverage.persistence.policy.EventPublisherPolicyRepositoryDecorator;
 import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.ConfigBasedLocalZoneIdProvider;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
@@ -41,7 +41,7 @@ import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.Dummy
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.DummyQuoteBasePriceCalculator;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.HardCodedAnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.JsonPreferentialProgramAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryWrapper;
+import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryDecorator;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
 import java.math.BigDecimal;
@@ -119,13 +119,13 @@ public class DemoContext implements Context {
         new JsonPreferentialProgramAdjustmentProvider());
     ServiceLocator.register(
         QuoteRepository.class,
-        new EventPublisherQuoteRepositoryWrapper(new InMemoryQuoteRepository(), mediator));
+        new EventPublisherQuoteRepositoryDecorator(new InMemoryQuoteRepository(), mediator));
   }
 
   private void registerCoverageServices() {
     ServiceLocator.register(
         PolicyRepository.class,
-        new EventPublisherPolicyRepositoryWrapper(new InMemoryPolicyRepository(), mediator));
+        new EventPublisherPolicyRepositoryDecorator(new InMemoryPolicyRepository(), mediator));
     ServiceLocator.register(ClaimRepository.class, new InMemoryClaimRepository());
 
     PolicyAppService policyAppService = new PolicyAppService();

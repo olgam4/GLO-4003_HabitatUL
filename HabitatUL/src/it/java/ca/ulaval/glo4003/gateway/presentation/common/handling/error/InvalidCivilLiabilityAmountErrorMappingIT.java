@@ -27,7 +27,7 @@ public class InvalidCivilLiabilityAmountErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format(
         "sorry, <%s> is not a valid civil liability amount value", INVALID_CIVIL_LIABILITY_AMOUNT);
   }

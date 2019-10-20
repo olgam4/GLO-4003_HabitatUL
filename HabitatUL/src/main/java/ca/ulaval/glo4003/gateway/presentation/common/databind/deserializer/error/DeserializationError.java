@@ -5,19 +5,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class DeserializationError extends JsonProcessingException implements Error {
   private final String error;
-  private final String description;
+  private final String message;
 
-  DeserializationError(String error, String description) {
-    super(description);
+  DeserializationError(String error, String message) {
+    super(message);
     this.error = error;
-    this.description = description;
+    this.message = message;
   }
 
   public String getError() {
     return error;
   }
 
-  public String getDescription() {
-    return description;
+  public String getMessage() {
+    return message;
   }
 }

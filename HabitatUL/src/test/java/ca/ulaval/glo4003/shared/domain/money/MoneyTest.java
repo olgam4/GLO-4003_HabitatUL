@@ -34,6 +34,26 @@ public class MoneyTest {
     assertEquals(expected, money);
   }
 
+  @Test
+  public void gettingMinimum_shouldReturnMinimum() {
+    Money first = new Money(new Amount(BigDecimal.valueOf(10)));
+    Money second = new Money(new Amount(BigDecimal.valueOf(7)));
+
+    Money minimum = Money.min(first, second);
+
+    assertEquals(second, minimum);
+  }
+
+  @Test
+  public void gettingMaximum_shouldReturnMaximum() {
+    Money first = new Money(new Amount(BigDecimal.valueOf(10)));
+    Money second = new Money(new Amount(BigDecimal.valueOf(7)));
+
+    Money maximum = Money.max(first, second);
+
+    assertEquals(first, maximum);
+  }
+
   private Money format(BigDecimal value) {
     return new Money(new Amount(value.setScale(DECIMAL_PRECISION, ROUNDING)));
   }

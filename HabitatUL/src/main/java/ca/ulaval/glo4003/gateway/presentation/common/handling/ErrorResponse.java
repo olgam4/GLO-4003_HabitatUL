@@ -9,9 +9,9 @@ public class ErrorResponse {
   private final Status status;
   private final ErrorMessage message;
 
-  public ErrorResponse(Status status, String error, String description) {
+  public ErrorResponse(Status status, String error, String message) {
     this.status = status;
-    this.message = new ErrorMessage(error, description);
+    this.message = new ErrorMessage(error, message);
   }
 
   public Status getStatus() {

@@ -25,7 +25,7 @@ public class QuoteAlreadyPurchasedErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format(
         "sorry, quote with id <%s> has already been purchased", QUOTE_ID.toRepresentation());
   }

@@ -2,21 +2,21 @@ package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"error", "description"})
+@JsonPropertyOrder({"error", "message"})
 public class ErrorMessage {
   private final String error;
-  private final String description;
+  private final String message;
 
-  public ErrorMessage(String error, String description) {
+  public ErrorMessage(String error, String message) {
     this.error = error;
-    this.description = description;
+    this.message = message;
   }
 
   public String getError() {
     return error;
   }
 
-  public String getDescription() {
-    return description;
+  public String getMessage() {
+    return message;
   }
 }

@@ -37,6 +37,7 @@ public abstract class ErrorMappingIT {
             .withErrorMapper(CatchAllErrorMapper.class)
             .withErrorMapper(BaseErrorMapper.class)
             .withErrorMapper(DeserializationErrorMapper.class)
+            .withErrorMapper(RouteNotFoundErrorMapper.class)
             .build();
     addResourceConfig(resourceConfig);
   }
@@ -69,7 +70,7 @@ public abstract class ErrorMappingIT {
         .get(ERROR_ROUTE)
         .then()
         .body("error", equalTo(getErrorCodeMatcher()))
-        .body("description", equalTo(getErrorDescriptionMatcher()));
+        .body("message", equalTo(getErrorMessageMatcher()));
   }
 
   public abstract Throwable getError();
@@ -78,5 +79,5 @@ public abstract class ErrorMappingIT {
 
   public abstract String getErrorCodeMatcher();
 
-  public abstract String getErrorDescriptionMatcher();
+  public abstract String getErrorMessageMatcher();
 }

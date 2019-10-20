@@ -27,7 +27,7 @@ public class InvalidPreventionSystemErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format(
         "sorry, <%s> is not a valid prevention system value", INVALID_PREVENTION_SYSTEM_VALUE);
   }

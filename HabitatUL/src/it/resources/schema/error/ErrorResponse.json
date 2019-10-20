@@ -4,7 +4,7 @@
   "title": "error response",
   "required": [
     "error",
-    "description"
+    "message"
   ],
   "properties": {
     "error": {
@@ -12,7 +12,7 @@
       "type": "string"
     },
     "description": {
-      "description": "error description",
+      "message": "error message",
       "type": "string"
     }
   }

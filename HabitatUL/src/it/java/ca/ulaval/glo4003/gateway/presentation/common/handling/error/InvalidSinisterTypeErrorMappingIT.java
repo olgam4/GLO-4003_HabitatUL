@@ -27,7 +27,7 @@ public class InvalidSinisterTypeErrorMappingIT extends ErrorMappingIT {
   }
 
   @Override
-  public String getErrorDescriptionMatcher() {
+  public String getErrorMessageMatcher() {
     return String.format(
         "sorry, <%s> is not a valid sinister type value", INVALID_SINISTER_TYPE_VALUE);
   }
