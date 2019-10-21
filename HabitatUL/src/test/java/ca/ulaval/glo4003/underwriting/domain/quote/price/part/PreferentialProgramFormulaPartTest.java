@@ -41,7 +41,7 @@ public class PreferentialProgramFormulaPartTest {
     subject.compute(QUOTE_FORM, BASE_PRICE);
 
     verify(preferentialProgramAdjustmentProvider)
-        .getAdjustment(QUOTE_FORM.getStudentInformation().getProgram());
+        .getAdjustment(QUOTE_FORM.getIdentity().getUniversityProfile().getProgram());
   }
 
   @Test

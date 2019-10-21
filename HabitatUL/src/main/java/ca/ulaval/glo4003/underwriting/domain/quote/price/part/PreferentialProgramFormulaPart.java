@@ -17,7 +17,7 @@ public class PreferentialProgramFormulaPart implements QuotePriceFormulaPart {
   public Money compute(QuoteForm quoteForm, Money basePrice) {
     QuotePriceAdjustment adjustment =
         preferentialProgramAdjustmentProvider.getAdjustment(
-            quoteForm.getStudentInformation().getProgram());
+            quoteForm.getIdentity().getUniversityProfile().getProgram());
     return adjustment.apply(basePrice);
   }
 }

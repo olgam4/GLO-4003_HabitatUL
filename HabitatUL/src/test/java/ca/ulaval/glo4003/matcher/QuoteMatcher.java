@@ -8,10 +8,10 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation.StudentInformation;
 import org.hamcrest.Matcher;
 
 import java.util.Optional;
@@ -45,8 +45,7 @@ public class QuoteMatcher {
         hasProperty("effectiveDate", equalTo(quoteFormDto.getEffectiveDate())),
         hasProperty("building", equalTo(quoteFormDto.getBuilding())),
         hasProperty("personalProperty", equalTo(quoteFormDto.getPersonalProperty())),
-        hasProperty("civilLiability", equalTo(quoteFormDto.getCivilLiability())),
-        hasProperty("studentInformation", equalTo(quoteFormDto.getStudentInformation())));
+        hasProperty("civilLiability", equalTo(quoteFormDto.getCivilLiability())));
   }
 
   public static Matcher<Identity> matchesIdentity(final IdentityRequest identityRequest) {
@@ -54,7 +53,18 @@ public class QuoteMatcher {
         hasProperty("firstName", equalTo(identityRequest.getFirstName())),
         hasProperty("lastName", equalTo(identityRequest.getLastName())),
         hasProperty("birthDate", equalTo(identityRequest.getBirthDate())),
-        hasProperty("gender", equalTo(identityRequest.getGender())));
+        hasProperty("gender", equalTo(identityRequest.getGender())),
+        hasProperty(
+            "universityProfile", matchesUniversityProfile(identityRequest.getUniversityProfile())));
+  }
+
+  public static Matcher<UniversityProfile> matchesUniversityProfile(
+      final Optional<UniversityProfileRequest> universityProfileRequest) {
+    UniversityProfileRequest universityProfile = universityProfileRequest.get();
+    return allOf(
+        hasProperty("idul", equalTo(universityProfile.getIdul())),
+        hasProperty("identificationNumber", equalTo(universityProfile.getNi())),
+        hasProperty("program", equalTo(universityProfile.getProgram())));
   }
 
   public static Matcher<Location> matchesLocation(final LocationRequest locationRequest) {
@@ -90,14 +100,6 @@ public class QuoteMatcher {
             "coverageAmount", equalTo(civilLiabilityRequest.get().getCoverageAmount().getValue())));
   }
 
-  public static Matcher<StudentInformation> matchesStudentInformation(
-      final StudentInformationRequest studentInformationRequest) {
-    return allOf(
-        hasProperty("idul", equalTo(studentInformationRequest.getIdul())),
-        hasProperty("identificationNumber", equalTo(studentInformationRequest.getNi())),
-        hasProperty("program", equalTo(studentInformationRequest.getProgram())));
-  }
-
   public static Matcher<QuoteFormDto> matchesQuoteFormDto(final QuoteRequest quoteRequest) {
     System.out.println(quoteRequest);
     return allOf(
@@ -107,8 +109,6 @@ public class QuoteMatcher {
         hasProperty("building", matchesBuilding(quoteRequest.getBuilding())),
         hasProperty(
             "personalProperty", matchesPersonalProperty(quoteRequest.getPersonalProperty())),
-        hasProperty("civilLiability", matchesCivilLiability(quoteRequest.getCivilLiability())),
-        hasProperty(
-            "studentInformation", matchesStudentInformation(quoteRequest.getStudentInformation())));
+        hasProperty("civilLiability", matchesCivilLiability(quoteRequest.getCivilLiability())));
   }
 }

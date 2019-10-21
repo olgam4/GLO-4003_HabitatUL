@@ -11,7 +11,6 @@ public class QuoteRequest {
   private BuildingRequest building;
   private PersonalPropertyRequest personalProperty;
   private CivilLiabilityRequest civilLiability;
-  private StudentInformationRequest studentInformation;
 
   private QuoteRequest() {}
 
@@ -21,15 +20,13 @@ public class QuoteRequest {
       Date effectiveDate,
       BuildingRequest building,
       PersonalPropertyRequest personalProperty,
-      CivilLiabilityRequest civilLiability,
-      StudentInformationRequest studentInformation) {
+      CivilLiabilityRequest civilLiability) {
     this.identity = identity;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
     this.personalProperty = personalProperty;
     this.civilLiability = civilLiability;
-    this.studentInformation = studentInformation;
   }
 
   public IdentityRequest getIdentity() {
@@ -54,9 +51,5 @@ public class QuoteRequest {
 
   public Optional<CivilLiabilityRequest> getCivilLiability() {
     return Optional.ofNullable(civilLiability);
-  }
-
-  public StudentInformationRequest getStudentInformation() {
-    return studentInformation;
   }
 }

@@ -6,7 +6,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiab
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation.StudentInformation;
 
 public class QuoteForm {
   private Identity identity;
@@ -15,7 +14,6 @@ public class QuoteForm {
   private Building building;
   private PersonalProperty personalProperty;
   private CivilLiability civilLiability;
-  private StudentInformation studentInformation;
 
   public QuoteForm(
       Identity identity,
@@ -23,15 +21,13 @@ public class QuoteForm {
       Date effectiveDate,
       Building building,
       PersonalProperty personalProperty,
-      CivilLiability civilLiability,
-      StudentInformation studentInformation) {
+      CivilLiability civilLiability) {
     this.identity = identity;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
     this.personalProperty = personalProperty;
     this.civilLiability = civilLiability;
-    this.studentInformation = studentInformation;
     completeWithDefaultValues();
   }
 
@@ -61,9 +57,5 @@ public class QuoteForm {
 
   public CivilLiability getCivilLiability() {
     return civilLiability;
-  }
-
-  public StudentInformation getStudentInformation() {
-    return studentInformation;
   }
 }

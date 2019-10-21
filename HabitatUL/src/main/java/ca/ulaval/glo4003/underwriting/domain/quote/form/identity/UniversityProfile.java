@@ -1,11 +1,11 @@
-package ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation;
+package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
 
-public class StudentInformation {
+public class UniversityProfile {
   private String idul;
   private String identificationNumber;
   private String program;
 
-  public StudentInformation(String idul, String identificationNumber, String program) {
+  public UniversityProfile(String idul, String identificationNumber, String program) {
     this.idul = idul;
     this.identificationNumber = identificationNumber;
     this.program = program;

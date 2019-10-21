@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.error;
 
-public class QuoteStudentInformationError extends QuoteError {
-  private static final String ERROR = "QUOTE_STUDENT_INFORMATION";
+public class QuoteUniversityProfileError extends QuoteError {
+  private static final String ERROR = "QUOTE_UNIVERSITY_PROFILE";
   private static final String MESSAGE =
-      "sorry, we have not been able to confirm your student information";
+      "sorry, we have not been able to confirm your university profile";
 
   public String getError() {
     return ERROR;

@@ -15,8 +15,7 @@ public class QuoteAssembler {
         quoteFormDto.getEffectiveDate(),
         quoteFormDto.getBuilding(),
         quoteFormDto.getPersonalProperty(),
-        quoteFormDto.getCivilLiability(),
-        quoteFormDto.getStudentInformation());
+        quoteFormDto.getCivilLiability());
   }
 
   public QuoteDto from(Quote quote) {

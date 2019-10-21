@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteStudentInformationError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteUniversityProfileError;
 
 import javax.ws.rs.core.Response;
 
-public class QuoteStudentInformationErrorMappingIT extends ErrorMappingIT {
+public class QuoteUniversityProfileErrorMappingIT extends ErrorMappingIT {
   @Override
   public Throwable getError() {
-    return new QuoteStudentInformationError();
+    return new QuoteUniversityProfileError();
   }
 
   @Override
@@ -18,11 +18,11 @@ public class QuoteStudentInformationErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorCodeMatcher() {
-    return "QUOTE_STUDENT_INFORMATION";
+    return "QUOTE_UNIVERSITY_PROFILE";
   }
 
   @Override
   public String getErrorMessageMatcher() {
-    return "sorry, we have not been able to confirm your student information";
+    return "sorry, we have not been able to confirm your university profile";
   }
 }

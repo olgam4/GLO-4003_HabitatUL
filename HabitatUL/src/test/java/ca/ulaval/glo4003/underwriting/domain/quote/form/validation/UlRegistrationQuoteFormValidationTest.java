@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
 import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteStudentInformationError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteUniversityProfileError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class UlRegistrationQuoteFormValidationTest {
   }
 
   @Test
-  public void validatingUlRegistration_withValidStudentInformation_shouldNotThrow() {
+  public void validatingUlRegistration_withValidUniversityProfile_shouldNotThrow() {
     when(ulRegistrarOffice.isValidRegistration(
             any(String.class), any(String.class), any(String.class)))
         .thenReturn(true);
@@ -34,8 +34,8 @@ public class UlRegistrationQuoteFormValidationTest {
     subject.validate(QUOTE_FORM);
   }
 
-  @Test(expected = QuoteStudentInformationError.class)
-  public void validatingUlRegistration_withInvalidStudentInformation_shouldThrow() {
+  @Test(expected = QuoteUniversityProfileError.class)
+  public void validatingUlRegistration_withInvalidUniversityProfile_shouldThrow() {
     when(ulRegistrarOffice.isValidRegistration(
             any(String.class), any(String.class), any(String.class)))
         .thenReturn(false);

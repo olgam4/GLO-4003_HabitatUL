@@ -8,12 +8,19 @@ public class Identity extends ValueObject {
   private String lastName;
   private Date birthDate;
   private Gender gender;
+  private UniversityProfile universityProfile;
 
-  public Identity(String firstName, String lastName, Date birthDate, Gender gender) {
+  public Identity(
+      String firstName,
+      String lastName,
+      Date birthDate,
+      Gender gender,
+      UniversityProfile universityProfile) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.birthDate = birthDate;
     this.gender = gender;
+    this.universityProfile = universityProfile;
   }
 
   public String getFirstName() {
@@ -30,5 +37,9 @@ public class Identity extends ValueObject {
 
   public Gender getGender() {
     return gender;
+  }
+
+  public UniversityProfile getUniversityProfile() {
+    return universityProfile;
   }
 }

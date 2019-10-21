@@ -16,8 +16,6 @@ import static ca.ulaval.glo4003.generator.quote.form.LocationGenerator.createLoc
 import static ca.ulaval.glo4003.generator.quote.form.LocationGenerator.createLocationRequest;
 import static ca.ulaval.glo4003.generator.quote.form.PersonalPropertyGenerator.createPersonalProperty;
 import static ca.ulaval.glo4003.generator.quote.form.PersonalPropertyGenerator.createPersonalPropertyRequest;
-import static ca.ulaval.glo4003.generator.quote.form.StudentInformationGenerator.createStudentInformation;
-import static ca.ulaval.glo4003.generator.quote.form.StudentInformationGenerator.createStudentInformationRequest;
 
 public class QuoteFormGenerator {
   private QuoteFormGenerator() {}
@@ -29,8 +27,7 @@ public class QuoteFormGenerator {
         createEffectiveDate(),
         createBuildingRequest(),
         createPersonalPropertyRequest(),
-        createCivilLiabilityRequest(),
-        createStudentInformationRequest());
+        createCivilLiabilityRequest());
   }
 
   public static QuoteFormDto createQuoteFormDto() {
@@ -40,8 +37,7 @@ public class QuoteFormGenerator {
         createEffectiveDate(),
         createBuilding(),
         createPersonalProperty(),
-        createCivilLiability(),
-        createStudentInformation());
+        createCivilLiability());
   }
 
   public static QuoteForm createQuoteForm() {
@@ -51,8 +47,7 @@ public class QuoteFormGenerator {
         createEffectiveDate(),
         createBuilding(),
         createPersonalProperty(),
-        createCivilLiability(),
-        createStudentInformation());
+        createCivilLiability());
   }
 
   public static QuoteForm createQuoteFormWithEffectiveDate(Date effectiveDate) {
@@ -62,8 +57,7 @@ public class QuoteFormGenerator {
         effectiveDate,
         createBuilding(),
         createPersonalProperty(),
-        createCivilLiability(),
-        createStudentInformation());
+        createCivilLiability());
   }
 
   public static QuoteForm createQuoteFormWithCivilLiabilityAmount(
@@ -74,8 +68,7 @@ public class QuoteFormGenerator {
         createEffectiveDate(),
         createBuilding(),
         createPersonalProperty(),
-        createCivilLiabilityWithAmount(civilLiabilityAmount),
-        createStudentInformation());
+        createCivilLiabilityWithAmount(civilLiabilityAmount));
   }
 
   public static QuoteForm createQuoteFormWithCivilLiabilityAmountAndNumberOfUnits(
@@ -86,7 +79,6 @@ public class QuoteFormGenerator {
         createEffectiveDate(),
         BuildingGenerator.createBuildingWithNumberOfUnits(numberOfUnits),
         createPersonalProperty(),
-        CivilLiabilityGenerator.createCivilLiabilityWithAmount(civilLiabilityAmount),
-        createStudentInformation());
+        CivilLiabilityGenerator.createCivilLiabilityWithAmount(civilLiabilityAmount));
   }
 }

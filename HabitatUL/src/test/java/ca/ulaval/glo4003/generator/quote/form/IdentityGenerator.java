@@ -10,14 +10,26 @@ import com.github.javafaker.Faker;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+import static ca.ulaval.glo4003.generator.quote.form.UniversityProfileGenerator.createUniversityProfile;
+import static ca.ulaval.glo4003.generator.quote.form.UniversityProfileGenerator.createUniversityProfileRequest;
+
 public class IdentityGenerator {
   public static IdentityRequest createIdentityRequest() {
     return new IdentityRequest(
-        createFirstName(), createLastName(), createBirthDate(), createGender());
+        createFirstName(),
+        createLastName(),
+        createBirthDate(),
+        createGender(),
+        createUniversityProfileRequest());
   }
 
   public static Identity createIdentity() {
-    return new Identity(createFirstName(), createLastName(), createBirthDate(), createGender());
+    return new Identity(
+        createFirstName(),
+        createLastName(),
+        createBirthDate(),
+        createGender(),
+        createUniversityProfile());
   }
 
   private static String createFirstName() {

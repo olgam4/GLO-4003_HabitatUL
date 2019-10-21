@@ -15,34 +15,44 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.studentinformation.StudentInformation;
 
 import java.util.Optional;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
     return new QuoteFormDto(
-        from(quoteRequest.getIdentity()),
-        from(quoteRequest.getLocation()),
+        fromIdentityRequest(quoteRequest.getIdentity()),
+        fromLocationRequest(quoteRequest.getLocation()),
         quoteRequest.getEffectiveDate(),
-        from(quoteRequest.getBuilding()),
-        from(quoteRequest.getPersonalProperty()),
-        from(quoteRequest.getCivilLiability()),
-        from(quoteRequest.getStudentInformation()));
+        fromBuildingRequest(quoteRequest.getBuilding()),
+        fromPersonalPropertyRequest(quoteRequest.getPersonalProperty()),
+        fromCivilLiabilityRequest(quoteRequest.getCivilLiability()));
   }
 
-  private Identity from(IdentityRequest identityRequest) {
+  private Identity fromIdentityRequest(IdentityRequest identityRequest) {
     return new Identity(
         identityRequest.getFirstName(),
         identityRequest.getLastName(),
         identityRequest.getBirthDate(),
-        identityRequest.getGender());
+        identityRequest.getGender(),
+        fromUniversityProfileRequest(identityRequest.getUniversityProfile()));
   }
 
-  private Location from(LocationRequest locationRequest) {
+  private UniversityProfile fromUniversityProfileRequest(
+      Optional<UniversityProfileRequest> universityProfileRequest) {
+    String idul = universityProfileRequest.map(UniversityProfileRequest::getIdul).orElse(null);
+    String identificationNumber =
+        universityProfileRequest.map(UniversityProfileRequest::getNi).orElse(null);
+    String program =
+        universityProfileRequest.map(UniversityProfileRequest::getProgram).orElse(null);
+    return new UniversityProfile(idul, identificationNumber, program);
+  }
+
+  private Location fromLocationRequest(LocationRequest locationRequest) {
     return new Location(
         locationRequest.getZipCode(),
         locationRequest.getStreetNumber(),
@@ -50,30 +60,25 @@ public class QuoteViewAssembler {
         locationRequest.getFloor());
   }
 
-  private Building from(BuildingRequest buildingRequest) {
+  private Building fromBuildingRequest(BuildingRequest buildingRequest) {
     return new Building(
         buildingRequest.getNumberOfUnits(),
         buildingRequest.getPreventionSystems(),
         buildingRequest.getCommercialUse());
   }
 
-  private PersonalProperty from(PersonalPropertyRequest personalPropertyRequest) {
+  private PersonalProperty fromPersonalPropertyRequest(
+      PersonalPropertyRequest personalPropertyRequest) {
     Amount coverageAmount = personalPropertyRequest.getCoverageAmount();
     Animals animals = personalPropertyRequest.getAnimals();
     return new PersonalProperty(coverageAmount, animals);
   }
 
-  private CivilLiability from(Optional<CivilLiabilityRequest> civilLiabilityRequest) {
+  private CivilLiability fromCivilLiabilityRequest(
+      Optional<CivilLiabilityRequest> civilLiabilityRequest) {
     CivilLiabilityAmount coverageAmount =
         civilLiabilityRequest.map(CivilLiabilityRequest::getCoverageAmount).orElse(null);
     return new CivilLiability(coverageAmount);
-  }
-
-  private StudentInformation from(StudentInformationRequest studentInformationRequest) {
-    String idul = studentInformationRequest.getIdul();
-    String identificationNumber = studentInformationRequest.getNi();
-    String program = studentInformationRequest.getProgram();
-    return new StudentInformation(idul, identificationNumber, program);
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {
@@ -81,11 +86,13 @@ public class QuoteViewAssembler {
     Money price = quoteDto.getPrice();
     Period effectivePeriod = quoteDto.getEffectivePeriod();
     DateTime expirationDate = quoteDto.getExpirationDate();
-    QuoteCoverageOverviewResponse coverage = from(quoteDto.getCoverageOverview());
+    QuoteCoverageOverviewResponse coverage =
+        fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview());
     return new QuoteResponse(quoteId, price, effectivePeriod, expirationDate, coverage);
   }
 
-  private QuoteCoverageOverviewResponse from(QuoteCoverageOverviewDto quoteCoverageOverviewDto) {
+  private QuoteCoverageOverviewResponse fromQuoteCoverageOverviewDto(
+      QuoteCoverageOverviewDto quoteCoverageOverviewDto) {
     return new QuoteCoverageOverviewResponse(
         quoteCoverageOverviewDto.getPersonalProperty(),
         quoteCoverageOverviewDto.getCivilLiability());

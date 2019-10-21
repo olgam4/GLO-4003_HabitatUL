@@ -24,6 +24,10 @@ public class QuoteRequestBuilder {
   private final String DEFAULT_BIRTH_DATE = createBirthDate();
   private final String DEFAULT_GENDER = createGender();
 
+  private final String DEFAULT_IDUL = Faker.instance().university().name();
+  private final String DEFAULT_IDENTIFICATION_NUMBER = Faker.instance().educator().university();
+  private final String DEFAULT_PROGRAM = Faker.instance().educator().course();
+
   private final String DEFAULT_ZIP_CODE = "G3A0G4";
   private final int DEFAULT_STREET_NUMBER = 13;
   private final int DEFAULT_APARTMENT_NUMBER = 2;
@@ -41,14 +45,14 @@ public class QuoteRequestBuilder {
   private final String DEFAULT_CIVIL_LIABILITY_COVERAGE_AMOUNT =
       EnumSampler.sample(CivilLiabilityAmount.class).getRepresentation();
 
-  private final String DEFAULT_IDUL = Faker.instance().university().name();
-  private final String DEFAULT_IDENTIFICATION_NUMBER = Faker.instance().educator().university();
-  private final String DEFAULT_PROGRAM = Faker.instance().educator().course();
-
   private String firstName = DEFAULT_FIRST_NAME;
   private String lastName = DEFAULT_LAST_NAME;
   private String birthDate = DEFAULT_BIRTH_DATE;
   private String gender = DEFAULT_GENDER;
+
+  private String idul = DEFAULT_IDUL;
+  private String identificationNumber = DEFAULT_IDENTIFICATION_NUMBER;
+  private String program = DEFAULT_PROGRAM;
 
   private String zipCode = DEFAULT_ZIP_CODE;
   private int streetNumber = DEFAULT_STREET_NUMBER;
@@ -65,10 +69,6 @@ public class QuoteRequestBuilder {
   private List<JSONObject> animals = DEFAULT_ANIMALS;
 
   private String civilLiabilityCoverageAmount = DEFAULT_CIVIL_LIABILITY_COVERAGE_AMOUNT;
-
-  private String idul = DEFAULT_IDUL;
-  private String identificationNumber = DEFAULT_IDENTIFICATION_NUMBER;
-  private String program = DEFAULT_PROGRAM;
 
   private QuoteRequestBuilder() {}
 
@@ -121,7 +121,6 @@ public class QuoteRequestBuilder {
     json.put("building", buildBuilding());
     json.put("personalProperty", buildPersonalProperty());
     json.put("civilLiability", buildCivilLiability());
-    json.put("studentInformation", buildStudentInformation());
     return json;
   }
 
@@ -131,6 +130,15 @@ public class QuoteRequestBuilder {
     json.put("lastName", lastName);
     json.put("birthDate", birthDate);
     json.put("gender", gender);
+    json.put("universityProfile", buildUniversityProfile());
+    return json;
+  }
+
+  private JSONObject buildUniversityProfile() {
+    JSONObject json = new JSONObject();
+    json.put("idul", idul);
+    json.put("ni", identificationNumber);
+    json.put("program", program);
     return json;
   }
 
@@ -161,14 +169,6 @@ public class QuoteRequestBuilder {
   private JSONObject buildCivilLiability() {
     JSONObject json = new JSONObject();
     json.put("coverageAmount", civilLiabilityCoverageAmount);
-    return json;
-  }
-
-  private JSONObject buildStudentInformation() {
-    JSONObject json = new JSONObject();
-    json.put("idul", idul);
-    json.put("ni", identificationNumber);
-    json.put("program", program);
     return json;
   }
 }
