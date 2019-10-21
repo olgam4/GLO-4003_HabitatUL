@@ -5,7 +5,8 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import java.util.Optional;
 
 public class QuoteRequest {
-  private IdentityRequest identity;
+  private IdentityRequest personalInformation;
+  private IdentityRequest additionalInsured;
   private LocationRequest location;
   private Date effectiveDate;
   private BuildingRequest building;
@@ -15,13 +16,15 @@ public class QuoteRequest {
   private QuoteRequest() {}
 
   public QuoteRequest(
-      IdentityRequest identity,
+      IdentityRequest personalInformation,
+      IdentityRequest additionalInsured,
       LocationRequest location,
       Date effectiveDate,
       BuildingRequest building,
       PersonalPropertyRequest personalProperty,
       CivilLiabilityRequest civilLiability) {
-    this.identity = identity;
+    this.personalInformation = personalInformation;
+    this.additionalInsured = additionalInsured;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
@@ -29,8 +32,12 @@ public class QuoteRequest {
     this.civilLiability = civilLiability;
   }
 
-  public IdentityRequest getIdentity() {
-    return identity;
+  public IdentityRequest getPersonalInformation() {
+    return personalInformation;
+  }
+
+  public Optional<IdentityRequest> getAdditionalInsured() {
+    return Optional.ofNullable(additionalInsured);
   }
 
   public LocationRequest getLocation() {

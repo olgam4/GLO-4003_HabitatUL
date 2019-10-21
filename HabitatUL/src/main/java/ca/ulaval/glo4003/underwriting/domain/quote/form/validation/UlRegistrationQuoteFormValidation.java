@@ -13,7 +13,7 @@ public class UlRegistrationQuoteFormValidation implements QuoteFormValidation {
 
   @Override
   public void validate(QuoteForm quoteForm) {
-    UniversityProfile universityProfile = quoteForm.getIdentity().getUniversityProfile();
+    UniversityProfile universityProfile = quoteForm.getPersonalInformation().getUniversityProfile();
     String idul = universityProfile.getIdul();
     String identificationNumber = universityProfile.getIdentificationNumber();
     String program = universityProfile.getProgram();

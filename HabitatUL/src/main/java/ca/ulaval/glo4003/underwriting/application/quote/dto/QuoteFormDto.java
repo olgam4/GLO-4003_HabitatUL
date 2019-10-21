@@ -9,7 +9,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 public class QuoteFormDto extends DataTransferObject {
-  private Identity identity;
+  private Identity personalInformation;
+  private Identity additionalInsured;
   private Location location;
   private Date effectiveDate;
   private Building building;
@@ -17,13 +18,15 @@ public class QuoteFormDto extends DataTransferObject {
   private CivilLiability civilLiability;
 
   public QuoteFormDto(
-      Identity identity,
+      Identity personalInformation,
+      Identity additionalInsured,
       Location location,
       Date effectiveDate,
       Building building,
       PersonalProperty personalProperty,
       CivilLiability civilLiability) {
-    this.identity = identity;
+    this.personalInformation = personalInformation;
+    this.additionalInsured = additionalInsured;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
@@ -31,8 +34,12 @@ public class QuoteFormDto extends DataTransferObject {
     this.civilLiability = civilLiability;
   }
 
-  public Identity getIdentity() {
-    return identity;
+  public Identity getPersonalInformation() {
+    return personalInformation;
+  }
+
+  public Identity getAdditionalInsured() {
+    return additionalInsured;
   }
 
   public Location getLocation() {

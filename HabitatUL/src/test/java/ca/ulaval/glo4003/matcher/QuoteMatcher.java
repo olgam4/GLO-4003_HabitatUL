@@ -40,7 +40,8 @@ public class QuoteMatcher {
 
   public static Matcher<QuoteForm> matchesQuoteForm(final QuoteFormDto quoteFormDto) {
     return allOf(
-        hasProperty("identity", equalTo(quoteFormDto.getIdentity())),
+        hasProperty("personalInformation", equalTo(quoteFormDto.getPersonalInformation())),
+        hasProperty("additionalInsured", equalTo(quoteFormDto.getAdditionalInsured())),
         hasProperty("location", equalTo(quoteFormDto.getLocation())),
         hasProperty("effectiveDate", equalTo(quoteFormDto.getEffectiveDate())),
         hasProperty("building", equalTo(quoteFormDto.getBuilding())),
@@ -103,7 +104,9 @@ public class QuoteMatcher {
   public static Matcher<QuoteFormDto> matchesQuoteFormDto(final QuoteRequest quoteRequest) {
     System.out.println(quoteRequest);
     return allOf(
-        hasProperty("identity", matchesIdentity(quoteRequest.getIdentity())),
+        hasProperty("personalInformation", matchesIdentity(quoteRequest.getPersonalInformation())),
+        hasProperty(
+            "additionalInsured", matchesIdentity(quoteRequest.getAdditionalInsured().get())),
         hasProperty("location", matchesLocation(quoteRequest.getLocation())),
         hasProperty("effectiveDate", equalTo(quoteRequest.getEffectiveDate())),
         hasProperty("building", matchesBuilding(quoteRequest.getBuilding())),

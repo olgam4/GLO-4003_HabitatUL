@@ -22,30 +22,35 @@ public class HardCodedAnimalsAdjustmentProviderTest {
 
   @Test
   public void gettingAdjustment_withKnownAnimalBreed_shouldProvideCorrespondingAdjustment() {
-    validateScenario(AnimalBreed.CAT, 1, 0.01f);
-    validateScenario(AnimalBreed.DOG, 1, 0.05f);
-    validateScenario(AnimalBreed.GOLD_FISH, 1, -0.01f);
-    validateScenario(AnimalBreed.SNAKE, 1, 1f);
+    validateAdjustmentScenario(AnimalBreed.CAT, 1, 0.01f);
+    validateAdjustmentScenario(AnimalBreed.DOG, 1, 0.05f);
+    validateAdjustmentScenario(AnimalBreed.GOLD_FISH, 1, -0.01f);
+    validateAdjustmentScenario(AnimalBreed.SNAKE, 1, 1f);
   }
 
   @Test
   public void gettingAdjustment_withKnownAnimalBreed_shouldAdjustAccordingToCount() {
-    validateScenario(AnimalBreed.CAT, COUNT, 0.01f * COUNT);
+    validateAdjustmentScenario(AnimalBreed.CAT, COUNT, 0.01f * COUNT);
   }
 
   @Test
   public void gettingAdjustment_withOtherAnimalBreed_shouldProvideNoAdjustment() {
-    QuotePriceAdjustment adjustment = subject.getAdjustment(AnimalBreed.OTHER, COUNT);
-
-    QuotePriceAdjustment expectedAdjustment = new NoQuotePriceAdjustment();
-    assertEquals(expectedAdjustment, adjustment);
+    validateNoAdjustmentScenario(AnimalBreed.OTHER);
   }
 
-  private void validateScenario(AnimalBreed animalBreed, int animalCount, float expectedFactor) {
+  private void validateAdjustmentScenario(
+      AnimalBreed animalBreed, int animalCount, float expectedFactor) {
     QuotePriceAdjustment adjustment = subject.getAdjustment(animalBreed, animalCount);
 
     QuotePriceAdjustment expectedAdjustment =
         new MultiplicativeQuotePriceAdjustment(expectedFactor);
+    assertEquals(expectedAdjustment, adjustment);
+  }
+
+  private void validateNoAdjustmentScenario(AnimalBreed animalBreed) {
+    QuotePriceAdjustment adjustment = subject.getAdjustment(animalBreed, COUNT);
+
+    QuotePriceAdjustment expectedAdjustment = new NoQuotePriceAdjustment();
     assertEquals(expectedAdjustment, adjustment);
   }
 }

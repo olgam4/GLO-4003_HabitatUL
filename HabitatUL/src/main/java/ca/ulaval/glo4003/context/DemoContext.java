@@ -36,10 +36,12 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOf
 import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculator;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.RoommateAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.DummyQuoteBasePriceCalculator;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.HardCodedAnimalsAdjustmentProvider;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.HardCodedRoommateAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.JsonPreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryDecorator;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
@@ -117,6 +119,8 @@ public class DemoContext implements Context {
     ServiceLocator.register(
         PreferentialProgramAdjustmentProvider.class,
         new JsonPreferentialProgramAdjustmentProvider());
+    ServiceLocator.register(
+        RoommateAdjustmentProvider.class, new HardCodedRoommateAdjustmentProvider());
     ServiceLocator.register(
         QuoteRepository.class,
         new EventPublisherQuoteRepositoryDecorator(new InMemoryQuoteRepository(), mediator));

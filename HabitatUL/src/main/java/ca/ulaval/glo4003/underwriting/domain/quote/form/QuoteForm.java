@@ -8,7 +8,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 public class QuoteForm {
-  private Identity identity;
+  private Identity personalInformation;
+  private Identity additionalInsured;
   private Location location;
   private Date effectiveDate;
   private Building building;
@@ -16,13 +17,15 @@ public class QuoteForm {
   private CivilLiability civilLiability;
 
   public QuoteForm(
-      Identity identity,
+      Identity personalInformation,
+      Identity additionalInsured,
       Location location,
       Date effectiveDate,
       Building building,
       PersonalProperty personalProperty,
       CivilLiability civilLiability) {
-    this.identity = identity;
+    this.personalInformation = personalInformation;
+    this.additionalInsured = additionalInsured;
     this.location = location;
     this.effectiveDate = effectiveDate;
     this.building = building;
@@ -35,8 +38,12 @@ public class QuoteForm {
     civilLiability.completeWithDefaultValues(building.getNumberOfUnits());
   }
 
-  public Identity getIdentity() {
-    return identity;
+  public Identity getPersonalInformation() {
+    return personalInformation;
+  }
+
+  public Identity getAdditionalInsured() {
+    return additionalInsured;
   }
 
   public Location getLocation() {

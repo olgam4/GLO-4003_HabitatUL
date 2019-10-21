@@ -10,7 +10,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 public class QuoteAssembler {
   public QuoteForm from(QuoteFormDto quoteFormDto) {
     return new QuoteForm(
-        quoteFormDto.getIdentity(),
+        quoteFormDto.getPersonalInformation(),
+        quoteFormDto.getAdditionalInsured(),
         quoteFormDto.getLocation(),
         quoteFormDto.getEffectiveDate(),
         quoteFormDto.getBuilding(),

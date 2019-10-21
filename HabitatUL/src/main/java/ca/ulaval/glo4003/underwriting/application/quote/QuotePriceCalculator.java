@@ -3,12 +3,10 @@ package ca.ulaval.glo4003.underwriting.application.quote;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculator;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.QuotePriceFormula;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.part.AnimalsFormulaPart;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.part.PreferentialProgramFormulaPart;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.part.RoommateFormulaPart;
 
 public class QuotePriceCalculator {
   private QuotePriceFormula quotePriceFormula;
@@ -29,6 +27,8 @@ public class QuotePriceCalculator {
     quotePriceFormula.addFormulaPart(
         new PreferentialProgramFormulaPart(
             ServiceLocator.resolve(PreferentialProgramAdjustmentProvider.class)));
+    quotePriceFormula.addFormulaPart(
+        new RoommateFormulaPart(ServiceLocator.resolve(RoommateAdjustmentProvider.class)));
     // TODO: add other formula parts
     return quotePriceFormula;
   }

@@ -25,12 +25,17 @@ import java.util.Optional;
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
     return new QuoteFormDto(
-        fromIdentityRequest(quoteRequest.getIdentity()),
+        fromIdentityRequest(quoteRequest.getPersonalInformation()),
+        fromIdentityRequest(quoteRequest.getAdditionalInsured()),
         fromLocationRequest(quoteRequest.getLocation()),
         quoteRequest.getEffectiveDate(),
         fromBuildingRequest(quoteRequest.getBuilding()),
         fromPersonalPropertyRequest(quoteRequest.getPersonalProperty()),
         fromCivilLiabilityRequest(quoteRequest.getCivilLiability()));
+  }
+
+  private Identity fromIdentityRequest(Optional<IdentityRequest> identityRequest) {
+    return identityRequest.map(this::fromIdentityRequest).orElse(null);
   }
 
   private Identity fromIdentityRequest(IdentityRequest identityRequest) {

@@ -115,7 +115,8 @@ public class QuoteRequestBuilder {
 
   public JSONObject build() {
     JSONObject json = new JSONObject();
-    json.put("identity", buildIdentity());
+    json.put("personalInformation", buildIdentity());
+    json.put("additionalInsured", buildIdentity());
     json.put("location", buildLocation());
     json.put("effectiveDate", effectiveDate);
     json.put("building", buildBuilding());

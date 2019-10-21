@@ -23,6 +23,7 @@ public class QuoteFormGenerator {
   public static QuoteRequest createQuoteRequest() {
     return new QuoteRequest(
         createIdentityRequest(),
+        createIdentityRequest(),
         createLocationRequest(),
         createEffectiveDate(),
         createBuildingRequest(),
@@ -32,6 +33,7 @@ public class QuoteFormGenerator {
 
   public static QuoteFormDto createQuoteFormDto() {
     return new QuoteFormDto(
+        createIdentity(),
         createIdentity(),
         createLocation(),
         createEffectiveDate(),
@@ -43,6 +45,7 @@ public class QuoteFormGenerator {
   public static QuoteForm createQuoteForm() {
     return new QuoteForm(
         createIdentity(),
+        createIdentity(),
         createLocation(),
         createEffectiveDate(),
         createBuilding(),
@@ -52,6 +55,7 @@ public class QuoteFormGenerator {
 
   public static QuoteForm createQuoteFormWithEffectiveDate(Date effectiveDate) {
     return new QuoteForm(
+        createIdentity(),
         createIdentity(),
         createLocation(),
         effectiveDate,
@@ -64,6 +68,7 @@ public class QuoteFormGenerator {
       CivilLiabilityAmount civilLiabilityAmount) {
     return new QuoteForm(
         createIdentity(),
+        createIdentity(),
         createLocation(),
         createEffectiveDate(),
         createBuilding(),
@@ -75,10 +80,22 @@ public class QuoteFormGenerator {
       CivilLiabilityAmount civilLiabilityAmount, int numberOfUnits) {
     return new QuoteForm(
         createIdentity(),
+        createIdentity(),
         createLocation(),
         createEffectiveDate(),
         BuildingGenerator.createBuildingWithNumberOfUnits(numberOfUnits),
         createPersonalProperty(),
         CivilLiabilityGenerator.createCivilLiabilityWithAmount(civilLiabilityAmount));
+  }
+
+  public static QuoteForm createQuoteFormWithoutAdditionalInsured() {
+    return new QuoteForm(
+        createIdentity(),
+        null,
+        createLocation(),
+        createEffectiveDate(),
+        createBuilding(),
+        createPersonalProperty(),
+        createCivilLiability());
   }
 }
