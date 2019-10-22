@@ -24,6 +24,7 @@ public class QuoteFormValidator {
     quoteFormValidations.add(
         new EffectiveDateQuoteFormValidation(ServiceLocator.resolve(ClockProvider.class)));
     quoteFormValidations.add(new CivilLiabilityAmountQuoteFormValidation());
+    quoteFormValidations.add(new DifferentAdditionalInsuredQuoteFormValidation());
     quoteFormValidations.add(
         new UlRegistrationQuoteFormValidation(ServiceLocator.resolve(UlRegistrarOffice.class)));
     // TODO: add other validations

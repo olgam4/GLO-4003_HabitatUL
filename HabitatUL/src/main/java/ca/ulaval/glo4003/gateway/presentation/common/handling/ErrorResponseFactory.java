@@ -39,6 +39,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(InvalidZipCodeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteCivilLiabilityError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteDifferentAdditionalInsuredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteEffectiveDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteNotFoundError.class, Status.NOT_FOUND);

@@ -12,12 +12,10 @@ public class QuoteExpiredError extends QuoteError {
     this.quoteId = quoteId;
   }
 
-  @Override
   public String getError() {
     return ERROR;
   }
 
-  @Override
   public String getMessage() {
     return String.format(MESSAGE, quoteId.getValue());
   }
