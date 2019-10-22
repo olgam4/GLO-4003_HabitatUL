@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator.quote.form;
+package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.UniversityProfileRequest;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
@@ -14,15 +14,15 @@ public class UniversityProfileGenerator {
     return new UniversityProfile(createIdentificationNumber(), createIdul(), createProgram());
   }
 
-  private static String createIdul() {
+  public static String createIdul() {
     return Faker.instance().name().username();
   }
 
-  private static String createIdentificationNumber() {
+  public static String createIdentificationNumber() {
     return Faker.instance().idNumber().valid();
   }
 
-  private static String createProgram() {
+  public static String createProgram() {
     return Faker.instance().cat().name();
   }
 }

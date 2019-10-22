@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
-import ca.ulaval.glo4003.generator.user.CredentialsGenerator;
+import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

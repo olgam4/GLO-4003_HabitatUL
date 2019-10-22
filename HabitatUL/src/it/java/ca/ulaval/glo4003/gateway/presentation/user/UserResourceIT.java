@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.user;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
-import ca.ulaval.glo4003.generator.user.TokenGenerator;
+import ca.ulaval.glo4003.helper.user.TokenGenerator;
 import com.github.javafaker.Faker;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;

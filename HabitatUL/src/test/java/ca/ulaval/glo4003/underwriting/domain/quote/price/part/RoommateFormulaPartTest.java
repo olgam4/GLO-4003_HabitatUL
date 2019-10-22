@@ -1,7 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price.part;
 
-import ca.ulaval.glo4003.generator.MoneyGenerator;
-import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
@@ -23,6 +24,8 @@ public class RoommateFormulaPartTest {
   private static final Money BASE_PRICE = MoneyGenerator.create();
   private static final Money PRICE_ADJUSTMENT = MoneyGenerator.create();
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
+  private static final QuoteForm QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED =
+      QuoteFormBuilder.aQuoteForm().withoutAdditionalInsured().build();
 
   @Mock private RoommateAdjustmentProvider roommateAdjustmentProvider;
   @Mock private QuotePriceAdjustment quotePriceAdjustment;
@@ -63,18 +66,14 @@ public class RoommateFormulaPartTest {
 
   @Test
   public void computingFormulaPart_withoutAdditionalInsured_shouldNotGetRoommateAdjustment() {
-    QuoteForm quoteForm = QuoteFormGenerator.createQuoteFormWithoutAdditionalInsured();
-
-    subject.compute(quoteForm, BASE_PRICE);
+    subject.compute(QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED, BASE_PRICE);
 
     verify(roommateAdjustmentProvider, never()).getAdjustment(any(), any());
   }
 
   @Test
   public void computingFormulaPart_withoutAdditionalInsured_shouldReturnNullAdjustmentAmount() {
-    QuoteForm quoteForm = QuoteFormGenerator.createQuoteFormWithoutAdditionalInsured();
-
-    Money adjustmentAmount = subject.compute(quoteForm, BASE_PRICE);
+    Money adjustmentAmount = subject.compute(QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED, BASE_PRICE);
 
     assertEquals(new Money(Amount.ZERO), adjustmentAmount);
   }

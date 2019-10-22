@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.persistence.quote;
 
-import ca.ulaval.glo4003.generator.EventGenerator;
-import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
+import ca.ulaval.glo4003.helper.EventGenerator;
+import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.mediator.Mediator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;

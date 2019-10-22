@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureE
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.generator.user.TokenPayloadGenerator;
+import ca.ulaval.glo4003.helper.user.TokenPayloadGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

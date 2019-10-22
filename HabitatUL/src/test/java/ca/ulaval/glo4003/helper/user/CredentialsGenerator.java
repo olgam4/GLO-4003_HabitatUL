@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator.user;
+package ca.ulaval.glo4003.helper.user;
 
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import com.github.javafaker.Faker;

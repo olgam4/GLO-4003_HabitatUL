@@ -1,7 +1,7 @@
-package ca.ulaval.glo4003.generator.quote.form;
+package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.PersonalPropertyRequest;
-import ca.ulaval.glo4003.generator.EnumSampler;
+import ca.ulaval.glo4003.helper.EnumSampler;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;

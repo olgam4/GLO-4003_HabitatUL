@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator;
+package ca.ulaval.glo4003.helper;
 
 import ca.ulaval.glo4003.mediator.Event;
 

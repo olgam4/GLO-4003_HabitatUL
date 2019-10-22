@@ -1,8 +1,12 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
-import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.quote.form.BuildingBuilder;
+import ca.ulaval.glo4003.helper.quote.form.CivilLiabilityBuilder;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteCivilLiabilityError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -60,9 +64,14 @@ public class CivilLiabilityAmountQuoteFormValidationTest {
   private void validateScenario(
       CivilLiabilityAmount civilLiabilityAmount, int minNumberOfUnits, int maxNumberOfUnits) {
     int numberOfUnits = Faker.instance().number().numberBetween(minNumberOfUnits, maxNumberOfUnits);
+    Building building = BuildingBuilder.aBuilding().withNumberOfUnits(numberOfUnits).build();
+    CivilLiability civilLiability =
+        CivilLiabilityBuilder.aCivilLiability().withAmount(civilLiabilityAmount).build();
     QuoteForm quoteForm =
-        QuoteFormGenerator.createQuoteFormWithCivilLiabilityAmountAndNumberOfUnits(
-            civilLiabilityAmount, numberOfUnits);
+        QuoteFormBuilder.aQuoteForm()
+            .withBuilding(building)
+            .withCivilLiability(civilLiability)
+            .build();
 
     subject.validate(quoteForm);
   }

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price;
 
-import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import org.junit.Before;

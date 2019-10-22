@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
-import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
@@ -37,21 +37,23 @@ public class EffectiveDateQuoteFormValidationTest {
 
   @Test
   public void validatingQuoteForm_withValidEffectiveDate_shouldNotThrow() {
-    quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(VALID_EFFECTIVE_DATE);
+    quoteForm = QuoteFormBuilder.aQuoteForm().withEffectiveDate(VALID_EFFECTIVE_DATE).build();
 
     subject.validate(quoteForm);
   }
 
   @Test(expected = QuoteEffectiveDateError.class)
   public void validatingQuoteForm_withInvalidPastEffectiveDate_shouldThrow() {
-    quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(INVALID_PAST_EFFECTIVE_DATE);
+    quoteForm =
+        QuoteFormBuilder.aQuoteForm().withEffectiveDate(INVALID_PAST_EFFECTIVE_DATE).build();
 
     subject.validate(quoteForm);
   }
 
   @Test(expected = QuoteEffectiveDateError.class)
   public void validatingQuoteForm_withInvalidFutureEffectiveDate_shouldThrow() {
-    quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(INVALID_FUTURE_EFFECTIVE_DATE);
+    quoteForm =
+        QuoteFormBuilder.aQuoteForm().withEffectiveDate(INVALID_FUTURE_EFFECTIVE_DATE).build();
 
     subject.validate(quoteForm);
   }

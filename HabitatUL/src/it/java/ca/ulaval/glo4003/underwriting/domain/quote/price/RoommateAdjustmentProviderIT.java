@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price;
 
-import ca.ulaval.glo4003.generator.EnumSampler;
+import ca.ulaval.glo4003.helper.EnumSampler;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import org.junit.Before;

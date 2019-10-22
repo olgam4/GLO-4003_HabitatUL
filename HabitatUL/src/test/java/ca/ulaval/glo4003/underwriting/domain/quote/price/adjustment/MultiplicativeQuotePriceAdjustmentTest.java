@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment;
 
-import ca.ulaval.glo4003.generator.MoneyGenerator;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;

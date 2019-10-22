@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator.quote.form;
+package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import com.github.javafaker.Faker;

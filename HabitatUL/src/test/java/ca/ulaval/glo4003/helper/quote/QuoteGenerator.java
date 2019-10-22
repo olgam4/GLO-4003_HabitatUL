@@ -1,7 +1,8 @@
-package ca.ulaval.glo4003.generator.quote;
+package ca.ulaval.glo4003.helper.quote;
 
-import ca.ulaval.glo4003.generator.MoneyGenerator;
-import ca.ulaval.glo4003.generator.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -41,7 +42,7 @@ public class QuoteGenerator {
   public static Quote createValidQuoteWithEffectiveDate(Date effectiveDate) {
     QuoteId quoteId = createQuoteId();
     Money price = MoneyGenerator.create();
-    QuoteForm quoteForm = QuoteFormGenerator.createQuoteFormWithEffectiveDate(effectiveDate);
+    QuoteForm quoteForm = QuoteFormBuilder.aQuoteForm().withEffectiveDate(effectiveDate).build();
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
     return new Quote(quoteId, price, quoteForm, expirationDate, false, clockProvider);

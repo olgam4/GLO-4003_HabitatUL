@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator;
+package ca.ulaval.glo4003.helper;
 
 import java.util.List;
 import java.util.Random;

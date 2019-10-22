@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator.quote.form;
+package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.BuildingRequest;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
@@ -22,19 +22,15 @@ public class BuildingGenerator {
     return new Building(createNumberOfUnits(), createPreventionSystems(), createCommercialUse());
   }
 
-  public static Building createBuildingWithNumberOfUnits(int numberOfUnits) {
-    return new Building(numberOfUnits, createPreventionSystems(), createCommercialUse());
-  }
-
-  private static int createNumberOfUnits() {
+  public static int createNumberOfUnits() {
     return Faker.instance().number().numberBetween(MIN_NUMBER_OF_UNITS, MAX_NUMBER_OF_UNITS);
   }
 
-  private static HashSet<PreventionSystem> createPreventionSystems() {
+  public static HashSet<PreventionSystem> createPreventionSystems() {
     return new HashSet<>(Arrays.asList(PreventionSystem.SPRINKLER));
   }
 
-  private static Optional<String> createCommercialUse() {
+  public static Optional<String> createCommercialUse() {
     return Optional.of(Faker.instance().zelda().game());
   }
 }

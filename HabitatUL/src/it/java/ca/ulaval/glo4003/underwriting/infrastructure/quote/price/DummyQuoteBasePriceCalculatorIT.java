@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 
-import ca.ulaval.glo4003.generator.MoneyGenerator;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculator;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculatorIT;
 

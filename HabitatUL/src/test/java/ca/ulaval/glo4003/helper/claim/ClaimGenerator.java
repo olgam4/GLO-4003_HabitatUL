@@ -1,9 +1,9 @@
-package ca.ulaval.glo4003.generator.claim;
+package ca.ulaval.glo4003.helper.claim;
 
 import ca.ulaval.glo4003.coverage.application.claim.ClaimAssembler;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.coverage.domain.claim.*;
-import ca.ulaval.glo4003.generator.EnumSampler;
+import ca.ulaval.glo4003.helper.EnumSampler;
 
 import java.util.HashMap;
 

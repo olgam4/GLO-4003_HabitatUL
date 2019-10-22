@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.generator.quote.QuoteGenerator;
+import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
 import org.junit.Before;

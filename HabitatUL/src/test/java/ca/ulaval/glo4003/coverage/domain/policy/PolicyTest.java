@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
-import ca.ulaval.glo4003.generator.policy.PolicyGenerator;
+import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.mediator.Event;
 import org.junit.Before;
 import org.junit.Test;

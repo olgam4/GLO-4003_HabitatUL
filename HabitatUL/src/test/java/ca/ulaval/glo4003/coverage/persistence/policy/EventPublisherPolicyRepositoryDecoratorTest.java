@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.coverage.persistence.policy;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.generator.EventGenerator;
+import ca.ulaval.glo4003.helper.EventGenerator;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.mediator.Mediator;
 import com.github.javafaker.Faker;

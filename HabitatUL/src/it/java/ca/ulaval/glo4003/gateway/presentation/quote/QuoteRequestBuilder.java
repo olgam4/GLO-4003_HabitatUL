@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
-import ca.ulaval.glo4003.generator.EnumSampler;
+import ca.ulaval.glo4003.helper.EnumSampler;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;

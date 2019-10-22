@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.generator.policy;
+package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequestedEvent;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
