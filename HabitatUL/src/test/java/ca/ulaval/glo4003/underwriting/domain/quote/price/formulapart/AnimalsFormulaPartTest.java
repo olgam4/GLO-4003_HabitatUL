@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.underwriting.domain.quote.price.part;
+package ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart;
 
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
@@ -17,8 +17,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static ca.ulaval.glo4003.underwriting.domain.quote.price.part.AnimalsFormulaPart.MAXIMUM_ADJUSTMENT;
-import static ca.ulaval.glo4003.underwriting.domain.quote.price.part.AnimalsFormulaPart.MINIMUM_ADJUSTMENT;
+import static ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.AnimalsFormulaPart.MAXIMUM_ADJUSTMENT;
+import static ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.AnimalsFormulaPart.MINIMUM_ADJUSTMENT;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

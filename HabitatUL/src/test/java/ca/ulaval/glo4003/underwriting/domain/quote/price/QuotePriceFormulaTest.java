@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.part.QuotePriceFormulaPart;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.QuotePriceFormulaPart;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

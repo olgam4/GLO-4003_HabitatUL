@@ -17,6 +17,18 @@ public class DifferentAdditionalInsuredQuoteFormValidationTest {
 
   private DifferentAdditionalInsuredQuoteFormValidation subject;
 
+  private static Identity createEquivalentIdentity(Identity identity) {
+    return new Identity(
+        identity.getFirstName(),
+        identity.getLastName(),
+        identity.getBirthDate(),
+        identity.getGender(),
+        new UniversityProfile(
+            identity.getUniversityProfile().getIdul(),
+            identity.getUniversityProfile().getIdentificationNumber(),
+            identity.getUniversityProfile().getProgram()));
+  }
+
   @Before
   public void setUp() {
     subject = new DifferentAdditionalInsuredQuoteFormValidation();
@@ -53,17 +65,5 @@ public class DifferentAdditionalInsuredQuoteFormValidationTest {
             .build();
 
     subject.validate(quoteForm);
-  }
-
-  private static Identity createEquivalentIdentity(Identity identity) {
-    return new Identity(
-        identity.getFirstName(),
-        identity.getLastName(),
-        identity.getBirthDate(),
-        identity.getGender(),
-        new UniversityProfile(
-            identity.getUniversityProfile().getIdul(),
-            identity.getUniversityProfile().getIdentificationNumber(),
-            identity.getUniversityProfile().getProgram()));
   }
 }

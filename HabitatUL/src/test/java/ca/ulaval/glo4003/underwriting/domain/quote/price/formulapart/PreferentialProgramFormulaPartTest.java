@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.underwriting.domain.quote.price.part;
+package ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart;
 
 import ca.ulaval.glo4003.helper.MoneyBuilder;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
