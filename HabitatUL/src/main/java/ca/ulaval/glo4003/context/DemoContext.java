@@ -119,6 +119,8 @@ public class DemoContext implements Context {
     ServiceLocator.register(
         RoommateAdjustmentProvider.class, new HardCodedRoommateAdjustmentProvider());
     ServiceLocator.register(
+        GraduateStudentAdjustmentProvider.class, new HardCodedGraduateStudentAdjustmentProvider());
+    ServiceLocator.register(
         QuoteRepository.class,
         new EventPublisherQuoteRepositoryDecorator(new InMemoryQuoteRepository(), mediator));
   }

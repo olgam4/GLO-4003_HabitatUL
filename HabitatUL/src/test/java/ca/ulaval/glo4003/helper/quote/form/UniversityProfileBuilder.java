@@ -19,7 +19,7 @@ public class UniversityProfileBuilder {
 
   private UniversityProfileBuilder() {}
 
-  public static UniversityProfileBuilder aUniversity() {
+  public static UniversityProfileBuilder aUniversityProfile() {
     return new UniversityProfileBuilder();
   }
 

@@ -33,7 +33,7 @@ public class PreferentialProgramFormulaPartTest {
   private static final String DEGREE = Faker.instance().educator().campus();
   private static final String PROGRAM = Faker.instance().educator().course();
   private static final UniversityProfile FILLED_UNIVERSITY_PROFILE =
-      UniversityProfileBuilder.aUniversity()
+      UniversityProfileBuilder.aUniversityProfile()
           .withCycle(CYCLE)
           .withDegree(DEGREE)
           .withProgram(PROGRAM)
@@ -44,7 +44,7 @@ public class PreferentialProgramFormulaPartTest {
   private static final String ANOTHER_DEGREE = Faker.instance().educator().university();
   private static final String ANOTHER_PROGRAM = Faker.instance().educator().secondarySchool();
   private static final UniversityProfile ANOTHER_FILLED_UNIVERSITY_PROFILE =
-      UniversityProfileBuilder.aUniversity()
+      UniversityProfileBuilder.aUniversityProfile()
           .withCycle(ANOTHER_CYCLE)
           .withDegree(ANOTHER_DEGREE)
           .withProgram(ANOTHER_PROGRAM)

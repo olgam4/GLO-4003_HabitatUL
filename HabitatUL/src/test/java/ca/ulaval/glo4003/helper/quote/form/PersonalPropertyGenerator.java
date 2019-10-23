@@ -27,13 +27,13 @@ public class PersonalPropertyGenerator {
     return new PersonalProperty(createCoverageAmount(), createAnimals());
   }
 
-  private static Amount createCoverageAmount() {
+  public static Amount createCoverageAmount() {
     double randomDouble =
         Faker.instance().number().randomDouble(0, MIN_COVERAGE_AMOUNT, MAX_COVERAGE_AMOUNT);
     return new Amount(BigDecimal.valueOf(randomDouble));
   }
 
-  private static Animals createAnimals() {
+  public static Animals createAnimals() {
     return new Animals(getRandomAnimalMap());
   }
 
@@ -45,12 +45,12 @@ public class PersonalPropertyGenerator {
   }
 
   private static List<AnimalBreed> getRandomAnimalList() {
-    return Stream.generate(PersonalPropertyGenerator::getRandomAnimal)
+    return Stream.generate(PersonalPropertyGenerator::createAnimalBreed)
         .limit(Faker.instance().number().randomDigitNotZero())
         .collect(Collectors.toList());
   }
 
-  private static AnimalBreed getRandomAnimal() {
+  public static AnimalBreed createAnimalBreed() {
     return EnumSampler.sample(AnimalBreed.class);
   }
 }
