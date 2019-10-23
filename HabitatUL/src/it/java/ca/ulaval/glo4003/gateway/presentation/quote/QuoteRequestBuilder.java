@@ -26,6 +26,8 @@ public class QuoteRequestBuilder {
 
   private final String DEFAULT_IDUL = Faker.instance().university().name();
   private final String DEFAULT_IDENTIFICATION_NUMBER = Faker.instance().educator().university();
+  private final String DEFAULT_CYCLE = Faker.instance().university().prefix();
+  private final String DEFAULT_DEGREE = Faker.instance().university().suffix();
   private final String DEFAULT_PROGRAM = Faker.instance().educator().course();
 
   private final String DEFAULT_ZIP_CODE = "G3A0G4";
@@ -52,6 +54,8 @@ public class QuoteRequestBuilder {
 
   private String idul = DEFAULT_IDUL;
   private String identificationNumber = DEFAULT_IDENTIFICATION_NUMBER;
+  private String cycle = DEFAULT_CYCLE;
+  private String degree = DEFAULT_DEGREE;
   private String program = DEFAULT_PROGRAM;
 
   private String zipCode = DEFAULT_ZIP_CODE;
@@ -139,6 +143,8 @@ public class QuoteRequestBuilder {
     JSONObject json = new JSONObject();
     json.put("idul", idul);
     json.put("ni", identificationNumber);
+    json.put("cycle", cycle);
+    json.put("degree", degree);
     json.put("program", program);
     return json;
   }

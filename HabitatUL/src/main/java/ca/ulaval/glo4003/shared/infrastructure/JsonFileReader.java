@@ -3,7 +3,6 @@ package ca.ulaval.glo4003.shared.infrastructure;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -23,7 +22,7 @@ public class JsonFileReader {
     }
   }
 
-  private String streamToString(InputStream inputStream, Charset charset) throws IOException {
+  private String streamToString(InputStream inputStream, Charset charset) {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
     return bufferedReader.lines().collect(Collectors.joining(System.lineSeparator()));
   }

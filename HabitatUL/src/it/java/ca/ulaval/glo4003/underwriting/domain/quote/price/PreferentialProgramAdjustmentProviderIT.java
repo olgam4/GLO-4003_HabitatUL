@@ -7,7 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class PreferentialProgramAdjustmentProviderIT {
-  private static final String PROGRAM = "PROGRAM";
+  private static final String CYCLE = "cycle";
+  private static final String DEGREE = "degree";
+  private static final String PROGRAM = "program";
 
   private PreferentialProgramAdjustmentProvider subject;
 
@@ -18,7 +20,8 @@ public abstract class PreferentialProgramAdjustmentProviderIT {
 
   @Test
   public void gettingAdjustment_shouldProvideAdjustment() {
-    QuotePriceAdjustment adjustment = subject.getAdjustment(PROGRAM);
+    QuotePriceAdjustment adjustment =
+        subject.getAdjustment(CYCLE, DEGREE, PROGRAM);
 
     assertNotNull(adjustment);
   }

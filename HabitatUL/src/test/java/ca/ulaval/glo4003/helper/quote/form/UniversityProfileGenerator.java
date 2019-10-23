@@ -7,11 +7,12 @@ import com.github.javafaker.Faker;
 public class UniversityProfileGenerator {
   public static UniversityProfileRequest createUniversityProfileRequest() {
     return new UniversityProfileRequest(
-        createIdul(), createIdentificationNumber(), createProgram());
+        createIdul(), createIdentificationNumber(), createCycle(), createDegree(), createProgram());
   }
 
   public static UniversityProfile createUniversityProfile() {
-    return new UniversityProfile(createIdentificationNumber(), createIdul(), createProgram());
+    return new UniversityProfile(
+        createIdentificationNumber(), createIdul(), createCycle(), createDegree(), createProgram());
   }
 
   public static String createIdul() {
@@ -20,6 +21,14 @@ public class UniversityProfileGenerator {
 
   public static String createIdentificationNumber() {
     return Faker.instance().idNumber().valid();
+  }
+
+  public static String createCycle() {
+    return Faker.instance().educator().secondarySchool();
+  }
+
+  public static String createDegree() {
+    return Faker.instance().educator().campus();
   }
 
   public static String createProgram() {

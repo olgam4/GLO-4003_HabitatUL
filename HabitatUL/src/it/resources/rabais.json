@@ -1,3 +1,26 @@
 {
-  "PREFERENTIAL_PROGRAM": -0.15
+  "1er": {
+    "baccalaureat": [
+      {
+        "prog": "preferential",
+        "rabais": 5
+      }
+    ]
+  },
+  "2e": {
+    "maitrise": [
+      {
+        "prog": "preferential",
+        "rabais": 10
+      }
+    ]
+  },
+  "3e": {
+    "doctorat": [
+      {
+        "prog": "preferential",
+        "rabais": 15
+      }
+    ]
+  }
 }

@@ -29,14 +29,26 @@ public class PreferentialProgramFormulaPartTest {
   private static final Money PRICE_ADJUSTMENT = MoneyBuilder.aMoney().withAmount(10f).build();
   private static final Money SMALLER_PRICE_ADJUSTMENT =
       MoneyBuilder.aMoney().withAmount(5f).build();
+  private static final String CYCLE = Faker.instance().university().prefix();
+  private static final String DEGREE = Faker.instance().educator().campus();
   private static final String PROGRAM = Faker.instance().educator().course();
   private static final UniversityProfile FILLED_UNIVERSITY_PROFILE =
-      UniversityProfileBuilder.aUniversity().withProgram(PROGRAM).build();
+      UniversityProfileBuilder.aUniversity()
+          .withCycle(CYCLE)
+          .withDegree(DEGREE)
+          .withProgram(PROGRAM)
+          .build();
   private static final Identity IDENTITY =
       IdentityBuilder.anIdentity().withUniversityProfile(FILLED_UNIVERSITY_PROFILE).build();
-  private static final String ANOTHER_PROGRAM = Faker.instance().educator().campus();
+  private static final String ANOTHER_CYCLE = Faker.instance().university().suffix();
+  private static final String ANOTHER_DEGREE = Faker.instance().educator().university();
+  private static final String ANOTHER_PROGRAM = Faker.instance().educator().secondarySchool();
   private static final UniversityProfile ANOTHER_FILLED_UNIVERSITY_PROFILE =
-      UniversityProfileBuilder.aUniversity().withProgram(ANOTHER_PROGRAM).build();
+      UniversityProfileBuilder.aUniversity()
+          .withCycle(ANOTHER_CYCLE)
+          .withDegree(ANOTHER_DEGREE)
+          .withProgram(ANOTHER_PROGRAM)
+          .build();
   private static final Identity ANOTHER_IDENTITY =
       IdentityBuilder.anIdentity().withUniversityProfile(ANOTHER_FILLED_UNIVERSITY_PROFILE).build();
   private static final Identity IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE =
@@ -50,10 +62,11 @@ public class PreferentialProgramFormulaPartTest {
 
   @Before
   public void setUp() {
-    when(preferentialProgramAdjustmentProvider.getAdjustment(PROGRAM))
+    when(preferentialProgramAdjustmentProvider.getAdjustment(CYCLE, DEGREE, PROGRAM))
         .thenReturn(quotePriceAdjustment);
     when(quotePriceAdjustment.apply(any(Money.class))).thenReturn(PRICE_ADJUSTMENT);
-    when(preferentialProgramAdjustmentProvider.getAdjustment(ANOTHER_PROGRAM))
+    when(preferentialProgramAdjustmentProvider.getAdjustment(
+            ANOTHER_CYCLE, ANOTHER_DEGREE, ANOTHER_PROGRAM))
         .thenReturn(anotherQuotePriceAdjustment);
     when(anotherQuotePriceAdjustment.apply(any(Money.class))).thenReturn(SMALLER_PRICE_ADJUSTMENT);
     subject = new PreferentialProgramFormulaPart(preferentialProgramAdjustmentProvider);

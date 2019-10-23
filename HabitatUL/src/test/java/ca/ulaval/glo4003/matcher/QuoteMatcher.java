@@ -65,6 +65,7 @@ public class QuoteMatcher {
     return allOf(
         hasProperty("idul", equalTo(universityProfile.getIdul())),
         hasProperty("identificationNumber", equalTo(universityProfile.getNi())),
+        hasProperty("degree", equalTo(universityProfile.getDegree())),
         hasProperty("program", equalTo(universityProfile.getProgram())));
   }
 

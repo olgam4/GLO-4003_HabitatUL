@@ -165,6 +165,9 @@
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
                 <!-- Integration Tests - Response Schema -->
                 <directory>src/it/resources</directory>
             </resource>

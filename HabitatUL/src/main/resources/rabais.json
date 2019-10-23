@@ -1,3 +1,42 @@
 {
-  "PREFERENTIAL_PROGRAM": -0.15
+  "1er": {
+    "baccalaureat": [
+      {
+        "prog": "genie logiciel",
+        "rabais": 10
+      },
+      {
+        "prog": "genie civil",
+        "rabais": 1
+      },
+      {
+        "prog": "genie electrique",
+        "rabais": 2.5
+      },
+      {
+        "prog": "musique",
+        "rabais": 2
+      },
+      {
+        "prog": "actuariat",
+        "rabais": 25
+      }
+    ]
+  },
+  "2e": {
+    "maitrise": [
+      {
+        "prog": "informatique",
+        "rabais": 25
+      }
+    ]
+  },
+  "3e": {
+    "doctorat": [
+      {
+        "prog": "informatique",
+        "rabais": 15
+      }
+    ]
+  }
 }

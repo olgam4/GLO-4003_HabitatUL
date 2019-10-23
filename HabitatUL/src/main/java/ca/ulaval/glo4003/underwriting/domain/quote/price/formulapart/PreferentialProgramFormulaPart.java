@@ -51,8 +51,11 @@ public class PreferentialProgramFormulaPart implements QuotePriceFormulaPart {
   private Money computePriceAdjustmentAmount(UniversityProfile universityProfile, Money basePrice) {
     if (!universityProfile.isFilled()) return null;
 
+    String cycle = universityProfile.getCycle();
+    String degree = universityProfile.getDegree();
     String program = universityProfile.getProgram();
-    QuotePriceAdjustment adjustment = preferentialProgramAdjustmentProvider.getAdjustment(program);
+    QuotePriceAdjustment adjustment =
+        preferentialProgramAdjustmentProvider.getAdjustment(cycle, degree, program);
     return adjustment.apply(basePrice);
   }
 }

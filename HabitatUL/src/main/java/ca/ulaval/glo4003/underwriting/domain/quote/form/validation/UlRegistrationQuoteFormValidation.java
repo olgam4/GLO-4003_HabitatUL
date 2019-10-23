@@ -33,8 +33,11 @@ public class UlRegistrationQuoteFormValidation implements QuoteFormValidation {
     if (universityProfile.isFilled()) {
       String idul = universityProfile.getIdul();
       String identificationNumber = universityProfile.getIdentificationNumber();
+      String cycle = universityProfile.getCycle();
+      String degree = universityProfile.getDegree();
       String program = universityProfile.getProgram();
-      if (!ulRegistrarOffice.isValidRegistration(idul, identificationNumber, program)) {
+      if (!ulRegistrarOffice.isValidRegistration(
+          idul, identificationNumber, cycle, degree, program)) {
         throw new QuoteUniversityProfileError();
       }
     }

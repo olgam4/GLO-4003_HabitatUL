@@ -4,7 +4,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOf
 
 public class DummyUlRegistrarOffice implements UlRegistrarOffice {
   @Override
-  public boolean isValidRegistration(String idul, String identificationNumber, String program) {
+  public boolean isValidRegistration(
+      String idul, String identificationNumber, String cycle, String degree, String program) {
     return true;
   }
 }

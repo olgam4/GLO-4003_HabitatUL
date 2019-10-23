@@ -11,7 +11,7 @@ public class UniversityProfileTest {
 
   @Test
   public void checkingIfFormIsFilled_withUnfilledForm_shouldReturnFalse() {
-    subject = new UniversityProfile(null, null, null);
+    subject = new UniversityProfile(null, null, null, null, null);
 
     assertFalse(subject.isFilled());
   }

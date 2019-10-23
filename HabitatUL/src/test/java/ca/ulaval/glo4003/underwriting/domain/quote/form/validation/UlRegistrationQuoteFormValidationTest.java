@@ -38,11 +38,15 @@ public class UlRegistrationQuoteFormValidationTest {
     when(ulRegistrarOffice.isValidRegistration(
             VALID_UNIVERSITY_PROFILE.getIdul(),
             VALID_UNIVERSITY_PROFILE.getIdentificationNumber(),
+            VALID_UNIVERSITY_PROFILE.getCycle(),
+            VALID_UNIVERSITY_PROFILE.getDegree(),
             VALID_UNIVERSITY_PROFILE.getProgram()))
         .thenReturn(true);
     when(ulRegistrarOffice.isValidRegistration(
             INVALID_UNIVERSITY_PROFILE.getIdul(),
             INVALID_UNIVERSITY_PROFILE.getIdentificationNumber(),
+            INVALID_UNIVERSITY_PROFILE.getCycle(),
+            INVALID_UNIVERSITY_PROFILE.getDegree(),
             INVALID_UNIVERSITY_PROFILE.getProgram()))
         .thenReturn(false);
 

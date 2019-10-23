@@ -62,6 +62,8 @@ public class QuoteViewAssembler {
     return new UniversityProfile(
         universityProfileRequest.getIdul(),
         universityProfileRequest.getNi(),
+        universityProfileRequest.getCycle(),
+        universityProfileRequest.getDegree(),
         universityProfileRequest.getProgram());
   }
 
