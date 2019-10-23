@@ -96,9 +96,7 @@ public class QuoteMatcher {
 
   public static Matcher<CivilLiability> matchesCivilLiability(
       final Optional<CivilLiabilityRequest> civilLiabilityRequest) {
-    return allOf(
-        hasProperty(
-            "coverageAmount", equalTo(civilLiabilityRequest.get().getCoverageAmount().getValue())));
+    return allOf(hasProperty("limit", equalTo(civilLiabilityRequest.get().getLimit())));
   }
 
   public static Matcher<QuoteFormDto> matchesQuoteFormDto(final QuoteRequest quoteRequest) {

@@ -32,13 +32,13 @@ public class ErrorResponseFactory {
 
   private static void registerUnderwritingErrors() {
     STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(InvalidCivilLiabilityAmountError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidPreventionSystemError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidZipCodeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteCivilLiabilityError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteCivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteDifferentAdditionalInsuredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteEffectiveDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart;
 
+import ca.ulaval.glo4003.helper.MoneyBuilder;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 import static ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.AnimalsFormulaPart.MAXIMUM_ADJUSTMENT;
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class AnimalsFormulaPartTest {
   private static final Money BASE_PRICE = MoneyGenerator.create();
-  private static final Money PRICE_ADJUSTMENT = new Money(new Amount(BigDecimal.valueOf(0.001f)));
+  private static final Money PRICE_ADJUSTMENT = MoneyBuilder.aMoney().withAmount(0.01f).build();
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
   private static final Map<AnimalBreed, Integer> ANIMAL_COLLECTION =
       QUOTE_FORM.getPersonalProperty().getAnimals().getCollection();

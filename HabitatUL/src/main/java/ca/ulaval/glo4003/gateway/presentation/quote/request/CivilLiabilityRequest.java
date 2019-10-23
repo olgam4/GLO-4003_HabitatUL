@@ -1,17 +1,17 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 
 public class CivilLiabilityRequest {
-  private CivilLiabilityAmount coverageAmount;
+  private CivilLiabilityLimit limit;
 
   private CivilLiabilityRequest() {}
 
-  public CivilLiabilityRequest(CivilLiabilityAmount coverageAmount) {
-    this.coverageAmount = coverageAmount;
+  public CivilLiabilityRequest(CivilLiabilityLimit limit) {
+    this.limit = limit;
   }
 
-  public CivilLiabilityAmount getCoverageAmount() {
-    return coverageAmount;
+  public CivilLiabilityLimit getLimit() {
+    return limit;
   }
 }

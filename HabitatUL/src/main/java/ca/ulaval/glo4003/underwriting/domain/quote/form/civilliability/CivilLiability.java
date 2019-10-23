@@ -6,29 +6,29 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 public class CivilLiability extends ValueObject {
   public static final CivilLiability UNFILLED_CIVIL_LIABILITY = new CivilLiability(null);
 
-  static final int MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT = 25;
+  static final int MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT = 25;
 
-  private final CivilLiabilityAmount coverageAmount;
+  private final CivilLiabilityLimit limit;
 
-  public CivilLiability(CivilLiabilityAmount coverageAmount) {
-    this.coverageAmount = coverageAmount;
+  public CivilLiability(CivilLiabilityLimit limit) {
+    this.limit = limit;
   }
 
-  public CivilLiabilityAmount getCivilLiabilityAmount() {
-    return coverageAmount;
+  public CivilLiabilityLimit getLimit() {
+    return limit;
   }
 
   public Amount getCoverageAmount() {
-    return coverageAmount.getValue();
+    return limit.getValue();
   }
 
   public CivilLiability completeWithDefaultValues(int numberOfUnits) {
-    CivilLiabilityAmount newCoverageAmount = coverageAmount;
+    CivilLiabilityLimit newCoverageAmount = limit;
     if (!isFilled()) {
       newCoverageAmount =
           shouldUseHigherDefaultCivilLiability(numberOfUnits)
-              ? CivilLiabilityAmount.TWO_MILLION
-              : CivilLiabilityAmount.ONE_MILLION;
+              ? CivilLiabilityLimit.TWO_MILLION
+              : CivilLiabilityLimit.ONE_MILLION;
     }
     return new CivilLiability(newCoverageAmount);
   }
@@ -38,6 +38,6 @@ public class CivilLiability extends ValueObject {
   }
 
   private boolean shouldUseHigherDefaultCivilLiability(int numberOfUnits) {
-    return numberOfUnits >= MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT;
+    return numberOfUnits >= MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT;
   }
 }

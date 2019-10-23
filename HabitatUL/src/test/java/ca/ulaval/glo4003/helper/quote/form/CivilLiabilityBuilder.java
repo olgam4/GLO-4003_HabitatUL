@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 
-import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiabilityAmount;
+import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiabilityLimit;
 
 public class CivilLiabilityBuilder {
-  private static final CivilLiabilityAmount DEFAULT_AMOUNT = createCivilLiabilityAmount();
+  private static final CivilLiabilityLimit DEFAULT_AMOUNT = createCivilLiabilityLimit();
 
-  private CivilLiabilityAmount amount = DEFAULT_AMOUNT;
+  private CivilLiabilityLimit amount = DEFAULT_AMOUNT;
 
   private CivilLiabilityBuilder() {}
 
@@ -16,7 +16,7 @@ public class CivilLiabilityBuilder {
     return new CivilLiabilityBuilder();
   }
 
-  public CivilLiabilityBuilder withAmount(CivilLiabilityAmount amount) {
+  public CivilLiabilityBuilder withAmount(CivilLiabilityLimit amount) {
     this.amount = amount;
     return this;
   }

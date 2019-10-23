@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.AnimalsFormulaPart;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.CivilLiabilityLimitFormulaPart;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.PreferentialProgramFormulaPart;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart.RoommateFormulaPart;
 
@@ -22,6 +23,9 @@ public class QuotePriceCalculator {
   private static QuotePriceFormula assembleFormula() {
     QuotePriceFormula quotePriceFormula =
         new QuotePriceFormula(ServiceLocator.resolve(QuoteBasePriceCalculator.class));
+    quotePriceFormula.addFormulaPart(
+        new CivilLiabilityLimitFormulaPart(
+            ServiceLocator.resolve(CivilLiabilityLimitAdjustmentProvider.class)));
     quotePriceFormula.addFormulaPart(
         new AnimalsFormulaPart(ServiceLocator.resolve(AnimalsAdjustmentProvider.class)));
     quotePriceFormula.addFormulaPart(

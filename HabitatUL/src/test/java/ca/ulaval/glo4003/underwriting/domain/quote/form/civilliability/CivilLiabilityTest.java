@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT;
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT;
 import static org.junit.Assert.*;
 
 public class CivilLiabilityTest {
@@ -15,28 +15,28 @@ public class CivilLiabilityTest {
   @Test
   public void completingCivilLiability_withAmount_shouldUseProvidedAmount() {
     validateScenario(
-        CivilLiabilityAmount.ONE_MILLION,
-        CivilLiabilityAmount.ONE_MILLION,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT,
+        CivilLiabilityLimit.ONE_MILLION,
+        CivilLiabilityLimit.ONE_MILLION,
+        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT,
         Integer.MAX_VALUE);
     validateScenario(
-        CivilLiabilityAmount.TWO_MILLION,
-        CivilLiabilityAmount.TWO_MILLION,
+        CivilLiabilityLimit.TWO_MILLION,
+        CivilLiabilityLimit.TWO_MILLION,
         MIN_NUMBER_OF_UNITS,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT);
+        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT);
   }
 
   @Test
   public void completingCivilLiability_withoutAmount_shouldUseDefaultAmount() {
     validateScenario(
-        CivilLiabilityAmount.ONE_MILLION,
+        CivilLiabilityLimit.ONE_MILLION,
         null,
         MIN_NUMBER_OF_UNITS,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT);
+        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT);
     validateScenario(
-        CivilLiabilityAmount.TWO_MILLION,
+        CivilLiabilityLimit.TWO_MILLION,
         null,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT,
+        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT,
         Integer.MAX_VALUE);
   }
 
@@ -55,8 +55,8 @@ public class CivilLiabilityTest {
   }
 
   private void validateScenario(
-      CivilLiabilityAmount expectedAmount,
-      CivilLiabilityAmount initialAmount,
+      CivilLiabilityLimit expectedAmount,
+      CivilLiabilityLimit initialAmount,
       int minNumberOfUnits,
       int maxNumberOfUnits) {
     subject = new CivilLiability(initialAmount);
@@ -64,6 +64,6 @@ public class CivilLiabilityTest {
 
     CivilLiability civilLiability = subject.completeWithDefaultValues(numberOfUnits);
 
-    assertEquals(expectedAmount, civilLiability.getCivilLiabilityAmount());
+    assertEquals(expectedAmount, civilLiability.getLimit());
   }
 }

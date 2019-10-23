@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteCivilLiabilityError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteCivilLiabilityLimitError;
 
 import javax.ws.rs.core.Response;
 
-public class QuoteCivilLiabilityErrorMappingIT extends ErrorMappingIT {
+public class QuoteCivilLiabilityLimitErrorMappingIT extends ErrorMappingIT {
   @Override
   public Throwable getError() {
-    return new QuoteCivilLiabilityError();
+    return new QuoteCivilLiabilityLimitError();
   }
 
   @Override
@@ -18,11 +18,11 @@ public class QuoteCivilLiabilityErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorCodeMatcher() {
-    return "QUOTE_CIVIL_LIABILITY";
+    return "QUOTE_CIVIL_LIABILITY_LIMIT";
   }
 
   @Override
   public String getErrorMessageMatcher() {
-    return "sorry, the requested civil liability coverage amount is not allowed based on your risk exposure";
+    return "sorry, the requested civil liability limit is not allowed based on your risk exposure";
   }
 }

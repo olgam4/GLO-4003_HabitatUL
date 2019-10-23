@@ -13,6 +13,6 @@ public class QuoteFormTest {
   public void creatingQuoteForm_withUnfilledCivilLiability_shouldUseDefaultValue() {
     subject = QuoteFormBuilder.aQuoteForm().withCivilLiability(UNFILLED_CIVIL_LIABILITY).build();
 
-    assertNotNull(subject.getCivilLiability().getCivilLiabilityAmount());
+    assertNotNull(subject.getCivilLiability().getLimit());
   }
 }

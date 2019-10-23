@@ -14,7 +14,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
@@ -47,8 +47,7 @@ public class SerializationModule extends Module {
     SimpleDeserializers deserializers = new SimpleDeserializers();
     deserializers.addDeserializer(Amount.class, new AmountDeserializer());
     deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
-    deserializers.addDeserializer(
-        CivilLiabilityAmount.class, new CivilLiabilityAmountDeserializer());
+    deserializers.addDeserializer(CivilLiabilityLimit.class, new CivilLiabilityLimitDeserializer());
     deserializers.addDeserializer(Credentials.class, new CredentialsDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());

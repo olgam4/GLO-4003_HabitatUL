@@ -95,7 +95,7 @@ public class QuoteViewAssembler {
   }
 
   private CivilLiability fromCivilLiabilityRequest(CivilLiabilityRequest civilLiabilityRequest) {
-    return new CivilLiability(civilLiabilityRequest.getCoverageAmount());
+    return new CivilLiability(civilLiabilityRequest.getLimit());
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {
