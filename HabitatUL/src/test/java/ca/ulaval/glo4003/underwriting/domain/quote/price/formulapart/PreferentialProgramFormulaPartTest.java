@@ -18,45 +18,29 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PreferentialProgramFormulaPartTest {
-  private static final String NAMED_INSURED_PROGRAM = Faker.instance().educator().course();
-  private static final UniversityProfile NAMED_INSURED_UNIVERSITY_PROFILE =
-      UniversityProfileBuilder.aUniversity().withProgram(NAMED_INSURED_PROGRAM).build();
-  private static final Identity NAMED_INSURED_IDENTITY =
-      IdentityBuilder.anIdentity().withUniversityProfile(NAMED_INSURED_UNIVERSITY_PROFILE).build();
-  private static final String ADDITIONAL_INSURED_PROGRAM = Faker.instance().educator().campus();
-  private static final UniversityProfile ADDITIONAL_INSURED_UNIVERSITY_PROFILE =
-      UniversityProfileBuilder.aUniversity().withProgram(ADDITIONAL_INSURED_PROGRAM).build();
-  private static final Identity ADDITIONAL_INSURED_IDENTITY =
-      IdentityBuilder.anIdentity()
-          .withUniversityProfile(ADDITIONAL_INSURED_UNIVERSITY_PROFILE)
-          .build();
-  private static final Identity IDENTITY_WITHOUT_UNIVERSITY_PROFILE =
-      IdentityBuilder.anIdentity().withoutUniversityProfile().build();
-  private static final QuoteForm QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED =
-      QuoteFormBuilder.aQuoteForm()
-          .withPersonalInformation(NAMED_INSURED_IDENTITY)
-          .withoutAdditionalInsured()
-          .build();
-  private static final QuoteForm QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITHOUT_UNIVERSITY_PROFILE =
-      QuoteFormBuilder.aQuoteForm()
-          .withPersonalInformation(NAMED_INSURED_IDENTITY)
-          .withAdditionalInsured(IDENTITY_WITHOUT_UNIVERSITY_PROFILE)
-          .build();
-  private static final QuoteForm QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITH_UNIVERSITY_PROFILE =
-      QuoteFormBuilder.aQuoteForm()
-          .withPersonalInformation(NAMED_INSURED_IDENTITY)
-          .withAdditionalInsured(ADDITIONAL_INSURED_IDENTITY)
-          .build();
   private static final Money BASE_PRICE = MoneyGenerator.create();
   private static final Money PRICE_ADJUSTMENT = MoneyBuilder.aMoney().withAmount(10f).build();
   private static final Money SMALLER_PRICE_ADJUSTMENT =
       MoneyBuilder.aMoney().withAmount(5f).build();
+  private static final String PROGRAM = Faker.instance().educator().course();
+  private static final UniversityProfile FILLED_UNIVERSITY_PROFILE =
+      UniversityProfileBuilder.aUniversity().withProgram(PROGRAM).build();
+  private static final Identity IDENTITY =
+      IdentityBuilder.anIdentity().withUniversityProfile(FILLED_UNIVERSITY_PROFILE).build();
+  private static final String ANOTHER_PROGRAM = Faker.instance().educator().campus();
+  private static final UniversityProfile ANOTHER_FILLED_UNIVERSITY_PROFILE =
+      UniversityProfileBuilder.aUniversity().withProgram(ANOTHER_PROGRAM).build();
+  private static final Identity ANOTHER_IDENTITY =
+      IdentityBuilder.anIdentity().withUniversityProfile(ANOTHER_FILLED_UNIVERSITY_PROFILE).build();
+  private static final Identity IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE =
+      IdentityBuilder.anIdentity().withUniversityProfile(UNFILLED_UNIVERSITY_PROFILE).build();
 
   @Mock private PreferentialProgramAdjustmentProvider preferentialProgramAdjustmentProvider;
   @Mock private QuotePriceAdjustment quotePriceAdjustment;
@@ -66,93 +50,39 @@ public class PreferentialProgramFormulaPartTest {
 
   @Before
   public void setUp() {
-
-    when(preferentialProgramAdjustmentProvider.getAdjustment(NAMED_INSURED_PROGRAM))
+    when(preferentialProgramAdjustmentProvider.getAdjustment(PROGRAM))
         .thenReturn(quotePriceAdjustment);
     when(quotePriceAdjustment.apply(any(Money.class))).thenReturn(PRICE_ADJUSTMENT);
-    when(preferentialProgramAdjustmentProvider.getAdjustment(ADDITIONAL_INSURED_PROGRAM))
+    when(preferentialProgramAdjustmentProvider.getAdjustment(ANOTHER_PROGRAM))
         .thenReturn(anotherQuotePriceAdjustment);
     when(anotherQuotePriceAdjustment.apply(any(Money.class))).thenReturn(SMALLER_PRICE_ADJUSTMENT);
     subject = new PreferentialProgramFormulaPart(preferentialProgramAdjustmentProvider);
   }
 
   @Test
-  public void
-      computingFormulaPart_withoutAdditionalInsured_shouldGetPreferentialProgramAdjustments() {
-    subject.compute(QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED, BASE_PRICE);
-
-    verify(preferentialProgramAdjustmentProvider).getAdjustment(NAMED_INSURED_PROGRAM);
-    verify(preferentialProgramAdjustmentProvider, never())
-        .getAdjustment(ADDITIONAL_INSURED_PROGRAM);
+  public void computingFormulaPart_shouldComputeAdjustmentAmount() {
+    validateScenario(
+        IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
+        IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
+        Money.ZERO);
+    validateScenario(IDENTITY, IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE, PRICE_ADJUSTMENT);
+    validateScenario(IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE, IDENTITY, PRICE_ADJUSTMENT);
+    validateScenario(IDENTITY, ANOTHER_IDENTITY, SMALLER_PRICE_ADJUSTMENT);
+    validateScenario(ANOTHER_IDENTITY, IDENTITY, SMALLER_PRICE_ADJUSTMENT);
   }
 
-  @Test
-  public void computingFormulaPart_withoutAdditionalInsured_shouldComputeAdjustmentAmounts() {
-    subject.compute(QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED, BASE_PRICE);
+  private void validateScenario(
+      Identity namedInsuredIdentity,
+      Identity additionalInsuredIdentity,
+      Money expectedAdjustmentAmount) {
+    QuoteForm quoteForm =
+        QuoteFormBuilder.aQuoteForm()
+            .withPersonalInformation(namedInsuredIdentity)
+            .withAdditionalInsured(additionalInsuredIdentity)
+            .build();
 
-    verify(quotePriceAdjustment).apply(BASE_PRICE);
-    verify(anotherQuotePriceAdjustment, never()).apply(any());
-  }
+    Money adjustmentAmount = subject.compute(quoteForm, BASE_PRICE);
 
-  @Test
-  public void computingFormulaPart_withoutAdditionalInsured_shouldReturnAdjustmentAmount() {
-    Money adjustmentAmount = subject.compute(QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED, BASE_PRICE);
-
-    assertEquals(PRICE_ADJUSTMENT, adjustmentAmount);
-  }
-
-  @Test
-  public void
-      computingFormulaPart_withAdditionalInsuredWithoutUniversityProfile_shouldGetPreferentialProgramAdjustments() {
-    subject.compute(QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITHOUT_UNIVERSITY_PROFILE, BASE_PRICE);
-
-    verify(preferentialProgramAdjustmentProvider).getAdjustment(NAMED_INSURED_PROGRAM);
-    verify(preferentialProgramAdjustmentProvider, never())
-        .getAdjustment(ADDITIONAL_INSURED_PROGRAM);
-  }
-
-  @Test
-  public void
-      computingFormulaPart_withAdditionalInsuredWithoutUniversityProfile_shouldComputeAdjustmentAmounts() {
-    subject.compute(QUOTE_FORM_WITHOUT_ADDITIONAL_INSURED, BASE_PRICE);
-
-    verify(quotePriceAdjustment).apply(BASE_PRICE);
-    verify(anotherQuotePriceAdjustment, never()).apply(BASE_PRICE);
-  }
-
-  @Test
-  public void
-      computingFormulaPart_withAdditionalInsuredWithoutUniversityProfile_shouldReturnMinimumAdjustmentAmount() {
-    Money adjustmentAmount =
-        subject.compute(QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITHOUT_UNIVERSITY_PROFILE, BASE_PRICE);
-
-    assertEquals(PRICE_ADJUSTMENT, adjustmentAmount);
-  }
-
-  @Test
-  public void
-      computingFormulaPart_withAdditionalInsuredWithUniversityProfile_shouldGetPreferentialProgramAdjustments() {
-    subject.compute(QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITH_UNIVERSITY_PROFILE, BASE_PRICE);
-
-    verify(preferentialProgramAdjustmentProvider).getAdjustment(NAMED_INSURED_PROGRAM);
-    verify(preferentialProgramAdjustmentProvider).getAdjustment(ADDITIONAL_INSURED_PROGRAM);
-  }
-
-  @Test
-  public void
-      computingFormulaPart_withAdditionalInsuredWithUniversityProfile_shouldComputeAdjustmentAmounts() {
-    subject.compute(QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITH_UNIVERSITY_PROFILE, BASE_PRICE);
-
-    verify(quotePriceAdjustment).apply(BASE_PRICE);
-    verify(anotherQuotePriceAdjustment).apply(BASE_PRICE);
-  }
-
-  @Test
-  public void
-      computingFormulaPart_withAdditionalInsuredWithUniversityProfile_shouldReturnMinimumAdjustmentAmount() {
-    Money adjustmentAmount =
-        subject.compute(QUOTE_FORM_WITH_ADDITIONAL_INSURED_WITH_UNIVERSITY_PROFILE, BASE_PRICE);
-
-    assertEquals(SMALLER_PRICE_ADJUSTMENT, adjustmentAmount);
+    assertEquals(expectedAdjustmentAmount, adjustmentAmount);
   }
 }

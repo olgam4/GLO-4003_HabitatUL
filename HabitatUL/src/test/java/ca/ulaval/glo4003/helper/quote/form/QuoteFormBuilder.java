@@ -43,11 +43,6 @@ public class QuoteFormBuilder {
     return this;
   }
 
-  public QuoteFormBuilder withoutAdditionalInsured() {
-    this.additionalInsured = null;
-    return this;
-  }
-
   public QuoteFormBuilder withAdditionalInsured(Identity additionalInsured) {
     this.additionalInsured = additionalInsured;
     return this;

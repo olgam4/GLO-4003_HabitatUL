@@ -3,6 +3,9 @@ package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 public class UniversityProfile extends ValueObject {
+  public static final UniversityProfile UNFILLED_UNIVERSITY_PROFILE =
+      new UniversityProfile(null, null, null);
+
   private String idul;
   private String identificationNumber;
   private String program;
@@ -23,5 +26,9 @@ public class UniversityProfile extends ValueObject {
 
   public String getProgram() {
     return program;
+  }
+
+  public boolean isFilled() {
+    return !equals(UNFILLED_UNIVERSITY_PROFILE);
   }
 }

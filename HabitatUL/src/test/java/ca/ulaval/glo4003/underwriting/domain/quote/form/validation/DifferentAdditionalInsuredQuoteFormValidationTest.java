@@ -9,6 +9,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfi
 import org.junit.Before;
 import org.junit.Test;
 
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity.UNFILLED_IDENTITY;
+
 public class DifferentAdditionalInsuredQuoteFormValidationTest {
   private static final Identity NAMED_INSURED_IDENTITY = IdentityGenerator.createIdentity();
   private static final Identity DIFFERENT_IDENTITY = IdentityGenerator.createIdentity();
@@ -39,7 +41,7 @@ public class DifferentAdditionalInsuredQuoteFormValidationTest {
     QuoteForm quoteForm =
         QuoteFormBuilder.aQuoteForm()
             .withPersonalInformation(NAMED_INSURED_IDENTITY)
-            .withoutAdditionalInsured()
+            .withAdditionalInsured(UNFILLED_IDENTITY)
             .build();
 
     subject.validate(quoteForm);

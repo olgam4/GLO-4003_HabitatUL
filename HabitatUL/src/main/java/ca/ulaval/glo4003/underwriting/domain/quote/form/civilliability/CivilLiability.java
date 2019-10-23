@@ -1,11 +1,14 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability;
 
+import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-public class CivilLiability {
+public class CivilLiability extends ValueObject {
+  public static final CivilLiability UNFILLED_CIVIL_LIABILITY = new CivilLiability(null);
+
   static final int MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_AMOUNT = 25;
 
-  private CivilLiabilityAmount coverageAmount;
+  private final CivilLiabilityAmount coverageAmount;
 
   public CivilLiability(CivilLiabilityAmount coverageAmount) {
     this.coverageAmount = coverageAmount;
@@ -19,17 +22,19 @@ public class CivilLiability {
     return coverageAmount.getValue();
   }
 
-  public void completeWithDefaultValues(int numberOfUnits) {
-    if (shouldUseDefaultCivilLiabilityAmount()) {
-      coverageAmount =
+  public CivilLiability completeWithDefaultValues(int numberOfUnits) {
+    CivilLiabilityAmount newCoverageAmount = coverageAmount;
+    if (!isFilled()) {
+      newCoverageAmount =
           shouldUseHigherDefaultCivilLiability(numberOfUnits)
               ? CivilLiabilityAmount.TWO_MILLION
               : CivilLiabilityAmount.ONE_MILLION;
     }
+    return new CivilLiability(newCoverageAmount);
   }
 
-  private boolean shouldUseDefaultCivilLiabilityAmount() {
-    return coverageAmount == null;
+  public boolean isFilled() {
+    return !equals(UNFILLED_CIVIL_LIABILITY);
   }
 
   private boolean shouldUseHigherDefaultCivilLiability(int numberOfUnits) {

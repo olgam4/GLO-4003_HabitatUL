@@ -16,11 +16,6 @@ public class CivilLiabilityBuilder {
     return new CivilLiabilityBuilder();
   }
 
-  public CivilLiabilityBuilder withoutAmount() {
-    this.amount = null;
-    return this;
-  }
-
   public CivilLiabilityBuilder withAmount(CivilLiabilityAmount amount) {
     this.amount = amount;
     return this;

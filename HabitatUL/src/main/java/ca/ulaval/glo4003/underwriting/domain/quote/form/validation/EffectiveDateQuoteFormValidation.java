@@ -9,6 +9,7 @@ import java.time.Period;
 
 public class EffectiveDateQuoteFormValidation implements QuoteFormValidation {
   static final int NUMBER_OF_MONTHS_OF_COVERAGE = 12;
+
   private ClockProvider clockProvider;
 
   public EffectiveDateQuoteFormValidation(ClockProvider clockProvider) {

@@ -9,6 +9,6 @@ public class QuoteEffectiveDateError extends QuoteError {
   }
 
   public String getMessage() {
-    return String.format(MESSAGE);
+    return MESSAGE;
   }
 }

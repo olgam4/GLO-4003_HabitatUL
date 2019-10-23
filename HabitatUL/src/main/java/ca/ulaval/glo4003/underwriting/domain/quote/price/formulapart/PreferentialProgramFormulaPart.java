@@ -2,7 +2,6 @@ package ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart;
 
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
@@ -19,30 +18,40 @@ public class PreferentialProgramFormulaPart implements QuotePriceFormulaPart {
 
   @Override
   public Money compute(QuoteForm quoteForm, Money basePrice) {
-    Money namedInsuredBasedAdjustment =
+    Optional<Money> namedInsuredBasedAdjustment =
         computeNamedInsuredPriceAdjustmentAmount(quoteForm, basePrice);
     Optional<Money> additionalInsuredBasedAdjustment =
         computeAdditionalInsuredPriceAdjustmentAmount(quoteForm, basePrice);
-    return additionalInsuredBasedAdjustment
-        .map(x -> Money.min(namedInsuredBasedAdjustment, x))
-        .orElse(namedInsuredBasedAdjustment);
+
+    if (namedInsuredBasedAdjustment.isPresent() && additionalInsuredBasedAdjustment.isPresent()) {
+      return Money.min(namedInsuredBasedAdjustment.get(), additionalInsuredBasedAdjustment.get());
+    }
+
+    return namedInsuredBasedAdjustment.orElseGet(
+        () -> additionalInsuredBasedAdjustment.orElse(Money.ZERO));
   }
 
-  private Money computeNamedInsuredPriceAdjustmentAmount(QuoteForm quoteForm, Money basePrice) {
-    String program = quoteForm.getPersonalInformation().getUniversityProfile().getProgram();
-    return computePriceAdjustmentAmount(program, basePrice);
+  private Optional<Money> computeNamedInsuredPriceAdjustmentAmount(
+      QuoteForm quoteForm, Money basePrice) {
+    UniversityProfile namedInsuredUniversityProfile =
+        quoteForm.getPersonalInformation().getUniversityProfile();
+    Money adjustmentAmount = computePriceAdjustmentAmount(namedInsuredUniversityProfile, basePrice);
+    return Optional.ofNullable(adjustmentAmount);
   }
 
   private Optional<Money> computeAdditionalInsuredPriceAdjustmentAmount(
       QuoteForm quoteForm, Money basePrice) {
-    Optional<Identity> additionalInsured = Optional.ofNullable(quoteForm.getAdditionalInsured());
-    Optional<String> program =
-        additionalInsured.flatMap(
-            x -> Optional.ofNullable(x.getUniversityProfile()).map(UniversityProfile::getProgram));
-    return program.map(x -> computePriceAdjustmentAmount(x, basePrice));
+    UniversityProfile additionalInsuredUniversityProfile =
+        quoteForm.getAdditionalInsured().getUniversityProfile();
+    Money adjustmentAmount =
+        computePriceAdjustmentAmount(additionalInsuredUniversityProfile, basePrice);
+    return Optional.ofNullable(adjustmentAmount);
   }
 
-  private Money computePriceAdjustmentAmount(String program, Money basePrice) {
+  private Money computePriceAdjustmentAmount(UniversityProfile universityProfile, Money basePrice) {
+    if (!universityProfile.isFilled()) return null;
+
+    String program = universityProfile.getProgram();
     QuotePriceAdjustment adjustment = preferentialProgramAdjustmentProvider.getAdjustment(program);
     return adjustment.apply(basePrice);
   }

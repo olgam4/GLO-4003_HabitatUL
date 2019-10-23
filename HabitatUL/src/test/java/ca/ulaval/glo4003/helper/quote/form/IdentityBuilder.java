@@ -27,11 +27,6 @@ public class IdentityBuilder {
     return new IdentityBuilder();
   }
 
-  public IdentityBuilder withoutUniversityProfile() {
-    this.universityProfile = null;
-    return this;
-  }
-
   public IdentityBuilder withUniversityProfile(UniversityProfile universityProfile) {
     this.universityProfile = universityProfile;
     return this;

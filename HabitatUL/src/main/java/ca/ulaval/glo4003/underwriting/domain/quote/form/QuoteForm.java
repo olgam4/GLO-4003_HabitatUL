@@ -35,7 +35,7 @@ public class QuoteForm {
   }
 
   private void completeWithDefaultValues() {
-    civilLiability.completeWithDefaultValues(building.getNumberOfUnits());
+    civilLiability = civilLiability.completeWithDefaultValues(building.getNumberOfUnits());
   }
 
   public Identity getPersonalInformation() {

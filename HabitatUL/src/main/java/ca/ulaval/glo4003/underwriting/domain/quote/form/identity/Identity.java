@@ -4,6 +4,9 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
 public class Identity extends ValueObject {
+  public static final Identity UNFILLED_IDENTITY =
+      new Identity(null, null, null, null, UniversityProfile.UNFILLED_UNIVERSITY_PROFILE);
+
   private String firstName;
   private String lastName;
   private Date birthDate;
@@ -41,5 +44,9 @@ public class Identity extends ValueObject {
 
   public UniversityProfile getUniversityProfile() {
     return universityProfile;
+  }
+
+  public boolean isFilled() {
+    return !equals(UNFILLED_IDENTITY);
   }
 }

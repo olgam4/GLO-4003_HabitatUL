@@ -21,6 +21,7 @@ public class QuoteFormValidator {
 
   private static List<QuoteFormValidation> assembleValidations() {
     List<QuoteFormValidation> quoteFormValidations = new ArrayList<>();
+    quoteFormValidations.add(new StudentNamedInsuredQuoteFormValidation());
     quoteFormValidations.add(
         new EffectiveDateQuoteFormValidation(ServiceLocator.resolve(ClockProvider.class)));
     quoteFormValidations.add(new CivilLiabilityAmountQuoteFormValidation());

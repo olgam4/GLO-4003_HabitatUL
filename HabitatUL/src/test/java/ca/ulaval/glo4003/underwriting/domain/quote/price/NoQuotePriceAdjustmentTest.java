@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price;
 
 import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
 import org.junit.Before;
@@ -22,6 +21,6 @@ public class NoQuotePriceAdjustmentTest {
   public void applyingAdjustment_shouldReturnAdjustmentAmount() {
     Money adjustmentAmount = subject.apply(PRICE);
 
-    assertEquals(new Money(Amount.ZERO), adjustmentAmount);
+    assertEquals(Money.ZERO, adjustmentAmount);
   }
 }

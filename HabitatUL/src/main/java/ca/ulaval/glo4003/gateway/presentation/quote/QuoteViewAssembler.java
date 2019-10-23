@@ -13,7 +13,6 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityAmount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
@@ -21,6 +20,10 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 import java.util.Optional;
+
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity.UNFILLED_IDENTITY;
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
@@ -35,7 +38,7 @@ public class QuoteViewAssembler {
   }
 
   private Identity fromIdentityRequest(Optional<IdentityRequest> identityRequest) {
-    return identityRequest.map(this::fromIdentityRequest).orElse(null);
+    return identityRequest.map(this::fromIdentityRequest).orElse(UNFILLED_IDENTITY);
   }
 
   private Identity fromIdentityRequest(IdentityRequest identityRequest) {
@@ -49,12 +52,17 @@ public class QuoteViewAssembler {
 
   private UniversityProfile fromUniversityProfileRequest(
       Optional<UniversityProfileRequest> universityProfileRequest) {
-    String idul = universityProfileRequest.map(UniversityProfileRequest::getIdul).orElse(null);
-    String identificationNumber =
-        universityProfileRequest.map(UniversityProfileRequest::getNi).orElse(null);
-    String program =
-        universityProfileRequest.map(UniversityProfileRequest::getProgram).orElse(null);
-    return new UniversityProfile(idul, identificationNumber, program);
+    return universityProfileRequest
+        .map(this::fromUniversityProfileRequest)
+        .orElse(UNFILLED_UNIVERSITY_PROFILE);
+  }
+
+  private UniversityProfile fromUniversityProfileRequest(
+      UniversityProfileRequest universityProfileRequest) {
+    return new UniversityProfile(
+        universityProfileRequest.getIdul(),
+        universityProfileRequest.getNi(),
+        universityProfileRequest.getProgram());
   }
 
   private Location fromLocationRequest(LocationRequest locationRequest) {
@@ -81,9 +89,13 @@ public class QuoteViewAssembler {
 
   private CivilLiability fromCivilLiabilityRequest(
       Optional<CivilLiabilityRequest> civilLiabilityRequest) {
-    CivilLiabilityAmount coverageAmount =
-        civilLiabilityRequest.map(CivilLiabilityRequest::getCoverageAmount).orElse(null);
-    return new CivilLiability(coverageAmount);
+    return civilLiabilityRequest
+        .map(this::fromCivilLiabilityRequest)
+        .orElse(UNFILLED_CIVIL_LIABILITY);
+  }
+
+  private CivilLiability fromCivilLiabilityRequest(CivilLiabilityRequest civilLiabilityRequest) {
+    return new CivilLiability(civilLiabilityRequest.getCoverageAmount());
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {

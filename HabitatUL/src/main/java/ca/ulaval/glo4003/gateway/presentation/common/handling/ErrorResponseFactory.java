@@ -43,6 +43,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(QuoteEffectiveDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteNotFoundError.class, Status.NOT_FOUND);
+    STATUS_MAP.put(QuoteStudentNamedInsuredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteUniversityProfileError.class, Status.BAD_REQUEST);
   }
 

@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -25,8 +26,8 @@ public class UlRegistrationQuoteFormValidationTest {
       UniversityProfileGenerator.createUniversityProfile();
   private static final Identity IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE =
       IdentityBuilder.anIdentity().withUniversityProfile(INVALID_UNIVERSITY_PROFILE).build();
-  private static final Identity IDENTITY_WITHOUT_UNIVERSITY_PROFILE =
-      IdentityBuilder.anIdentity().withoutUniversityProfile().build();
+  private static final Identity IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE =
+      IdentityBuilder.anIdentity().withUniversityProfile(UNFILLED_UNIVERSITY_PROFILE).build();
 
   @Mock private UlRegistrarOffice ulRegistrarOffice;
 
@@ -49,60 +50,52 @@ public class UlRegistrationQuoteFormValidationTest {
   }
 
   @Test
-  public void
-      validatingUlRegistration_withValidUniversityProfileAndWithoutAdditionalInsured_shouldNotThrow() {
-    QuoteForm quoteForm =
-        QuoteFormBuilder.aQuoteForm()
-            .withPersonalInformation(IDENTITY_WITH_VALID_UNIVERSITY_PROFILE)
-            .withoutAdditionalInsured()
-            .build();
-
-    subject.validate(quoteForm);
+  public void validatingQuoteForm_withValidUniversityProfiles_shouldNotThrow() {
+    validateValidScenario(
+        IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE, IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE);
+    validateValidScenario(
+        IDENTITY_WITH_VALID_UNIVERSITY_PROFILE, IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE);
+    validateValidScenario(
+        IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE, IDENTITY_WITH_VALID_UNIVERSITY_PROFILE);
+    validateValidScenario(
+        IDENTITY_WITH_VALID_UNIVERSITY_PROFILE, IDENTITY_WITH_VALID_UNIVERSITY_PROFILE);
   }
 
   @Test(expected = QuoteUniversityProfileError.class)
-  public void
-      validatingUlRegistration_withInvalidUniversityProfileAndWithoutAdditionalInsured_shouldThrow() {
-    QuoteForm quoteForm =
-        QuoteFormBuilder.aQuoteForm()
-            .withPersonalInformation(IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE)
-            .withoutAdditionalInsured()
-            .build();
-
-    subject.validate(quoteForm);
-  }
-
-  @Test
-  public void
-      validatingUlRegistration_withValidUniversityProfileAndWithAdditionalInsuredWithoutUniversityProfile_shouldNotThrow() {
-    QuoteForm quoteForm =
-        QuoteFormBuilder.aQuoteForm()
-            .withPersonalInformation(IDENTITY_WITH_VALID_UNIVERSITY_PROFILE)
-            .withAdditionalInsured(IDENTITY_WITHOUT_UNIVERSITY_PROFILE)
-            .build();
-
-    subject.validate(quoteForm);
-  }
-
-  @Test
-  public void
-      validatingUlRegistration_withValidUniversityProfileAndWithAdditionalInsuredWithValidUniversityProfile_shouldNotThrow() {
-    QuoteForm quoteForm =
-        QuoteFormBuilder.aQuoteForm()
-            .withPersonalInformation(IDENTITY_WITH_VALID_UNIVERSITY_PROFILE)
-            .withAdditionalInsured(IDENTITY_WITH_VALID_UNIVERSITY_PROFILE)
-            .build();
-
-    subject.validate(quoteForm);
+  public void validatingQuoteForm_withNamedInsuredInvalidUniversityProfile_shouldThrow() {
+    validateInvalidScenario(
+        IDENTITY_WITH_VALID_UNIVERSITY_PROFILE, IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE);
   }
 
   @Test(expected = QuoteUniversityProfileError.class)
-  public void
-      validatingUlRegistration_withValidUniversityProfileAndWithAdditionalInsuredWithInvalidUniversityProfile_shouldThrow() {
+  public void validatingQuoteForm_withAdditionalInsuredInvalidUniversityProfile_shouldThrow() {
+    validateInvalidScenario(
+        IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE, IDENTITY_WITH_VALID_UNIVERSITY_PROFILE);
+  }
+
+  @Test(expected = QuoteUniversityProfileError.class)
+  public void validatingQuoteForm_withBothInvalidUniversityProfiles_shouldThrow() {
+    validateInvalidScenario(
+        IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE, IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE);
+  }
+
+  private void validateValidScenario(
+      Identity namedInsuredIdentity, Identity additionalInsuredIdentity) {
     QuoteForm quoteForm =
         QuoteFormBuilder.aQuoteForm()
-            .withPersonalInformation(IDENTITY_WITH_VALID_UNIVERSITY_PROFILE)
-            .withAdditionalInsured(IDENTITY_WITH_INVALID_UNIVERSITY_PROFILE)
+            .withPersonalInformation(namedInsuredIdentity)
+            .withAdditionalInsured(additionalInsuredIdentity)
+            .build();
+
+    subject.validate(quoteForm);
+  }
+
+  private void validateInvalidScenario(
+      Identity namedInsuredIdentity, Identity additionalInsuredIdentity) {
+    QuoteForm quoteForm =
+        QuoteFormBuilder.aQuoteForm()
+            .withPersonalInformation(namedInsuredIdentity)
+            .withAdditionalInsured(additionalInsuredIdentity)
             .build();
 
     subject.validate(quoteForm);

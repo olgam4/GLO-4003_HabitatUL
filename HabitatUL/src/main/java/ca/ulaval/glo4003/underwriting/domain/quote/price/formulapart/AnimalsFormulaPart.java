@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.price.formulapart;
 
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
@@ -26,7 +25,7 @@ public class AnimalsFormulaPart implements QuotePriceFormulaPart {
     Map<AnimalBreed, Integer> ownedAnimals =
         quoteForm.getPersonalProperty().getAnimals().getCollection();
 
-    Money totalAdjustment = new Money(Amount.ZERO);
+    Money totalAdjustment = Money.ZERO;
     for (Map.Entry<AnimalBreed, Integer> entry : ownedAnimals.entrySet()) {
       QuotePriceAdjustment adjustment =
           animalsAdjustmentProvider.getAdjustment(entry.getKey(), entry.getValue());

@@ -3,6 +3,8 @@ package ca.ulaval.glo4003.shared.domain.money;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 public class Money extends ValueObject {
+  public static final Money ZERO = new Money(Amount.ZERO);
+
   private Amount amount;
 
   public Money(Amount amount) {
