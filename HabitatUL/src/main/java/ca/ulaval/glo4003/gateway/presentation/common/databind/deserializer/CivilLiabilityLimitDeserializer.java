@@ -16,6 +16,8 @@ public class CivilLiabilityLimitDeserializer extends JsonDeserializer<CivilLiabi
       JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
     String value = node.textValue();
+    if (value == null) throw new InvalidCivilLiabilityLimitError(node.toString());
+
     return convertValueSafely(value);
   }
 

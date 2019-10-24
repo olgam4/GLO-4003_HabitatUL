@@ -50,7 +50,7 @@ public class JwtTokenTranslator implements TokenTranslator {
       String username = jwt.getClaim("username").asString();
       Instant expiration = Instant.ofEpochMilli(jwt.getClaim("expiration").asLong());
       return new TokenPayload(userKey, username, expiration);
-    } catch (JWTVerificationException exception) {
+    } catch (JWTVerificationException e) {
       throw new InvalidTokenSignatureError();
     }
   }

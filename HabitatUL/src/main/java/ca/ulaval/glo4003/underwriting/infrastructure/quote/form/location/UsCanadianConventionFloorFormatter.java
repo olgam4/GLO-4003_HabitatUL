@@ -44,7 +44,7 @@ public class UsCanadianConventionFloorFormatter implements FloorFormatter {
       String floorValue = value.substring(0, value.length() - HIGHER_FLOOR_ABBR.length());
       parsedFloorNumber = Integer.parseInt(floorValue);
       if (parsedFloorNumber <= 3) return Optional.empty();
-    } catch (NumberFormatException exception) {
+    } catch (NumberFormatException e) {
       return Optional.empty();
     }
 
@@ -58,7 +58,7 @@ public class UsCanadianConventionFloorFormatter implements FloorFormatter {
       String floorValue = value.substring(LOWER_FLOOR_ABBR.length());
       parsedFloorNumber = Integer.parseInt(floorValue);
       if (parsedFloorNumber < 1) return Optional.empty();
-    } catch (NumberFormatException exception) {
+    } catch (NumberFormatException e) {
       return Optional.empty();
     }
 

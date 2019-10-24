@@ -17,6 +17,8 @@ public class FloorDeserializer extends JsonDeserializer<Floor> {
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
     String value = node.textValue();
+    if (value == null) throw new InvalidFloorError(node.toString());
+
     return convertValueSafely(value);
   }
 
