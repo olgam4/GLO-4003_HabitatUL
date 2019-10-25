@@ -11,35 +11,33 @@ import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class Quote extends AggregateRoot {
-  static final int COVERAGE_PERIOD_IN_MONTHS = 12;
-
   private QuoteId quoteId;
-  private Money price;
   private QuoteForm quoteForm;
   private Period effectivePeriod;
+  private Money price;
   private DateTime expirationDate;
   private Boolean purchased;
   private ClockProvider clockProvider;
 
   public Quote(
       QuoteId quoteId,
-      Money price,
       QuoteForm quoteForm,
+      java.time.Period coveragePeriod,
+      Money price,
       DateTime expirationDate,
       Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
-    this.price = price;
     this.quoteForm = quoteForm;
+    this.effectivePeriod = computeEffectivePeriod(quoteForm, coveragePeriod);
+    this.price = price;
     this.expirationDate = expirationDate;
-    this.effectivePeriod = computeEffectivePeriod(quoteForm);
     this.purchased = purchased;
     this.clockProvider = clockProvider;
   }
 
-  private Period computeEffectivePeriod(QuoteForm quoteForm) {
+  private Period computeEffectivePeriod(QuoteForm quoteForm, java.time.Period coveragePeriod) {
     Date effectiveDate = quoteForm.getEffectiveDate();
-    java.time.Period coveragePeriod = java.time.Period.ofMonths(COVERAGE_PERIOD_IN_MONTHS);
     Date coverageEndDate = effectiveDate.plus(coveragePeriod);
     return new Period(effectiveDate, coverageEndDate);
   }

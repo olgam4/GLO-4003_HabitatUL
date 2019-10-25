@@ -22,13 +22,13 @@ public class CivilLiabilityLimitDeserializerIT {
       extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
+    public CivilLiabilityLimitValidTestCasesCustomDeserializerIT(Object value) {
+      super(value);
+    }
+
     @Parameterized.Parameters
     public static Collection parameters() {
       return Arrays.asList(new Object[][] {{VALID_VALUE}});
-    }
-
-    public CivilLiabilityLimitValidTestCasesCustomDeserializerIT(Object value) {
-      super(value);
     }
 
     @Override
@@ -42,6 +42,10 @@ public class CivilLiabilityLimitDeserializerIT {
       extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
+    public CivilLiabilityLimitInvalidTestCasesCustomDeserializerIT(Object value) {
+      super(value);
+    }
+
     @Parameterized.Parameters
     public static Collection parameters() {
       return Arrays.asList(
@@ -52,10 +56,6 @@ public class CivilLiabilityLimitDeserializerIT {
             {new JSONObject().put("test", VALID_VALUE).toString()},
             {new JSONArray().put(VALID_VALUE).toString()}
           });
-    }
-
-    public CivilLiabilityLimitInvalidTestCasesCustomDeserializerIT(Object value) {
-      super(value);
     }
 
     @Override

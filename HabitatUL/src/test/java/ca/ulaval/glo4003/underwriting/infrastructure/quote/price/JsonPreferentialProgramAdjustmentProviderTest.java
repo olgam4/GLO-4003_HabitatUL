@@ -53,8 +53,7 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
 
   @Test
   public void gettingAdjustment_shouldBeNormalized() {
-    validateScenario(
-        "1ER", BACHELOR, BACHELOR_PREFERENTIAL_PROGRAM, BACHELOR_ADJUSTMENT_VALUE);
+    validateScenario("1ER", BACHELOR, BACHELOR_PREFERENTIAL_PROGRAM, BACHELOR_ADJUSTMENT_VALUE);
     validateScenario(
         FIRST_CYCLE, "baCCalauréat", BACHELOR_PREFERENTIAL_PROGRAM, BACHELOR_ADJUSTMENT_VALUE);
     validateScenario(

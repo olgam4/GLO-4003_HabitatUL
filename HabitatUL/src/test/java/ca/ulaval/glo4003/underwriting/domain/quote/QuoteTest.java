@@ -26,8 +26,9 @@ public class QuoteTest {
   @Test
   public void creatingQuote_shouldComputeEffectivePeriod() {
     Date startDate = Date.from(LocalDate.now());
-    subject = QuoteGenerator.createValidQuoteWithEffectiveDate(startDate);
-    Date endDate = startDate.plus(java.time.Period.ofMonths(Quote.COVERAGE_PERIOD_IN_MONTHS));
+    java.time.Period period = java.time.Period.ofMonths(12);
+    subject = QuoteGenerator.createValidQuoteWithEffectiveDateAndCoveragePeriod(startDate, period);
+    Date endDate = startDate.plus(period);
 
     Period expected = new Period(startDate, endDate);
     assertEquals(expected, subject.getEffectivePeriod());

@@ -23,6 +23,14 @@ public abstract class CustomDeserializerIT {
     stopServer();
   }
 
+  public static String createSinglePropertyRequestBody(Object value) {
+    return createSinglePropertyRequestBody("value", value);
+  }
+
+  public static String createSinglePropertyRequestBody(String key, Object value) {
+    return new JSONObject().put(key, value).toString();
+  }
+
   @Before
   public void setUp() {
     ResourceConfig resourceConfig =
@@ -36,14 +44,6 @@ public abstract class CustomDeserializerIT {
   @After
   public void tearDown() {
     resetServer();
-  }
-
-  public static String createSinglePropertyRequestBody(Object value) {
-    return createSinglePropertyRequestBody("value", value);
-  }
-
-  public static String createSinglePropertyRequestBody(String key, Object value) {
-    return new JSONObject().put(key, value).toString();
   }
 
   public abstract Object createDeserializationResource();

@@ -17,10 +17,13 @@ import com.github.javafaker.Faker;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
 
 public class QuoteGenerator {
+  private static final java.time.Period COVERAGE_PERIOD = Period.ofMonths(12);
+
   private QuoteGenerator() {}
 
   public static QuoteDto createValidQuoteDto() {
@@ -36,16 +39,18 @@ public class QuoteGenerator {
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(quoteId, price, quoteForm, expirationDate, false, clockProvider);
+    return new Quote(
+        quoteId, quoteForm, COVERAGE_PERIOD, price, expirationDate, false, clockProvider);
   }
 
-  public static Quote createValidQuoteWithEffectiveDate(Date effectiveDate) {
+  public static Quote createValidQuoteWithEffectiveDateAndCoveragePeriod(
+      Date effectiveDate, Period period) {
     QuoteId quoteId = createQuoteId();
     Money price = MoneyGenerator.create();
     QuoteForm quoteForm = QuoteFormBuilder.aQuoteForm().withEffectiveDate(effectiveDate).build();
     DateTime expirationDate = createFutureDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(quoteId, price, quoteForm, expirationDate, false, clockProvider);
+    return new Quote(quoteId, quoteForm, period, price, expirationDate, false, clockProvider);
   }
 
   public static Quote createExpiredQuote() {
@@ -53,7 +58,8 @@ public class QuoteGenerator {
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(createQuoteId(), price, quoteForm, expirationDate, false, clockProvider);
+    return new Quote(
+        createQuoteId(), quoteForm, COVERAGE_PERIOD, price, expirationDate, false, clockProvider);
   }
 
   public static Quote createPurchasedQuote() {
@@ -61,7 +67,8 @@ public class QuoteGenerator {
     QuoteForm quoteForm = QuoteFormGenerator.createQuoteForm();
     DateTime expirationDate = createPastDate();
     ClockProvider clockProvider = new FixedClockProvider();
-    return new Quote(createQuoteId(), price, quoteForm, expirationDate, true, clockProvider);
+    return new Quote(
+        createQuoteId(), quoteForm, Period.ZERO, price, expirationDate, true, clockProvider);
   }
 
   private static QuoteId createQuoteId() {

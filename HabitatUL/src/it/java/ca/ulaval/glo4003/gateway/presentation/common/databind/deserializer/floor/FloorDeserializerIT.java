@@ -22,13 +22,13 @@ public class FloorDeserializerIT {
       extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
+    public ValidTestCasesFloorCustomDeserializerIT(Object value) {
+      super(value);
+    }
+
     @Parameterized.Parameters
     public static Collection parameters() {
       return Arrays.asList(new Object[][] {{VALID_VALUE}});
-    }
-
-    public ValidTestCasesFloorCustomDeserializerIT(Object value) {
-      super(value);
     }
 
     @Override
@@ -42,6 +42,10 @@ public class FloorDeserializerIT {
       extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
+    public InvalidTestCasesFloorCustomDeserializerIT(Object value) {
+      super(value);
+    }
+
     @Parameterized.Parameters
     public static Collection parameters() {
       return Arrays.asList(
@@ -52,10 +56,6 @@ public class FloorDeserializerIT {
             {new JSONObject().put("test", VALID_VALUE).toString()},
             {new JSONArray().put(VALID_VALUE).toString()}
           });
-    }
-
-    public InvalidTestCasesFloorCustomDeserializerIT(Object value) {
-      super(value);
     }
 
     @Override

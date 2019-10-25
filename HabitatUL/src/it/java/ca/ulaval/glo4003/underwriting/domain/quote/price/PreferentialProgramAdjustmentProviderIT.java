@@ -20,8 +20,7 @@ public abstract class PreferentialProgramAdjustmentProviderIT {
 
   @Test
   public void gettingAdjustment_shouldProvideAdjustment() {
-    QuotePriceAdjustment adjustment =
-        subject.getAdjustment(CYCLE, DEGREE, PROGRAM);
+    QuotePriceAdjustment adjustment = subject.getAdjustment(CYCLE, DEGREE, PROGRAM);
 
     assertNotNull(adjustment);
   }

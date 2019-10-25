@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -24,8 +25,10 @@ import static org.mockito.Mockito.when;
 public class QuoteFactoryTest {
   private static final Money A_PRICE = MoneyGenerator.create();
   private static final Duration VALIDITY_PERIOD = Duration.of(1, ChronoUnit.MINUTES);
+  private static final java.time.Period COVERAGE_PERIOD = Period.ofYears(1);
 
   @Mock private QuoteValidityPeriodProvider quoteValidityPeriodProvider;
+  @Mock private EffectivePeriodProvider effectivePeriodProvider;
 
   private QuoteFactory subject;
   private ClockProvider clockProvider;
@@ -33,8 +36,9 @@ public class QuoteFactoryTest {
   @Before
   public void setUp() {
     when(quoteValidityPeriodProvider.getQuoteValidityPeriod()).thenReturn(VALIDITY_PERIOD);
+    when(effectivePeriodProvider.getEffectivePeriod()).thenReturn(COVERAGE_PERIOD);
     clockProvider = new FixedClockProvider();
-    subject = new QuoteFactory(quoteValidityPeriodProvider, clockProvider);
+    subject = new QuoteFactory(effectivePeriodProvider, quoteValidityPeriodProvider, clockProvider);
   }
 
   @Test

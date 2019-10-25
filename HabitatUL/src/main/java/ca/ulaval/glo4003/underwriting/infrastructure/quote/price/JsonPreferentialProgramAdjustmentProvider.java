@@ -27,6 +27,16 @@ public class JsonPreferentialProgramAdjustmentProvider
     parseAdjustmentsFile(parsedAdjustments);
   }
 
+  private static String normalize(String value) {
+    String normalizedValue = Normalizer.normalize(value, Normalizer.Form.NFD);
+    return normalizedValue
+        .replaceAll("[^\\p{ASCII}]", "")
+        .replaceAll("\\W", " ")
+        .replaceAll("_", " ")
+        .replaceAll("\\s+", " ")
+        .toLowerCase();
+  }
+
   private void parseAdjustmentsFile(JSONObject parsedAdjustments) {
     parsedAdjustments
         .keys()
@@ -76,15 +86,5 @@ public class JsonPreferentialProgramAdjustmentProvider
     Map<String, QuotePriceAdjustment> programMap =
         degreeMap.getOrDefault(normalizedDegree, new HashMap<>());
     return programMap.getOrDefault(normalizedProgram, new NoQuotePriceAdjustment());
-  }
-
-  private static String normalize(String value) {
-    String normalizedValue = Normalizer.normalize(value, Normalizer.Form.NFD);
-    return normalizedValue
-        .replaceAll("[^\\p{ASCII}]", "")
-        .replaceAll("\\W", " ")
-        .replaceAll("_", " ")
-        .replaceAll("\\s+", " ")
-        .toLowerCase();
   }
 }
