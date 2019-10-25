@@ -1,38 +1,44 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
+import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-import static ca.ulaval.glo4003.underwriting.domain.quote.form.validation.EffectiveDateQuoteFormValidation.NUMBER_OF_MONTHS_OF_COVERAGE;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class EffectiveDateQuoteFormValidationTest {
-  private static final ClockProvider clockProvider = new FixedClockProvider();
-  private static final LocalDate NOW = LocalDate.now(clockProvider.getClock());
-  private static final Date VALID_EFFECTIVE_DATE = Date.from(NOW);
-  private static final int RANDOM_NUMBER_YEARS = Faker.instance().number().randomDigitNotZero();
-  private static final LocalDate PAST_DATE =
-      NOW.minus(Period.ofMonths(NUMBER_OF_MONTHS_OF_COVERAGE + RANDOM_NUMBER_YEARS));
-  private static final Date INVALID_PAST_EFFECTIVE_DATE = Date.from(PAST_DATE);
-  private static final LocalDate FUTURE_DATE =
-      NOW.plus(Period.ofMonths(NUMBER_OF_MONTHS_OF_COVERAGE + RANDOM_NUMBER_YEARS));
-  private static final Date INVALID_FUTURE_EFFECTIVE_DATE = Date.from(FUTURE_DATE);
+  private static final ClockProvider CLOCK_PROVIDER = new FixedClockProvider();
+  private static final Date VALID_EFFECTIVE_DATE =
+      Date.from(LocalDate.now(CLOCK_PROVIDER.getClock()));
+  private static final Period EFFECTIVE_PERIOD = TemporalGenerator.createJavaTimePeriod();
+  private static final Date INVALID_PAST_EFFECTIVE_DATE =
+      TemporalGenerator.createDateBefore(VALID_EFFECTIVE_DATE);
+  private static final Date INVALID_FUTURE_EFFECTIVE_DATE =
+      TemporalGenerator.createDateAfter(VALID_EFFECTIVE_DATE.plus(EFFECTIVE_PERIOD));
+
+  @Mock private QuoteEffectivePeriodProvider quoteEffectivePeriodProvider;
 
   private EffectiveDateQuoteFormValidation subject;
   private QuoteForm quoteForm;
 
   @Before
   public void setUp() {
-    subject = new EffectiveDateQuoteFormValidation(clockProvider);
+    when(quoteEffectivePeriodProvider.getQuoteEffectivePeriod()).thenReturn(EFFECTIVE_PERIOD);
+    subject = new EffectiveDateQuoteFormValidation(quoteEffectivePeriodProvider, CLOCK_PROVIDER);
   }
 
   @Test

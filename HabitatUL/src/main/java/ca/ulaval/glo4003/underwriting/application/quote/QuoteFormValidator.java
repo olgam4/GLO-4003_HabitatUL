@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.*;
 
@@ -23,7 +24,9 @@ public class QuoteFormValidator {
     List<QuoteFormValidation> quoteFormValidations = new ArrayList<>();
     quoteFormValidations.add(new StudentNamedInsuredQuoteFormValidation());
     quoteFormValidations.add(
-        new EffectiveDateQuoteFormValidation(ServiceLocator.resolve(ClockProvider.class)));
+        new EffectiveDateQuoteFormValidation(
+            ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
+            ServiceLocator.resolve(ClockProvider.class)));
     quoteFormValidations.add(new CivilLiabilityLimitQuoteFormValidation());
     quoteFormValidations.add(new DifferentAdditionalInsuredQuoteFormValidation());
     quoteFormValidations.add(
