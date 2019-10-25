@@ -27,7 +27,8 @@ public abstract class PasswordValidatorIT {
   }
 
   @Test
-  public void validatingPassword_withoutPassword_shouldNotValidate() throws InvalidPasswordException {
+  public void validatingPassword_withoutPassword_shouldNotValidate()
+      throws InvalidPasswordException {
     subject.registerPassword(USER_KEY, PASSWORD);
 
     assertFalse(subject.validatePassword(USER_KEY, null));

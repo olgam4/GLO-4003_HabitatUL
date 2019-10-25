@@ -30,8 +30,8 @@ public class PolicyAppServiceTest {
 
   @Before
   public void setUp() {
-    policyCreationRequestedEvent = PolicyGenerator.createQuotePurchasedDto();
-    when(policyFactory.create(any())).thenReturn(policy);
+    policyCreationRequestedEvent = PolicyGenerator.createPolicyCreationRequestedEvent();
+    when(policyFactory.create(any(), any(), any())).thenReturn(policy);
     subject = new PolicyAppService(policyFactory, policyRepository, claimFactory, claimRepository);
   }
 

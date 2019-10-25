@@ -23,7 +23,8 @@ public abstract class TokenTranslatorIT {
   }
 
   @Test
-  public void decodingToken_withValidToken_shouldRetrieveEncodedToken() throws InvalidTokenSignatureException {
+  public void decodingToken_withValidToken_shouldRetrieveEncodedToken()
+      throws InvalidTokenSignatureException {
     Token token = subject.encodeToken(TOKEN_PAYLOAD);
 
     TokenPayload tokenPayload = subject.decodeToken(token);

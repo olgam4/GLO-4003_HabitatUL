@@ -13,41 +13,31 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 public class Quote extends AggregateRoot {
   private QuoteId quoteId;
   private QuoteForm quoteForm;
+  private DateTime expirationDate;
   private Period effectivePeriod;
   private Money price;
-  private DateTime expirationDate;
   private Boolean purchased;
   private ClockProvider clockProvider;
 
   public Quote(
       QuoteId quoteId,
       QuoteForm quoteForm,
-      java.time.Period coveragePeriod,
-      Money price,
       DateTime expirationDate,
+      Period effectivePeriod,
+      Money price,
       Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
     this.quoteForm = quoteForm;
-    this.effectivePeriod = computeEffectivePeriod(quoteForm, coveragePeriod);
-    this.price = price;
     this.expirationDate = expirationDate;
+    this.effectivePeriod = effectivePeriod;
+    this.price = price;
     this.purchased = purchased;
     this.clockProvider = clockProvider;
   }
 
-  private Period computeEffectivePeriod(QuoteForm quoteForm, java.time.Period coveragePeriod) {
-    Date effectiveDate = quoteForm.getEffectiveDate();
-    Date coverageEndDate = effectiveDate.plus(coveragePeriod);
-    return new Period(effectiveDate, coverageEndDate);
-  }
-
   public QuoteId getQuoteId() {
     return quoteId;
-  }
-
-  public Money getPrice() {
-    return price;
   }
 
   public QuoteForm getQuoteForm() {
@@ -62,6 +52,18 @@ public class Quote extends AggregateRoot {
     return effectivePeriod;
   }
 
+  public Money getPrice() {
+    return price;
+  }
+
+  public boolean isExpired() {
+    return DateTime.now(clockProvider.getClock()).isAfter(expirationDate);
+  }
+
+  public boolean isPurchased() {
+    return purchased;
+  }
+
   public void purchase() {
     if (isPurchased()) throw new QuoteAlreadyPurchasedError(quoteId);
     if (isExpired()) throw new QuoteExpiredError(quoteId);
@@ -71,14 +73,7 @@ public class Quote extends AggregateRoot {
   }
 
   private void registerQuotePurchaseEvent() {
-    registerEvent(new QuotePurchasedEvent(quoteId, price, quoteForm));
-  }
-
-  public boolean isPurchased() {
-    return purchased;
-  }
-
-  public boolean isExpired() {
-    return DateTime.now(clockProvider.getClock()).isAfter(expirationDate);
+    Date now = Date.now(clockProvider.getClock());
+    registerEvent(new QuotePurchasedEvent(quoteId, quoteForm, effectivePeriod, price, now));
   }
 }

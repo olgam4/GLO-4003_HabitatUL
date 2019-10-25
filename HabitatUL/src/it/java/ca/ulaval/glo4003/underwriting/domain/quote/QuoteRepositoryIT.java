@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
+import ca.ulaval.glo4003.helper.quote.QuoteBuilder;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
@@ -17,7 +18,7 @@ public abstract class QuoteRepositoryIT {
   @Before
   public void setUp() {
     subject = createSubject();
-    quote = QuoteGenerator.createValidQuote();
+    quote = QuoteGenerator.createQuote();
     quoteId = quote.getQuoteId();
   }
 
@@ -46,7 +47,7 @@ public abstract class QuoteRepositoryIT {
       throws QuoteNotFoundException, QuoteAlreadyCreatedException {
     subject.create(quote);
 
-    Quote updatedQuote = QuoteGenerator.createValidQuoteWithId(quoteId);
+    Quote updatedQuote = QuoteBuilder.aQuote().withId(quoteId).build();
     subject.update(updatedQuote);
 
     assertThat(subject.getById(quoteId), matchesQuote(updatedQuote));

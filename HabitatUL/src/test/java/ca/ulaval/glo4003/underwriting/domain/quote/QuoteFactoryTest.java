@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
-import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +14,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,36 +21,36 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteFactoryTest {
-  private static final Money A_PRICE = MoneyGenerator.create();
-  private static final Duration VALIDITY_PERIOD = Duration.of(1, ChronoUnit.MINUTES);
-  private static final java.time.Period COVERAGE_PERIOD = Period.ofYears(1);
+  private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
+  private static final Money PRICE = MoneyGenerator.create();
+  private static final Duration VALIDITY_PERIOD = TemporalGenerator.createDuration();
+  private static final java.time.Period COVERAGE_PERIOD = TemporalGenerator.createJavaTimePeriod();
 
   @Mock private QuoteValidityPeriodProvider quoteValidityPeriodProvider;
-  @Mock private EffectivePeriodProvider effectivePeriodProvider;
+  @Mock private QuoteEffectivePeriodProvider quoteEffectivePeriodProvider;
 
   private QuoteFactory subject;
-  private ClockProvider clockProvider;
 
   @Before
   public void setUp() {
     when(quoteValidityPeriodProvider.getQuoteValidityPeriod()).thenReturn(VALIDITY_PERIOD);
-    when(effectivePeriodProvider.getEffectivePeriod()).thenReturn(COVERAGE_PERIOD);
-    clockProvider = new FixedClockProvider();
-    subject = new QuoteFactory(effectivePeriodProvider, quoteValidityPeriodProvider, clockProvider);
+    when(quoteEffectivePeriodProvider.getQuoteEffectivePeriod()).thenReturn(COVERAGE_PERIOD);
+    subject =
+        new QuoteFactory(quoteValidityPeriodProvider, quoteEffectivePeriodProvider, CLOCK_PROVIDER);
   }
 
   @Test
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
-    Quote quote = subject.create(A_PRICE, QuoteFormGenerator.createQuoteForm());
+    Quote quote = subject.create(PRICE, QuoteFormGenerator.createQuoteForm());
 
     DateTime expectedExpirationDate =
-        DateTime.from(LocalDateTime.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
+        DateTime.from(LocalDateTime.now(CLOCK_PROVIDER.getClock()).plus(VALIDITY_PERIOD));
     assertEquals(expectedExpirationDate, quote.getExpirationDate());
   }
 
   @Test
   public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(A_PRICE, QuoteFormGenerator.createQuoteForm());
+    Quote quote = subject.create(PRICE, QuoteFormGenerator.createQuoteForm());
 
     assertFalse(quote.isPurchased());
   }

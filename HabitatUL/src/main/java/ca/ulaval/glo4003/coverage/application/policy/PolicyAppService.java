@@ -38,7 +38,11 @@ public class PolicyAppService {
   }
 
   public void issuePolicy(PolicyCreationRequestedEvent policyCreationRequestedEvent) {
-    Policy policy = policyFactory.create(policyCreationRequestedEvent.getQuoteKey());
+    Policy policy =
+        policyFactory.create(
+            policyCreationRequestedEvent.getQuoteKey(),
+            policyCreationRequestedEvent.getCoveragePeriod(),
+            policyCreationRequestedEvent.getPurchaseDate());
     policy.issue();
     policyRepository.create(policy);
   }

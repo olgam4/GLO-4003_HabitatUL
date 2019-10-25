@@ -40,7 +40,7 @@ public class QuoteResourceTest {
   public void setUp() {
     quoteRequest = QuoteFormGenerator.createQuoteRequest();
     quoteViewAssembler = new QuoteViewAssembler();
-    quoteDto = QuoteGenerator.createValidQuoteDto();
+    quoteDto = QuoteGenerator.createQuoteDto();
     subject = new QuoteResource(quoteAppService, quoteViewAssembler, userAppService);
     when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
   }

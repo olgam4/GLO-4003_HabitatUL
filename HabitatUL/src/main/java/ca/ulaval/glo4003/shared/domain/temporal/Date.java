@@ -21,6 +21,14 @@ public class Date extends ValueObject {
     return new Date(value);
   }
 
+  public static Date earliest(Date firstDate, Date secondDate) {
+    return firstDate.isBefore(secondDate) ? firstDate : secondDate;
+  }
+
+  public static Date latest(Date firstDate, Date secondDate) {
+    return firstDate.isAfter(secondDate) ? firstDate : secondDate;
+  }
+
   public LocalDate getValue() {
     return value;
   }

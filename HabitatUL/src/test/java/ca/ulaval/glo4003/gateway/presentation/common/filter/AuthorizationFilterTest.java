@@ -69,7 +69,8 @@ public class AuthorizationFilterTest {
   }
 
   @Test(expected = UnauthorizedError.class)
-  public void filteringRequest_withSecuredRouteAndInvalidToken_shouldThrow() throws InvalidTokenSignatureException {
+  public void filteringRequest_withSecuredRouteAndInvalidToken_shouldThrow()
+      throws InvalidTokenSignatureException {
     when(tokenTranslator.decodeToken(any())).thenThrow(new InvalidTokenSignatureException());
 
     subject.filter(requestContext);

@@ -1,30 +1,35 @@
 package ca.ulaval.glo4003.shared.domain;
 
+import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
+@RunWith(Enclosed.class)
 public class DateTest {
+  private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
   private static final LocalDate BEFORE_DATE_VALUE = LocalDate.now().minusDays(2);
   private static final Date BEFORE_DATE = Date.from(BEFORE_DATE_VALUE);
   private static final LocalDate AFTER_DATE_VALUE = LocalDate.now().plusDays(2);
   private static final Date AFTER_DATE = Date.from(AFTER_DATE_VALUE);
 
   private Date subject;
-  private ClockProvider clockProvider;
 
   @Before
   public void setUp() {
-    clockProvider = new FixedClockProvider();
-    subject = Date.now(clockProvider.getClock());
+    subject = Date.now(CLOCK_PROVIDER.getClock());
   }
 
   @Test
@@ -67,5 +72,63 @@ public class DateTest {
 
     Date expected = Date.from(AFTER_DATE_VALUE.minus(period));
     assertEquals(expected, observed);
+  }
+
+  @RunWith(Parameterized.class)
+  public static class gettingEarliestDateBetweenTwoDates {
+    private Date firstDate;
+    private Date secondDate;
+    private Date expectedDate;
+
+    public gettingEarliestDateBetweenTwoDates(Date firstDate, Date secondDate, Date expectedDate) {
+      this.firstDate = firstDate;
+      this.secondDate = secondDate;
+      this.expectedDate = expectedDate;
+    }
+
+    @Parameterized.Parameters
+    public static Collection parameters() {
+      return Arrays.asList(
+          new Object[][] {
+            {BEFORE_DATE, AFTER_DATE, BEFORE_DATE},
+            {AFTER_DATE, BEFORE_DATE, BEFORE_DATE}
+          });
+    }
+
+    @Test
+    public void gettingEarliestDateBetweenTwoDates_shouldReturnEarliestDate() {
+      Date earliestDate = Date.earliest(firstDate, secondDate);
+
+      assertEquals(expectedDate, earliestDate);
+    }
+  }
+
+  @RunWith(Parameterized.class)
+  public static class gettingLatestDateBetweenTwoDates {
+    private Date firstDate;
+    private Date secondDate;
+    private Date expectedDate;
+
+    public gettingLatestDateBetweenTwoDates(Date firstDate, Date secondDate, Date expectedDate) {
+      this.firstDate = firstDate;
+      this.secondDate = secondDate;
+      this.expectedDate = expectedDate;
+    }
+
+    @Parameterized.Parameters
+    public static Collection parameters() {
+      return Arrays.asList(
+          new Object[][] {
+            {BEFORE_DATE, AFTER_DATE, AFTER_DATE},
+            {AFTER_DATE, BEFORE_DATE, AFTER_DATE}
+          });
+    }
+
+    @Test
+    public void gettingLatestDateBetweenTwoDates_shouldReturnLatestDate() {
+      Date latestDate = Date.latest(firstDate, secondDate);
+
+      assertEquals(expectedDate, latestDate);
+    }
   }
 }

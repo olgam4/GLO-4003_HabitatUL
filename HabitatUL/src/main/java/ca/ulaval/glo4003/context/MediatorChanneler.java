@@ -19,7 +19,11 @@ class MediatorChanneler {
     mediator.addChannel(
         QuotePurchasedEvent.class,
         PolicyCreationRequestedEvent.class,
-        event -> new PolicyCreationRequestedEvent(event.getQuoteId().toRepresentation()));
+        event ->
+            new PolicyCreationRequestedEvent(
+                event.getQuoteId().toRepresentation(),
+                event.getEffectivePeriod(),
+                event.getPurchaseDate()));
 
     mediator.addChannel(
         PolicyIssuedEvent.class,

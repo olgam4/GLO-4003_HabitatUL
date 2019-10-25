@@ -25,8 +25,8 @@ public class QuoteAppService {
         new QuoteFormValidator(),
         new QuotePriceCalculator(),
         new QuoteFactory(
-            ServiceLocator.resolve(EffectivePeriodProvider.class),
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
+            ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
             ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(QuoteRepository.class));
   }

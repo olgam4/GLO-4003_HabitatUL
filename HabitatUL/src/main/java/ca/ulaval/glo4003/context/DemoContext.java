@@ -31,12 +31,12 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
 import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.EffectivePeriodProvider;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.*;
-import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedEffectivePeriodProvider;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.*;
@@ -111,7 +111,7 @@ public class DemoContext implements Context {
   private void registerUnderwritingServices() {
     Money hardCodedPrice = new Money(new Amount(BigDecimal.valueOf(200)));
     ServiceLocator.register(
-        EffectivePeriodProvider.class, new ConfigBasedEffectivePeriodProvider());
+        QuoteEffectivePeriodProvider.class, new ConfigBasedQuoteEffectivePeriodProvider());
     ServiceLocator.register(
         QuoteValidityPeriodProvider.class, new ConfigBasedQuoteValidityPeriodProvider());
     ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());

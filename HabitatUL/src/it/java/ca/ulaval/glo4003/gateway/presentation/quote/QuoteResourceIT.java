@@ -43,7 +43,7 @@ public class QuoteResourceIT {
   public void setUp() {
     QuoteResource quoteResource =
         new QuoteResource(quoteAppService, new QuoteViewAssembler(), userAppService);
-    quoteDto = QuoteGenerator.createValidQuoteDto();
+    quoteDto = QuoteGenerator.createQuoteDto();
     when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
     registerResource(quoteResource);
   }

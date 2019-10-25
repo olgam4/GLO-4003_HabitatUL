@@ -63,7 +63,7 @@ public class EventPublisherQuoteRepositoryDecoratorTest {
 
   @Test
   public void updatingQuote_shouldDelegateToQuoteRepository() throws QuoteNotFoundException {
-    Quote quote = QuoteGenerator.createValidQuote();
+    Quote quote = QuoteGenerator.createQuote();
 
     subject.update(quote);
 
