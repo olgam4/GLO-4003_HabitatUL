@@ -10,6 +10,7 @@ import ca.ulaval.glo4003.gateway.presentation.claim.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.policy.response.PoliciesResponse;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -56,7 +57,7 @@ public class PolicyResource {
   public Response claim(
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
-      ClaimRequest claimRequest) {
+      @Valid ClaimRequest claimRequest) {
     ClaimCreationDto claimCreationDto = claimViewAssembler.from(claimRequest);
     ClaimId claimId = policyAppService.openClaim(policyId, claimCreationDto);
     URI location =

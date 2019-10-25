@@ -10,15 +10,16 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class FloorDeserializer extends JsonDeserializer<Floor> {
   @Override
   public Floor deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    String value = node.textValue();
-    if (value == null) throw new InvalidFloorError(node.toString());
-
+    String value =
+        Optional.ofNullable(node.textValue())
+            .orElseThrow(() -> new InvalidFloorError(node.toString()));
     return convertValueSafely(value);
   }
 
