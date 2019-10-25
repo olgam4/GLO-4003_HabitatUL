@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.administration.domain.user;
 
-import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordError;
+import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -21,13 +21,13 @@ public abstract class PasswordValidatorIT {
     subject = createSubject();
   }
 
-  @Test(expected = InvalidPasswordError.class)
-  public void registeringPassword_withoutPassword_shouldThrow() {
+  @Test(expected = InvalidPasswordException.class)
+  public void registeringPassword_withoutPassword_shouldThrow() throws InvalidPasswordException {
     subject.registerPassword(USER_KEY, null);
   }
 
   @Test
-  public void validatingPassword_withoutPassword_shouldNotValidate() {
+  public void validatingPassword_withoutPassword_shouldNotValidate() throws InvalidPasswordException {
     subject.registerPassword(USER_KEY, PASSWORD);
 
     assertFalse(subject.validatePassword(USER_KEY, null));
@@ -39,14 +39,16 @@ public abstract class PasswordValidatorIT {
   }
 
   @Test
-  public void validatingPassword_withRegisteredUserKeyAndValidPassword_shouldValidate() {
+  public void validatingPassword_withRegisteredUserKeyAndValidPassword_shouldValidate()
+      throws InvalidPasswordException {
     subject.registerPassword(USER_KEY, PASSWORD);
 
     assertTrue(subject.validatePassword(USER_KEY, PASSWORD));
   }
 
   @Test
-  public void validatingPassword_withRegisteredUserKeyAndInvalidPassword_shouldNotValidate() {
+  public void validatingPassword_withRegisteredUserKeyAndInvalidPassword_shouldNotValidate()
+      throws InvalidPasswordException {
     subject.registerPassword(USER_KEY, PASSWORD);
 
     assertFalse(subject.validatePassword(USER_KEY, INVALID_PASSWORD));

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.administration.domain.user;
 
-import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

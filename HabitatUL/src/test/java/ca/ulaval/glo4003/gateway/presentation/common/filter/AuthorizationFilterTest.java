@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.common.filter;
 
 import ca.ulaval.glo4003.administration.application.user.AccessController;
-import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
-import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureError;
+import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -41,7 +41,7 @@ public class AuthorizationFilterTest {
   private AuthorizationFilter subject;
 
   @Before
-  public void setUp() {
+  public void setUp() throws InvalidTokenSignatureException {
     when(resourceInfo.getResourceMethod()).thenReturn(resourceMethod);
     when(resourceMethod.getAnnotation(Secured.class)).thenReturn(securedAnnotation);
     when(requestContext.getHeaderString(HttpHeaders.AUTHORIZATION)).thenReturn(AUTH_HEADER);
@@ -68,9 +68,9 @@ public class AuthorizationFilterTest {
     verify(accessController).controlAccess(TOKEN_PAYLOAD);
   }
 
-  @Test(expected = InvalidTokenSignatureError.class)
-  public void filteringRequest_withSecuredRouteAndInvalidToken_shouldThrow() {
-    when(tokenTranslator.decodeToken(any())).thenThrow(new InvalidTokenSignatureError());
+  @Test(expected = UnauthorizedError.class)
+  public void filteringRequest_withSecuredRouteAndInvalidToken_shouldThrow() throws InvalidTokenSignatureException {
+    when(tokenTranslator.decodeToken(any())).thenThrow(new InvalidTokenSignatureException());
 
     subject.filter(requestContext);
   }

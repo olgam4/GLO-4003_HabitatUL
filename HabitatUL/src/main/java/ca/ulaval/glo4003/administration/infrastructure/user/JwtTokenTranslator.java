@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.administration.infrastructure.user;
 
-import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureError;
+import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -43,7 +43,7 @@ public class JwtTokenTranslator implements TokenTranslator {
   }
 
   @Override
-  public TokenPayload decodeToken(Token token) {
+  public TokenPayload decodeToken(Token token) throws InvalidTokenSignatureException {
     try {
       DecodedJWT jwt = verifier.verify(token.getValue());
       String userKey = jwt.getClaim("userId").asString();
@@ -51,7 +51,7 @@ public class JwtTokenTranslator implements TokenTranslator {
       Instant expiration = Instant.ofEpochMilli(jwt.getClaim("expiration").asLong());
       return new TokenPayload(userKey, username, expiration);
     } catch (JWTVerificationException e) {
-      throw new InvalidTokenSignatureError();
+      throw new InvalidTokenSignatureException();
     }
   }
 }

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error;
 
-import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 
 import javax.ws.rs.core.Response;

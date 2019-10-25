@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.administration.application.user.exception;
+package ca.ulaval.glo4003.administration.application.user.error;
 
 public class InvalidCredentialsError extends UserAppServiceError {
   private static final String ERROR = "INVALID_CREDENTIALS";

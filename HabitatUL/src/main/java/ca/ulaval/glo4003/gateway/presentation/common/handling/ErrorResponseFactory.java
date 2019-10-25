@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
-import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.*;
 import ca.ulaval.glo4003.shared.domain.Error;

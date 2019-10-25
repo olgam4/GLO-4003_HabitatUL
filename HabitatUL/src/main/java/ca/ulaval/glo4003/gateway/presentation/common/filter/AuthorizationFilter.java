@@ -1,7 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.common.filter;
 
 import ca.ulaval.glo4003.administration.application.user.AccessController;
-import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -63,7 +64,11 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
     if (authHeader == null) throw new UnauthorizedError();
     Token token = new Token(authHeader.replace(AUTHORIZATION_HEADER_SCHEME, "").trim());
-    return tokenTranslator.decodeToken(token);
+    try {
+      return tokenTranslator.decodeToken(token);
+    } catch (InvalidTokenSignatureException e) {
+      throw new UnauthorizedError();
+    }
   }
 
   private void setSecurityContext(

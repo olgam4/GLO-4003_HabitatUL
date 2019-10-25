@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.administration.persistence.user;
 
 import ca.ulaval.glo4003.administration.domain.user.TokenRegistry;
-import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistError;
-import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.error.KeyAlreadyExistError;
+import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
 
 import java.util.HashMap;
 import java.util.Map;

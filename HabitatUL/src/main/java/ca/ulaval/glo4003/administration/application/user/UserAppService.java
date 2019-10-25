@@ -1,11 +1,13 @@
 package ca.ulaval.glo4003.administration.application.user;
 
-import ca.ulaval.glo4003.administration.application.user.exception.InvalidCredentialsError;
+import ca.ulaval.glo4003.administration.application.user.error.CannotCreateUserError;
+import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundError;
-import ca.ulaval.glo4003.administration.domain.user.exception.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -69,7 +71,11 @@ public class UserAppService implements AccessController {
   public String createUser(Credentials credentials) {
     String userKey = userKeyGenerator.generateUserKey();
     usernameRegistry.register(userKey, credentials.getUsername());
-    passwordValidator.registerPassword(userKey, credentials.getPassword());
+    try {
+      passwordValidator.registerPassword(userKey, credentials.getPassword());
+    } catch (InvalidPasswordException e) {
+      throw new CannotCreateUserError();
+    }
     return userKey;
   }
 

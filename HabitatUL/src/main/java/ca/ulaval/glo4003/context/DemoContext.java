@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.administration.application.user.AccessController;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.communication.user.UserBoundedContextEventHandler;
 import ca.ulaval.glo4003.administration.domain.user.*;
+import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
@@ -98,7 +99,11 @@ public class DemoContext implements Context {
     String adminName = String.valueOf(properties.getProperty("admin.username"));
     String adminPassword = String.valueOf(properties.getProperty("admin.password"));
     usernameRegistry.register(adminKey, adminName);
-    passwordValidator.registerPassword(adminName, adminPassword);
+    try {
+      passwordValidator.registerPassword(adminName, adminPassword);
+    } catch (InvalidPasswordException e) {
+      e.printStackTrace();
+    }
   }
 
   private void registerUnderwritingServices() {

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.administration.application.user.exception;
+package ca.ulaval.glo4003.administration.application.user.error;
 
 import ca.ulaval.glo4003.shared.domain.BaseError;
 
