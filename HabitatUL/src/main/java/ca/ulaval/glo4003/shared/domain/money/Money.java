@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 public class Money extends ValueObject {
   public static final Money ZERO = new Money(Amount.ZERO);
 
-  private Amount amount;
+  private final Amount amount;
 
   public Money(Amount amount) {
     this.amount = amount;

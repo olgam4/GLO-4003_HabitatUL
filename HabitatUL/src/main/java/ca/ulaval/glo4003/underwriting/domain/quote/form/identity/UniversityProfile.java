@@ -6,11 +6,11 @@ public class UniversityProfile extends ValueObject {
   public static final UniversityProfile UNFILLED_UNIVERSITY_PROFILE =
       new UniversityProfile(null, null, null, null, null);
 
-  private String idul;
-  private String identificationNumber;
-  private String cycle;
-  private String degree;
-  private String program;
+  private final String idul;
+  private final String identificationNumber;
+  private final String cycle;
+  private final String degree;
+  private final String program;
 
   public UniversityProfile(
       String idul, String identificationNumber, String cycle, String degree, String program) {

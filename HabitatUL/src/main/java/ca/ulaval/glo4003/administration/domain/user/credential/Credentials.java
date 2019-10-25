@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.administration.domain.user.credential;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 public class Credentials extends ValueObject {
-  private String username;
-  private String password;
+  private final String username;
+  private final String password;
 
   public Credentials(String username, String password) {
     this.username = username;

@@ -4,12 +4,13 @@ import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimStatus;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
+import ca.ulaval.glo4003.shared.application.DataTransferObject;
 
-public class ClaimDto {
-  private ClaimId claimId;
-  private ClaimStatus claimStatus;
-  private SinisterType sinisterType;
-  private LossDeclarations lossDeclarations;
+public class ClaimDto extends DataTransferObject {
+  private final ClaimId claimId;
+  private final ClaimStatus claimStatus;
+  private final SinisterType sinisterType;
+  private final LossDeclarations lossDeclarations;
 
   public ClaimDto(
       ClaimId claimId,

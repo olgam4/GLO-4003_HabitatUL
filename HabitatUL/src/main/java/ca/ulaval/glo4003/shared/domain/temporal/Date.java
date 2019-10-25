@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Date extends ValueObject {
-  private LocalDate value;
+  private final LocalDate value;
 
   private Date(LocalDate value) {
     this.value = value;

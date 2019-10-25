@@ -27,8 +27,8 @@ public class DataTransferObjectTest {
   }
 
   class DummyDataTransferObject extends DataTransferObject {
-    private String attr1;
-    private String attr2;
+    private final String attr1;
+    private final String attr2;
 
     DummyDataTransferObject(String attr1, String attr2) {
       this.attr1 = attr1;

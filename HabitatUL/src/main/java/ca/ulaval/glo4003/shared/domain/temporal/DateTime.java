@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class DateTime extends ValueObject {
-  private LocalDateTime value;
+  private final LocalDateTime value;
 
   private DateTime(LocalDateTime value) {
     this.value = value;

@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 public class ZipCode extends ValueObject {
-  private String value;
+  private final String value;
 
   public ZipCode(String value, ZipCodeFormatter zipCodeFormatter) throws InvalidArgumentException {
     this.value = zipCodeFormatter.format(value);

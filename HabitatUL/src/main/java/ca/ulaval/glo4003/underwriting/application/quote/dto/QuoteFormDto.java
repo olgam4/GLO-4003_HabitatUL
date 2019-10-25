@@ -9,13 +9,13 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 public class QuoteFormDto extends DataTransferObject {
-  private Identity personalInformation;
-  private Identity additionalInsured;
-  private Location location;
-  private Date effectiveDate;
-  private Building building;
-  private PersonalProperty personalProperty;
-  private CivilLiability civilLiability;
+  private final Identity personalInformation;
+  private final Identity additionalInsured;
+  private final Location location;
+  private final Date effectiveDate;
+  private final Building building;
+  private final PersonalProperty personalProperty;
+  private final CivilLiability civilLiability;
 
   public QuoteFormDto(
       Identity personalInformation,

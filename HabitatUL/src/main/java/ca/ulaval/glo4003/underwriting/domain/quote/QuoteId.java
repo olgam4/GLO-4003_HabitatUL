@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 import java.util.UUID;
 
 public class QuoteId extends ValueObject {
-  private UUID value;
+  private final UUID value;
 
   public QuoteId() {
     this(UUID.randomUUID());

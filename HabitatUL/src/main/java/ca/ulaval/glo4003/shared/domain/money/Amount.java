@@ -10,7 +10,7 @@ public class Amount extends ValueObject {
   static final int DECIMAL_PRECISION = 2;
   static final int ROUNDING = BigDecimal.ROUND_HALF_UP;
 
-  private BigDecimal value;
+  private final BigDecimal value;
 
   public Amount(BigDecimal value) {
     this.value = value.setScale(DECIMAL_PRECISION, ROUNDING);

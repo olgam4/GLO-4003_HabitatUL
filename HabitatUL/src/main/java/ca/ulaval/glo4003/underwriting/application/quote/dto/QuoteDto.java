@@ -7,11 +7,11 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
 public class QuoteDto extends DataTransferObject {
-  private QuoteId quoteId;
-  private Money price;
-  private DateTime expirationDate;
-  private Period effectivePeriod;
-  private QuoteCoverageOverviewDto coverageOverview;
+  private final QuoteId quoteId;
+  private final Money price;
+  private final DateTime expirationDate;
+  private final Period effectivePeriod;
+  private final QuoteCoverageOverviewDto coverageOverview;
 
   public QuoteDto(
       QuoteId quoteId,

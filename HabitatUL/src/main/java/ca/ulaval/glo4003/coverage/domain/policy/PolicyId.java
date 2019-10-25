@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 import java.util.UUID;
 
 public class PolicyId extends ValueObject {
-  private UUID value;
+  private final UUID value;
 
   public PolicyId() {
     this(UUID.randomUUID());

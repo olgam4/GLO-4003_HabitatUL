@@ -7,11 +7,11 @@ public class Identity extends ValueObject {
   public static final Identity UNFILLED_IDENTITY =
       new Identity(null, null, null, null, UniversityProfile.UNFILLED_UNIVERSITY_PROFILE);
 
-  private String firstName;
-  private String lastName;
-  private Date birthDate;
-  private Gender gender;
-  private UniversityProfile universityProfile;
+  private final String firstName;
+  private final String lastName;
+  private final Date birthDate;
+  private final Gender gender;
+  private final UniversityProfile universityProfile;
 
   public Identity(
       String firstName,
