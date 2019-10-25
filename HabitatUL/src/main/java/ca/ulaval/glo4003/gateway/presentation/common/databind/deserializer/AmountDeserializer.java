@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidAmountError;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -14,6 +15,9 @@ public class AmountDeserializer extends JsonDeserializer<Amount> {
   public Amount deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    return new Amount(BigDecimal.valueOf(node.floatValue()));
+    float value = node.floatValue();
+    if (value < 0 || !node.isNumber()) throw new InvalidAmountError(node.toString());
+
+    return new Amount(BigDecimal.valueOf(value));
   }
 }

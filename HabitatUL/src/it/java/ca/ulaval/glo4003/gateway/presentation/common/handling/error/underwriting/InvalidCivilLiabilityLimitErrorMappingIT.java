@@ -8,12 +8,13 @@ import com.github.javafaker.Faker;
 import javax.ws.rs.core.Response;
 
 public class InvalidCivilLiabilityLimitErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_CIVIL_LIABILITY_LIMIT = Faker.instance().internet().uuid();
+  private static final String INVALID_CIVIL_LIABILITY_LIMIT_VALUE =
+      Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
     return new MockedDeserializationError(
-        new InvalidCivilLiabilityLimitError(INVALID_CIVIL_LIABILITY_LIMIT));
+        new InvalidCivilLiabilityLimitError(INVALID_CIVIL_LIABILITY_LIMIT_VALUE));
   }
 
   @Override
@@ -29,6 +30,7 @@ public class InvalidCivilLiabilityLimitErrorMappingIT extends ErrorMappingIT {
   @Override
   public String getErrorMessageMatcher() {
     return String.format(
-        "sorry, <%s> is not a valid civil liability limit value", INVALID_CIVIL_LIABILITY_LIMIT);
+        "sorry, <%s> is not a valid civil liability limit value",
+        INVALID_CIVIL_LIABILITY_LIMIT_VALUE);
   }
 }

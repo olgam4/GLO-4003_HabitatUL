@@ -44,8 +44,10 @@ public class ErrorResponseFactory {
 
   private static void registerUnderwritingErrors() {
     STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.INTERNAL_SERVER_ERROR);
+    STATUS_MAP.put(InvalidAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidAnimalsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidPreventionSystemError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
