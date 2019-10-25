@@ -11,6 +11,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
@@ -27,9 +29,16 @@ public class RestITestHelper {
   private RestITestHelper() {}
 
   public static void startServer() {
+    disableLogging();
     new TestContext().execute();
     server = new Server();
     server.start(TEST_SERVER_PORT);
+  }
+
+  private static void disableLogging() {
+    Logger.getLogger("org.glassfish.jersey.internal.inject.Providers").setLevel(Level.SEVERE);
+    System.setProperty("org.eclipse.jetty.util.log.class", "org.eclipse.jetty.util.log.StdErrLog");
+    System.setProperty("org.eclipse.jetty.LEVEL", "OFF");
   }
 
   public static void addResourceConfig(ResourceConfig resourceConfig) {

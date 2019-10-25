@@ -21,12 +21,6 @@ public class FloorDeserializationResource {
   }
 
   public static class FloorDeserializationRequest {
-    private Floor value;
-
-    private FloorDeserializationRequest() {}
-
-    public Floor getValue() {
-      return value;
-    }
+    public Floor value;
   }
 }

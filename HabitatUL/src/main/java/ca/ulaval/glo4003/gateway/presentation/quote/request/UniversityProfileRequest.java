@@ -1,11 +1,13 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
+import javax.validation.constraints.NotNull;
+
 public class UniversityProfileRequest {
-  private String idul;
-  private String ni;
-  private String cycle;
-  private String degree;
-  private String program;
+  @NotNull private String idul;
+  @NotNull private String ni;
+  @NotNull private String cycle;
+  @NotNull private String degree;
+  @NotNull private String program;
 
   private UniversityProfileRequest() {}
 

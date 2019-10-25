@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
+import ca.ulaval.glo4003.gateway.presentation.common.handling.CatchAllErrorMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;
 import org.junit.After;
@@ -37,6 +38,7 @@ public abstract class CustomDeserializerIT {
         ResourceConfigBuilder.aResourceConfig()
             .withResource(createDeserializationResource())
             .withErrorMapper(MockedDeserializationErrorMapper.class)
+            .withErrorMapper(CatchAllErrorMapper.class)
             .build();
     addResourceConfig(resourceConfig);
   }

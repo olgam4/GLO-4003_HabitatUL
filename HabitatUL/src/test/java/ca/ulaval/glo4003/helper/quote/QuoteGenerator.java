@@ -23,7 +23,7 @@ public class QuoteGenerator {
         TemporalGenerator.createFutureDateTime(),
         TemporalGenerator.createPeriod(),
         MoneyGenerator.create(),
-        Faker.instance().bool().bool(),
+        false,
         TemporalGenerator.getClockProvider());
   }
 

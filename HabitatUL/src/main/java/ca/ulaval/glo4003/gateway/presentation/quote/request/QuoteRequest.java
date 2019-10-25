@@ -2,16 +2,18 @@ package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 public class QuoteRequest {
-  private IdentityRequest personalInformation;
-  private IdentityRequest additionalInsured;
-  private LocationRequest location;
-  private Date effectiveDate;
-  private BuildingRequest building;
-  private PersonalPropertyRequest personalProperty;
-  private CivilLiabilityRequest civilLiability;
+  @NotNull @Valid private IdentityRequest personalInformation;
+  @Valid private IdentityRequest additionalInsured;
+  @NotNull @Valid private LocationRequest location;
+  @NotNull @Valid private Date effectiveDate;
+  @NotNull @Valid private BuildingRequest building;
+  @NotNull @Valid private PersonalPropertyRequest personalProperty;
+  @Valid private CivilLiabilityRequest civilLiability;
 
   private QuoteRequest() {}
 

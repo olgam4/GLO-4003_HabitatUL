@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class ResourceConfigBuilder {
   private Set<Object> resources = new HashSet<>();
-  private Set<Class> errorMappers = new HashSet<>();
+  private Set<Class<?>> errorMappers = new HashSet<>();
   private Set<ContainerRequestFilter> requestFilters = new HashSet<>();
 
   private ResourceConfigBuilder() {}
@@ -34,8 +34,8 @@ public class ResourceConfigBuilder {
 
   public ResourceConfig build() {
     ResourceConfig resourceConfig = new ResourceConfig();
-    resources.forEach(resourceConfig::register);
-    errorMappers.forEach(resourceConfig::register);
+    resourceConfig.registerInstances(resources);
+    resourceConfig.registerClasses(errorMappers);
     requestFilters.forEach(resourceConfig::register);
     return resourceConfig;
   }

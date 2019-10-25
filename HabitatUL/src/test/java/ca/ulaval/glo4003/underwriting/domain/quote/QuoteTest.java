@@ -26,7 +26,7 @@ public class QuoteTest {
 
   @Test(expected = QuoteExpiredError.class)
   public void purchasingQuote_withExpiredQuote_shouldThrow() {
-    subject = QuoteBuilder.aQuote().expired().build();
+    subject = QuoteBuilder.aQuote().unPurchased().expired().build();
 
     subject.purchase();
   }

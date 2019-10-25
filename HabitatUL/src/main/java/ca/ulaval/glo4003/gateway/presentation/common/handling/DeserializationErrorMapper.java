@@ -3,15 +3,17 @@ package ca.ulaval.glo4003.gateway.presentation.common.handling;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.DeserializationError;
 import ca.ulaval.glo4003.shared.domain.BaseError;
 import ca.ulaval.glo4003.shared.domain.Error;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class DeserializationErrorMapper implements ExceptionMapper<JsonProcessingException> {
+@Produces(MediaType.APPLICATION_JSON)
+public class DeserializationErrorMapper implements ExceptionMapper<JsonMappingException> {
   private ErrorResponseFactory errorResponseFactory;
 
   public DeserializationErrorMapper() {
@@ -19,8 +21,8 @@ public class DeserializationErrorMapper implements ExceptionMapper<JsonProcessin
   }
 
   @Override
-  public Response toResponse(JsonProcessingException jpe) {
-    Error error = convertError(jpe);
+  public Response toResponse(JsonMappingException e) {
+    Error error = convertError(e);
     ErrorResponse errorResponse = errorResponseFactory.createErrorResponse(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())
@@ -28,11 +30,11 @@ public class DeserializationErrorMapper implements ExceptionMapper<JsonProcessin
         .build();
   }
 
-  private Error convertError(JsonProcessingException jpe) {
-    return isDeserializationError(jpe) ? (DeserializationError) jpe.getCause() : new BaseError();
+  private Error convertError(JsonMappingException e) {
+    return isDeserializationError(e) ? (DeserializationError) e.getCause() : new BaseError();
   }
 
-  private boolean isDeserializationError(JsonProcessingException jpe) {
-    return jpe.getCause() instanceof DeserializationError;
+  private boolean isDeserializationError(JsonMappingException e) {
+    return e.getCause() instanceof DeserializationError;
   }
 }

@@ -81,7 +81,7 @@ public class QuoteMatcher {
     return allOf(
         hasProperty("numberOfUnits", equalTo(buildingRequest.getNumberOfUnits())),
         hasProperty("preventionSystems", equalTo(buildingRequest.getPreventionSystems())),
-        hasProperty("commercialUse", equalTo(buildingRequest.getCommercialUse())));
+        hasProperty("commercialUse", equalTo(buildingRequest.getCommercialUse().get())));
   }
 
   public static Matcher<Animals> matchesAnimal(final Animals animals) {

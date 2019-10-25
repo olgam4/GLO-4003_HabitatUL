@@ -21,12 +21,6 @@ public class CivilLiabilityLimitDeserializationResource {
   }
 
   public static class CivilLiabilityLimitDeserializationRequest {
-    private CivilLiabilityLimit value;
-
-    private CivilLiabilityLimitDeserializationRequest() {}
-
-    public CivilLiabilityLimit getValue() {
-      return value;
-    }
+    public CivilLiabilityLimit value;
   }
 }

@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.gateway.presentation.common.databind.JacksonFeature;
-import ca.ulaval.glo4003.gateway.presentation.common.filter.CORSResponseFilter;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.configuration.MarshallingFeature;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -32,6 +31,7 @@ public class Server {
   }
 
   public void addResourceConfig(ResourceConfig resourceConfig) {
+    resourceConfig.register(MarshallingFeature.class);
     ServletContextHandler servletContextHandler =
         createServletContextHandlerFromResourceConfig(resourceConfig);
     startServletContextHandler(servletContextHandler);
@@ -50,8 +50,6 @@ public class Server {
     ServletContextHandler servletContextHandler =
         new ServletContextHandler(
             contextHandlerCollection, CONTEXT_PATH, ServletContextHandler.SESSIONS);
-    resourceConfig.register(CORSResponseFilter.class);
-    resourceConfig.register(JacksonFeature.class);
     ServletContainer servletContainer = new ServletContainer(resourceConfig);
     ServletHolder servletHolder = new ServletHolder(servletContainer);
     servletContextHandler.addServlet(servletHolder, "/*");

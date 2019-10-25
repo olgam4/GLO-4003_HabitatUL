@@ -3,14 +3,16 @@ package ca.ulaval.glo4003.gateway.presentation.quote.request;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 public class IdentityRequest {
-  private String firstName;
-  private String lastName;
-  private Date birthDate;
-  private Gender gender;
-  private UniversityProfileRequest universityProfile;
+  @NotNull private String firstName;
+  @NotNull private String lastName;
+  @NotNull private Date birthDate;
+  @NotNull private Gender gender;
+  @Valid private UniversityProfileRequest universityProfile;
 
   private IdentityRequest() {}
 

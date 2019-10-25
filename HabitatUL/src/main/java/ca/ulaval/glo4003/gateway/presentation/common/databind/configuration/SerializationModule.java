@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.databind;
+package ca.ulaval.glo4003.gateway.presentation.common.databind.configuration;
 
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.serializer.*;
 import ca.ulaval.glo4003.shared.domain.money.Amount;

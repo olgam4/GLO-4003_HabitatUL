@@ -21,6 +21,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Persona
 
 import java.util.Optional;
 
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building.NO_COMMERCIAL_USE;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity.UNFILLED_IDENTITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
@@ -79,7 +80,7 @@ public class QuoteViewAssembler {
     return new Building(
         buildingRequest.getNumberOfUnits(),
         buildingRequest.getPreventionSystems(),
-        buildingRequest.getCommercialUse());
+        buildingRequest.getCommercialUse().orElse(NO_COMMERCIAL_USE));
   }
 
   private PersonalProperty fromPersonalPropertyRequest(

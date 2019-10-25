@@ -2,18 +2,19 @@ package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.Set;
 
 public class BuildingRequest {
-  private int numberOfUnits;
+  @NotNull private int numberOfUnits;
   private Set<PreventionSystem> preventionSystems;
-  private Optional<String> commercialUse;
+  private String commercialUse;
 
   private BuildingRequest() {}
 
   public BuildingRequest(
-      int numberOfUnits, Set<PreventionSystem> preventionSystems, Optional<String> commercialUse) {
+      int numberOfUnits, Set<PreventionSystem> preventionSystems, String commercialUse) {
     this.numberOfUnits = numberOfUnits;
     this.preventionSystems = preventionSystems;
     this.commercialUse = commercialUse;
@@ -28,6 +29,6 @@ public class BuildingRequest {
   }
 
   public Optional<String> getCommercialUse() {
-    return commercialUse;
+    return Optional.ofNullable(commercialUse);
   }
 }

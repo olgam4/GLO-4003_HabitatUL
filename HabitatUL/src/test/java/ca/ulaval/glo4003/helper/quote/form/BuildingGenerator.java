@@ -7,7 +7,6 @@ import com.github.javafaker.Faker;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 
 public class BuildingGenerator {
   private static int MIN_NUMBER_OF_UNITS = 1;
@@ -30,7 +29,7 @@ public class BuildingGenerator {
     return new HashSet<>(Arrays.asList(PreventionSystem.SPRINKLER));
   }
 
-  public static Optional<String> createCommercialUse() {
-    return Optional.of(Faker.instance().zelda().game());
+  public static String createCommercialUse() {
+    return Faker.instance().zelda().game();
   }
 }

@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -16,6 +17,7 @@ import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
 
 @Path(QuoteResource.QUOTE_ROUTE)
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class QuoteResource {
   public static final String QUOTE_ROUTE = "/quotes";
   public static final String PURCHASE_ROUTE = "/purchase";
@@ -39,8 +41,7 @@ public class QuoteResource {
   }
 
   @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  public Response requestQuote(QuoteRequest quoteRequest) {
+  public Response requestQuote(@Valid QuoteRequest quoteRequest) {
     QuoteFormDto quoteFormDto = quoteViewAssembler.from(quoteRequest);
     QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
     String quoteIdString = quoteDto.getQuoteId().toRepresentation();

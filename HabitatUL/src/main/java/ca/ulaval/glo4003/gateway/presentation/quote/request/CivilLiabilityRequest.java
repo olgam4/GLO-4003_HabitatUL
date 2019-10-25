@@ -2,8 +2,10 @@ package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 
+import javax.validation.constraints.NotNull;
+
 public class CivilLiabilityRequest {
-  private CivilLiabilityLimit limit;
+  @NotNull private CivilLiabilityLimit limit;
 
   private CivilLiabilityRequest() {}
 
