@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability;
 
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.math.BigDecimal;

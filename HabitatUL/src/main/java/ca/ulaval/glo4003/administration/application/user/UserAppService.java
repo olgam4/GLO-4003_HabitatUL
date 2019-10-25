@@ -1,13 +1,15 @@
 package ca.ulaval.glo4003.administration.application.user;
 
-import ca.ulaval.glo4003.administration.application.user.error.CannotCreateUserError;
+import ca.ulaval.glo4003.administration.application.user.error.CouldNotAuthenticateUserError;
+import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUserError;
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -69,23 +71,27 @@ public class UserAppService implements AccessController {
   }
 
   public String createUser(Credentials credentials) {
-    String userKey = userKeyGenerator.generateUserKey();
-    usernameRegistry.register(userKey, credentials.getUsername());
     try {
+      String userKey = userKeyGenerator.generateUserKey();
+      usernameRegistry.register(userKey, credentials.getUsername());
       passwordValidator.registerPassword(userKey, credentials.getPassword());
-    } catch (InvalidPasswordException e) {
-      throw new CannotCreateUserError();
+      return userKey;
+    } catch (KeyAlreadyExistException | InvalidPasswordException e) {
+      throw new CouldNotCreateUserError();
     }
-    return userKey;
   }
 
   public Token authenticateUser(Credentials credentials) {
-    String username = credentials.getUsername();
-    String userKey = usernameRegistry.getUserKey(username);
-    validateCredentials(userKey, credentials.getPassword());
-    Token token = createToken(username, userKey);
-    tokenRegistry.register(userKey, token.getValue());
-    return token;
+    try {
+      String username = credentials.getUsername();
+      String userKey = usernameRegistry.getUserKey(username);
+      validateCredentials(userKey, credentials.getPassword());
+      Token token = createToken(username, userKey);
+      tokenRegistry.register(userKey, token.getValue());
+      return token;
+    } catch (KeyNotFoundException | KeyAlreadyExistException e) {
+      throw new CouldNotAuthenticateUserError();
+    }
   }
 
   private void validateCredentials(String userKey, String password) {
@@ -119,7 +125,7 @@ public class UserAppService implements AccessController {
   private void checkTokenRegistration(TokenPayload tokenPayload) {
     try {
       tokenRegistry.getToken(tokenPayload.getUserKey());
-    } catch (KeyNotFoundError e) {
+    } catch (KeyNotFoundException e) {
       throw new UnauthorizedError();
     }
   }
@@ -129,8 +135,14 @@ public class UserAppService implements AccessController {
   }
 
   public void associatePolicy(String quoteKey, String policyKey) {
-    String userKey = quoteRegistry.getUserKey(quoteKey);
-    policyRegistry.register(userKey, policyKey);
+    try {
+      String userKey = quoteRegistry.getUserKey(quoteKey);
+      policyRegistry.register(userKey, policyKey);
+    } catch (KeyNotFoundException e) {
+      // TODO: log event
+      // TODO: put in a queue for later reprocessing
+      e.printStackTrace();
+    }
   }
 
   public List<String> getPolicies(String userKey) {
@@ -138,7 +150,13 @@ public class UserAppService implements AccessController {
   }
 
   public void processQuotePayment(String quoteKey, Money payment) {
-    String userKey = quoteRegistry.getUserKey(quoteKey);
-    paymentProcessor.process(userKey, payment);
+    try {
+      String userKey = quoteRegistry.getUserKey(quoteKey);
+      paymentProcessor.process(userKey, payment);
+    } catch (KeyNotFoundException e) {
+      // TODO: log event
+      // TODO: put in a queue for later reprocessing
+      e.printStackTrace();
+    }
   }
 }

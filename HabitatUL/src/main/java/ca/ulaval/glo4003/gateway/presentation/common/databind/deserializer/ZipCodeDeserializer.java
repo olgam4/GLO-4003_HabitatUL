@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidZipCodeError;
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.CanadianZipCodeFormatter;
 import com.fasterxml.jackson.core.JsonParser;

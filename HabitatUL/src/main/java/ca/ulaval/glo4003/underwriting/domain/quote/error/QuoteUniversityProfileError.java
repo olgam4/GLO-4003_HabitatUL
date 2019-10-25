@@ -5,11 +5,7 @@ public class QuoteUniversityProfileError extends QuoteError {
   private static final String MESSAGE =
       "sorry, we have not been able to confirm your university profile";
 
-  public String getError() {
-    return ERROR;
-  }
-
-  public String getMessage() {
-    return MESSAGE;
+  public QuoteUniversityProfileError() {
+    super(ERROR, MESSAGE);
   }
 }

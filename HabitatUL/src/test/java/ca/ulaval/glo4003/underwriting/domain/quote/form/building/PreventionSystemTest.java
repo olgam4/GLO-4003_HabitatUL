@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.building;
 
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

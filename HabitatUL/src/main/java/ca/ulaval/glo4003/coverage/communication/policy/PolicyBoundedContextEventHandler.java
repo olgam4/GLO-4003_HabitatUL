@@ -17,6 +17,7 @@ public class PolicyBoundedContextEventHandler {
   }
 
   void handlePolicyCreationRequestedEvent(PolicyCreationRequestedEvent event) {
-    policyAppService.issuePolicy(event);
+    policyAppService.issuePolicy(
+        event.getQuoteKey(), event.getCoveragePeriod(), event.getPurchaseDate());
   }
 }

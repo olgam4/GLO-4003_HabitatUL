@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 
 public class ZipCode extends ValueObject {
   private final String value;

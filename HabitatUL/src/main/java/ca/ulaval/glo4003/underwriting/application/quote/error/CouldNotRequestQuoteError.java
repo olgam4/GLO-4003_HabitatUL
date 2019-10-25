@@ -5,13 +5,7 @@ public class CouldNotRequestQuoteError extends QuoteAppServiceError {
   private static final String MESSAGE =
       "sorry, something went wrong while trying to request your quote";
 
-  @Override
-  public String getError() {
-    return ERROR;
-  }
-
-  @Override
-  public String getMessage() {
-    return MESSAGE;
+  public CouldNotRequestQuoteError() {
+    super(ERROR, MESSAGE);
   }
 }

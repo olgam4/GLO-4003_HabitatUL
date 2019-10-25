@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.administration.domain.user;
 
-import ca.ulaval.glo4003.administration.domain.user.error.KeyAlreadyExistError;
-import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,38 +19,42 @@ public abstract class UsernameRegistryIT {
   private UsernameRegistry subject;
 
   @Before
-  public void setUp() {
+  public void setUp() throws KeyAlreadyExistException {
     subject = createSubject();
     subject.register(USER_KEY, USERNAME);
   }
 
-  @Test(expected = KeyAlreadyExistError.class)
-  public void registeringUsername_withAlreadyExistingUserKey_shouldThrow() {
+  @Test(expected = KeyAlreadyExistException.class)
+  public void registeringUsername_withAlreadyExistingUserKey_shouldThrow()
+      throws KeyAlreadyExistException {
     subject.register(USER_KEY, ANOTHER_USERNAME);
   }
 
-  @Test(expected = KeyAlreadyExistError.class)
-  public void registeringUsername_withAlreadyExistingUsername_shouldThrow() {
+  @Test(expected = KeyAlreadyExistException.class)
+  public void registeringUsername_withAlreadyExistingUsername_shouldThrow()
+      throws KeyAlreadyExistException {
     subject.register(ANOTHER_USER_KEY, USERNAME);
   }
 
   @Test
-  public void gettingUserKey_withRegisteredUsernameKey_shouldReturnMappedUserKey() {
+  public void gettingUserKey_withRegisteredUsernameKey_shouldReturnMappedUserKey()
+      throws KeyNotFoundException {
     assertEquals(USER_KEY, subject.getUserKey(USERNAME));
   }
 
-  @Test(expected = KeyNotFoundError.class)
-  public void gettingUserKey_withNotExistingUsername_shouldThrow() {
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUserKey_withNotExistingUsername_shouldThrow() throws KeyNotFoundException {
     subject.getUserKey(NOT_EXISTING_USERNAME);
   }
 
   @Test
-  public void gettingUsername_withRegisteredUserKey_shouldReturnMappedUsername() {
+  public void gettingUsername_withRegisteredUserKey_shouldReturnMappedUsername()
+      throws KeyNotFoundException {
     assertEquals(USERNAME, subject.getUsername(USER_KEY));
   }
 
-  @Test(expected = KeyNotFoundError.class)
-  public void gettingUsername_withNotExistingUserKey_shouldThrow() {
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUsername_withNotExistingUserKey_shouldThrow() throws KeyNotFoundException {
     subject.getUsername(NOT_EXISTING_USER_KEY);
   }
 

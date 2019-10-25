@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.administration.domain.user;
 
-import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,12 +25,13 @@ public abstract class PolicyRegistryIT {
   }
 
   @Test
-  public void gettingUserKey_withRegisteredPolicyKey_shouldReturnMappedUserKey() {
+  public void gettingUserKey_withRegisteredPolicyKey_shouldReturnMappedUserKey()
+      throws KeyNotFoundException {
     assertEquals(USER_KEY, subject.getUserKey(POLICY_KEY));
   }
 
-  @Test(expected = KeyNotFoundError.class)
-  public void gettingUserKey_withNotExistingPolicyKey_shouldThrow() {
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUserKey_withNotExistingPolicyKey_shouldThrow() throws KeyNotFoundException {
     subject.getUserKey(NOT_EXISTING_POLICY_KEY);
   }
 

@@ -5,11 +5,7 @@ public class QuoteCivilLiabilityLimitError extends QuoteError {
   private static final String MESSAGE =
       "sorry, the requested civil liability limit is not allowed based on your risk exposure";
 
-  public String getError() {
-    return ERROR;
-  }
-
-  public String getMessage() {
-    return MESSAGE;
+  public QuoteCivilLiabilityLimitError() {
+    super(ERROR, MESSAGE);
   }
 }

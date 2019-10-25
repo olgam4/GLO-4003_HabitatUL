@@ -52,8 +52,7 @@ public class EventPublisherQuoteRepositoryDecoratorTest {
 
   @Test
   public void creatingQuote_shouldPublishDomainEvents() throws QuoteAlreadyCreatedException {
-    int randomNumber = Faker.instance().number().randomDigitNotZero();
-    List<Event> events = EventGenerator.createList(randomNumber);
+    List<Event> events = EventGenerator.createList();
     when(quote.getEvents()).thenReturn(events);
 
     subject.create(quote);

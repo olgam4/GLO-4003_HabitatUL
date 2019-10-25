@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.administration.communication.user.UserBoundedContextEve
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
 import ca.ulaval.glo4003.administration.infrastructure.user.ConfigBasedTokenValidityPeriodProvider;
@@ -100,10 +101,10 @@ public class DemoContext implements Context {
     String adminKey = String.valueOf(properties.getProperty("admin.key"));
     String adminName = String.valueOf(properties.getProperty("admin.username"));
     String adminPassword = String.valueOf(properties.getProperty("admin.password"));
-    usernameRegistry.register(adminKey, adminName);
     try {
+      usernameRegistry.register(adminKey, adminName);
       passwordValidator.registerPassword(adminName, adminPassword);
-    } catch (InvalidPasswordException e) {
+    } catch (KeyAlreadyExistException | InvalidPasswordException e) {
       e.printStackTrace();
     }
   }

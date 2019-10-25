@@ -1,9 +1,13 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
+import ca.ulaval.glo4003.administration.application.user.error.CouldNotAuthenticateUserError;
+import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUserError;
+import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
-import ca.ulaval.glo4003.coverage.domain.policy.exception.NotDeclaredBicycleError;
+import ca.ulaval.glo4003.coverage.domain.policy.error.NotDeclaredBicycleError;
+import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.*;
-import ca.ulaval.glo4003.shared.domain.Error;
+import ca.ulaval.glo4003.shared.domain.handling.Error;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.*;
@@ -18,6 +22,7 @@ public class ErrorResponseFactory {
 
   static {
     registerGenericErrors();
+    registerAdministrationErrors();
     registerUnderwritingErrors();
     registerCoverageErrors();
   }
@@ -26,12 +31,19 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(UnauthorizedError.class, Status.UNAUTHORIZED);
   }
 
+  private static void registerAdministrationErrors() {
+    STATUS_MAP.put(CouldNotAuthenticateUserError.class, Status.INTERNAL_SERVER_ERROR);
+    STATUS_MAP.put(CouldNotCreateUserError.class, Status.INTERNAL_SERVER_ERROR);
+    STATUS_MAP.put(InvalidCredentialsError.class, Status.UNAUTHORIZED);
+  }
+
   private static void registerCoverageErrors() {
+    STATUS_MAP.put(PolicyNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);
   }
 
   private static void registerUnderwritingErrors() {
-    STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.INTERNAL_SERVER_ERROR);
     STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidPreventionSystemError.class, Status.BAD_REQUEST);

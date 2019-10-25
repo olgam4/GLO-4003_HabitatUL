@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.claim;
 
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 
 import java.util.HashMap;
 import java.util.Map;

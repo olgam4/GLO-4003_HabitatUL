@@ -36,6 +36,6 @@ public class PolicyBoundedContextEventHandlerTest {
 
     subject.handlePolicyCreationRequestedEvent(event);
 
-    verify(policyAppService).issuePolicy(event);
+    verify(policyAppService).issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE);
   }
 }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationRequest;
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;

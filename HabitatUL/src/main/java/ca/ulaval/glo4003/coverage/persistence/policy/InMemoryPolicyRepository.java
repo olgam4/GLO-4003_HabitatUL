@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.coverage.persistence.policy;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyPersistedError;
-import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundError;
+import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedException;
+import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +13,19 @@ public class InMemoryPolicyRepository implements PolicyRepository {
   private Map<PolicyId, Policy> policies = new HashMap<>();
 
   @Override
-  public void create(Policy policy) {
-    PolicyId policyId = policy.getPolicyId();
+  public Policy getById(PolicyId policyId) throws PolicyNotFoundException {
+    if (isExistingPolicy(policyId)) return policies.get(policyId);
 
-    if (isExistingPolicy(policyId)) throw new PolicyAlreadyPersistedError(policyId);
-
-    policies.put(policy.getPolicyId(), policy);
+    throw new PolicyNotFoundException();
   }
 
   @Override
-  public Policy getById(PolicyId policyId) {
-    if (isExistingPolicy(policyId)) return policies.get(policyId);
+  public void create(Policy policy) throws PolicyAlreadyCreatedException {
+    PolicyId policyId = policy.getPolicyId();
 
-    throw new PolicyNotFoundError(policyId);
+    if (isExistingPolicy(policyId)) throw new PolicyAlreadyCreatedException();
+
+    policies.put(policy.getPolicyId(), policy);
   }
 
   private boolean isExistingPolicy(PolicyId policyId) {

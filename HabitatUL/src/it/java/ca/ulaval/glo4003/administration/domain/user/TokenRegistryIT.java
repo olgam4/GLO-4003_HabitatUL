@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.administration.domain.user;
 
-import ca.ulaval.glo4003.administration.domain.user.error.KeyAlreadyExistError;
-import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,38 +19,42 @@ public abstract class TokenRegistryIT {
   private TokenRegistry subject;
 
   @Before
-  public void setUp() {
+  public void setUp() throws KeyAlreadyExistException {
     subject = createSubject();
     subject.register(USER_KEY, TOKEN);
   }
 
-  @Test(expected = KeyAlreadyExistError.class)
-  public void registeringToken_withAlreadyExistingUserKey_shouldThrow() {
+  @Test(expected = KeyAlreadyExistException.class)
+  public void registeringToken_withAlreadyExistingUserKey_shouldThrow()
+      throws KeyAlreadyExistException {
     subject.register(USER_KEY, ANOTHER_TOKEN);
   }
 
-  @Test(expected = KeyAlreadyExistError.class)
-  public void registeringToken_withAlreadyExistingToken_shouldThrow() {
+  @Test(expected = KeyAlreadyExistException.class)
+  public void registeringToken_withAlreadyExistingToken_shouldThrow()
+      throws KeyAlreadyExistException {
     subject.register(ANOTHER_USER_KEY, TOKEN);
   }
 
   @Test
-  public void gettingUserKey_withRegisteredToken_shouldReturnMappedUserKey() {
+  public void gettingUserKey_withRegisteredToken_shouldReturnMappedUserKey()
+      throws KeyNotFoundException {
     assertEquals(USER_KEY, subject.getUserKey(TOKEN));
   }
 
-  @Test(expected = KeyNotFoundError.class)
-  public void gettingUserKey_withNotExistingToken_shouldThrow() {
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingUserKey_withNotExistingToken_shouldThrow() throws KeyNotFoundException {
     subject.getUserKey(NOT_EXISTING_TOKEN);
   }
 
   @Test
-  public void gettingToken_withRegisteredUserKey_shouldReturnMappedToken() {
+  public void gettingToken_withRegisteredUserKey_shouldReturnMappedToken()
+      throws KeyNotFoundException {
     assertEquals(TOKEN, subject.getToken(USER_KEY));
   }
 
-  @Test(expected = KeyNotFoundError.class)
-  public void gettingToken_withNotExistingUserKey_shouldThrow() {
+  @Test(expected = KeyNotFoundException.class)
+  public void gettingToken_withNotExistingUserKey_shouldThrow() throws KeyNotFoundException {
     subject.getToken(NOT_EXISTING_USER_KEY);
   }
 

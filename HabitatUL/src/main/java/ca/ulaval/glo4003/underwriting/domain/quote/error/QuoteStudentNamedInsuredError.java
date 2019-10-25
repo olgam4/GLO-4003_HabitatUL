@@ -4,11 +4,7 @@ public class QuoteStudentNamedInsuredError extends QuoteError {
   private static final String ERROR = "QUOTE_STUDENT_NAMED_INSURED";
   private static final String MESSAGE = "sorry, the named insured must have a university profile";
 
-  public String getError() {
-    return ERROR;
-  }
-
-  public String getMessage() {
-    return MESSAGE;
+  public QuoteStudentNamedInsuredError() {
+    super(ERROR, MESSAGE);
   }
 }

@@ -1,28 +1,32 @@
 package ca.ulaval.glo4003.administration.application.user;
 
+import ca.ulaval.glo4003.administration.application.user.error.CouldNotAuthenticateUserError;
+import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUserError;
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
-import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.helper.user.TokenGenerator;
 import ca.ulaval.glo4003.helper.user.TokenPayloadGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
-import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
@@ -40,9 +44,11 @@ public class UserAppServiceTest {
   private static final String QUOTE_KEY = Faker.instance().rickAndMorty().quote();
   private static final String POLICY_KEY = Faker.instance().rickAndMorty().quote();
   private static final Token TOKEN = TokenGenerator.createToken();
-  private static final TokenPayload TOKEN_PAYLAOD = TokenPayloadGenerator.createValidTokenPayload();
+  private static final TokenPayload TOKEN_PAYLOAD = TokenPayloadGenerator.createValidTokenPayload();
   private static final Money PAYMENT = MoneyGenerator.create();
   private static final Duration VALIDITY_PERIOD = Duration.of(1, ChronoUnit.MINUTES);
+  private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
+  private static final Credentials CREDENTIALS = CredentialsGenerator.createCredentials();
 
   @Mock UsernameRegistry usernameRegistry;
   @Mock UserKeyGenerator userKeyGenerator;
@@ -55,12 +61,9 @@ public class UserAppServiceTest {
   @Mock PaymentProcessor paymentProcessor;
 
   private UserAppService subject;
-  private ClockProvider clockProvider;
-  private Credentials credentials = CredentialsGenerator.createCredentials();
 
   @Before
-  public void setUp() {
-    clockProvider = new FixedClockProvider();
+  public void setUp() throws KeyNotFoundException {
     when(userKeyGenerator.generateUserKey()).thenReturn(USER_KEY);
     when(usernameRegistry.getUserKey(any())).thenReturn(USER_KEY);
     when(quoteRegistry.getUserKey(any())).thenReturn(USER_KEY);
@@ -68,66 +71,97 @@ public class UserAppServiceTest {
     when(tokenTranslator.encodeToken(any())).thenReturn(TOKEN);
     when(tokenRegistry.getToken(any())).thenReturn(TOKEN.getValue());
     when(tokenValidityPeriodProvider.getTokenValidityPeriod()).thenReturn(VALIDITY_PERIOD);
-    createSubject();
+    subject =
+        new UserAppService(
+            usernameRegistry,
+            quoteRegistry,
+            policyRegistry,
+            passwordValidator,
+            tokenTranslator,
+            CLOCK_PROVIDER,
+            tokenValidityPeriodProvider,
+            tokenRegistry,
+            paymentProcessor,
+            userKeyGenerator);
   }
 
   @Test
   public void creatingUser_shouldGenerateUserKey() {
-    subject.createUser(credentials);
+    subject.createUser(CREDENTIALS);
 
     verify(userKeyGenerator).generateUserKey();
   }
 
   @Test
-  public void creatingUser_shouldRegisterUsername() {
-    subject.createUser(credentials);
+  public void creatingUser_shouldRegisterUsername() throws KeyAlreadyExistException {
+    subject.createUser(CREDENTIALS);
 
-    verify(usernameRegistry).register(USER_KEY, credentials.getUsername());
+    verify(usernameRegistry).register(USER_KEY, CREDENTIALS.getUsername());
   }
 
   @Test
   public void creatingUser_shouldRegisterPassword() throws InvalidPasswordException {
-    subject.createUser(credentials);
+    subject.createUser(CREDENTIALS);
 
-    verify(passwordValidator).registerPassword(USER_KEY, credentials.getPassword());
+    verify(passwordValidator).registerPassword(USER_KEY, CREDENTIALS.getPassword());
   }
 
   @Test
   public void creatingUser_shouldReturnGeneratedUserKey() {
-    String userKey = subject.createUser(credentials);
+    String userKey = subject.createUser(CREDENTIALS);
 
     assertEquals(USER_KEY, userKey);
   }
 
-  @Test
-  public void authenticatingUser_shouldGetUserKeyFromUsernameRegistry() {
-    subject.authenticateUser(credentials);
+  @Test(expected = CouldNotCreateUserError.class)
+  public void creatingUser_withAlreadyExistingUserKey_shouldThrow()
+      throws KeyAlreadyExistException {
+    Mockito.doThrow(KeyAlreadyExistException.class)
+        .when(usernameRegistry)
+        .register(USER_KEY, CREDENTIALS.getUsername());
 
-    verify(usernameRegistry).getUserKey(credentials.getUsername());
+    subject.createUser(CREDENTIALS);
+  }
+
+  @Test(expected = CouldNotCreateUserError.class)
+  public void creatingUser_withInvalidPassword_shouldThrow() throws InvalidPasswordException {
+    Mockito.doThrow(InvalidPasswordException.class)
+        .when(passwordValidator)
+        .registerPassword(USER_KEY, CREDENTIALS.getPassword());
+
+    subject.createUser(CREDENTIALS);
+  }
+
+  @Test
+  public void authenticatingUser_shouldGetUserKeyFromUsernameRegistry()
+      throws KeyNotFoundException {
+    subject.authenticateUser(CREDENTIALS);
+
+    verify(usernameRegistry).getUserKey(CREDENTIALS.getUsername());
   }
 
   @Test
   public void authenticatingUser_shouldValidatePassword() {
-    subject.authenticateUser(credentials);
+    subject.authenticateUser(CREDENTIALS);
 
-    verify(passwordValidator).validatePassword(USER_KEY, credentials.getPassword());
+    verify(passwordValidator).validatePassword(USER_KEY, CREDENTIALS.getPassword());
   }
 
   @Test
   public void authenticatingUser_shouldEncodeToken() {
-    subject.authenticateUser(credentials);
+    subject.authenticateUser(CREDENTIALS);
 
     TokenPayload expectedTokenPayload =
         new TokenPayload(
             USER_KEY,
-            credentials.getUsername(),
-            Instant.now(clockProvider.getClock()).plus(VALIDITY_PERIOD));
+            CREDENTIALS.getUsername(),
+            Instant.now(CLOCK_PROVIDER.getClock()).plus(VALIDITY_PERIOD));
     verify(tokenTranslator).encodeToken(expectedTokenPayload);
   }
 
   @Test
-  public void authenticatingUser_shouldRegisterToken() {
-    subject.authenticateUser(credentials);
+  public void authenticatingUser_shouldRegisterToken() throws KeyAlreadyExistException {
+    subject.authenticateUser(CREDENTIALS);
 
     verify(tokenRegistry).register(USER_KEY, TOKEN.getValue());
   }
@@ -136,12 +170,30 @@ public class UserAppServiceTest {
   public void authenticatingUser_withInvalidCredentials_shouldThrow() {
     when(passwordValidator.validatePassword(any(), any())).thenReturn(false);
 
-    subject.authenticateUser(credentials);
+    subject.authenticateUser(CREDENTIALS);
+  }
+
+  @Test(expected = CouldNotAuthenticateUserError.class)
+  public void authenticatingUser_withNotExistingUsername_shouldThrow() throws KeyNotFoundException {
+    when(usernameRegistry.getUserKey(CREDENTIALS.getUsername()))
+        .thenThrow(KeyNotFoundException.class);
+
+    subject.authenticateUser(CREDENTIALS);
+  }
+
+  @Test(expected = CouldNotAuthenticateUserError.class)
+  public void authenticatingUser_withAlreadyAuthenticatedUserKey_shouldThrow()
+      throws KeyAlreadyExistException {
+    Mockito.doThrow(KeyAlreadyExistException.class)
+        .when(tokenRegistry)
+        .register(USER_KEY, TOKEN.getValue());
+
+    subject.authenticateUser(CREDENTIALS);
   }
 
   @Test
   public void controllingAccess_withValidTokenPayload_shouldNotThrow() {
-    subject.controlAccess(TOKEN_PAYLAOD);
+    subject.controlAccess(TOKEN_PAYLOAD);
   }
 
   @Test(expected = UnauthorizedError.class)
@@ -152,10 +204,10 @@ public class UserAppServiceTest {
   }
 
   @Test(expected = UnauthorizedError.class)
-  public void controllingAccess_withUnregisteredToken_shouldThrow() {
-    when(tokenRegistry.getToken(TOKEN_PAYLAOD.getUserKey())).thenThrow(KeyNotFoundError.class);
+  public void controllingAccess_withUnregisteredToken_shouldThrow() throws KeyNotFoundException {
+    when(tokenRegistry.getToken(TOKEN_PAYLOAD.getUserKey())).thenThrow(KeyNotFoundException.class);
 
-    subject.controlAccess(TOKEN_PAYLAOD);
+    subject.controlAccess(TOKEN_PAYLOAD);
   }
 
   @Test
@@ -166,7 +218,7 @@ public class UserAppServiceTest {
   }
 
   @Test
-  public void associatingPolicy_shouldRegisterPolicyKey() {
+  public void associatingPolicy_shouldRegisterPolicyKey() throws KeyNotFoundException {
     when(quoteRegistry.getUserKey(QUOTE_KEY)).thenReturn(USER_KEY);
 
     subject.associatePolicy(QUOTE_KEY, POLICY_KEY);
@@ -182,7 +234,7 @@ public class UserAppServiceTest {
   }
 
   @Test
-  public void processingQuotePayment_shouldGetUserKey() {
+  public void processingQuotePayment_shouldGetUserKey() throws KeyNotFoundException {
     subject.processQuotePayment(QUOTE_KEY, PAYMENT);
 
     verify(quoteRegistry).getUserKey(QUOTE_KEY);
@@ -193,20 +245,5 @@ public class UserAppServiceTest {
     subject.processQuotePayment(QUOTE_KEY, PAYMENT);
 
     verify(paymentProcessor).process(USER_KEY, PAYMENT);
-  }
-
-  private void createSubject() {
-    subject =
-        new UserAppService(
-            usernameRegistry,
-            quoteRegistry,
-            policyRegistry,
-            passwordValidator,
-            tokenTranslator,
-            clockProvider,
-            tokenValidityPeriodProvider,
-            tokenRegistry,
-            paymentProcessor,
-            userKeyGenerator);
   }
 }

@@ -2,7 +2,6 @@ package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
-import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequestedEvent;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
@@ -11,6 +10,11 @@ import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
+import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
+import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedException;
+import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 public class PolicyAppService {
   private PolicyFactory policyFactory;
@@ -37,24 +41,29 @@ public class PolicyAppService {
     this.claimRepository = claimRepository;
   }
 
-  public void issuePolicy(PolicyCreationRequestedEvent policyCreationRequestedEvent) {
-    Policy policy =
-        policyFactory.create(
-            policyCreationRequestedEvent.getQuoteKey(),
-            policyCreationRequestedEvent.getCoveragePeriod(),
-            policyCreationRequestedEvent.getPurchaseDate());
-    policy.issue();
-    policyRepository.create(policy);
+  public void issuePolicy(String quoteKey, Period coveragePeriod, Date purchaseDate) {
+    try {
+      Policy policy = policyFactory.create(quoteKey, coveragePeriod, purchaseDate);
+      policy.issue();
+      policyRepository.create(policy);
+    } catch (PolicyAlreadyCreatedException e) {
+      // TODO: log event
+      // TODO: put in a queue for later reprocessing
+      e.printStackTrace();
+    }
   }
 
   public ClaimId openClaim(PolicyId policyId, ClaimCreationDto claimCreationDto) {
-    Policy policy = policyRepository.getById(policyId);
-    Claim claim =
-        policy.openClaim(
-            claimCreationDto.getSinisterType(),
-            claimCreationDto.getLossDeclarations(),
-            claimFactory);
-    claimRepository.create(claim);
-    return claim.getClaimId();
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      Claim claim =
+          claimFactory.create(
+              claimCreationDto.getSinisterType(), claimCreationDto.getLossDeclarations());
+      policy.openClaim(claim);
+      claimRepository.create(claim);
+      return claim.getClaimId();
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
   }
 }

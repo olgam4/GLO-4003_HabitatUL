@@ -5,11 +5,7 @@ public class QuoteDifferentAdditionalInsuredError extends QuoteError {
   private static final String MESSAGE =
       "sorry, named and additional insureds must be different people";
 
-  public String getError() {
-    return ERROR;
-  }
-
-  public String getMessage() {
-    return MESSAGE;
+  public QuoteDifferentAdditionalInsuredError() {
+    super(ERROR, MESSAGE);
   }
 }

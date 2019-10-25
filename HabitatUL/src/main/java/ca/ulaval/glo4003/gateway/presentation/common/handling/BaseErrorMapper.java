@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
-import ca.ulaval.glo4003.shared.domain.BaseError;
+import ca.ulaval.glo4003.shared.domain.handling.BaseError;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;

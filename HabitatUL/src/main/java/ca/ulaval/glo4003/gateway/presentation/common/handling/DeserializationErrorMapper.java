@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.DeserializationError;
-import ca.ulaval.glo4003.shared.domain.BaseError;
-import ca.ulaval.glo4003.shared.domain.Error;
+import ca.ulaval.glo4003.shared.domain.handling.DefaultError;
+import ca.ulaval.glo4003.shared.domain.handling.Error;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import javax.ws.rs.Produces;
@@ -31,7 +31,7 @@ public class DeserializationErrorMapper implements ExceptionMapper<JsonMappingEx
   }
 
   private Error convertError(JsonMappingException e) {
-    return isDeserializationError(e) ? (DeserializationError) e.getCause() : new BaseError();
+    return isDeserializationError(e) ? (DeserializationError) e.getCause() : new DefaultError();
   }
 
   private boolean isDeserializationError(JsonMappingException e) {

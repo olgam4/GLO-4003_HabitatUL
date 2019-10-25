@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error;
 
-import ca.ulaval.glo4003.shared.domain.Error;
+import ca.ulaval.glo4003.shared.domain.handling.Error;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class DeserializationError extends JsonProcessingException implements Error {
+public abstract class DeserializationError extends JsonProcessingException implements Error {
   private final String error;
   private final String message;
 

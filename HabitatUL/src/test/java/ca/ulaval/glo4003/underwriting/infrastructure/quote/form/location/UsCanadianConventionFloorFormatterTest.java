@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location;
 
-import ca.ulaval.glo4003.shared.domain.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
-import ca.ulaval.glo4003.shared.domain.BaseError;
+import ca.ulaval.glo4003.shared.domain.handling.DefaultError;
+import ca.ulaval.glo4003.shared.domain.handling.Error;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -19,7 +20,7 @@ public class CatchAllErrorMapper implements ExceptionMapper<Throwable> {
 
   @Override
   public Response toResponse(Throwable throwable) {
-    BaseError error = new BaseError();
+    Error error = new DefaultError();
     ErrorResponse errorResponse = errorResponseFactory.createErrorResponse(error);
     return Response.status(errorResponse.getStatus())
         .entity(errorResponse.getMessage())

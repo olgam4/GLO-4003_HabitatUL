@@ -1,12 +1,9 @@
 package ca.ulaval.glo4003.administration.persistence.user;
 
 import ca.ulaval.glo4003.administration.domain.user.PolicyRegistry;
-import ca.ulaval.glo4003.administration.domain.user.error.KeyNotFoundError;
+import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryPolicyRegistry implements PolicyRegistry {
   private Map<String, List<String>> policyKeysByUserKey = new HashMap<>();
@@ -21,12 +18,9 @@ public class InMemoryPolicyRegistry implements PolicyRegistry {
   }
 
   @Override
-  public String getUserKey(String policyKey) {
-    return userKeyByPolicyKey.computeIfAbsent(
-        policyKey,
-        (String newKey) -> {
-          throw new KeyNotFoundError(policyKey);
-        });
+  public String getUserKey(String policyKey) throws KeyNotFoundException {
+    return Optional.ofNullable(userKeyByPolicyKey.get(policyKey))
+        .orElseThrow(KeyNotFoundException::new);
   }
 
   @Override
