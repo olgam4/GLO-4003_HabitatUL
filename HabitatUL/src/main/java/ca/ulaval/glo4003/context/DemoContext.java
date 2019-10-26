@@ -31,7 +31,7 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
-import ca.ulaval.glo4003.shared.infrastructure.SystemUtcClockProvider;
+import ca.ulaval.glo4003.shared.infrastructure.SystemDefaultZoneClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
@@ -67,7 +67,7 @@ public class DemoContext implements Context {
 
   private void registerCommonServices() {
     MediatorChanneler.registerChannels(mediator);
-    ServiceLocator.register(ClockProvider.class, new SystemUtcClockProvider());
+    ServiceLocator.register(ClockProvider.class, new SystemDefaultZoneClockProvider());
     ServiceLocator.register(LocalZoneIdProvider.class, new ConfigBasedLocalZoneIdProvider());
   }
 
