@@ -23,7 +23,8 @@ class MediatorChanneler {
             new PolicyCreationRequestedEvent(
                 event.getQuoteId().toRepresentation(),
                 event.getEffectivePeriod(),
-                event.getPurchaseDate()));
+                event.getPurchaseDate(),
+                event.getQuoteForm().getPersonalProperty().getCoverageAmount()));
 
     mediator.addChannel(
         PolicyIssuedEvent.class,

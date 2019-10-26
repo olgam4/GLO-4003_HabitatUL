@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -21,6 +23,7 @@ public class PolicyFactoryTest {
       TemporalGenerator.createDateBefore(COVERAGE_PERIOD.getStartDate());
   private static final Date AFTER_COVERAGE_PERIOD_START_DATE =
       TemporalGenerator.createDateAfter(COVERAGE_PERIOD.getStartDate());
+  private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmount();
 
   private PolicyFactory subject;
 
@@ -32,7 +35,9 @@ public class PolicyFactoryTest {
   @Test
   public void
       creatingPolicy_withCoveragePeriodStartingAfterPurchaseDate_shouldNotAdjustCoveragePeriod() {
-    Policy policy = subject.create(QUOTE_KEY, COVERAGE_PERIOD, BEFORE_COVERAGE_PERIOD_START_DATE);
+    Policy policy =
+        subject.create(
+            QUOTE_KEY, COVERAGE_PERIOD, BEFORE_COVERAGE_PERIOD_START_DATE, COVERAGE_AMOUNT);
 
     Period expectedPeriod =
         new Period(COVERAGE_PERIOD.getStartDate(), COVERAGE_PERIOD.getEndDate());
@@ -42,7 +47,9 @@ public class PolicyFactoryTest {
   @Test
   public void
       creatingPolicy_withCoveragePeriodStartingBeforePurchaseDate_shouldAdjustCoveragePeriod() {
-    Policy policy = subject.create(QUOTE_KEY, COVERAGE_PERIOD, AFTER_COVERAGE_PERIOD_START_DATE);
+    Policy policy =
+        subject.create(
+            QUOTE_KEY, COVERAGE_PERIOD, AFTER_COVERAGE_PERIOD_START_DATE, COVERAGE_AMOUNT);
 
     Period expectedPeriod =
         new Period(

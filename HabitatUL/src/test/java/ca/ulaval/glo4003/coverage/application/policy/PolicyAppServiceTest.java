@@ -12,8 +12,10 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import com.github.javafaker.Faker;
@@ -35,6 +37,7 @@ public class PolicyAppServiceTest {
   private static final String QUOTE_KEY = Faker.instance().internet().uuid();
   private static final Period COVERAGE_PERIOD = TemporalGenerator.createPeriod();
   private static final Date PURCHASE_DATE = TemporalGenerator.createDate();
+  private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmount();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final ClaimId CLAIM_ID = createClaimId();
 
@@ -50,7 +53,7 @@ public class PolicyAppServiceTest {
 
   @Before
   public void setUp() throws PolicyNotFoundException {
-    when(policyFactory.create(any(), any(), any())).thenReturn(policy);
+    when(policyFactory.create(any(), any(), any(), any())).thenReturn(policy);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
     when(claimFactory.create(any(), any())).thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
@@ -60,14 +63,14 @@ public class PolicyAppServiceTest {
 
   @Test
   public void issuingPolicy_shouldIssuePolicy() {
-    subject.issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE);
+    subject.issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE, COVERAGE_AMOUNT);
 
     verify(policy).issue();
   }
 
   @Test
   public void issuingPolicy_shouldCreatePolicy() throws PolicyAlreadyCreatedException {
-    subject.issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE);
+    subject.issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE, COVERAGE_AMOUNT);
 
     verify(policyRepository).create(policy);
   }

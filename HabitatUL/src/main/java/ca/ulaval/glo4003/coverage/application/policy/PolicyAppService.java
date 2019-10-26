@@ -13,6 +13,7 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -42,9 +43,10 @@ public class PolicyAppService {
     this.claimRepository = claimRepository;
   }
 
-  public void issuePolicy(String quoteKey, Period coveragePeriod, Date purchaseDate) {
+  public void issuePolicy(
+      String quoteKey, Period coveragePeriod, Date purchaseDate, Amount coverageAmount) {
     try {
-      Policy policy = policyFactory.create(quoteKey, coveragePeriod, purchaseDate);
+      Policy policy = policyFactory.create(quoteKey, coveragePeriod, purchaseDate, coverageAmount);
       policy.issue();
       policyRepository.create(policy);
     } catch (PolicyAlreadyCreatedException e) {

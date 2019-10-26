@@ -5,8 +5,10 @@ import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.LossCategory;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.policy.error.ClaimOutsideCoveragePeriodError;
+import ca.ulaval.glo4003.coverage.domain.policy.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -19,13 +21,19 @@ public class Policy extends AggregateRoot {
   private PolicyId policyId;
   private String quoteKey;
   private Period coveragePeriod;
+  private Amount coverageAmount;
   private ClockProvider clockProvider;
 
   public Policy(
-      PolicyId policyId, String quoteKey, Period coveragePeriod, ClockProvider clockProvider) {
+      PolicyId policyId,
+      String quoteKey,
+      Period coveragePeriod,
+      Amount coverageAmount,
+      ClockProvider clockProvider) {
     this.policyId = policyId;
     this.quoteKey = quoteKey;
     this.coveragePeriod = coveragePeriod;
+    this.coverageAmount = coverageAmount;
     this.clockProvider = clockProvider;
   }
 
@@ -57,7 +65,8 @@ public class Policy extends AggregateRoot {
 
   private void validateClaim(Claim claim) {
     checkIfClaimOutsideCoveragePeriod();
-    checkIfLossDeclarationContainsNotDeclaredBicycle(claim.getLossDeclarations());
+    checkIfLossDeclarationsContainsNotDeclaredBicycle(claim.getLossDeclarations());
+    checkIfLossDeclarationsExceedCoverageAmount(claim.getLossDeclarations());
   }
 
   private void checkIfClaimOutsideCoveragePeriod() {
@@ -67,7 +76,15 @@ public class Policy extends AggregateRoot {
     }
   }
 
-  private void checkIfLossDeclarationContainsNotDeclaredBicycle(LossDeclarations lossDeclarations) {
+  private void checkIfLossDeclarationsExceedCoverageAmount(LossDeclarations lossDeclarations) {
+    Amount totalLosses = lossDeclarations.computeTotalLosses();
+    if (totalLosses.isGreaterThan(coverageAmount)) {
+      throw new LossDeclarationsExceedCoverageAmountError();
+    }
+  }
+
+  private void checkIfLossDeclarationsContainsNotDeclaredBicycle(
+      LossDeclarations lossDeclarations) {
     if (lossDeclarations.getLossDeclarations().containsKey(LossCategory.BICYCLE)) {
       throw new NotDeclaredBicycleError();
     }

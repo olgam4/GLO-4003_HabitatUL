@@ -39,4 +39,8 @@ public class Amount extends ValueObject {
   public Amount multiply(double factor) {
     return new Amount(value.multiply(BigDecimal.valueOf(factor)));
   }
+
+  public boolean isGreaterThan(Amount otherAmount) {
+    return value.compareTo(otherAmount.value) > 0;
+  }
 }

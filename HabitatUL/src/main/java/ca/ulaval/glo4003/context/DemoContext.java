@@ -124,7 +124,7 @@ public class DemoContext implements Context {
     ServiceLocator.register(
         AnimalsAdjustmentProvider.class, new HardCodedAnimalsAdjustmentProvider());
     ServiceLocator.register(
-        AnimalsAdjustmentLimitsProvider.class, new HardCodedAnimaAdjustmentLimitsProvider());
+        AnimalsAdjustmentLimitsProvider.class, new HardCodedAnimalsAdjustmentLimitsProvider());
     ServiceLocator.register(
         PreferentialProgramAdjustmentProvider.class,
         new JsonPreferentialProgramAdjustmentProvider());

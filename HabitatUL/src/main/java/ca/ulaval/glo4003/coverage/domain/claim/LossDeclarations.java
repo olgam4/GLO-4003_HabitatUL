@@ -14,4 +14,8 @@ public class LossDeclarations {
   public Map<LossCategory, Amount> getLossDeclarations() {
     return lossDeclarations;
   }
+
+  public Amount computeTotalLosses() {
+    return lossDeclarations.values().stream().reduce(Amount.ZERO, Amount::add);
+  }
 }

@@ -2,7 +2,9 @@ package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import com.github.javafaker.Faker;
@@ -13,11 +15,13 @@ public class PolicyBuilder {
   private static final PolicyId DEFAULT_POLICY_ID = createPolicyId();
   private static final String DEFAULT_QUOTE_KEY = Faker.instance().internet().uuid();
   private static final Period DEFAULT_COVERAGE_PERIOD = TemporalGenerator.createPeriod();
+  private static final Amount DEFAULT_AMOUNT = MoneyGenerator.createAmount();
   private static final ClockProvider DEFAULT_CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
 
   private PolicyId policyId = DEFAULT_POLICY_ID;
   private String quoteKey = DEFAULT_QUOTE_KEY;
   private Period coveragePeriod = DEFAULT_COVERAGE_PERIOD;
+  private Amount coverageAmount = DEFAULT_AMOUNT;
   private ClockProvider clockProvider = DEFAULT_CLOCK_PROVIDER;
 
   private PolicyBuilder() {}
@@ -31,7 +35,12 @@ public class PolicyBuilder {
     return this;
   }
 
+  public PolicyBuilder withCoverageAmount(Amount coverageAmount) {
+    this.coverageAmount = coverageAmount;
+    return this;
+  }
+
   public Policy build() {
-    return new Policy(policyId, quoteKey, coveragePeriod, clockProvider);
+    return new Policy(policyId, quoteKey, coveragePeriod, coverageAmount, clockProvider);
   }
 }

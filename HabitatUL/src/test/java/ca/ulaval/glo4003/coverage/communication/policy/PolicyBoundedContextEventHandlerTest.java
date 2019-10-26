@@ -2,7 +2,9 @@ package ca.ulaval.glo4003.coverage.communication.policy;
 
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequestedEvent;
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import com.github.javafaker.Faker;
@@ -19,6 +21,7 @@ public class PolicyBoundedContextEventHandlerTest {
   private static final String QUOTE_KEY = Faker.instance().internet().uuid();
   private static final Period COVERAGE_PERIOD = TemporalGenerator.createPeriod();
   private static final Date PURCHASE_DATE = TemporalGenerator.createDate();
+  private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmount();
 
   @Mock private PolicyAppService policyAppService;
 
@@ -32,10 +35,12 @@ public class PolicyBoundedContextEventHandlerTest {
   @Test
   public void handlingPolicyCreationRequestedEvent_shouldDelegateToPolicyAppService() {
     PolicyCreationRequestedEvent event =
-        new PolicyCreationRequestedEvent(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE);
+        new PolicyCreationRequestedEvent(
+            QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE, COVERAGE_AMOUNT);
 
     subject.handlePolicyCreationRequestedEvent(event);
 
-    verify(policyAppService).issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE);
+    verify(policyAppService)
+        .issuePolicy(QUOTE_KEY, COVERAGE_PERIOD, PURCHASE_DATE, COVERAGE_AMOUNT);
   }
 }

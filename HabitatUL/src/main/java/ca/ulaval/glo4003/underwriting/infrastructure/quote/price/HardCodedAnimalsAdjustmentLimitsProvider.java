@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentLimits
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 
-public class HardCodedAnimaAdjustmentLimitsProvider implements AnimalsAdjustmentLimitsProvider {
+public class HardCodedAnimalsAdjustmentLimitsProvider implements AnimalsAdjustmentLimitsProvider {
   static final QuotePriceAdjustment MAXIMUM_ADJUSTMENT = new MultiplicativeQuotePriceAdjustment(1f);
   static final QuotePriceAdjustment MINIMUM_ADJUSTMENT =
       new MultiplicativeQuotePriceAdjustment(-0.1f);

@@ -40,4 +40,8 @@ public class ClaimGenerator {
     // TODO: feed values
     return new LossDeclarations(new HashMap<>());
   }
+
+  public static LossCategory createLossCategory() {
+    return EnumSampler.sample(LossCategory.class);
+  }
 }

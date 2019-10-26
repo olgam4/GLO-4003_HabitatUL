@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -13,10 +14,11 @@ public class PolicyFactory {
     this.clockProvider = clockProvider;
   }
 
-  public Policy create(String quoteKey, Period coveragePeriod, Date purchaseDate) {
+  public Policy create(
+      String quoteKey, Period coveragePeriod, Date purchaseDate, Amount coverageAmount) {
     PolicyId policyId = new PolicyId();
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
-    return new Policy(policyId, quoteKey, adjustedCoveragePeriod, clockProvider);
+    return new Policy(policyId, quoteKey, adjustedCoveragePeriod, coverageAmount, clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {
