@@ -12,6 +12,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 public class TemporalGenerator {
+  public static Date getNowDate() {
+    return Date.now(getClockProvider().getClock());
+  }
+
   public static Date createDate() {
     return Date.from(createDateTime().getValue().toLocalDate());
   }
@@ -54,6 +58,18 @@ public class TemporalGenerator {
 
   public static Period createPeriod() {
     return new Period(createDate(), createDate());
+  }
+
+  public static Period createPastPeriod() {
+    Date endDate = createDateBefore(getNowDate());
+    Date startDate = createDateBefore(endDate);
+    return new Period(startDate, endDate);
+  }
+
+  public static Period createActivePeriod() {
+    Date startDate = createDateBefore(getNowDate());
+    Date endDate = createDateAfter(getNowDate());
+    return new Period(startDate, endDate);
   }
 
   public static java.time.Period createJavaTimePeriod() {

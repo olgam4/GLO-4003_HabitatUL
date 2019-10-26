@@ -13,6 +13,7 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
@@ -24,7 +25,7 @@ public class PolicyAppService {
 
   public PolicyAppService() {
     this(
-        new PolicyFactory(),
+        new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));

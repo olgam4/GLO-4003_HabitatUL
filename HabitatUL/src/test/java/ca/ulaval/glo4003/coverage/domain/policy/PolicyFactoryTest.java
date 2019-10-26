@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
 import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import com.github.javafaker.Faker;
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyFactoryTest {
+  private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
   private static final String QUOTE_KEY = Faker.instance().internet().uuid();
   private static final Period COVERAGE_PERIOD = TemporalGenerator.createPeriod();
   private static final Date BEFORE_COVERAGE_PERIOD_START_DATE =
@@ -24,7 +26,7 @@ public class PolicyFactoryTest {
 
   @Before
   public void setUp() {
-    subject = new PolicyFactory();
+    subject = new PolicyFactory(CLOCK_PROVIDER);
   }
 
   @Test

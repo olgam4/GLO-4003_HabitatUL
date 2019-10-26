@@ -3,13 +3,16 @@ package ca.ulaval.glo4003.coverage.domain.policy;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.LossCategory;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.coverage.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
+import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.mediator.Event;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +26,8 @@ public class PolicyTest {
 
   @Before
   public void setUp() {
-    subject = PolicyGenerator.createPolicy();
+    subject =
+        PolicyBuilder.aPolicy().withCoveragePeriod(TemporalGenerator.createActivePeriod()).build();
   }
 
   @Test
@@ -34,6 +38,15 @@ public class PolicyTest {
 
     assertEquals(1, events.size());
     assertEquals(PolicyIssuedEvent.class, events.get(0).getClass());
+  }
+
+  @Test(expected = ClaimOutsideCoveragePeriodError.class)
+  public void openingClaim_shouldCheckThatClaimIsOpenedWithInCoveragePeriod() {
+    Period pastPeriod = TemporalGenerator.createPastPeriod();
+    subject = PolicyBuilder.aPolicy().withCoveragePeriod(pastPeriod).build();
+    Claim claim = ClaimGenerator.createClaim();
+
+    subject.openClaim(claim);
   }
 
   @Test(expected = NotDeclaredBicycleError.class)

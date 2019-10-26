@@ -1,15 +1,22 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 import java.time.LocalDate;
 
 public class PolicyFactory {
+  private ClockProvider clockProvider;
+
+  public PolicyFactory(ClockProvider clockProvider) {
+    this.clockProvider = clockProvider;
+  }
+
   public Policy create(String quoteKey, Period coveragePeriod, Date purchaseDate) {
     PolicyId policyId = new PolicyId();
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
-    return new Policy(policyId, quoteKey, adjustedCoveragePeriod);
+    return new Policy(policyId, quoteKey, adjustedCoveragePeriod, clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

@@ -8,7 +8,10 @@ import com.github.javafaker.Faker;
 public class PolicyGenerator {
   public static Policy createPolicy() {
     return new Policy(
-        createPolicyId(), Faker.instance().internet().uuid(), TemporalGenerator.createPeriod());
+        createPolicyId(),
+        Faker.instance().internet().uuid(),
+        TemporalGenerator.createPeriod(),
+        TemporalGenerator.getClockProvider());
   }
 
   public static PolicyId createPolicyId() {

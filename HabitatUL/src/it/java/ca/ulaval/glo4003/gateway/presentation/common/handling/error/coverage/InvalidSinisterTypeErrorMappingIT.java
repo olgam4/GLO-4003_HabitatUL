@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.handling.error.underwriting;
+package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
 
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidSinisterTypeError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
