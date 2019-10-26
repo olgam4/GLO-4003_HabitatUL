@@ -86,4 +86,15 @@ public class PolicyTest {
 
     assertTrue(subject.getClaims().contains(claim.getClaimId()));
   }
+
+  @Test
+  public void openingClaim_withValidClaim_shouldRegisterClaimOpenedEvent() {
+    Claim claim = ClaimGenerator.createClaim();
+
+    subject.openClaim(claim);
+    List<Event> events = subject.getEvents();
+
+    assertEquals(1, events.size());
+    assertEquals(ClaimOpenedEvent.class, events.get(0).getClass());
+  }
 }

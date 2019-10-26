@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 public class QuotePaymentRequestedEvent extends Event {
-  private String quoteKey;
-  private Money total;
+  private final String quoteKey;
+  private final Money total;
 
   public QuotePaymentRequestedEvent(String quoteKey, Money total) {
     this.quoteKey = quoteKey;

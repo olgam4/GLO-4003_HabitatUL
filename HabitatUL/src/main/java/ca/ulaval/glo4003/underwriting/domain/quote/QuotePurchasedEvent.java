@@ -7,11 +7,11 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuotePurchasedEvent extends Event {
-  private QuoteId quoteId;
-  private QuoteForm quoteForm;
-  private Period effectivePeriod;
-  private Money price;
-  private Date purchaseDate;
+  private final QuoteId quoteId;
+  private final QuoteForm quoteForm;
+  private final Period effectivePeriod;
+  private final Money price;
+  private final Date purchaseDate;
 
   public QuotePurchasedEvent(
       QuoteId quoteId,

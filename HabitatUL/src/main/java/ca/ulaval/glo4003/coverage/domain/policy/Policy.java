@@ -60,7 +60,8 @@ public class Policy extends AggregateRoot {
   public void openClaim(Claim claim) {
     validateClaim(claim);
     claims.add(claim.getClaimId());
-    // TODO: register Event OpenedClaim
+    registerEvent(
+        new ClaimOpenedEvent(policyId, claim.getClaimId(), Date.now(clockProvider.getClock())));
   }
 
   private void validateClaim(Claim claim) {

@@ -6,10 +6,10 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 public class PolicyCreationRequestedEvent extends Event {
-  private String quoteKey;
-  private Period coveragePeriod;
-  private Date purchaseDate;
-  private Amount coverageAmount;
+  private final String quoteKey;
+  private final Period coveragePeriod;
+  private final Date purchaseDate;
+  private final Amount coverageAmount;
 
   public PolicyCreationRequestedEvent(
       String quoteKey, Period coveragePeriod, Date purchaseDate, Amount coverageAmount) {

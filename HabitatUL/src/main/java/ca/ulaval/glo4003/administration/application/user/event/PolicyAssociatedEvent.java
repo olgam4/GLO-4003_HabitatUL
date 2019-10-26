@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.administration.application.user.event;
 import ca.ulaval.glo4003.mediator.Event;
 
 public class PolicyAssociatedEvent extends Event {
-  private String policyKey;
-  private String quoteKey;
+  private final String policyKey;
+  private final String quoteKey;
 
   public PolicyAssociatedEvent(String policyKey, String quoteKey) {
     this.policyKey = policyKey;
