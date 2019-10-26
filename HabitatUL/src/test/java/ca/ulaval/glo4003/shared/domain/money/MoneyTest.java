@@ -25,6 +25,14 @@ public class MoneyTest {
   }
 
   @Test
+  public void subtractingMoney_shouldSubtract() {
+    Money money = MONEY.subtract(OTHER_MONEY);
+
+    Money expected = format(MONEY_VALUE.subtract(OTHER_MONEY_VALUE));
+    assertEquals(expected, money);
+  }
+
+  @Test
   public void multiplyingMoney_shouldMultiply() {
     double factor = Faker.instance().number().randomDouble(5, 0, 1000);
 

@@ -24,7 +24,9 @@ public class QuotePriceCalculator {
         new CivilLiabilityLimitFormulaPart(
             ServiceLocator.resolve(CivilLiabilityLimitAdjustmentProvider.class)));
     quotePriceFormula.addFormulaPart(
-        new AnimalsFormulaPart(ServiceLocator.resolve(AnimalsAdjustmentProvider.class)));
+        new AnimalsFormulaPart(
+            ServiceLocator.resolve(AnimalsAdjustmentProvider.class),
+            ServiceLocator.resolve(AnimalsAdjustmentLimitsProvider.class)));
     quotePriceFormula.addFormulaPart(
         new PreferentialProgramFormulaPart(
             ServiceLocator.resolve(PreferentialProgramAdjustmentProvider.class)));

@@ -27,6 +27,10 @@ public class Money extends ValueObject {
     return new Money(amount.add(money.amount));
   }
 
+  public Money subtract(Money money) {
+    return new Money(amount.subtract(money.amount));
+  }
+
   public Money multiply(double factor) {
     return new Money(amount.multiply(factor));
   }

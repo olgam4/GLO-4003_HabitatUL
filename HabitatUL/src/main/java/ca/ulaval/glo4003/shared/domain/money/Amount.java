@@ -32,6 +32,10 @@ public class Amount extends ValueObject {
     return new Amount(value.add(amount.value));
   }
 
+  public Amount subtract(Amount amount) {
+    return new Amount(value.subtract(amount.value));
+  }
+
   public Amount multiply(double factor) {
     return new Amount(value.multiply(BigDecimal.valueOf(factor)));
   }
