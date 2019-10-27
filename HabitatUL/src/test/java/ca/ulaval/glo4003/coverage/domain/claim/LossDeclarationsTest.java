@@ -6,13 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmount;
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createLossCategory;
 import static org.junit.Assert.assertEquals;
 
 public class LossDeclarationsTest {
-  private static final LossCategory LOSS_CATEGORY = createLossCategory();
+  private static final LossCategory LOSS_CATEGORY = LossCategory.COMPUTER_EQUIPMENT;
   private static final Amount LOSS_AMOUNT = createAmount();
-  private static final LossCategory ANOTHER_LOSS_CATEGORY = createLossCategory();
+  private static final LossCategory ANOTHER_LOSS_CATEGORY = LossCategory.OTHER;
   private static final Amount ANOTHER_LOSS_AMOUNT = createAmount();
   private LossDeclarations subject;
 
