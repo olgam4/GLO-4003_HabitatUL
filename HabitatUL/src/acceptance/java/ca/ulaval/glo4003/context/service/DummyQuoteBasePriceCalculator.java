@@ -1,17 +1,13 @@
-package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
+package ca.ulaval.glo4003.context.service;
 
+import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculator;
 
 public class DummyQuoteBasePriceCalculator implements QuoteBasePriceCalculator {
-  private Money price;
-
-  public DummyQuoteBasePriceCalculator(Money price) {
-    this.price = price;
-  }
-
+  @Override
   public Money computeQuoteBasePrice(QuoteForm quoteForm) {
-    return price;
+    return MoneyGenerator.create();
   }
 }

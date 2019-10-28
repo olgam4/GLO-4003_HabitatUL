@@ -225,7 +225,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Integration Test -->
+            <!-- Integration & Acceptance Test -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -240,6 +240,7 @@
                         <configuration>
                             <sources>
                                 <source>src/it/java</source>
+                                <source>src/acceptance/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -261,6 +262,21 @@
                             </excludes>
                             <includes>
                                 <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>acceptance-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*Test.java</exclude>
+                                <exclude>**/*IT.java</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*Story.java</include>
                             </includes>
                         </configuration>
                     </execution>

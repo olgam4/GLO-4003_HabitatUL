@@ -27,8 +27,6 @@ import ca.ulaval.glo4003.coverage.persistence.policy.InMemoryPolicyRepository;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.ConfigBasedLocalZoneIdProvider;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
 import ca.ulaval.glo4003.mediator.Mediator;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
-import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
 import ca.ulaval.glo4003.shared.infrastructure.SystemDefaultZoneClockProvider;
@@ -44,7 +42,6 @@ import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.*;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryDecorator;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
-import java.math.BigDecimal;
 import java.util.Properties;
 
 public class DemoContext implements Context {
@@ -110,14 +107,13 @@ public class DemoContext implements Context {
   }
 
   private void registerUnderwritingServices() {
-    Money hardCodedPrice = new Money(new Amount(BigDecimal.valueOf(200)));
     ServiceLocator.register(
         QuoteEffectivePeriodProvider.class, new ConfigBasedQuoteEffectivePeriodProvider());
     ServiceLocator.register(
         QuoteValidityPeriodProvider.class, new ConfigBasedQuoteValidityPeriodProvider());
     ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
     ServiceLocator.register(
-        QuoteBasePriceCalculator.class, new DummyQuoteBasePriceCalculator(hardCodedPrice));
+        QuoteBasePriceCalculator.class, new HardCodedQuoteBasePriceCalculator());
     ServiceLocator.register(
         CivilLiabilityLimitAdjustmentProvider.class,
         new HardCodedCivilLiabilityLimitAdjustmentProvider());

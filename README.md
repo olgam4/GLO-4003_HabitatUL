@@ -28,7 +28,7 @@ To execute unit tests separately:
 mvn surefire:test
 ```
 
-Similarly, for integration tests:
+However, integration and acceptance tests must be executed together:
 
 ```{bash}
 mvn failsafe:integration-test

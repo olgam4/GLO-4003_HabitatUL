@@ -21,7 +21,7 @@ public class LocationGenerator {
         createZipCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
   }
 
-  private static ZipCode createZipCode() {
+  public static ZipCode createZipCode() {
     try {
       String zipCodeValue = Faker.instance().address().zipCode();
       return new ZipCode(zipCodeValue, zipCode -> zipCode);
@@ -39,7 +39,7 @@ public class LocationGenerator {
     return Faker.instance().number().digit();
   }
 
-  private static Floor createFloor() {
+  public static Floor createFloor() {
     try {
       Faker faker = Faker.instance();
       String floorValue = faker.lordOfTheRings().location();
