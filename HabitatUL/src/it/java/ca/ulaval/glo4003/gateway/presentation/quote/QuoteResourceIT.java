@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
+import ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
@@ -63,8 +64,8 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingQuotePath_withValidRequest_shouldHaveExpectedStatusCode() {
-    JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
+  public void postingQuotePath_shouldHaveExpectedStatusCode() {
+    JSONObject request = RequestBodyGenerator.createQuoteRequestBody();
 
     int expectedStatusCode = Response.Status.CREATED.getStatusCode();
     getBaseScenario()
@@ -77,8 +78,8 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingQuotePath_withValidRequest_shouldProvideLocationCreatedQuote() {
-    JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
+  public void postingQuotePath_shouldProvideLocationCreatedQuote() {
+    JSONObject request = RequestBodyGenerator.createQuoteRequestBody();
 
     String expectedLocation = toUri(QUOTE_ROUTE, quoteDto.getQuoteId().toRepresentation());
     getBaseScenario()
@@ -91,8 +92,8 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingQuotePath_withValidRequest_shouldProvideProperlyFormattedResponse() {
-    JSONObject request = QuoteRequestBuilder.aQuoteRequest().build();
+  public void postingQuotePath_shouldProvideProperlyFormattedResponse() {
+    JSONObject request = RequestBodyGenerator.createQuoteRequestBody();
 
     getBaseScenario()
         .given()
@@ -104,7 +105,7 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingPurchaseQuotePath_withValidQuoteId_shouldHaveExpectedStatusCode() {
+  public void postingPurchaseQuotePath_shouldHaveExpectedStatusCode() {
     String path = toPath(QUOTE_ROUTE, quoteDto.getQuoteId().toRepresentation(), PURCHASE_ROUTE);
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();

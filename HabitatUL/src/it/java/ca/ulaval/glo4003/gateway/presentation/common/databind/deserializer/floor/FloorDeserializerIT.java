@@ -13,10 +13,10 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_FLOOR_VALUE;
+
 @RunWith(Enclosed.class)
 public class FloorDeserializerIT {
-  private static final String VALID_VALUE = "RC";
-
   @RunWith(Parameterized.class)
   public static class ValidTestCasesFloorCustomDeserializerIT
       extends ValidTestCasesCustomDeserializerIT {
@@ -28,7 +28,7 @@ public class FloorDeserializerIT {
 
     @Parameterized.Parameters
     public static Collection parameters() {
-      return Arrays.asList(new Object[][] {{VALID_VALUE}});
+      return Arrays.asList(new Object[][] {{VALID_FLOOR_VALUE}});
     }
 
     @Override
@@ -53,8 +53,8 @@ public class FloorDeserializerIT {
             {""},
             {Faker.instance().number().randomDigit()},
             {"INVALID"},
-            {new JSONObject().put("test", VALID_VALUE).toString()},
-            {new JSONArray().put(VALID_VALUE).toString()}
+            {new JSONObject().put("test", VALID_FLOOR_VALUE).toString()},
+            {new JSONArray().put(VALID_FLOOR_VALUE).toString()}
           });
     }
 

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.epic.purchaseInsurance;
 
 import ca.ulaval.glo4003.AcceptanceTestHelper;
-import ca.ulaval.glo4003.context.TestCase;
+import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
@@ -23,7 +23,7 @@ public class InsureAnApartmentStory {
   @Before
   public void setUp() {
     quoteAppService = new QuoteAppService();
-    quoteFormDto = TestCase.getValidQuoteFormDto();
+    quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
   }
 
   @Test

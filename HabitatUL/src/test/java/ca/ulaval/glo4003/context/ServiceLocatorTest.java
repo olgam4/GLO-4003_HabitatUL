@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.context.exception.CannotRegisterContractTwiceException;
-import ca.ulaval.glo4003.context.exception.UnableResolveServiceException;
+import ca.ulaval.glo4003.context.exception.CannotReplaceUnregisteredContract;
+import ca.ulaval.glo4003.context.exception.CannotResolveServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public class ServiceLocatorTest {
@@ -14,7 +16,7 @@ public class ServiceLocatorTest {
   }
 
   @Test
-  public void resolvingContract_withRegisteredService_shouldResolvesService() {
+  public void resolvingContract_withRegisteredService_shouldResolveService() {
     TestImplementation expectedImplementation = new TestImplementation();
     ServiceLocator.register(TestContract.class, expectedImplementation);
 
@@ -23,8 +25,8 @@ public class ServiceLocatorTest {
     assertSame(expectedImplementation, observedImplementation);
   }
 
-  @Test(expected = UnableResolveServiceException.class)
-  public void resolvingContract_withoutRegisteredService_shouldThrow() {
+  @Test(expected = CannotResolveServiceException.class)
+  public void resolvingContract_withUnregisteredService_shouldThrow() {
     ServiceLocator.resolve(Test.class);
   }
 
@@ -33,6 +35,22 @@ public class ServiceLocatorTest {
     ServiceLocator.register(TestContract.class, new TestImplementation());
 
     ServiceLocator.register(TestContract.class, new TestImplementation());
+  }
+
+  @Test
+  public void replacingContract_withRegisteredService_shouldReplaceService() {
+    ServiceLocator.register(TestContract.class, new TestImplementation());
+
+    AnotherTestImplementation replacingService = new AnotherTestImplementation();
+    ServiceLocator.replace(TestContract.class, replacingService);
+
+    TestContract service = ServiceLocator.resolve(TestContract.class);
+    assertEquals(replacingService, service);
+  }
+
+  @Test(expected = CannotReplaceUnregisteredContract.class)
+  public void replacingContract_withUnregisteredService_shouldThrow() {
+    ServiceLocator.replace(TestContract.class, new TestImplementation());
   }
 
   @Test
@@ -47,4 +65,6 @@ public class ServiceLocatorTest {
   private interface TestContract {}
 
   private class TestImplementation implements TestContract {}
+
+  private class AnotherTestImplementation implements TestContract {}
 }

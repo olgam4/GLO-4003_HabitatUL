@@ -33,10 +33,14 @@ import ca.ulaval.glo4003.shared.infrastructure.SystemDefaultZoneClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.FloorFormatter;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCodeFormatter;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.*;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.CanadianZipCodeFormatter;
+import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.UsCanadianConventionFloorFormatter;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.*;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryDecorator;
@@ -65,7 +69,9 @@ public class DemoContext implements Context {
   private void registerCommonServices() {
     MediatorChanneler.registerChannels(mediator);
     ServiceLocator.register(ClockProvider.class, new SystemDefaultZoneClockProvider());
+    ServiceLocator.register(FloorFormatter.class, new UsCanadianConventionFloorFormatter());
     ServiceLocator.register(LocalZoneIdProvider.class, new ConfigBasedLocalZoneIdProvider());
+    ServiceLocator.register(ZipCodeFormatter.class, new CanadianZipCodeFormatter());
   }
 
   private void registerManagementServices() {

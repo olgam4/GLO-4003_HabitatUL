@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
+import ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.helper.user.TokenGenerator;
 import com.github.javafaker.Faker;
@@ -57,8 +58,8 @@ public class UserResourceIT {
   }
 
   @Test
-  public void postingUserPath_withValidRequest_shouldHaveExpectedStatusCode() {
-    JSONObject request = CredentialsBuilder.aCredentialsRequest().build();
+  public void postingUserPath_shouldHaveExpectedStatusCode() {
+    JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
 
     getBaseScenario()
         .given()
@@ -70,8 +71,8 @@ public class UserResourceIT {
   }
 
   @Test
-  public void postingUserPath_withValidRequest_shouldProvideLocationCreatedUser() {
-    JSONObject request = CredentialsBuilder.aCredentialsRequest().build();
+  public void postingUserPath_shouldProvideLocationCreatedUser() {
+    JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
 
     String expectedLocation = toUri(USER_ROUTE, USER_KEY);
     getBaseScenario()
@@ -84,9 +85,9 @@ public class UserResourceIT {
   }
 
   @Test
-  public void postingUserAuthenticationPath_withValidRequest_shouldHaveExpectedStatusCode() {
+  public void postingUserAuthenticationPath_shouldHaveExpectedStatusCode() {
     String path = toPath(USER_ROUTE, AUTHENTICATION_ROUTE);
-    JSONObject request = CredentialsBuilder.aCredentialsRequest().build();
+    JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
 
     getBaseScenario()
         .given()
@@ -98,10 +99,9 @@ public class UserResourceIT {
   }
 
   @Test
-  public void
-      postingUserAuthenticationPath_withValidRequest_shouldProvideProperlyFormattedResponse() {
+  public void postingUserAuthenticationPath_shouldProvideProperlyFormattedResponse() {
     String path = toPath(USER_ROUTE, AUTHENTICATION_ROUTE);
-    JSONObject request = CredentialsBuilder.aCredentialsRequest().build();
+    JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
 
     getBaseScenario()
         .given()

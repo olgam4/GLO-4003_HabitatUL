@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class BuildingGenerator {
-  private static int MIN_NUMBER_OF_UNITS = 1;
-  private static int MAX_NUMBER_OF_UNITS = 200;
+  private static int MIN_NUMBER_OF_UNITS = 4;
+  private static int MAX_NUMBER_OF_UNITS = 50;
 
   public static BuildingRequest createBuildingRequest() {
     return new BuildingRequest(
