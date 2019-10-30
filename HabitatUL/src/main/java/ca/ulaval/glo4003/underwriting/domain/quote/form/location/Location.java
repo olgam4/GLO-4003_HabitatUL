@@ -2,11 +2,11 @@ package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
 public class Location {
   private ZipCode zipCode;
-  private int streetNumber;
+  private String streetNumber;
   private String apartmentNumber;
   private Floor floor;
 
-  public Location(ZipCode zipCode, Integer streetNumber, String apartmentNumber, Floor floor) {
+  public Location(ZipCode zipCode, String streetNumber, String apartmentNumber, Floor floor) {
     this.zipCode = zipCode;
     this.streetNumber = streetNumber;
     this.apartmentNumber = apartmentNumber;
@@ -17,7 +17,7 @@ public class Location {
     return zipCode;
   }
 
-  public int getStreetNumber() {
+  public String getStreetNumber() {
     return streetNumber;
   }
 

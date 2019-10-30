@@ -31,8 +31,8 @@ public class LocationGenerator {
     }
   }
 
-  public static int createStreetNumber() {
-    return Faker.instance().number().numberBetween(MIN_STREET_NUMBER, MAX_STREET_NUMBER);
+  public static String createStreetNumber() {
+    return Faker.instance().address().streetName();
   }
 
   public static String createApartmentNumber() {
