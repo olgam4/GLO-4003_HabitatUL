@@ -66,7 +66,7 @@ public class RequestBodyGenerator {
   private static JSONObject toRequestBody(PersonalPropertyRequest personalPropertyRequest) {
     JSONObject json = new JSONObject();
     json.put("coverageAmount", personalPropertyRequest.getCoverageAmount().getValue());
-    json.put("animals", toRequestBody(personalPropertyRequest.getAnimals()));
+    personalPropertyRequest.getAnimals().map(x -> json.put("animals", toRequestBody(x)));
     return json;
   }
 

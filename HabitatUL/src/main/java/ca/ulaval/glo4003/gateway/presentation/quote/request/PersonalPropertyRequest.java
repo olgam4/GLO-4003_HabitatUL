@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 public class PersonalPropertyRequest {
   @NotNull private Amount coverageAmount;
@@ -20,7 +21,7 @@ public class PersonalPropertyRequest {
     return coverageAmount;
   }
 
-  public Animals getAnimals() {
-    return animals;
+  public Optional<Animals> getAnimals() {
+    return Optional.ofNullable(animals);
   }
 }

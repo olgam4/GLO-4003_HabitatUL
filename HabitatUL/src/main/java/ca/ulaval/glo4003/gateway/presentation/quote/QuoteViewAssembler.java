@@ -25,6 +25,7 @@ import static ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity.UNFILLED_IDENTITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals.UNFILLED_ANIMALS;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
@@ -86,7 +87,7 @@ public class QuoteViewAssembler {
   private PersonalProperty fromPersonalPropertyRequest(
       PersonalPropertyRequest personalPropertyRequest) {
     Amount coverageAmount = personalPropertyRequest.getCoverageAmount();
-    Animals animals = personalPropertyRequest.getAnimals();
+    Animals animals = personalPropertyRequest.getAnimals().orElse(UNFILLED_ANIMALS);
     return new PersonalProperty(coverageAmount, animals);
   }
 

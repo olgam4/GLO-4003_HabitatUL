@@ -13,12 +13,12 @@ public class LocationGenerator {
 
   public static LocationRequest createLocationRequest() {
     return new LocationRequest(
-        createZipCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
+        createZipCode(), createStreetNumber(), createApartmentNumber(), createFloor());
   }
 
   public static Location createLocation() {
     return new Location(
-        createZipCode(), getRandomStreetNumber(), createApartmentNumber(), createFloor());
+        createZipCode(), createStreetNumber(), createApartmentNumber(), createFloor());
   }
 
   public static ZipCode createZipCode() {
@@ -31,11 +31,11 @@ public class LocationGenerator {
     }
   }
 
-  private static int getRandomStreetNumber() {
+  public static int createStreetNumber() {
     return Faker.instance().number().numberBetween(MIN_STREET_NUMBER, MAX_STREET_NUMBER);
   }
 
-  private static String createApartmentNumber() {
+  public static String createApartmentNumber() {
     return Faker.instance().number().digit();
   }
 

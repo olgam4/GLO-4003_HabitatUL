@@ -10,7 +10,7 @@ public class QuoteRequest {
   @NotNull @Valid private IdentityRequest personalInformation;
   @Valid private IdentityRequest additionalInsured;
   @NotNull @Valid private LocationRequest location;
-  @NotNull @Valid private Date effectiveDate;
+  @NotNull private Date effectiveDate;
   @NotNull @Valid private BuildingRequest building;
   @NotNull @Valid private PersonalPropertyRequest personalProperty;
   @Valid private CivilLiabilityRequest civilLiability;

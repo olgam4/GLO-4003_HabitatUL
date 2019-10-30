@@ -7,19 +7,19 @@ import com.github.javafaker.Faker;
 public class UniversityProfileGenerator {
   public static UniversityProfileRequest createUniversityProfileRequest() {
     return new UniversityProfileRequest(
-        createIdul(), createIdentificationNumber(), createCycle(), createDegree(), createProgram());
+        createIdul(), createNi(), createCycle(), createDegree(), createProgram());
   }
 
   public static UniversityProfile createUniversityProfile() {
     return new UniversityProfile(
-        createIdentificationNumber(), createIdul(), createCycle(), createDegree(), createProgram());
+        createNi(), createIdul(), createCycle(), createDegree(), createProgram());
   }
 
   public static String createIdul() {
     return Faker.instance().name().username();
   }
 
-  public static String createIdentificationNumber() {
+  public static String createNi() {
     return Faker.instance().idNumber().valid();
   }
 

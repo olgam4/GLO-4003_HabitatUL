@@ -25,6 +25,13 @@ public class IntegrationTestContext implements Context {
     System.setProperty("org.eclipse.jetty.LEVEL", "OFF");
   }
 
+  private static FloorFormatter getDummyFloorFormatter() {
+    return floorValue -> {
+      if (floorValue.equals(VALID_FLOOR_VALUE)) return Faker.instance().number().randomDigit();
+      throw new InvalidArgumentException();
+    };
+  }
+
   @Override
   public void execute() {
     disableLogging();
@@ -35,12 +42,5 @@ public class IntegrationTestContext implements Context {
     ServiceLocator.register(FloorFormatter.class, getDummyFloorFormatter());
     ServiceLocator.register(LocalZoneIdProvider.class, () -> ZoneId.of("UTC"));
     ServiceLocator.register(ZipCodeFormatter.class, (x) -> x);
-  }
-
-  private static FloorFormatter getDummyFloorFormatter() {
-    return floorValue -> {
-      if (floorValue.equals(VALID_FLOOR_VALUE)) return Faker.instance().number().randomDigit();
-      throw new InvalidArgumentException();
-    };
   }
 }

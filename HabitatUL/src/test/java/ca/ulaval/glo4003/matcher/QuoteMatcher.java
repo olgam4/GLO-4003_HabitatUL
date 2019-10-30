@@ -92,7 +92,7 @@ public class QuoteMatcher {
       final PersonalPropertyRequest personalPropertyRequest) {
     return allOf(
         hasProperty("coverageAmount", equalTo(personalPropertyRequest.getCoverageAmount())),
-        hasProperty("animals", matchesAnimal(personalPropertyRequest.getAnimals())));
+        hasProperty("animals", matchesAnimal(personalPropertyRequest.getAnimals().get())));
   }
 
   public static Matcher<CivilLiability> matchesCivilLiability(

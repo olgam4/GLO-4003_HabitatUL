@@ -6,7 +6,7 @@ import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.*;
 
 public class UniversityProfileBuilder {
   private static final String DEFAULT_IDUL = createIdul();
-  private static final String DEFAULT_IDENTIFICATION_NUMBER = createIdentificationNumber();
+  private static final String DEFAULT_IDENTIFICATION_NUMBER = createNi();
   private static final String DEFAULT_CYCLE = createCycle();
   private static final String DEFAULT_DEGREE = createDegree();
   private static final String DEFAULT_PROGRAM = createProgram();

@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class UlRegistrarOfficeIT {
   private static final String IDUL = createIdul();
-  private static final String IDENTIFICATION_NUMBER = createIdentificationNumber();
+  private static final String IDENTIFICATION_NUMBER = createNi();
   private static final String CYCLE = createCycle();
   private static final String DEGREE = createDegree();
   private static final String PROGRAM = createProgram();

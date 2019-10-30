@@ -10,7 +10,7 @@ import java.util.Set;
 public class BuildingRequest {
   @Min(value = 1L)
   @NotNull
-  private int numberOfUnits;
+  private Integer numberOfUnits;
 
   private Set<PreventionSystem> preventionSystems;
   private String commercialUse;
@@ -18,13 +18,13 @@ public class BuildingRequest {
   private BuildingRequest() {}
 
   public BuildingRequest(
-      int numberOfUnits, Set<PreventionSystem> preventionSystems, String commercialUse) {
+      Integer numberOfUnits, Set<PreventionSystem> preventionSystems, String commercialUse) {
     this.numberOfUnits = numberOfUnits;
     this.preventionSystems = preventionSystems;
     this.commercialUse = commercialUse;
   }
 
-  public int getNumberOfUnits() {
+  public Integer getNumberOfUnits() {
     return numberOfUnits;
   }
 
