@@ -2,12 +2,15 @@ package ca.ulaval.glo4003.gateway.presentation.common.handling;
 
 import org.junit.Test;
 
+import java.util.Set;
+
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.getBaseScenario;
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.matchesJsonSchema;
 import static ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorThrowingResource.ERROR_ROUTE;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
-public abstract class ErrorMappingIT extends BaseErrorMappingIT {
+public abstract class MultipleMessagesErrorMappingIT extends BaseErrorMappingIT {
   @Test
   public void gettingError_shouldHaveExpectedStatusCode() {
     getBaseScenario().given().when().get(ERROR_ROUTE).then().statusCode(getStatusCode());
@@ -20,7 +23,7 @@ public abstract class ErrorMappingIT extends BaseErrorMappingIT {
         .when()
         .get(ERROR_ROUTE)
         .then()
-        .body(matchesJsonSchema("error/ErrorResponse"));
+        .body(matchesJsonSchema("error/MultipleMessagesErrorResponse"));
   }
 
   @Test
@@ -31,12 +34,12 @@ public abstract class ErrorMappingIT extends BaseErrorMappingIT {
         .get(ERROR_ROUTE)
         .then()
         .body("error", equalTo(getErrorCodeMatcher()))
-        .body("message", equalTo(getErrorMessageMatcher()));
+        .body("messages", containsInAnyOrder(getErrorMessagesMatcher().toArray()));
   }
 
   public abstract int getStatusCode();
 
   public abstract String getErrorCodeMatcher();
 
-  public abstract String getErrorMessageMatcher();
+  public abstract Set<String> getErrorMessagesMatcher();
 }

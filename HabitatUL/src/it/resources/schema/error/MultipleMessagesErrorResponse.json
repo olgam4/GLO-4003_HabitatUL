@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "multiple messages error response",
+  "required": [
+    "error",
+    "messages"
+  ],
+  "properties": {
+    "error": {
+      "description": "error code",
+      "type": "string"
+    },
+    "description": {
+      "messages": "error messages",
+      "type": "array",
+      "items": {
+        "description": "error message",
+        "type": "string"
+      }
+    }
+  }
+}
