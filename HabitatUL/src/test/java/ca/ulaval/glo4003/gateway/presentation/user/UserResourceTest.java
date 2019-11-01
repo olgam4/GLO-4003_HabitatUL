@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -10,37 +11,41 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.matcher.CredentialsMatcher.matchesCredentials;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceTest {
-  private static final Credentials CREDENTIALS = CredentialsGenerator.createCredentials();
   private static final String USER_KEY = Faker.instance().internet().uuid();
 
   @Mock private UserAppService userAppService;
 
   private UserResource subject;
+  private CredentialsRequest credentialsRequest;
   private UserViewAssembler userViewAssembler;
 
   @Before
   public void setUp() {
+    credentialsRequest = CredentialsGenerator.createCredentialsRequest();
     userViewAssembler = new UserViewAssembler();
-    when(userAppService.createUser(CREDENTIALS)).thenReturn(USER_KEY);
+    when(userAppService.createUser(any(Credentials.class))).thenReturn(USER_KEY);
     subject = new UserResource(userAppService, userViewAssembler);
   }
 
   @Test
   public void creatingUser_shouldDelegateToUserAppService() {
-    subject.createUser(CREDENTIALS);
+    subject.createUser(credentialsRequest);
 
-    verify(userAppService).createUser(CREDENTIALS);
+    verify(userAppService).createUser(argThat(matchesCredentials(credentialsRequest)));
   }
 
   @Test
   public void authenticatingUser_shouldDelegateToUserAppService() {
-    subject.authenticateUser(CREDENTIALS);
+    subject.authenticateUser(credentialsRequest);
 
-    verify(userAppService).authenticateUser(CREDENTIALS);
+    verify(userAppService).authenticateUser(argThat(matchesCredentials(credentialsRequest)));
   }
 }

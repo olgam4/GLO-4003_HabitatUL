@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.user;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
+import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -35,7 +36,8 @@ public class UserResource {
   }
 
   @POST
-  public Response createUser(Credentials credentials) {
+  public Response createUser(CredentialsRequest credentialsRequest) {
+    Credentials credentials = userViewAssembler.from(credentialsRequest);
     String userKey = userAppService.createUser(credentials);
     URI location = UriBuilder.fromPath(CONTEXT_PATH).path(USER_ROUTE).path(userKey).build();
     return Response.created(location).build();
@@ -43,8 +45,9 @@ public class UserResource {
 
   @POST
   @Path(AUTHENTICATION_ROUTE)
-  public Response authenticateUser(Credentials authRequest) {
-    Token token = userAppService.authenticateUser(authRequest);
+  public Response authenticateUser(CredentialsRequest credentialsRequest) {
+    Credentials credentials = userViewAssembler.from(credentialsRequest);
+    Token token = userAppService.authenticateUser(credentials);
     return Response.ok(userViewAssembler.from(token)).build();
   }
 }

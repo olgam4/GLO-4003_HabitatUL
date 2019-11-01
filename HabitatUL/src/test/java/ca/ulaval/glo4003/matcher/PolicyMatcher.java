@@ -4,9 +4,7 @@ import ca.ulaval.glo4003.coverage.application.policy.event.PolicyCreationRequest
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import org.hamcrest.Matcher;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.Matchers.*;
 
 public class PolicyMatcher {
   public static Matcher<Policy> matchesPolicy(final Policy policy) {

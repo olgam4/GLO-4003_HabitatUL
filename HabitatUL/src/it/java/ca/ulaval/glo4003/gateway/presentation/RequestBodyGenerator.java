@@ -1,10 +1,11 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
+import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
-import com.github.javafaker.Faker;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -91,9 +92,10 @@ public class RequestBodyGenerator {
   }
 
   public static JSONObject createCredentialRequestBody() {
+    CredentialsRequest credentialsRequest = CredentialsGenerator.createCredentialsRequest();
     JSONObject json = new JSONObject();
-    json.put("username", Faker.instance().name().username());
-    json.put("password", Faker.instance().internet().password());
+    json.put("username", credentialsRequest.getUsername());
+    json.put("password", credentialsRequest.getPassword());
     return json;
   }
 }

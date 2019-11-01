@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.configuration;
 
-import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
@@ -49,7 +48,6 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(Amount.class, new AmountDeserializer());
     deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
     deserializers.addDeserializer(CivilLiabilityLimit.class, new CivilLiabilityLimitDeserializer());
-    deserializers.addDeserializer(Credentials.class, new CredentialsDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
