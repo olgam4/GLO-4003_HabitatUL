@@ -37,6 +37,7 @@ public class ErrorResponseFactory {
   private static void registerSharedErrors() {
     STATUS_MAP.put(InvalidAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidDateError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidDateTimeError.class, Status.BAD_REQUEST);
   }
 
   private static void registerAdministrationErrors() {
