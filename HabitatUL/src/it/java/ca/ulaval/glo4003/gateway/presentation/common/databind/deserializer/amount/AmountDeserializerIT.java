@@ -63,8 +63,8 @@ public class AmountDeserializerIT {
     }
 
     @Override
-    protected String getDeserializationErrorCause() {
-      return InvalidAmountError.class.getName();
+    protected Class getDeserializationErrorCause() {
+      return InvalidAmountError.class;
     }
   }
 }

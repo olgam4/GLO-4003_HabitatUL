@@ -86,8 +86,8 @@ public class AnimalsDeserializerIT {
     }
 
     @Override
-    protected String getDeserializationErrorCause() {
-      return InvalidAnimalsError.class.getName();
+    protected Class getDeserializationErrorCause() {
+      return InvalidAnimalsError.class;
     }
   }
 }

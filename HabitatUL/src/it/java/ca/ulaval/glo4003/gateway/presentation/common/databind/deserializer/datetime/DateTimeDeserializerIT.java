@@ -65,8 +65,8 @@ public class DateTimeDeserializerIT {
     }
 
     @Override
-    protected String getDeserializationErrorCause() {
-      return InvalidDateTimeError.class.getName();
+    protected Class getDeserializationErrorCause() {
+      return InvalidDateTimeError.class;
     }
   }
 }

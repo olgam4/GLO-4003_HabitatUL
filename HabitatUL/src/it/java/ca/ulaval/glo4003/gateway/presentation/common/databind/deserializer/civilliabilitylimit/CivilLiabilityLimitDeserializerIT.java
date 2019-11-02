@@ -64,8 +64,8 @@ public class CivilLiabilityLimitDeserializerIT {
     }
 
     @Override
-    protected String getDeserializationErrorCause() {
-      return InvalidCivilLiabilityLimitError.class.getName();
+    protected Class getDeserializationErrorCause() {
+      return InvalidCivilLiabilityLimitError.class;
     }
   }
 }

@@ -63,8 +63,8 @@ public class GenderDeserializerIT {
     }
 
     @Override
-    protected String getDeserializationErrorCause() {
-      return InvalidGenderError.class.getName();
+    protected Class getDeserializationErrorCause() {
+      return InvalidGenderError.class;
     }
   }
 }

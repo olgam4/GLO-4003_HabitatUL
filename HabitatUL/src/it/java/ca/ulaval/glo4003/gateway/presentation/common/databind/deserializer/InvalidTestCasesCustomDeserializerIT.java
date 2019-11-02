@@ -34,8 +34,8 @@ public abstract class InvalidTestCasesCustomDeserializerIT extends CustomDeseria
         .when()
         .post(DESERIALIZE_ROUTE)
         .then()
-        .body("cause", equalTo(getDeserializationErrorCause()));
+        .body("cause", equalTo(getDeserializationErrorCause().getName()));
   }
 
-  protected abstract String getDeserializationErrorCause();
+  protected abstract Class getDeserializationErrorCause();
 }

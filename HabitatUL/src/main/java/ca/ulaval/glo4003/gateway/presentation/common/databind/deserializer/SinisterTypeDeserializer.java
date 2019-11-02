@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 import java.io.IOException;
 
@@ -15,11 +16,18 @@ public class SinisterTypeDeserializer extends JsonDeserializer<SinisterType> {
   public SinisterType deserialize(
       JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    String value = node.textValue();
-    return convertValueSafely(value);
+    enforceNodeType(node);
+    return convertValueSafely(node);
   }
 
-  private SinisterType convertValueSafely(String value) throws InvalidSinisterTypeError {
+  private void enforceNodeType(JsonNode node) throws InvalidSinisterTypeError {
+    if (!node.getNodeType().equals(JsonNodeType.STRING)) {
+      throw new InvalidSinisterTypeError(node.toString());
+    }
+  }
+
+  private SinisterType convertValueSafely(JsonNode node) throws InvalidSinisterTypeError {
+    String value = node.textValue();
     try {
       return SinisterType.getEnum(value);
     } catch (InvalidArgumentException e) {
