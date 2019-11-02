@@ -67,10 +67,16 @@ public class AnimalsDeserializerIT {
             {""},
             {Faker.instance().number().randomDigit()},
             {"INVALID"},
+            {new JSONArray().put(new JSONObject().put("breed", VALID_BREED))},
+            {new JSONArray().put(new JSONObject().put("quantity", VALID_QUANTITY))},
             {new JSONArray().put(toJson(null, VALID_QUANTITY))},
+            {new JSONArray().put(toJson(VALID_BREED, null))},
             {new JSONArray().put(toJson("", VALID_QUANTITY))},
             {new JSONArray().put(toJson(Faker.instance().number().randomDigit(), VALID_QUANTITY))},
-            {new JSONArray().put(toJson(VALID_BREED, -1))},
+            {
+              new JSONArray()
+                  .put(toJson(VALID_BREED, -Faker.instance().number().randomDigitNotZero()))
+            },
           });
     }
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 import java.io.IOException;
 import java.util.EnumMap;
@@ -18,13 +19,24 @@ public class AnimalsDeserializer extends JsonDeserializer<Animals> {
   public Animals deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode nodes = jsonParser.getCodec().readTree(jsonParser);
-    if (!nodes.isArray()) throw new InvalidAnimalsError(nodes.asText());
+    enforceNodeType(nodes, JsonNodeType.ARRAY);
+    return convertValueSafely(nodes);
+  }
+
+  private void enforceNodeType(JsonNode node, JsonNodeType nodeType) throws InvalidAnimalsError {
+    if (!node.getNodeType().equals(nodeType)) {
+      throw new InvalidAnimalsError(node.toString());
+    }
+  }
+
+  private Animals convertValueSafely(JsonNode nodes) throws InvalidAnimalsError {
     return new Animals(parseNodes(nodes));
   }
 
   private Map<AnimalBreed, Integer> parseNodes(JsonNode nodes) throws InvalidAnimalsError {
     Map<AnimalBreed, Integer> animalsMap = new EnumMap<>(AnimalBreed.class);
     for (JsonNode node : nodes) {
+      enforceNodeType(node, JsonNodeType.OBJECT);
       parseNode(animalsMap, node);
     }
     return animalsMap;
@@ -42,8 +54,9 @@ public class AnimalsDeserializer extends JsonDeserializer<Animals> {
     JsonNode breedNode =
         Optional.ofNullable(node.get("breed"))
             .orElseThrow(() -> new InvalidAnimalsError(node.toString()));
+    enforceNodeType(breedNode, JsonNodeType.STRING);
     String breed = breedNode.textValue();
-    if (breed == null || breed.isEmpty()) throw new InvalidAnimalsError(node.toString());
+    if (breed.isEmpty()) throw new InvalidAnimalsError(node.toString());
     return AnimalBreed.getEnum(breed);
   }
 
@@ -51,6 +64,7 @@ public class AnimalsDeserializer extends JsonDeserializer<Animals> {
     JsonNode quantityNode =
         Optional.ofNullable(node.get("quantity"))
             .orElseThrow(() -> new InvalidAnimalsError(node.toString()));
+    enforceNodeType(quantityNode, JsonNodeType.NUMBER);
     int quantity = quantityNode.intValue();
     if (quantity < 0) throw new InvalidAnimalsError(node.toString());
     return quantity;
