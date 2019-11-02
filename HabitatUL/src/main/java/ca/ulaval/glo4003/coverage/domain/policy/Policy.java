@@ -86,7 +86,7 @@ public class Policy extends AggregateRoot {
 
   private void checkIfLossDeclarationsContainsNotDeclaredBicycle(
       LossDeclarations lossDeclarations) {
-    if (lossDeclarations.getLossDeclarations().containsKey(LossCategory.BICYCLE)) {
+    if (lossDeclarations.getCollection().containsKey(LossCategory.BICYCLE)) {
       throw new NotDeclaredBicycleError();
     }
   }

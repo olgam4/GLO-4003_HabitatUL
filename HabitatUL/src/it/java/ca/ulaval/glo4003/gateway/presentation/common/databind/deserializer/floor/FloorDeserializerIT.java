@@ -18,11 +18,10 @@ import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALI
 @RunWith(Enclosed.class)
 public class FloorDeserializerIT {
   @RunWith(Parameterized.class)
-  public static class ValidTestCasesFloorCustomDeserializerIT
-      extends ValidTestCasesCustomDeserializerIT {
+  public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public ValidTestCasesFloorCustomDeserializerIT(Object value) {
+    public ValidTestCases(Object value) {
       super(value);
     }
 
@@ -38,11 +37,10 @@ public class FloorDeserializerIT {
   }
 
   @RunWith(Parameterized.class)
-  public static class InvalidTestCasesFloorCustomDeserializerIT
-      extends InvalidTestCasesCustomDeserializerIT {
+  public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public InvalidTestCasesFloorCustomDeserializerIT(Object value) {
+    public InvalidTestCases(Object value) {
       super(value);
     }
 

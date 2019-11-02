@@ -40,7 +40,19 @@ public class Amount extends ValueObject {
     return new Amount(value.multiply(BigDecimal.valueOf(factor)));
   }
 
+  public Amount divide(double factor) {
+    return new Amount(value.divide(BigDecimal.valueOf(factor), ROUNDING));
+  }
+
+  public boolean isSmallerThan(Amount otherAmount) {
+    return value.compareTo(otherAmount.value) < 0;
+  }
+
   public boolean isGreaterThan(Amount otherAmount) {
     return value.compareTo(otherAmount.value) > 0;
+  }
+
+  public boolean isBetween(Amount firstAmount, Amount secondAmount) {
+    return isGreaterThan(firstAmount) && isSmallerThan(secondAmount);
   }
 }

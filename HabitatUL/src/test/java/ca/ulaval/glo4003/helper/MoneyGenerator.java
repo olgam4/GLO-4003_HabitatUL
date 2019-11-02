@@ -8,21 +8,42 @@ import java.math.BigDecimal;
 
 public class MoneyGenerator {
   private static final int MAX_NUMBER_OF_DECIMALS = 5;
-  private static final int MIN_VALUE = 0;
-  private static final int MAX_VALUE = 1000;
 
   public static Money create() {
     Amount amount = createAmount();
     return new Money(amount);
   }
 
-  public static Money createMaxValue() {
-    return new Money(new Amount(BigDecimal.valueOf(Long.MAX_VALUE)));
-  }
-
   public static Amount createAmount() {
     double randomDouble =
-        Faker.instance().number().randomDouble(MAX_NUMBER_OF_DECIMALS, MIN_VALUE, MAX_VALUE);
+        Faker.instance()
+            .number()
+            .randomDouble(MAX_NUMBER_OF_DECIMALS, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    return new Amount(new BigDecimal(randomDouble));
+  }
+
+  public static Amount createAmountSmallerThan(Amount amount) {
+    double randomDouble =
+        Faker.instance()
+            .number()
+            .randomDouble(MAX_NUMBER_OF_DECIMALS, Integer.MIN_VALUE, amount.getValue().intValue());
+    return new Amount(new BigDecimal(randomDouble));
+  }
+
+  public static Amount createAmountGreaterThan(Amount amount) {
+    double randomDouble =
+        Faker.instance()
+            .number()
+            .randomDouble(MAX_NUMBER_OF_DECIMALS, amount.getValue().intValue(), Integer.MAX_VALUE);
+    return new Amount(new BigDecimal(randomDouble));
+  }
+
+  public static Amount createAmountBetween(Amount min, Amount max) {
+    double randomDouble =
+        Faker.instance()
+            .number()
+            .randomDouble(
+                MAX_NUMBER_OF_DECIMALS, min.getValue().intValue(), max.getValue().intValue());
     return new Amount(new BigDecimal(randomDouble));
   }
 }

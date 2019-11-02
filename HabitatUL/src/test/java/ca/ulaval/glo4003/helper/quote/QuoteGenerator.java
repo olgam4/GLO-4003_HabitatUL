@@ -1,13 +1,14 @@
 package ca.ulaval.glo4003.helper.quote;
 
 import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.TemporalGenerator;
-import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import com.github.javafaker.Faker;
+
+import static ca.ulaval.glo4003.helper.TemporalGenerator.*;
+import static ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator.createQuoteForm;
 
 public class QuoteGenerator {
   private QuoteGenerator() {}
@@ -19,12 +20,12 @@ public class QuoteGenerator {
   public static Quote createQuote() {
     return new Quote(
         createQuoteId(),
-        QuoteFormGenerator.createQuoteForm(),
-        TemporalGenerator.createFutureDateTime(),
-        TemporalGenerator.createPeriod(),
+        createQuoteForm(),
+        createFutureDateTime(),
+        createPeriod(),
         MoneyGenerator.create(),
         false,
-        TemporalGenerator.getClockProvider());
+        getClockProvider());
   }
 
   public static QuoteId createQuoteId() {

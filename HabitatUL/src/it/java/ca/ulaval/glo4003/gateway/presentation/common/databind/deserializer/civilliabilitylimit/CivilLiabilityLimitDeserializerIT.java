@@ -18,11 +18,10 @@ public class CivilLiabilityLimitDeserializerIT {
   private static final String VALID_VALUE = "1M";
 
   @RunWith(Parameterized.class)
-  public static class CivilLiabilityLimitValidTestCasesCustomDeserializerIT
-      extends ValidTestCasesCustomDeserializerIT {
+  public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public CivilLiabilityLimitValidTestCasesCustomDeserializerIT(Object value) {
+    public ValidTestCases(Object value) {
       super(value);
     }
 
@@ -38,11 +37,10 @@ public class CivilLiabilityLimitDeserializerIT {
   }
 
   @RunWith(Parameterized.class)
-  public static class CivilLiabilityLimitInvalidTestCasesCustomDeserializerIT
-      extends InvalidTestCasesCustomDeserializerIT {
+  public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public CivilLiabilityLimitInvalidTestCasesCustomDeserializerIT(Object value) {
+    public InvalidTestCases(Object value) {
       super(value);
     }
 

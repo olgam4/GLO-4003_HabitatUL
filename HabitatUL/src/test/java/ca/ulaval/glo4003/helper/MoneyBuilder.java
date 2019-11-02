@@ -23,16 +23,6 @@ public class MoneyBuilder {
     return this;
   }
 
-  public MoneyBuilder withSmallerAmountThan(Money money) {
-    withAmount(money.subtract(MoneyGenerator.create()).getAmount());
-    return this;
-  }
-
-  public MoneyBuilder withBiggerAmountThan(Money money) {
-    withAmount(money.add(MoneyGenerator.create()).getAmount());
-    return this;
-  }
-
   public MoneyBuilder withAmount(Amount amount) {
     this.amount = amount;
     return this;

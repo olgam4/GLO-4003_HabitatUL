@@ -34,4 +34,8 @@ public class Money extends ValueObject {
   public Money multiply(double factor) {
     return new Money(amount.multiply(factor));
   }
+
+  public Money divide(double factor) {
+    return new Money(amount.divide(factor));
+  }
 }

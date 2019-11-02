@@ -35,12 +35,10 @@ public class AnimalsDeserializerIT {
   }
 
   @RunWith(Parameterized.class)
-  public static class ValidTestCasesAnimalsCustomDeserializerIT
-      extends ValidTestCasesCustomDeserializerIT {
-
+  public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public ValidTestCasesAnimalsCustomDeserializerIT(Object value) {
+    public ValidTestCases(Object value) {
       super(value);
     }
 
@@ -56,12 +54,10 @@ public class AnimalsDeserializerIT {
   }
 
   @RunWith(Parameterized.class)
-  public static class InvalidTestCasesAnimalsCustomDeserializerIT
-      extends InvalidTestCasesCustomDeserializerIT {
-
+  public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public InvalidTestCasesAnimalsCustomDeserializerIT(Object value) {
+    public InvalidTestCases(Object value) {
       super(value);
     }
 

@@ -5,8 +5,14 @@ import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.coverage.domain.claim.*;
 import ca.ulaval.glo4003.helper.EnumSampler;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
+import com.github.javafaker.Faker;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
 
 public class ClaimGenerator {
   private ClaimGenerator() {}
@@ -37,8 +43,16 @@ public class ClaimGenerator {
   }
 
   public static LossDeclarations createLossDeclarations() {
-    // TODO: feed values
-    return new LossDeclarations(new HashMap<>());
+    HashMap<LossCategory, Amount> lossDeclarationsMap =
+        IntStream.range(0, Faker.instance().number().randomDigitNotZero())
+            .boxed()
+            .collect(
+                Collectors.toMap(
+                    i -> createLossCategory(),
+                    i -> createAmountGreaterThan(Amount.ZERO),
+                    (a, b) -> b,
+                    HashMap::new));
+    return new LossDeclarations(lossDeclarationsMap);
   }
 
   public static LossCategory createLossCategory() {

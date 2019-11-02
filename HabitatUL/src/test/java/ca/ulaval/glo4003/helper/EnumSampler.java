@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.helper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -11,8 +12,18 @@ public class EnumSampler {
   }
 
   public static <T extends Enum<T>> T sample(Class<T> enumeration) {
-    T[] values = enumeration.getEnumConstants();
+    List<T> values = Arrays.asList(enumeration.getEnumConstants());
+    return sampleValue(values);
+  }
+
+  public static <T extends Enum<T>> T sample(Class<T> enumeration, List<T> exceptions) {
+    List<T> values = Arrays.asList(enumeration.getEnumConstants());
+    values.removeAll(exceptions);
+    return sampleValue(values);
+  }
+
+  private static <T extends Enum<T>> T sampleValue(List<T> values) {
     Random random = new Random();
-    return values[random.nextInt(values.length)];
+    return values.get(random.nextInt(values.size()));
   }
 }

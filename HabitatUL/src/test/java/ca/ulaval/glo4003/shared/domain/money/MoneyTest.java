@@ -15,6 +15,7 @@ public class MoneyTest {
   private static final BigDecimal MONEY_VALUE = MONEY.getAmount().getValue();
   private static final Money OTHER_MONEY = MoneyGenerator.create();
   private static final BigDecimal OTHER_MONEY_VALUE = OTHER_MONEY.getAmount().getValue();
+  private static final double FACTOR = Faker.instance().number().randomDouble(5, 0, 1000);
 
   @Test
   public void addingMoney_shouldAdd() {
@@ -34,11 +35,17 @@ public class MoneyTest {
 
   @Test
   public void multiplyingMoney_shouldMultiply() {
-    double factor = Faker.instance().number().randomDouble(5, 0, 1000);
+    Money money = MONEY.multiply(FACTOR);
 
-    Money money = MONEY.multiply(factor);
+    Money expected = format(MONEY_VALUE.multiply(new BigDecimal(FACTOR)));
+    assertEquals(expected, money);
+  }
 
-    Money expected = format(MONEY_VALUE.multiply(new BigDecimal(factor)));
+  @Test
+  public void dividingMoney_shouldDivide() {
+    Money money = MONEY.divide(FACTOR);
+
+    Money expected = format(MONEY_VALUE.divide(new BigDecimal(FACTOR), ROUNDING));
     assertEquals(expected, money);
   }
 

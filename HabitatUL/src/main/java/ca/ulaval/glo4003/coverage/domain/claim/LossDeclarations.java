@@ -5,17 +5,17 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import java.util.Map;
 
 public class LossDeclarations {
-  private Map<LossCategory, Amount> lossDeclarations;
+  private Map<LossCategory, Amount> collection;
 
-  public LossDeclarations(Map<LossCategory, Amount> lossDeclarations) {
-    this.lossDeclarations = lossDeclarations;
+  public LossDeclarations(Map<LossCategory, Amount> collection) {
+    this.collection = collection;
   }
 
-  public Map<LossCategory, Amount> getLossDeclarations() {
-    return lossDeclarations;
+  public Map<LossCategory, Amount> getCollection() {
+    return collection;
   }
 
   public Amount computeTotalLosses() {
-    return lossDeclarations.values().stream().reduce(Amount.ZERO, Amount::add);
+    return collection.values().stream().reduce(Amount.ZERO, Amount::add);
   }
 }

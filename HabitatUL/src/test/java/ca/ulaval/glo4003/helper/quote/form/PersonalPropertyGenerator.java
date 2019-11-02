@@ -8,17 +8,15 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 import com.github.javafaker.Faker;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PersonalPropertyGenerator {
-  private static final int MIN_COVERAGE_AMOUNT = 8000;
-  private static final int MAX_COVERAGE_AMOUNT = 100000;
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
 
+public class PersonalPropertyGenerator {
   public static PersonalPropertyRequest createPersonalPropertyRequest() {
     return new PersonalPropertyRequest(createCoverageAmount(), createAnimals());
   }
@@ -28,9 +26,7 @@ public class PersonalPropertyGenerator {
   }
 
   public static Amount createCoverageAmount() {
-    double randomDouble =
-        Faker.instance().number().randomDouble(0, MIN_COVERAGE_AMOUNT, MAX_COVERAGE_AMOUNT);
-    return new Amount(BigDecimal.valueOf(randomDouble));
+    return createAmountGreaterThan(Amount.ZERO);
   }
 
   public static Animals createAnimals() {

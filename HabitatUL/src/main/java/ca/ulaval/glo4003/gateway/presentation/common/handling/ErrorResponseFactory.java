@@ -48,6 +48,7 @@ public class ErrorResponseFactory {
 
   private static void registerCoverageErrors() {
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidLossDeclarationsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(LossDeclarationsExceedCoverageAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);

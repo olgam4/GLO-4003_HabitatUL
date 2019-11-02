@@ -18,11 +18,10 @@ public class AmountDeserializerIT {
   private static final double VALID_VALUE = new Random().nextDouble();
 
   @RunWith(Parameterized.class)
-  public static class ValidTestCasesAmountCustomDeserializerIT
-      extends ValidTestCasesCustomDeserializerIT {
+  public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public ValidTestCasesAmountCustomDeserializerIT(Object value) {
+    public ValidTestCases(Object value) {
       super(value);
     }
 
@@ -38,11 +37,10 @@ public class AmountDeserializerIT {
   }
 
   @RunWith(Parameterized.class)
-  public static class InvalidTestCasesAmountCustomDeserializerIT
-      extends InvalidTestCasesCustomDeserializerIT {
+  public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public InvalidTestCasesAmountCustomDeserializerIT(Object value) {
+    public InvalidTestCases(Object value) {
       super(value);
     }
 

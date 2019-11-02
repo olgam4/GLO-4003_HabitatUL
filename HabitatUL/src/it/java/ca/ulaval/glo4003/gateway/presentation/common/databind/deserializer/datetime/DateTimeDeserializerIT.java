@@ -18,11 +18,10 @@ public class DateTimeDeserializerIT {
   private static final String VALID_VALUE = "1987-07-19 19:56:32";
 
   @RunWith(Parameterized.class)
-  public static class ValidTestCasesDateCustomDeserializerIT
-      extends ValidTestCasesCustomDeserializerIT {
+  public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public ValidTestCasesDateCustomDeserializerIT(Object value) {
+    public ValidTestCases(Object value) {
       super(value);
     }
 
@@ -38,11 +37,10 @@ public class DateTimeDeserializerIT {
   }
 
   @RunWith(Parameterized.class)
-  public static class InvalidTestCasesDateCustomDeserializerIT
-      extends InvalidTestCasesCustomDeserializerIT {
+  public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public InvalidTestCasesDateCustomDeserializerIT(Object value) {
+    public InvalidTestCases(Object value) {
       super(value);
     }
 

@@ -1,8 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.policy;
 
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
-import ca.ulaval.glo4003.coverage.domain.claim.LossCategory;
-import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.coverage.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.NotDeclaredBicycleError;
@@ -10,7 +8,6 @@ import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
-import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
@@ -24,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PolicyTest {
-  private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmount();
+  private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmountGreaterThan(Amount.ZERO);
 
   private Policy subject;
 
@@ -48,7 +45,7 @@ public class PolicyTest {
   }
 
   @Test(expected = ClaimOutsideCoveragePeriodError.class)
-  public void openingClaim_shouldCheckThatClaimIsOpenedWithInCoveragePeriod() {
+  public void openingClaim_shouldCheckThatClaimIsOpenedWithinCoveragePeriod() {
     Period pastPeriod = TemporalGenerator.createPastPeriod();
     subject = PolicyBuilder.aPolicy().withCoveragePeriod(pastPeriod).build();
     Claim claim = ClaimGenerator.createClaim();
@@ -58,29 +55,33 @@ public class PolicyTest {
 
   @Test(expected = NotDeclaredBicycleError.class)
   public void openingClaim_shouldCheckForNotDeclaredBicycle() {
-    LossDeclarations lossDeclarations =
-        LossDeclarationsBuilder.aLossDeclaration()
-            .withLoss(LossCategory.BICYCLE, MoneyGenerator.createAmount())
+    Claim claim =
+        ClaimBuilder.aClaim()
+            .withBicycleLossDeclaration()
+            .withMaximumTotalAmount(COVERAGE_AMOUNT)
             .build();
-    Claim claim = ClaimBuilder.aClaim().withLossDeclarations(lossDeclarations).build();
 
     subject.openClaim(claim);
   }
 
   @Test(expected = LossDeclarationsExceedCoverageAmountError.class)
   public void openingClaim_shouldCheckThatLossDeclarationsDoNotExceedCoverageAmount() {
-    LossDeclarations lossDeclarations =
-        LossDeclarationsBuilder.aLossDeclaration()
-            .withLoss(LossCategory.CLOTHES, COVERAGE_AMOUNT.multiply(2))
+    Claim claim =
+        ClaimBuilder.aClaim()
+            .withoutBicycleLossDeclaration()
+            .withMinimumTotalAmount(COVERAGE_AMOUNT)
             .build();
-    Claim claim = ClaimBuilder.aClaim().withLossDeclarations(lossDeclarations).build();
 
     subject.openClaim(claim);
   }
 
   @Test
   public void openingClaim_withValidClaim_shouldKeepReferenceOnOpenedClaim() {
-    Claim claim = ClaimGenerator.createClaim();
+    Claim claim =
+        ClaimBuilder.aClaim()
+            .withoutBicycleLossDeclaration()
+            .withMaximumTotalAmount(COVERAGE_AMOUNT)
+            .build();
 
     subject.openClaim(claim);
 
@@ -89,7 +90,11 @@ public class PolicyTest {
 
   @Test
   public void openingClaim_withValidClaim_shouldRegisterClaimOpenedEvent() {
-    Claim claim = ClaimGenerator.createClaim();
+    Claim claim =
+        ClaimBuilder.aClaim()
+            .withoutBicycleLossDeclaration()
+            .withMaximumTotalAmount(COVERAGE_AMOUNT)
+            .build();
 
     subject.openClaim(claim);
     List<Event> events = subject.getEvents();
