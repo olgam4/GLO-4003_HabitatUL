@@ -52,9 +52,10 @@ public class DateTimeDeserializerIT {
           new Object[][] {
             {""},
             {Faker.instance().number().randomDigit()},
+            {"INVALID"},
             {"2019-10-25"},
-            {new JSONObject().put("test", VALID_VALUE).toString()},
-            {new JSONArray().put(VALID_VALUE).toString()}
+            {new JSONObject().put("test", VALID_VALUE)},
+            {new JSONArray().put(VALID_VALUE)}
           });
     }
 

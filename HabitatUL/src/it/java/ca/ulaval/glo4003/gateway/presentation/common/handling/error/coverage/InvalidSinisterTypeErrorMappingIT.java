@@ -8,12 +8,11 @@ import com.github.javafaker.Faker;
 import javax.ws.rs.core.Response;
 
 public class InvalidSinisterTypeErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_SINISTER_TYPE_VALUE = Faker.instance().internet().uuid();
+  private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(
-        new InvalidSinisterTypeError(INVALID_SINISTER_TYPE_VALUE));
+    return new MockedDeserializationError(new InvalidSinisterTypeError(INVALID_VALUE));
   }
 
   @Override
@@ -28,7 +27,6 @@ public class InvalidSinisterTypeErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format(
-        "sorry, <%s> is not a valid sinister type value", INVALID_SINISTER_TYPE_VALUE);
+    return String.format("sorry, <%s> is not a valid sinister type value", INVALID_VALUE);
   }
 }

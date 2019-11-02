@@ -8,11 +8,11 @@ import com.github.javafaker.Faker;
 import javax.ws.rs.core.Response;
 
 public class InvalidDateTimeErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_DATE_TIME_VALUE = Faker.instance().internet().uuid();
+  private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(new InvalidDateTimeError(INVALID_DATE_TIME_VALUE));
+    return new MockedDeserializationError(new InvalidDateTimeError(INVALID_VALUE));
   }
 
   @Override
@@ -27,6 +27,6 @@ public class InvalidDateTimeErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format("sorry, <%s> is not a valid date time value", INVALID_DATE_TIME_VALUE);
+    return String.format("sorry, <%s> is not a valid date time value", INVALID_VALUE);
   }
 }

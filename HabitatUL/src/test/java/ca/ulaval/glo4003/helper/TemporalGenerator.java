@@ -20,6 +20,26 @@ public class TemporalGenerator {
     return Date.from(createDateTime().getValue().toLocalDate());
   }
 
+  public static Date createPastDate() {
+    Instant pastInstant =
+        Faker.instance()
+            .date()
+            .past(Faker.instance().number().randomDigitNotZero(), TimeUnit.DAYS)
+            .toInstant();
+    LocalDateTime pastDateTime = LocalDateTime.ofInstant(pastInstant, ZoneOffset.UTC);
+    return Date.from(pastDateTime.toLocalDate());
+  }
+
+  public static Date createFutureDate() {
+    Instant futureInstant =
+        Faker.instance()
+            .date()
+            .future(Faker.instance().number().randomDigitNotZero(), TimeUnit.DAYS)
+            .toInstant();
+    LocalDateTime futureDate = LocalDateTime.ofInstant(futureInstant, ZoneOffset.UTC);
+    return Date.from(futureDate.toLocalDate());
+  }
+
   public static Date createDateBefore(Date date) {
     return Date.from(
         date.getValue().minus(Faker.instance().number().randomDigitNotZero(), ChronoUnit.DAYS));
@@ -42,8 +62,8 @@ public class TemporalGenerator {
             .date()
             .past(Faker.instance().number().randomDigitNotZero(), TimeUnit.DAYS)
             .toInstant();
-    LocalDateTime pastDate = LocalDateTime.ofInstant(pastInstant, ZoneOffset.UTC);
-    return DateTime.from(pastDate);
+    LocalDateTime pastDateTime = LocalDateTime.ofInstant(pastInstant, ZoneOffset.UTC);
+    return DateTime.from(pastDateTime);
   }
 
   public static DateTime createFutureDateTime() {
@@ -52,8 +72,8 @@ public class TemporalGenerator {
             .date()
             .future(Faker.instance().number().randomDigitNotZero(), TimeUnit.DAYS)
             .toInstant();
-    LocalDateTime futureDate = LocalDateTime.ofInstant(futureInstant, ZoneOffset.UTC);
-    return DateTime.from(futureDate);
+    LocalDateTime futureDateTime = LocalDateTime.ofInstant(futureInstant, ZoneOffset.UTC);
+    return DateTime.from(futureDateTime);
   }
 
   public static Period createPeriod() {

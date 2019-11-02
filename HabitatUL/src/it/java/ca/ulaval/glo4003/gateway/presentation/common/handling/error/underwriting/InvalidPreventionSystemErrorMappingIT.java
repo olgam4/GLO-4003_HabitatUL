@@ -8,12 +8,11 @@ import com.github.javafaker.Faker;
 import javax.ws.rs.core.Response;
 
 public class InvalidPreventionSystemErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_PREVENTION_SYSTEM_VALUE = Faker.instance().internet().uuid();
+  private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(
-        new InvalidPreventionSystemError(INVALID_PREVENTION_SYSTEM_VALUE));
+    return new MockedDeserializationError(new InvalidPreventionSystemError(INVALID_VALUE));
   }
 
   @Override
@@ -28,7 +27,6 @@ public class InvalidPreventionSystemErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format(
-        "sorry, <%s> is not a valid prevention system value", INVALID_PREVENTION_SYSTEM_VALUE);
+    return String.format("sorry, <%s> is not a valid prevention system value", INVALID_VALUE);
   }
 }

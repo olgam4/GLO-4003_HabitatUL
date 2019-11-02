@@ -8,9 +8,9 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
+import static ca.ulaval.glo4003.helper.TemporalGenerator.createFutureDate;
 import static ca.ulaval.glo4003.helper.quote.form.BuildingGenerator.createBuilding;
 import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiability;
-import static ca.ulaval.glo4003.helper.quote.form.EffectiveDateGenerator.createEffectiveDate;
 import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createIdentity;
 import static ca.ulaval.glo4003.helper.quote.form.LocationGenerator.createLocation;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createPersonalProperty;
@@ -19,7 +19,7 @@ public class QuoteFormBuilder {
   private static final Identity DEFAULT_PERSONAL_INFORMATION = createIdentity();
   private static final Identity DEFAULT_ADDITIONAL_INSURED = createIdentity();
   private static final Location DEFAULT_LOCATION = createLocation();
-  private static final Date DEFAULT_EFFECTIVE_DATE = createEffectiveDate();
+  private static final Date DEFAULT_EFFECTIVE_DATE = createFutureDate();
   private static final Building DEFAULT_BUILDING = createBuilding();
   private static final PersonalProperty DEFAULT_PERSONAL_PROPERTY = createPersonalProperty();
   private static final CivilLiability DEFAULT_CIVIL_LIABILITY = createCivilLiability();

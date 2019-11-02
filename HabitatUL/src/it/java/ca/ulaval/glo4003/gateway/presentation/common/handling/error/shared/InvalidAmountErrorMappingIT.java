@@ -8,11 +8,11 @@ import com.github.javafaker.Faker;
 import javax.ws.rs.core.Response;
 
 public class InvalidAmountErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_AMOUNT_VALUE = Faker.instance().internet().uuid();
+  private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(new InvalidAmountError(INVALID_AMOUNT_VALUE));
+    return new MockedDeserializationError(new InvalidAmountError(INVALID_VALUE));
   }
 
   @Override
@@ -27,6 +27,6 @@ public class InvalidAmountErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format("sorry, <%s> is not a valid amount value", INVALID_AMOUNT_VALUE);
+    return String.format("sorry, <%s> is not a valid amount value", INVALID_VALUE);
   }
 }

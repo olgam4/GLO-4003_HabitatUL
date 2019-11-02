@@ -53,8 +53,8 @@ public class FloorDeserializerIT {
             {""},
             {Faker.instance().number().randomDigit()},
             {"INVALID"},
-            {new JSONObject().put("test", VALID_FLOOR_VALUE).toString()},
-            {new JSONArray().put(VALID_FLOOR_VALUE).toString()}
+            {new JSONObject().put("test", VALID_FLOOR_VALUE)},
+            {new JSONArray().put(VALID_FLOOR_VALUE)}
           });
     }
 

@@ -8,11 +8,11 @@ import com.github.javafaker.Faker;
 import javax.ws.rs.core.Response;
 
 public class InvalidFloorErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_FLOOR_VALUE = Faker.instance().internet().uuid();
+  private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(new InvalidFloorError(INVALID_FLOOR_VALUE));
+    return new MockedDeserializationError(new InvalidFloorError(INVALID_VALUE));
   }
 
   @Override
@@ -27,6 +27,6 @@ public class InvalidFloorErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format("sorry, <%s> is not a valid floor value", INVALID_FLOOR_VALUE);
+    return String.format("sorry, <%s> is not a valid floor value", INVALID_VALUE);
   }
 }

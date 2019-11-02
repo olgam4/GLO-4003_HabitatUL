@@ -9,11 +9,11 @@ import javax.ws.rs.core.Response;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createAnimals;
 
 public class InvalidAnimalsErrorMappingIT extends ErrorMappingIT {
-  private static final String INVALID_ANIMALS_VALUE = createAnimals().toString();
+  private static final String INVALID_VALUE = createAnimals().toString();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(new InvalidAnimalsError(INVALID_ANIMALS_VALUE));
+    return new MockedDeserializationError(new InvalidAnimalsError(INVALID_VALUE));
   }
 
   @Override
@@ -28,6 +28,6 @@ public class InvalidAnimalsErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format("sorry, <%s> is not a valid animal list", INVALID_ANIMALS_VALUE);
+    return String.format("sorry, <%s> is not a valid animal list", INVALID_VALUE);
   }
 }

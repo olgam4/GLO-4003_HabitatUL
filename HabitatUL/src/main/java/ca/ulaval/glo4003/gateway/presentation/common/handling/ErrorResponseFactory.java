@@ -59,6 +59,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(InvalidAnimalsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidGenderError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidPreventionSystemError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidZipCodeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);

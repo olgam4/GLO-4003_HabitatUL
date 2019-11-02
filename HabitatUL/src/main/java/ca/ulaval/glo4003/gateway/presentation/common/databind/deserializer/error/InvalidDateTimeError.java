@@ -4,7 +4,7 @@ public class InvalidDateTimeError extends DeserializationError {
   private static final String ERROR = "INVALID_DATE_TIME";
   private static final String MESSAGE = "sorry, <%s> is not a valid date time value";
 
-  public InvalidDateTimeError(String invalidDate) {
-    super(ERROR, String.format(MESSAGE, invalidDate));
+  public InvalidDateTimeError(String invalidValue) {
+    super(ERROR, String.format(MESSAGE, invalidValue));
   }
 }

@@ -10,9 +10,9 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
+import static ca.ulaval.glo4003.helper.TemporalGenerator.createFutureDate;
 import static ca.ulaval.glo4003.helper.quote.form.BuildingGenerator.createBuildingRequest;
 import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiabilityRequest;
-import static ca.ulaval.glo4003.helper.quote.form.EffectiveDateGenerator.createEffectiveDate;
 import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createIdentityRequest;
 import static ca.ulaval.glo4003.helper.quote.form.LocationGenerator.createLocationRequest;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createPersonalPropertyRequest;
@@ -33,7 +33,7 @@ public class QuoteRequestTest {
             null,
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -51,7 +51,7 @@ public class QuoteRequestTest {
             new IdentityRequest(null, null, null, null, null),
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -68,7 +68,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             new IdentityRequest(null, null, null, null, null),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -85,7 +85,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             null,
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -103,7 +103,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             new LocationRequest(null, null, null, null),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -138,7 +138,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             null,
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -156,7 +156,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             new BuildingRequest(null, null, null),
             createPersonalPropertyRequest(),
             createCivilLiabilityRequest());
@@ -173,7 +173,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             null,
             createCivilLiabilityRequest());
@@ -191,7 +191,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             new PersonalPropertyRequest(null, null),
             createCivilLiabilityRequest());
@@ -208,7 +208,7 @@ public class QuoteRequestTest {
             createIdentityRequest(),
             createIdentityRequest(),
             createLocationRequest(),
-            createEffectiveDate(),
+            createFutureDate(),
             createBuildingRequest(),
             createPersonalPropertyRequest(),
             new CivilLiabilityRequest(null));

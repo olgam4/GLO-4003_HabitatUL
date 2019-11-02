@@ -1,8 +1,8 @@
-package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.amount;
+package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.gender;
 
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.InvalidTestCasesCustomDeserializerIT;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.ValidTestCasesCustomDeserializerIT;
-import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidAmountError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidGenderError;
 import com.github.javafaker.Faker;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,15 +14,15 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Enclosed.class)
-public class AmountDeserializerIT {
-  private static final float VALID_VALUE = 1.23f;
+public class GenderDeserializerIT {
+  private static final String VALID_VALUE = "MALE";
 
   @RunWith(Parameterized.class)
-  public static class ValidTestCasesAmountCustomDeserializerIT
+  public static class ValidTestCasesDateCustomDeserializerIT
       extends ValidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public ValidTestCasesAmountCustomDeserializerIT(Object value) {
+    public ValidTestCasesDateCustomDeserializerIT(Object value) {
       super(value);
     }
 
@@ -33,16 +33,16 @@ public class AmountDeserializerIT {
 
     @Override
     public Object createDeserializationResource() {
-      return new AmountDeserializationResource();
+      return new GenderDeserializationResource();
     }
   }
 
   @RunWith(Parameterized.class)
-  public static class InvalidTestCasesAmountCustomDeserializerIT
+  public static class InvalidTestCasesDateCustomDeserializerIT
       extends InvalidTestCasesCustomDeserializerIT {
     private Object value;
 
-    public InvalidTestCasesAmountCustomDeserializerIT(Object value) {
+    public InvalidTestCasesDateCustomDeserializerIT(Object value) {
       super(value);
     }
 
@@ -51,8 +51,7 @@ public class AmountDeserializerIT {
       return Arrays.asList(
           new Object[][] {
             {""},
-            {-Faker.instance().number().randomDigitNotZero()},
-            {"INVALID"},
+            {Faker.instance().number().randomDigit()},
             {new JSONObject().put("test", VALID_VALUE)},
             {new JSONArray().put(VALID_VALUE)}
           });
@@ -60,12 +59,12 @@ public class AmountDeserializerIT {
 
     @Override
     public Object createDeserializationResource() {
-      return new AmountDeserializationResource();
+      return new GenderDeserializationResource();
     }
 
     @Override
     protected String getDeserializationErrorCause() {
-      return InvalidAmountError.class.getName();
+      return InvalidGenderError.class.getName();
     }
   }
 }

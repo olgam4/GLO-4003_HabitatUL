@@ -12,7 +12,6 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createAnimalBreed;
 
@@ -20,8 +19,8 @@ import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.crea
 public class AnimalsDeserializerIT {
   private static final String VALID_BREED = createAnimalBreed().toString();
   private static final int VALID_QUANTITY = Faker.instance().number().randomDigitNotZero();
-  private static final List<JSONObject> VALID_VALUE =
-      Arrays.asList(toJson(VALID_BREED, VALID_QUANTITY));
+  private static final JSONArray VALID_VALUE =
+      new JSONArray().put(toJson(VALID_BREED, VALID_QUANTITY));
 
   private static JSONObject toJson(Object breed, Object quantity) {
     JSONObject animal = new JSONObject();
@@ -65,13 +64,12 @@ public class AnimalsDeserializerIT {
     public static Collection parameters() {
       return Arrays.asList(
           new Object[][] {
+            {""},
             {Faker.instance().number().randomDigit()},
             {"INVALID"},
-            {new JSONObject().put("test", VALID_VALUE).toString()},
-            {new JSONArray().put(VALID_VALUE).toString()},
             {new JSONArray().put(toJson(null, VALID_QUANTITY))},
-            {new JSONArray().put(toJson(123, VALID_QUANTITY))},
             {new JSONArray().put(toJson("", VALID_QUANTITY))},
+            {new JSONArray().put(toJson(Faker.instance().number().randomDigit(), VALID_QUANTITY))},
             {new JSONArray().put(toJson(VALID_BREED, -1))},
           });
     }

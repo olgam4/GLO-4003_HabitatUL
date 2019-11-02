@@ -53,8 +53,8 @@ public class CivilLiabilityLimitDeserializerIT {
             {""},
             {Faker.instance().number().randomDigit()},
             {"INVALID"},
-            {new JSONObject().put("test", VALID_VALUE).toString()},
-            {new JSONArray().put(VALID_VALUE).toString()}
+            {new JSONObject().put("test", VALID_VALUE)},
+            {new JSONArray().put(VALID_VALUE)}
           });
     }
 

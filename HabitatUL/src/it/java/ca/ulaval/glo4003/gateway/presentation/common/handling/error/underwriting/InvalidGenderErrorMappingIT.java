@@ -1,18 +1,18 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.underwriting;
 
-import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidZipCodeError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidGenderError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.MockedDeserializationError;
 import com.github.javafaker.Faker;
 
 import javax.ws.rs.core.Response;
 
-public class InvalidZipCodeErrorMappingIT extends ErrorMappingIT {
+public class InvalidGenderErrorMappingIT extends ErrorMappingIT {
   private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(new InvalidZipCodeError(INVALID_VALUE));
+    return new MockedDeserializationError(new InvalidGenderError(INVALID_VALUE));
   }
 
   @Override
@@ -22,11 +22,11 @@ public class InvalidZipCodeErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorCodeMatcher() {
-    return "INVALID_ZIP_CODE";
+    return "INVALID_GENDER";
   }
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format("sorry, <%s> is not a valid zip code value", INVALID_VALUE);
+    return String.format("sorry, <%s> is not a valid gender value", INVALID_VALUE);
   }
 }

@@ -4,7 +4,7 @@ public class InvalidAnimalsError extends DeserializationError {
   private static final String ERROR = "INVALID_ANIMALS";
   private static final String MESSAGE = "sorry, <%s> is not a valid animal list";
 
-  public InvalidAnimalsError(String invalidAnimals) {
-    super(ERROR, String.format(MESSAGE, invalidAnimals));
+  public InvalidAnimalsError(String invalidValue) {
+    super(ERROR, String.format(MESSAGE, invalidValue));
   }
 }
