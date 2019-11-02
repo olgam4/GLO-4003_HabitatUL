@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 public class IntegrationTestContext implements Context {
   public static final String VALID_FLOOR_VALUE = "RC";
+  public static final String VALID_ZIP_CODE_VALUE = "G3A 0G4";
 
   public IntegrationTestContext() {
     ServiceLocator.reset();
@@ -32,6 +33,13 @@ public class IntegrationTestContext implements Context {
     };
   }
 
+  private static ZipCodeFormatter getDummyZipCodeFormatter() {
+    return zipCodeValue -> {
+      if (zipCodeValue.equals(VALID_ZIP_CODE_VALUE)) return VALID_ZIP_CODE_VALUE;
+      throw new InvalidArgumentException();
+    };
+  }
+
   @Override
   public void execute() {
     disableLogging();
@@ -41,6 +49,6 @@ public class IntegrationTestContext implements Context {
   private void registerServices() {
     ServiceLocator.register(FloorFormatter.class, getDummyFloorFormatter());
     ServiceLocator.register(LocalZoneIdProvider.class, () -> ZoneId.of("UTC"));
-    ServiceLocator.register(ZipCodeFormatter.class, (x) -> x);
+    ServiceLocator.register(ZipCodeFormatter.class, getDummyZipCodeFormatter());
   }
 }

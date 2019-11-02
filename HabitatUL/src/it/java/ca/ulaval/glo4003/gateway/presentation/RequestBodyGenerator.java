@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_FLOOR_VALUE;
+import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_ZIP_CODE_VALUE;
 
 public class RequestBodyGenerator {
   public static JSONObject createQuoteRequestBody() {
@@ -49,7 +50,7 @@ public class RequestBodyGenerator {
 
   private static JSONObject toRequestBody(LocationRequest locationRequest) {
     JSONObject json = new JSONObject();
-    json.put("zipCode", locationRequest.getZipCode().getValue());
+    json.put("zipCode", VALID_ZIP_CODE_VALUE);
     json.put("streetNumber", locationRequest.getStreetNumber());
     json.put("apartmentNumber", locationRequest.getApartmentNumber());
     json.put("floor", VALID_FLOOR_VALUE);
