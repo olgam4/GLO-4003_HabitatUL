@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,9 +16,17 @@ public class AmountDeserializer extends JsonDeserializer<Amount> {
   public Amount deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-    float value = node.floatValue();
-    if (value < 0 || !node.isNumber()) throw new InvalidAmountError(node.toString());
+    enforceNodeType(node);
+    return convertValueSafely(node);
+  }
 
-    return new Amount(BigDecimal.valueOf(value));
+  private void enforceNodeType(JsonNode node) throws InvalidAmountError {
+    if (!node.getNodeType().equals(JsonNodeType.NUMBER)) {
+      throw new InvalidAmountError(node.toString());
+    }
+  }
+
+  private Amount convertValueSafely(JsonNode node) {
+    return new Amount(BigDecimal.valueOf(node.floatValue()));
   }
 }

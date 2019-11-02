@@ -3,7 +3,6 @@ package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.amou
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.InvalidTestCasesCustomDeserializerIT;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.ValidTestCasesCustomDeserializerIT;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidAmountError;
-import com.github.javafaker.Faker;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.experimental.runners.Enclosed;
@@ -12,10 +11,11 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Random;
 
 @RunWith(Enclosed.class)
 public class AmountDeserializerIT {
-  private static final float VALID_VALUE = 1.23f;
+  private static final double VALID_VALUE = new Random().nextDouble();
 
   @RunWith(Parameterized.class)
   public static class ValidTestCasesAmountCustomDeserializerIT
@@ -51,7 +51,6 @@ public class AmountDeserializerIT {
       return Arrays.asList(
           new Object[][] {
             {""},
-            {-Faker.instance().number().randomDigitNotZero()},
             {"INVALID"},
             {new JSONObject().put("test", VALID_VALUE)},
             {new JSONArray().put(VALID_VALUE)}
