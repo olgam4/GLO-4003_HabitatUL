@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty;
 
+import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-public class PersonalProperty {
+public class PersonalProperty extends ValueObject {
   private Amount coverageAmount;
   private Animals animals;
 

@@ -19,8 +19,13 @@ import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.crea
 public class AnimalsDeserializerIT {
   private static final String VALID_BREED = createAnimalBreed().toString();
   private static final int VALID_QUANTITY = Faker.instance().number().randomDigitNotZero();
+  private static final JSONObject VALID_ANIMAL = toJson(VALID_BREED, VALID_QUANTITY);
+  private static final String ANOTHER_VALID_BREED = createAnimalBreed().toString();
+  private static final int ANOTHER_VALID_QUANTITY = Faker.instance().number().randomDigitNotZero();
+  private static final JSONObject ANOTHER_VALID_ANIMAL =
+      toJson(ANOTHER_VALID_BREED, ANOTHER_VALID_QUANTITY);
   private static final JSONArray VALID_VALUE =
-      new JSONArray().put(toJson(VALID_BREED, VALID_QUANTITY));
+      new JSONArray().put(VALID_ANIMAL).put(ANOTHER_VALID_ANIMAL);
 
   private static JSONObject toJson(Object breed, Object quantity) {
     JSONObject animal = new JSONObject();
@@ -67,6 +72,7 @@ public class AnimalsDeserializerIT {
             {""},
             {Faker.instance().number().randomDigit()},
             {"INVALID"},
+            {VALID_ANIMAL},
             {new JSONArray().put(new JSONObject().put("breed", VALID_BREED))},
             {new JSONArray().put(new JSONObject().put("quantity", VALID_QUANTITY))},
             {new JSONArray().put(toJson(null, VALID_QUANTITY))},

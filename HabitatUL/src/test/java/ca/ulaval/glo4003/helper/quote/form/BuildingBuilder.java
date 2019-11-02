@@ -1,19 +1,17 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
-
-import java.util.Set;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
 
 import static ca.ulaval.glo4003.helper.quote.form.BuildingGenerator.*;
 
 public class BuildingBuilder {
   private static final int DEFAULT_NUMBER_OF_UNITS = createNumberOfUnits();
-  private static final Set<PreventionSystem> DEFAULT_PREVENTION_SYSTEMS = createPreventionSystems();
+  private static final PreventionSystems DEFAULT_PREVENTION_SYSTEMS = createPreventionSystems();
   private static final String DEFAULT_COMMERCIAL_USE = createCommercialUse();
 
   private int numberOfUnits = DEFAULT_NUMBER_OF_UNITS;
-  private Set<PreventionSystem> preventionSystems = DEFAULT_PREVENTION_SYSTEMS;
+  private PreventionSystems preventionSystems = DEFAULT_PREVENTION_SYSTEMS;
   private String commercialUse = DEFAULT_COMMERCIAL_USE;
 
   private BuildingBuilder() {}

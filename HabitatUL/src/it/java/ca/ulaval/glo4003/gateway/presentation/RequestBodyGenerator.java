@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,8 +61,16 @@ public class RequestBodyGenerator {
   private static JSONObject toRequestBody(BuildingRequest buildingRequest) {
     JSONObject json = new JSONObject();
     json.put("numberOfUnits", buildingRequest.getNumberOfUnits());
-    json.put("preventionSystems", new JSONArray(buildingRequest.getPreventionSystems()));
-    json.put("commercialUse", buildingRequest.getCommercialUse().get());
+    buildingRequest
+        .getPreventionSystems()
+        .map(x -> json.put("preventionSystems", toRequestBody(x)));
+    buildingRequest.getCommercialUse().map(x -> json.put("commercialUse", x));
+    return json;
+  }
+
+  private static JSONArray toRequestBody(PreventionSystems preventionSystems) {
+    JSONArray json = new JSONArray();
+    preventionSystems.getCollection().forEach(x -> json.put(x.toString()));
     return json;
   }
 

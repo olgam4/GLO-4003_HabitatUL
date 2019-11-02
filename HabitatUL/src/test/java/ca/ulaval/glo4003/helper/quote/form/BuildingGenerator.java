@@ -1,11 +1,12 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.BuildingRequest;
+import ca.ulaval.glo4003.helper.EnumSampler;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
 import com.github.javafaker.Faker;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class BuildingGenerator {
@@ -25,8 +26,15 @@ public class BuildingGenerator {
     return Faker.instance().number().numberBetween(MIN_NUMBER_OF_UNITS, MAX_NUMBER_OF_UNITS);
   }
 
-  public static HashSet<PreventionSystem> createPreventionSystems() {
-    return new HashSet<>(Arrays.asList(PreventionSystem.SPRINKLER));
+  public static PreventionSystems createPreventionSystems() {
+    return new PreventionSystems(
+        new HashSet<>(
+            EnumSampler.sample(
+                PreventionSystem.class, Faker.instance().number().randomDigitNotZero())));
+  }
+
+  public static PreventionSystem createPreventionSystem() {
+    return EnumSampler.sample(PreventionSystem.class);
   }
 
   public static String createCommercialUse() {

@@ -13,7 +13,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
@@ -53,7 +53,7 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
-    deserializers.addDeserializer(PreventionSystem.class, new PreventionSystemDeserializer());
+    deserializers.addDeserializer(PreventionSystems.class, new PreventionSystemsDeserializer());
     deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
     deserializers.addDeserializer(ZipCode.class, new ZipCodeDeserializer());
     setupContext.addDeserializers(deserializers);

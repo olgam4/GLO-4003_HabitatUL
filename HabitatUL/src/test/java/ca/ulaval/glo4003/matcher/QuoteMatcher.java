@@ -78,7 +78,7 @@ public class QuoteMatcher {
   public static Matcher<Building> matchesBuilding(final BuildingRequest buildingRequest) {
     return allOf(
         hasProperty("numberOfUnits", equalTo(buildingRequest.getNumberOfUnits())),
-        hasProperty("preventionSystems", equalTo(buildingRequest.getPreventionSystems())),
+        hasProperty("preventionSystems", equalTo(buildingRequest.getPreventionSystems().get())),
         hasProperty("commercialUse", equalTo(buildingRequest.getCommercialUse().get())));
   }
 
