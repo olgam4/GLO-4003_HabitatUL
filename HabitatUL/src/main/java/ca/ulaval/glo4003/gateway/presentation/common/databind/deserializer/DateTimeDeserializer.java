@@ -16,26 +16,28 @@ import java.time.format.DateTimeParseException;
 public class DateTimeDeserializer extends JsonDeserializer<DateTime> {
   private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+  private String inputValue;
+
   @Override
   public DateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = node.toString();
     enforceNodeType(node);
     return convertValueSafely(node);
   }
 
   private void enforceNodeType(JsonNode node) throws InvalidDateTimeError {
     if (!node.getNodeType().equals(JsonNodeType.STRING)) {
-      throw new InvalidDateTimeError(node.toString());
+      throw new InvalidDateTimeError(inputValue);
     }
   }
 
   private DateTime convertValueSafely(JsonNode node) throws InvalidDateTimeError {
-    String value = node.textValue();
     try {
-      return DateTime.from(LocalDateTime.parse(value, formatter));
+      return DateTime.from(LocalDateTime.parse(node.textValue(), formatter));
     } catch (DateTimeParseException e) {
-      throw new InvalidDateTimeError(value);
+      throw new InvalidDateTimeError(inputValue);
     }
   }
 }

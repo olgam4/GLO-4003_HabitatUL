@@ -12,27 +12,29 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
 import java.io.IOException;
 
 public class CivilLiabilityLimitDeserializer extends JsonDeserializer<CivilLiabilityLimit> {
+  private String inputValue;
+
   @Override
   public CivilLiabilityLimit deserialize(
       JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = node.toString();
     enforceNodeType(node);
     return convertValueSafely(node);
   }
 
   private void enforceNodeType(JsonNode node) throws InvalidCivilLiabilityLimitError {
     if (!node.getNodeType().equals(JsonNodeType.STRING)) {
-      throw new InvalidCivilLiabilityLimitError(node.toString());
+      throw new InvalidCivilLiabilityLimitError(inputValue);
     }
   }
 
   private CivilLiabilityLimit convertValueSafely(JsonNode node)
       throws InvalidCivilLiabilityLimitError {
-    String value = node.textValue();
     try {
-      return CivilLiabilityLimit.getEnum(value);
+      return CivilLiabilityLimit.getEnum(node.textValue());
     } catch (InvalidArgumentException e) {
-      throw new InvalidCivilLiabilityLimitError(value);
+      throw new InvalidCivilLiabilityLimitError(inputValue);
     }
   }
 }

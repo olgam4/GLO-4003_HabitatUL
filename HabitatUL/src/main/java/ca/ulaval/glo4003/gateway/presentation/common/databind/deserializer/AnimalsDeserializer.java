@@ -15,17 +15,20 @@ import java.util.Map;
 import java.util.Optional;
 
 public class AnimalsDeserializer extends JsonDeserializer<Animals> {
+  private String inputValue;
+
   @Override
   public Animals deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode nodes = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = nodes.toString();
     enforceNodeType(nodes, JsonNodeType.ARRAY);
     return convertValueSafely(nodes);
   }
 
   private void enforceNodeType(JsonNode node, JsonNodeType nodeType) throws InvalidAnimalsError {
     if (!node.getNodeType().equals(nodeType)) {
-      throw new InvalidAnimalsError(node.toString());
+      throw new InvalidAnimalsError(inputValue);
     }
   }
 
@@ -53,20 +56,20 @@ public class AnimalsDeserializer extends JsonDeserializer<Animals> {
   private AnimalBreed getBreed(JsonNode node) throws InvalidAnimalsError {
     JsonNode breedNode =
         Optional.ofNullable(node.get("breed"))
-            .orElseThrow(() -> new InvalidAnimalsError(node.toString()));
+            .orElseThrow(() -> new InvalidAnimalsError(inputValue));
     enforceNodeType(breedNode, JsonNodeType.STRING);
     String breed = breedNode.textValue();
-    if (breed.isEmpty()) throw new InvalidAnimalsError(node.toString());
+    if (breed.isEmpty()) throw new InvalidAnimalsError(inputValue);
     return AnimalBreed.getEnum(breed);
   }
 
   private int getQuantity(JsonNode node) throws InvalidAnimalsError {
     JsonNode quantityNode =
         Optional.ofNullable(node.get("quantity"))
-            .orElseThrow(() -> new InvalidAnimalsError(node.toString()));
+            .orElseThrow(() -> new InvalidAnimalsError(inputValue));
     enforceNodeType(quantityNode, JsonNodeType.NUMBER);
     int quantity = quantityNode.intValue();
-    if (quantity < 0) throw new InvalidAnimalsError(node.toString());
+    if (quantity < 0) throw new InvalidAnimalsError(inputValue);
     return quantity;
   }
 }

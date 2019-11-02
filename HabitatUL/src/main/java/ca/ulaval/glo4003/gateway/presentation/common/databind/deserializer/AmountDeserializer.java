@@ -12,17 +12,20 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 public class AmountDeserializer extends JsonDeserializer<Amount> {
+  private String inputValue;
+
   @Override
   public Amount deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = node.toString();
     enforceNodeType(node);
     return convertValueSafely(node);
   }
 
   private void enforceNodeType(JsonNode node) throws InvalidAmountError {
     if (!node.getNodeType().equals(JsonNodeType.NUMBER)) {
-      throw new InvalidAmountError(node.toString());
+      throw new InvalidAmountError(inputValue);
     }
   }
 

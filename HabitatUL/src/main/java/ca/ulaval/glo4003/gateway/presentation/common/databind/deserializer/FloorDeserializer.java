@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class FloorDeserializer extends JsonDeserializer<Floor> {
   private FloorFormatter floorFormatter;
+  private String inputValue;
 
   public FloorDeserializer() {
     this.floorFormatter = ServiceLocator.resolve(FloorFormatter.class);
@@ -24,22 +25,22 @@ public class FloorDeserializer extends JsonDeserializer<Floor> {
   public Floor deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = node.toString();
     enforceNodeType(node);
     return convertValueSafely(node);
   }
 
   private void enforceNodeType(JsonNode node) throws InvalidFloorError {
     if (!node.getNodeType().equals(JsonNodeType.STRING)) {
-      throw new InvalidFloorError(node.toString());
+      throw new InvalidFloorError(inputValue);
     }
   }
 
   private Floor convertValueSafely(JsonNode node) throws InvalidFloorError {
-    String value = node.textValue();
     try {
-      return new Floor(value, floorFormatter);
+      return new Floor(node.textValue(), floorFormatter);
     } catch (InvalidArgumentException e) {
-      throw new InvalidFloorError(value);
+      throw new InvalidFloorError(inputValue);
     }
   }
 }

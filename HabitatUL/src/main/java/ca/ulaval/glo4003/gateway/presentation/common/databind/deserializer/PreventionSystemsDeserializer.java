@@ -15,10 +15,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PreventionSystemsDeserializer extends JsonDeserializer<PreventionSystems> {
+  private String inputValue;
+
   @Override
   public PreventionSystems deserialize(
       JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode nodes = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = nodes.toString();
     enforceNodeType(nodes, JsonNodeType.ARRAY);
     return convertValueSafely(nodes);
   }
@@ -26,7 +29,7 @@ public class PreventionSystemsDeserializer extends JsonDeserializer<PreventionSy
   private void enforceNodeType(JsonNode node, JsonNodeType nodeType)
       throws InvalidPreventionSystemsError {
     if (!node.getNodeType().equals(nodeType)) {
-      throw new InvalidPreventionSystemsError(node.toString());
+      throw new InvalidPreventionSystemsError(inputValue);
     }
   }
 
@@ -50,7 +53,7 @@ public class PreventionSystemsDeserializer extends JsonDeserializer<PreventionSy
     try {
       preventionSystems.add(PreventionSystem.getEnum(value));
     } catch (InvalidArgumentException e) {
-      throw new InvalidPreventionSystemsError(value);
+      throw new InvalidPreventionSystemsError(inputValue);
     }
   }
 }

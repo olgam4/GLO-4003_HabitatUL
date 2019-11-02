@@ -13,26 +13,28 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class DateDeserializer extends JsonDeserializer<Date> {
+  private String inputValue;
+
   @Override
   public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = node.toString();
     enforceNodeType(node);
     return convertValueSafely(node);
   }
 
   private void enforceNodeType(JsonNode node) throws InvalidDateError {
     if (!node.getNodeType().equals(JsonNodeType.STRING)) {
-      throw new InvalidDateError(node.toString());
+      throw new InvalidDateError(inputValue);
     }
   }
 
   private Date convertValueSafely(JsonNode node) throws InvalidDateError {
-    String value = node.textValue();
     try {
-      return Date.from(LocalDate.parse(value));
+      return Date.from(LocalDate.parse(node.textValue()));
     } catch (DateTimeParseException e) {
-      throw new InvalidDateError(value);
+      throw new InvalidDateError(inputValue);
     }
   }
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class ZipCodeDeserializer extends JsonDeserializer<ZipCode> {
   private ZipCodeFormatter zipCodeFormatter;
+  private String inputValue;
 
   public ZipCodeDeserializer() {
     this.zipCodeFormatter = ServiceLocator.resolve(ZipCodeFormatter.class);
@@ -24,22 +25,22 @@ public class ZipCodeDeserializer extends JsonDeserializer<ZipCode> {
   public ZipCode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = node.toString();
     enforceNodeType(node);
     return convertValueSafely(node);
   }
 
   private void enforceNodeType(JsonNode node) throws InvalidZipCodeError {
     if (!node.getNodeType().equals(JsonNodeType.STRING)) {
-      throw new InvalidZipCodeError(node.toString());
+      throw new InvalidZipCodeError(inputValue);
     }
   }
 
   private ZipCode convertValueSafely(JsonNode node) throws InvalidZipCodeError {
-    String value = node.textValue();
     try {
-      return new ZipCode(value, zipCodeFormatter);
+      return new ZipCode(node.textValue(), zipCodeFormatter);
     } catch (InvalidArgumentException e) {
-      throw new InvalidZipCodeError(value);
+      throw new InvalidZipCodeError(inputValue);
     }
   }
 }

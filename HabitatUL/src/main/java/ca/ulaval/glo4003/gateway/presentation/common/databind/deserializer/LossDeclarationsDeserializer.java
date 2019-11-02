@@ -16,10 +16,13 @@ import java.util.Map;
 import java.util.Optional;
 
 public class LossDeclarationsDeserializer extends JsonDeserializer<LossDeclarations> {
+  private String inputValue;
+
   @Override
   public LossDeclarations deserialize(
       JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode nodes = jsonParser.getCodec().readTree(jsonParser);
+    inputValue = nodes.toString();
     enforceNodeType(nodes, JsonNodeType.ARRAY);
     return convertValueSafely(nodes);
   }
@@ -27,7 +30,7 @@ public class LossDeclarationsDeserializer extends JsonDeserializer<LossDeclarati
   private void enforceNodeType(JsonNode node, JsonNodeType nodeType)
       throws InvalidLossDeclarationsError {
     if (!node.getNodeType().equals(nodeType)) {
-      throw new InvalidLossDeclarationsError(node.toString());
+      throw new InvalidLossDeclarationsError(inputValue);
     }
   }
 
@@ -55,7 +58,7 @@ public class LossDeclarationsDeserializer extends JsonDeserializer<LossDeclarati
   private LossCategory getLossCategory(JsonNode node) throws InvalidLossDeclarationsError {
     JsonNode lossCategoryNode =
         Optional.ofNullable(node.get("category"))
-            .orElseThrow(() -> new InvalidLossDeclarationsError(node.toString()));
+            .orElseThrow(() -> new InvalidLossDeclarationsError(inputValue));
     enforceNodeType(lossCategoryNode, JsonNodeType.STRING);
     enforceNotBlank(lossCategoryNode);
     String textValue = lossCategoryNode.textValue();
@@ -64,18 +67,18 @@ public class LossDeclarationsDeserializer extends JsonDeserializer<LossDeclarati
 
   private void enforceNotBlank(JsonNode node) throws InvalidLossDeclarationsError {
     if (node.textValue().isEmpty()) {
-      throw new InvalidLossDeclarationsError(node.toString());
+      throw new InvalidLossDeclarationsError(inputValue);
     }
   }
 
   private Amount getLossAmount(JsonNode node) throws InvalidLossDeclarationsError {
     JsonNode lossAmountNode =
         Optional.ofNullable(node.get("amount"))
-            .orElseThrow(() -> new InvalidLossDeclarationsError(node.toString()));
+            .orElseThrow(() -> new InvalidLossDeclarationsError(inputValue));
     enforceNodeType(lossAmountNode, JsonNodeType.NUMBER);
     Amount lossAmount = new Amount(lossAmountNode.decimalValue());
     if (lossAmount.isSmallerThan(Amount.ZERO)) {
-      throw new InvalidLossDeclarationsError(node.toString());
+      throw new InvalidLossDeclarationsError(inputValue);
     }
     return lossAmount;
   }
