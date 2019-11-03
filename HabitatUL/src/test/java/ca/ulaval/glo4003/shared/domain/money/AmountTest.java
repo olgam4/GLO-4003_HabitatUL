@@ -23,57 +23,72 @@ public class AmountTest {
   }
 
   @Test
-  public void checkingIfAmountIsSmallerThanAnother_withSmallerValue_shouldBeGreater() {
+  public void checkingIfAmountIsSmallerThan_withSmallerValue_shouldBeGreater() {
     assertFalse(subject.isSmallerThan(SMALLER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsSmallerThanAnother_withSameValue_shouldBeEqual() {
+  public void checkingIfAmountIsSmallerThan_withSameValue_shouldBeEqual() {
     assertFalse(subject.isSmallerThan(SAME_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsSmallerThanAnother_withGreaterValue_shouldBeSmaller() {
+  public void checkingIfAmountIsSmallerThan_withGreaterValue_shouldBeSmaller() {
     assertTrue(subject.isSmallerThan(GREATER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsGreaterThanAnother_withSmallerValue_shouldBeGreater() {
+  public void checkingIfAmountIsSmallerOrEqual_withSmallerValue_shouldBeGreater() {
+    assertFalse(subject.isSmallerOrEqual(SMALLER_VALUE));
+  }
+
+  @Test
+  public void checkingIfAmountIsSmallerOrEqual_withSameValue_shouldBeEqual() {
+    assertTrue(subject.isSmallerOrEqual(SAME_VALUE));
+  }
+
+  @Test
+  public void checkingIfAmountIsSmallerOrEqual_withGreaterValue_shouldBeSmaller() {
+    assertTrue(subject.isSmallerOrEqual(GREATER_VALUE));
+  }
+
+  @Test
+  public void checkingIfAmountIsGreaterThan_withSmallerValue_shouldBeGreater() {
     assertTrue(subject.isGreaterThan(SMALLER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsGreaterThanAnother_withSameValue_shouldBeEqual() {
+  public void checkingIfAmountIsGreaterThan_withSameValue_shouldBeEqual() {
     assertFalse(subject.isGreaterThan(SAME_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsGreaterThanAnother_withGreaterValue_shouldBeSmaller() {
+  public void checkingIfAmountIsGreaterThan_withGreaterValue_shouldBeSmaller() {
     assertFalse(subject.isGreaterThan(GREATER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsBetweenTwoOthers_withValueBetween_shouldBeBetween() {
+  public void checkingIfAmountIsBetween_withValueBetween_shouldBeBetween() {
     assertTrue(subject.isBetween(SMALLER_VALUE, GREATER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsBetweenTwoOthers_withTooSmallValue_shouldNotBeBetween() {
+  public void checkingIfAmountIsBetween_withTooSmallValue_shouldNotBeBetween() {
     assertFalse(subject.isBetween(GREATER_VALUE, EVEN_GREATER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsBetweenTwoOthers_withLowerBoundValue_shouldNotBeBetween() {
+  public void checkingIfAmountIsBetween_withLowerBoundValue_shouldNotBeBetween() {
     assertFalse(subject.isBetween(VALUE, GREATER_VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsBetweenTwoOthers_withUpperBoundValue_shouldNotBeBetween() {
+  public void checkingIfAmountIsBetween_withUpperBoundValue_shouldNotBeBetween() {
     assertFalse(subject.isBetween(SMALLER_VALUE, VALUE));
   }
 
   @Test
-  public void checkingIfAmountIsBetweenTwoOthers_withTooGreatValue_shouldNotBeBetween() {
+  public void checkingIfAmountIsBetween_withTooGreatValue_shouldNotBeBetween() {
     assertFalse(subject.isBetween(EVEN_SMALLER_VALUE, SMALLER_VALUE));
   }
 }

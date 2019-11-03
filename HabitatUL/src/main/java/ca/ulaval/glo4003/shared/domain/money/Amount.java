@@ -48,6 +48,10 @@ public class Amount extends ValueObject {
     return value.compareTo(otherAmount.value) < 0;
   }
 
+  public boolean isSmallerOrEqual(Amount otherAmount) {
+    return isSmallerThan(otherAmount) || equals(otherAmount);
+  }
+
   public boolean isGreaterThan(Amount otherAmount) {
     return value.compareTo(otherAmount.value) > 0;
   }

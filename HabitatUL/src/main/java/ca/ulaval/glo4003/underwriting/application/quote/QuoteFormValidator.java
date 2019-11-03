@@ -31,6 +31,7 @@ public class QuoteFormValidator {
     quoteFormValidations.add(new DifferentAdditionalInsuredQuoteFormValidation());
     quoteFormValidations.add(
         new UlRegistrationQuoteFormValidation(ServiceLocator.resolve(UlRegistrarOffice.class)));
+    quoteFormValidations.add(new PositiveCoverageAmountQuoteFormValidation());
     // TODO: add other validations
     return quoteFormValidations;
   }

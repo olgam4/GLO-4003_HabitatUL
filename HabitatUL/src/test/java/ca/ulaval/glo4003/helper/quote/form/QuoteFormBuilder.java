@@ -58,6 +58,11 @@ public class QuoteFormBuilder {
     return this;
   }
 
+  public QuoteFormBuilder withPersonalProperty(PersonalProperty personalProperty) {
+    this.personalProperty = personalProperty;
+    return this;
+  }
+
   public QuoteFormBuilder withCivilLiability(CivilLiability civilLiability) {
     this.civilLiability = civilLiability;
     return this;
