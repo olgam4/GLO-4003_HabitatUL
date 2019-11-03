@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class HardCodedRoommateAdjustmentProviderTest {
   private void validateNoAdjustmentScenario(Gender namedInsuredGender, Gender roommateGender) {
     QuotePriceAdjustment adjustment = subject.getAdjustment(namedInsuredGender, roommateGender);
 
-    QuotePriceAdjustment expectedAdjustment = new NoQuotePriceAdjustment();
+    QuotePriceAdjustment expectedAdjustment = new NullQuotePriceAdjustment();
     assertEquals(expectedAdjustment, adjustment);
   }
 }

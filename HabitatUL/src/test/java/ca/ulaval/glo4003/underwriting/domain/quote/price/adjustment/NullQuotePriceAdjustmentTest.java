@@ -7,22 +7,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class MultiplicativeQuotePriceAdjustmentTest {
+public class NullQuotePriceAdjustmentTest {
   private static final Money PRICE = MoneyGenerator.createMoney();
-  private static final double FACTOR = 1.2;
-
-  private MultiplicativeQuotePriceAdjustment subject;
+  private NullQuotePriceAdjustment subject;
 
   @Before
   public void setUp() {
-    subject = new MultiplicativeQuotePriceAdjustment(FACTOR);
+    subject = new NullQuotePriceAdjustment();
   }
 
   @Test
   public void applyingAdjustment_shouldReturnAdjustmentAmount() {
     Money adjustmentAmount = subject.apply(PRICE);
 
-    Money expectedAmount = PRICE.multiply(FACTOR);
-    assertEquals(expectedAmount, adjustmentAmount);
+    assertEquals(Money.ZERO, adjustmentAmount);
   }
 }

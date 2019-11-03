@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 import ca.ulaval.glo4003.shared.infrastructure.JsonFileReader;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -85,6 +85,6 @@ public class JsonPreferentialProgramAdjustmentProvider
         adjustments.getOrDefault(normalizedCycle, new HashMap<>());
     Map<String, QuotePriceAdjustment> programMap =
         degreeMap.getOrDefault(normalizedDegree, new HashMap<>());
-    return programMap.getOrDefault(normalizedProgram, new NoQuotePriceAdjustment());
+    return programMap.getOrDefault(normalizedProgram, new NullQuotePriceAdjustment());
   }
 }

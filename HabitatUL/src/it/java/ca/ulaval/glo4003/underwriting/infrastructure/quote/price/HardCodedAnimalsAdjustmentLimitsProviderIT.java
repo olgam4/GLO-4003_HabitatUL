@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentLimits
 import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentLimitsProviderIT;
 
 public class HardCodedAnimalsAdjustmentLimitsProviderIT extends AnimalsAdjustmentLimitsProviderIT {
-
   @Override
   public AnimalsAdjustmentLimitsProvider createSubject() {
     return new HardCodedAnimalsAdjustmentLimitsProvider();

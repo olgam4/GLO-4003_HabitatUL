@@ -45,7 +45,7 @@ public class UserAppServiceTest {
   private static final String POLICY_KEY = Faker.instance().rickAndMorty().quote();
   private static final Token TOKEN = TokenGenerator.createToken();
   private static final TokenPayload TOKEN_PAYLOAD = TokenPayloadGenerator.createValidTokenPayload();
-  private static final Money PAYMENT = MoneyGenerator.create();
+  private static final Money PAYMENT = MoneyGenerator.createMoney();
   private static final Duration VALIDITY_PERIOD = Duration.of(1, ChronoUnit.MINUTES);
   private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
   private static final Credentials CREDENTIALS = CredentialsGenerator.createCredentials();

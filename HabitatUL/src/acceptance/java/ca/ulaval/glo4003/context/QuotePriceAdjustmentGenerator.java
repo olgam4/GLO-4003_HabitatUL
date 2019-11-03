@@ -9,7 +9,7 @@ public class QuotePriceAdjustmentGenerator {
     return new QuotePriceAdjustment() {
       @Override
       public Money apply(Money price) {
-        return MoneyGenerator.create();
+        return MoneyGenerator.createMoney();
       }
     };
   }

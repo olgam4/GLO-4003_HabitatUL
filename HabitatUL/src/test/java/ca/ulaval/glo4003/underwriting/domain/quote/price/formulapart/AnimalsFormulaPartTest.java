@@ -7,9 +7,9 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentProvider;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,18 +26,16 @@ public class AnimalsFormulaPartTest {
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
   private static final Map<AnimalBreed, Integer> ANIMAL_COLLECTION =
       QUOTE_FORM.getPersonalProperty().getAnimals().getCollection();
-  private static final Money BASE_PRICE = MoneyGenerator.create();
-  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.create();
-  private static final Money MIN_PRICE_ADJUSTMENT =
-      PRICE_ADJUSTMENT.divide(ANIMAL_COLLECTION.size() + 1);
-  private static final Money MAX_PRICE_ADJUSTMENT =
-      PRICE_ADJUSTMENT.multiply(ANIMAL_COLLECTION.size() + 1);
+  private static final Money BASE_PRICE = MoneyGenerator.createMoney();
+  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.createMoney();
+  private static final Money MINIMUM_PRICE_ADJUSTMENT = MoneyGenerator.createMoney();
+  private static final Money MAXIMUM_PRICE_ADJUSTMENT = MoneyGenerator.createMoney();
 
   @Mock private AnimalsAdjustmentProvider animalsAdjustmentProvider;
   @Mock private AnimalsAdjustmentLimitsProvider animalsAdjustmentLimitsProvider;
   @Mock private QuotePriceAdjustment quotePriceAdjustment;
-  @Mock private QuotePriceAdjustment minPriceAdjustment;
-  @Mock private QuotePriceAdjustment maxPriceAdjustment;
+  @Mock private QuotePriceAdjustment minimumPriceAdjustment;
+  @Mock private QuotePriceAdjustment maximumPriceAdjustment;
 
   private AnimalsFormulaPart subject;
 
@@ -46,10 +44,12 @@ public class AnimalsFormulaPartTest {
     when(quotePriceAdjustment.apply(any(Money.class))).thenReturn(PRICE_ADJUSTMENT);
     when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreed.class), any(Integer.class)))
         .thenReturn(quotePriceAdjustment);
-    when(minPriceAdjustment.apply(any(Money.class))).thenReturn(MIN_PRICE_ADJUSTMENT);
-    when(maxPriceAdjustment.apply(any(Money.class))).thenReturn(MAX_PRICE_ADJUSTMENT);
-    when(animalsAdjustmentLimitsProvider.getMin()).thenReturn(minPriceAdjustment);
-    when(animalsAdjustmentLimitsProvider.getMax()).thenReturn(maxPriceAdjustment);
+    when(minimumPriceAdjustment.apply(any(Money.class))).thenReturn(MINIMUM_PRICE_ADJUSTMENT);
+    when(maximumPriceAdjustment.apply(any(Money.class))).thenReturn(MAXIMUM_PRICE_ADJUSTMENT);
+    when(animalsAdjustmentLimitsProvider.getMinimumAdjustment(any(Money.class)))
+        .thenReturn(minimumPriceAdjustment);
+    when(animalsAdjustmentLimitsProvider.getMaximumAdjustment(any(Money.class)))
+        .thenReturn(maximumPriceAdjustment);
     subject = new AnimalsFormulaPart(animalsAdjustmentProvider, animalsAdjustmentLimitsProvider);
   }
 
@@ -61,8 +61,12 @@ public class AnimalsFormulaPartTest {
   }
 
   @Test
-  @Ignore
   public void computingFormulaPart_shouldCombineAdjustments() {
+    when(animalsAdjustmentLimitsProvider.getMinimumAdjustment(any(Money.class)))
+        .thenReturn(new NoQuotePriceAdjustment());
+    when(animalsAdjustmentLimitsProvider.getMaximumAdjustment(any(Money.class)))
+        .thenReturn(new NoQuotePriceAdjustment());
+
     Money computedAdjustment = subject.compute(QUOTE_FORM, BASE_PRICE);
 
     Money expectedAdjustment = PRICE_ADJUSTMENT.multiply(ANIMAL_COLLECTION.size());
@@ -72,22 +76,24 @@ public class AnimalsFormulaPartTest {
   @Test
   public void computingFormulaPart_shouldCapAdjustmentToMinimumAdjustment() {
     when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreed.class), any(Integer.class)))
-        .thenReturn(minPriceAdjustment);
-    when(animalsAdjustmentLimitsProvider.getMin()).thenReturn(maxPriceAdjustment);
+        .thenReturn(minimumPriceAdjustment);
+    when(animalsAdjustmentLimitsProvider.getMinimumAdjustment(any(Money.class)))
+        .thenReturn(maximumPriceAdjustment);
 
     Money computedAdjustment = subject.compute(QUOTE_FORM, BASE_PRICE);
 
-    assertEquals(MAX_PRICE_ADJUSTMENT, computedAdjustment);
+    assertEquals(MAXIMUM_PRICE_ADJUSTMENT, computedAdjustment);
   }
 
   @Test
   public void computingFormulaPart_shouldCapAdjustmentToMaximumAdjustment() {
     when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreed.class), any(Integer.class)))
-        .thenReturn(maxPriceAdjustment);
-    when(animalsAdjustmentLimitsProvider.getMax()).thenReturn(minPriceAdjustment);
+        .thenReturn(maximumPriceAdjustment);
+    when(animalsAdjustmentLimitsProvider.getMaximumAdjustment(any(Money.class)))
+        .thenReturn(minimumPriceAdjustment);
 
     Money computedAdjustment = subject.compute(QUOTE_FORM, BASE_PRICE);
 
-    assertEquals(MIN_PRICE_ADJUSTMENT, computedAdjustment);
+    assertEquals(MINIMUM_PRICE_ADJUSTMENT, computedAdjustment);
   }
 }

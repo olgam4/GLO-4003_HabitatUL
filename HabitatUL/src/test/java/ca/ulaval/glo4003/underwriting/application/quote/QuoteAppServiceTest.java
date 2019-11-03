@@ -29,7 +29,7 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Money A_PRICE = MoneyGenerator.create();
+  private static final Money A_PRICE = MoneyGenerator.createMoney();
   private static final QuoteId QUOTE_ID = new QuoteId();
 
   @Mock private QuoteFormValidator quoteFormValidator;

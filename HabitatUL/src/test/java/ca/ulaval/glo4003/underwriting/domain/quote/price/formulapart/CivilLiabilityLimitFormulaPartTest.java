@@ -23,8 +23,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CivilLiabilityLimitFormulaPartTest {
-  private static final Money BASE_PRICE = MoneyGenerator.create();
-  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.create();
+  private static final Money BASE_PRICE = MoneyGenerator.createMoney();
+  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.createMoney();
   private static final CivilLiabilityLimit CIVIL_LIABILITY_LIMIT = createCivilLiabilityLimit();
   private static final CivilLiability CIVIL_LIABILITY =
       CivilLiabilityBuilder.aCivilLiability().withAmount(CIVIL_LIABILITY_LIMIT).build();

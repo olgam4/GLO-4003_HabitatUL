@@ -8,6 +8,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.price.QuoteBasePriceCalculato
 public class DummyQuoteBasePriceCalculator implements QuoteBasePriceCalculator {
   @Override
   public Money computeQuoteBasePrice(QuoteForm quoteForm) {
-    return MoneyGenerator.create();
+    return MoneyGenerator.createMoney();
   }
 }

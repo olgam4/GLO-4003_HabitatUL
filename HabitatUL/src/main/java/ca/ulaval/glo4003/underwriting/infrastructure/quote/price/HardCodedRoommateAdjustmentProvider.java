@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.RoommateAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 
 import java.util.AbstractMap;
@@ -24,6 +24,6 @@ public class HardCodedRoommateAdjustmentProvider implements RoommateAdjustmentPr
         new AbstractMap.SimpleEntry<>(namedInsuredGender, roommateGender);
     return Optional.ofNullable(LOOKUP_MAP.get(key))
         .map(x -> (QuotePriceAdjustment) new MultiplicativeQuotePriceAdjustment(x))
-        .orElse(new NoQuotePriceAdjustment());
+        .orElse(new NullQuotePriceAdjustment());
   }
 }

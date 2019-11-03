@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuotePriceCalculatorTest {
-  private static final Money PRICE = MoneyGenerator.create();
+  private static final Money PRICE = MoneyGenerator.createMoney();
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
 
   @Mock private QuotePriceFormula quotePriceFormula;

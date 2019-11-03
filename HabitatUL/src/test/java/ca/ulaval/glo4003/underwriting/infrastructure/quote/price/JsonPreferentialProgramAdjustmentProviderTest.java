@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 
 import ca.ulaval.glo4003.shared.infrastructure.JsonFileReader;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -79,7 +79,7 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
   private void validateNoAdjustmentScenario(String cycle, String degree, String program) {
     QuotePriceAdjustment adjustment = subject.getAdjustment(cycle, degree, program);
 
-    QuotePriceAdjustment expectedAdjustment = new NoQuotePriceAdjustment();
+    QuotePriceAdjustment expectedAdjustment = new NullQuotePriceAdjustment();
     assertEquals(expectedAdjustment, adjustment);
   }
 

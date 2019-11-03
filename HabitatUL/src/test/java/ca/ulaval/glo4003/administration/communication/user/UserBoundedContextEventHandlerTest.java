@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 public class UserBoundedContextEventHandlerTest {
   private static final String POLICY_KEY = Faker.instance().internet().uuid();
   private static final String QUOTE_KEY = Faker.instance().internet().uuid();
-  private static final Money TOTAL = MoneyGenerator.create();
+  private static final Money TOTAL = MoneyGenerator.createMoney();
 
   @Mock private UserAppService userAppService;
 

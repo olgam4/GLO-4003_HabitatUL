@@ -22,8 +22,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RoommateFormulaPartTest {
-  private static final Money BASE_PRICE = MoneyGenerator.create();
-  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.create();
+  private static final Money BASE_PRICE = MoneyGenerator.createMoney();
+  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.createMoney();
   private static final Identity IDENTITY = IdentityGenerator.createIdentity();
   private static final Identity ANOTHER_IDENTITY = IdentityGenerator.createIdentity();
 

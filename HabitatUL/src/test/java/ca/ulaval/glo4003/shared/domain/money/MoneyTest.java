@@ -11,9 +11,9 @@ import static ca.ulaval.glo4003.shared.domain.money.Amount.ROUNDING;
 import static org.junit.Assert.assertEquals;
 
 public class MoneyTest {
-  private static final Money MONEY = MoneyGenerator.create();
+  private static final Money MONEY = MoneyGenerator.createMoney();
   private static final BigDecimal MONEY_VALUE = MONEY.getAmount().getValue();
-  private static final Money OTHER_MONEY = MoneyGenerator.create();
+  private static final Money OTHER_MONEY = MoneyGenerator.createMoney();
   private static final BigDecimal OTHER_MONEY_VALUE = OTHER_MONEY.getAmount().getValue();
   private static final double FACTOR = Faker.instance().number().randomDouble(5, 0, 1000);
 

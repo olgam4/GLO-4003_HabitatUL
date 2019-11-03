@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.RoommateAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 
 import java.util.Optional;
@@ -24,7 +24,7 @@ public class RoommateFormulaPart implements QuotePriceFormulaPart {
     QuotePriceAdjustment adjustment =
         additionalInsuredGender
             .map(x -> roommateAdjustmentProvider.getAdjustment(namedInsuredGender, x))
-            .orElse(new NoQuotePriceAdjustment());
+            .orElse(new NullQuotePriceAdjustment());
     return adjustment.apply(basePrice);
   }
 }

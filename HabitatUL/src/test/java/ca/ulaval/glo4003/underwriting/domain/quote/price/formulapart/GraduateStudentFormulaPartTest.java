@@ -24,8 +24,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GraduateStudentFormulaPartTest {
-  private static final Money BASE_PRICE = MoneyGenerator.create();
-  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.create();
+  private static final Money BASE_PRICE = MoneyGenerator.createMoney();
+  private static final Money PRICE_ADJUSTMENT = MoneyGenerator.createMoney();
   private static final String CYCLE = createCycle();
   private static final UniversityProfile UNIVERSITY_PROFILE =
       UniversityProfileBuilder.aUniversityProfile().withCycle(CYCLE).build();

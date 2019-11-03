@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.price.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 
 import java.util.HashMap;
@@ -22,6 +22,6 @@ public class HardCodedGraduateStudentAdjustmentProvider
   public QuotePriceAdjustment getAdjustment(String cycle) {
     return Optional.ofNullable(LOOKUP_MAP.get(cycle))
         .map(x -> (QuotePriceAdjustment) new MultiplicativeQuotePriceAdjustment(x))
-        .orElse(new NoQuotePriceAdjustment());
+        .orElse(new NullQuotePriceAdjustment());
   }
 }

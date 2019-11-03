@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import com.github.javafaker.Faker;
 import org.junit.Before;
@@ -50,7 +50,7 @@ public class HardCodedAnimalsAdjustmentProviderTest {
   private void validateNoAdjustmentScenario(AnimalBreed animalBreed) {
     QuotePriceAdjustment adjustment = subject.getAdjustment(animalBreed, COUNT);
 
-    QuotePriceAdjustment expectedAdjustment = new NoQuotePriceAdjustment();
+    QuotePriceAdjustment expectedAdjustment = new NullQuotePriceAdjustment();
     assertEquals(expectedAdjustment, adjustment);
   }
 }

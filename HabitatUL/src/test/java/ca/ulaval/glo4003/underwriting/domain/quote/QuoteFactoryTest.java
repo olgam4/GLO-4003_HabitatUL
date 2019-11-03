@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteFactoryTest {
   private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
-  private static final Money PRICE = MoneyGenerator.create();
+  private static final Money PRICE = MoneyGenerator.createMoney();
   private static final Duration VALIDITY_PERIOD = TemporalGenerator.createDuration();
   private static final java.time.Period COVERAGE_PERIOD = TemporalGenerator.createJavaTimePeriod();
 

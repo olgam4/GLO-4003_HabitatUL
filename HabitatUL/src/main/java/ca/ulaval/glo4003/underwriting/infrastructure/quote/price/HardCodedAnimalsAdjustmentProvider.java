@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.underwriting.infrastructure.quote.price;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.MultiplicativeQuotePriceAdjustment;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NoQuotePriceAdjustment;
+import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.NullQuotePriceAdjustment;
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 
 import java.util.EnumMap;
@@ -24,6 +24,6 @@ public class HardCodedAnimalsAdjustmentProvider implements AnimalsAdjustmentProv
   public QuotePriceAdjustment getAdjustment(AnimalBreed breed, Integer count) {
     return Optional.ofNullable(LOOKUP_MAP.get(breed))
         .map(x -> (QuotePriceAdjustment) new MultiplicativeQuotePriceAdjustment(x * count))
-        .orElse(new NoQuotePriceAdjustment());
+        .orElse(new NullQuotePriceAdjustment());
   }
 }

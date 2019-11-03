@@ -39,8 +39,10 @@ public class AnimalsFormulaPart implements QuotePriceFormulaPart {
   }
 
   private Money capAdjustment(Money totalAdjustment, Money basePrice) {
-    Money maximumPrice = animalsAdjustmentLimitsProvider.getMax().apply(basePrice);
-    Money minimumPrice = animalsAdjustmentLimitsProvider.getMin().apply(basePrice);
-    return Money.max(minimumPrice, Money.min(maximumPrice, totalAdjustment));
+    QuotePriceAdjustment minimumAdjustment =
+        animalsAdjustmentLimitsProvider.getMinimumAdjustment(basePrice);
+    QuotePriceAdjustment maximumAdjustment =
+        animalsAdjustmentLimitsProvider.getMaximumAdjustment(basePrice);
+    return maximumAdjustment.apply(minimumAdjustment.apply(totalAdjustment));
   }
 }
