@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 public class MoneyGenerator {
   private static final int MAX_NUMBER_OF_DECIMALS = 5;
 
+  private MoneyGenerator() {}
+
   public static Money createMoney() {
     Amount amount = createAmount();
     return new Money(amount);

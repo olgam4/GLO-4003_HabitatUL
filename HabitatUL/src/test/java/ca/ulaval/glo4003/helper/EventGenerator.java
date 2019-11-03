@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class EventGenerator {
+  private EventGenerator() {}
+
   public static List<Event> createList() {
     return createList(Faker.instance().number().randomDigitNotZero());
   }

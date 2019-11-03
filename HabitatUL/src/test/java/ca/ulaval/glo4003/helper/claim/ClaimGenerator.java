@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.coverage.application.claim.ClaimAssembler;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.coverage.domain.claim.*;
+import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.helper.EnumSampler;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.github.javafaker.Faker;
@@ -16,6 +17,10 @@ import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
 
 public class ClaimGenerator {
   private ClaimGenerator() {}
+
+  public static ClaimRequest createClaimRequest() {
+    return new ClaimRequest(createSinisterType(), createLossDeclarations());
+  }
 
   public static ClaimCreationDto createClaimCreationDto() {
     return new ClaimCreationDto(createSinisterType(), createLossDeclarations());

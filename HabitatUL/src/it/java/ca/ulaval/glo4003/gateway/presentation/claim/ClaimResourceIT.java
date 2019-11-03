@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.gateway.presentation.claim;
 
 import ca.ulaval.glo4003.coverage.application.claim.ClaimAppService;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
+import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
@@ -20,9 +21,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClaimResourceIT {
-  @Mock private ClaimAppService claimAppService;
+  private static final ClaimDto CLAIM_DTO = ClaimGenerator.createClaimDto();
+  private static final String CLAIM_ID_REPRESENTATION = CLAIM_DTO.getClaimId().toRepresentation();
 
-  private ClaimDto claimDto;
+  @Mock private ClaimAppService claimAppService;
 
   @BeforeClass
   public static void setUpClass() {
@@ -36,9 +38,8 @@ public class ClaimResourceIT {
 
   @Before
   public void setUp() {
+    when(claimAppService.getClaim(any(ClaimId.class))).thenReturn(CLAIM_DTO);
     ClaimResource claimResource = new ClaimResource(claimAppService, new ClaimViewAssembler());
-    claimDto = ClaimGenerator.createClaimDto();
-    when(claimAppService.getClaim(any())).thenReturn(claimDto);
     ResourceConfig resourceConfig =
         ResourceConfigBuilder.aResourceConfig()
             .withResource(claimResource)
@@ -53,21 +54,21 @@ public class ClaimResourceIT {
   }
 
   @Test
-  public void gettingClaimPath_shouldHaveExpectedStatusCode() {
-    String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().toRepresentation());
+  public void gettingClaim_shouldHaveExpectedStatusCode() {
+    String route = toPath(CLAIM_ROUTE, CLAIM_ID_REPRESENTATION);
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
-    getBaseScenario().given().when().get(path).then().statusCode(expectedStatusCode);
+    getBaseScenario().given().when().get(route).then().statusCode(expectedStatusCode);
   }
 
   @Test
-  public void gettingClaimPath_shouldProvideProperlyFormattedResponse() {
-    String path = toPath(CLAIM_ROUTE, claimDto.getClaimId().toRepresentation());
+  public void gettingClaim_shouldProvideProperlyFormattedResponse() {
+    String route = toPath(CLAIM_ROUTE, CLAIM_ID_REPRESENTATION);
 
     getBaseScenario()
         .given()
         .when()
-        .get(path)
+        .get(route)
         .then()
         .body(matchesJsonSchema("claim/ClaimResponse"));
   }

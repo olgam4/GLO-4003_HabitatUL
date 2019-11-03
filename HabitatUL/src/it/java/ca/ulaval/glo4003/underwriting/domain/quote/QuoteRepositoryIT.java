@@ -11,6 +11,8 @@ import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuote;
 import static org.junit.Assert.assertThat;
 
 public abstract class QuoteRepositoryIT {
+  private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
+
   private QuoteRepository subject;
   private Quote quote;
   private QuoteId quoteId;
@@ -24,7 +26,7 @@ public abstract class QuoteRepositoryIT {
 
   @Test(expected = QuoteNotFoundException.class)
   public void gettingQuoteById_withUnknownQuoteId_shouldThrow() throws QuoteNotFoundException {
-    subject.getById(new QuoteId());
+    subject.getById(QUOTE_ID);
   }
 
   @Test

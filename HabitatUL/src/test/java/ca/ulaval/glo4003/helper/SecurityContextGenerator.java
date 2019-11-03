@@ -8,6 +8,8 @@ import java.security.Principal;
 public class SecurityContextGenerator {
   private static final String USER_ID = Faker.instance().internet().uuid();
 
+  private SecurityContextGenerator() {}
+
   public static SecurityContext createSecurityContext() {
     return new SecurityContext() {
       @Override

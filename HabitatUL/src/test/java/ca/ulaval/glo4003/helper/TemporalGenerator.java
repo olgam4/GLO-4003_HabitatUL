@@ -12,6 +12,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 public class TemporalGenerator {
+  private TemporalGenerator() {}
+
   public static Date getNowDate() {
     return Date.now(getClockProvider().getClock());
   }

@@ -6,6 +6,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiab
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 
 public class CivilLiabilityGenerator {
+  private CivilLiabilityGenerator() {}
+
   public static CivilLiabilityRequest createCivilLiabilityRequest() {
     return new CivilLiabilityRequest(createCivilLiabilityLimit());
   }

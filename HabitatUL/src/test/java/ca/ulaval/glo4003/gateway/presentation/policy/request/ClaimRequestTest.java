@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.claim.request;
+package ca.ulaval.glo4003.gateway.presentation.policy.request;
 
 import org.junit.Before;
 import org.junit.Test;

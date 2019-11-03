@@ -24,20 +24,20 @@ public class QuoteResource {
   private static final String QUOTE_ID_PARAM_NAME = "quoteId";
 
   private QuoteAppService quoteAppService;
-  private QuoteViewAssembler quoteViewAssembler;
   private UserAppService userAppService;
+  private QuoteViewAssembler quoteViewAssembler;
 
   public QuoteResource() {
-    this(new QuoteAppService(), new QuoteViewAssembler(), new UserAppService());
+    this(new QuoteAppService(), new UserAppService(), new QuoteViewAssembler());
   }
 
   public QuoteResource(
       QuoteAppService quoteAppService,
-      QuoteViewAssembler quoteViewAssembler,
-      UserAppService userAppService) {
+      UserAppService userAppService,
+      QuoteViewAssembler quoteViewAssembler) {
     this.quoteAppService = quoteAppService;
-    this.quoteViewAssembler = quoteViewAssembler;
     this.userAppService = userAppService;
+    this.quoteViewAssembler = quoteViewAssembler;
   }
 
   @POST

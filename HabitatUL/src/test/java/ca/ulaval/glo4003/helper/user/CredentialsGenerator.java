@@ -5,6 +5,8 @@ import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
 import com.github.javafaker.Faker;
 
 public class CredentialsGenerator {
+  private CredentialsGenerator() {}
+
   public static CredentialsRequest createCredentialsRequest() {
     return new CredentialsRequest(createUsername(), createPassword());
   }

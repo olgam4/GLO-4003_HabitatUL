@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventPublisherQuoteRepositoryDecoratorTest {
-  private static final QuoteId QUOTE_ID = new QuoteId();
+  private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
 
   @Mock private Quote quote;
   @Mock private QuoteRepository quoteRepository;

@@ -11,6 +11,8 @@ public class LocationGenerator {
   private static final int MIN_STREET_NUMBER = 1;
   private static final int MAX_STREET_NUMBER = 1000;
 
+  private LocationGenerator() {}
+
   public static LocationRequest createLocationRequest() {
     return new LocationRequest(
         createZipCode(), createStreetNumber(), createApartmentNumber(), createFloor());

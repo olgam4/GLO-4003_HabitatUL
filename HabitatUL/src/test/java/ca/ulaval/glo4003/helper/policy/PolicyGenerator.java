@@ -7,6 +7,8 @@ import ca.ulaval.glo4003.helper.TemporalGenerator;
 import com.github.javafaker.Faker;
 
 public class PolicyGenerator {
+  private PolicyGenerator() {}
+
   public static Policy createPolicy() {
     return new Policy(
         createPolicyId(),

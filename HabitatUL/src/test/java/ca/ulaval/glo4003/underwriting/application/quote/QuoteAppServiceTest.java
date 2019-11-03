@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -29,8 +30,8 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Money A_PRICE = MoneyGenerator.createMoney();
-  private static final QuoteId QUOTE_ID = new QuoteId();
+  private static final Money PRICE = MoneyGenerator.createMoney();
+  private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
 
   @Mock private QuoteFormValidator quoteFormValidator;
   @Mock private QuotePriceCalculator quotePriceCalculator;
@@ -48,7 +49,7 @@ public class QuoteAppServiceTest {
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
     when(quote.getQuoteForm()).thenReturn(QuoteFormGenerator.createQuoteForm());
-    when(quotePriceCalculator.compute(any(QuoteForm.class))).thenReturn(A_PRICE);
+    when(quotePriceCalculator.compute(any(QuoteForm.class))).thenReturn(PRICE);
     when(quoteFactory.create(any(Money.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 

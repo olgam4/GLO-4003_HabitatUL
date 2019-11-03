@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
 import ca.ulaval.glo4003.helper.EventGenerator;
+import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.mediator.Mediator;
 import org.junit.Before;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventPublisherPolicyRepositoryDecoratorTest {
-  private static final PolicyId POLICY_ID = new PolicyId();
+  private static final PolicyId POLICY_ID = PolicyGenerator.createPolicyId();
 
   @Mock private Policy policy;
   @Mock private PolicyRepository policyRepository;

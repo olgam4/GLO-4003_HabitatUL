@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
-import com.github.javafaker.Faker;
 
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.helper.TemporalGenerator.*;
@@ -29,6 +28,6 @@ public class QuoteGenerator {
   }
 
   public static QuoteId createQuoteId() {
-    return new QuoteId(Faker.instance().internet().uuid());
+    return new QuoteId();
   }
 }

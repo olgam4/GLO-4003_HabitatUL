@@ -7,6 +7,8 @@ import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.*;
 
 public class PolicyMatcher {
+  private PolicyMatcher() {}
+
   public static Matcher<Policy> matchesPolicy(final Policy policy) {
     return allOf(
         hasProperty("policyId", equalTo(policy.getPolicyId())),

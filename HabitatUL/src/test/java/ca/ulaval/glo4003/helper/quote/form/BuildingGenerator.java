@@ -13,6 +13,8 @@ public class BuildingGenerator {
   private static int MIN_NUMBER_OF_UNITS = 4;
   private static int MAX_NUMBER_OF_UNITS = 50;
 
+  private BuildingGenerator() {}
+
   public static BuildingRequest createBuildingRequest() {
     return new BuildingRequest(
         createNumberOfUnits(), createPreventionSystems(), createCommercialUse());

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.user;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
+import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
@@ -43,13 +44,13 @@ public class UserResourceIT {
 
   @Before
   public void setUp() {
+    when(userAppService.createUser(any(Credentials.class))).thenReturn(USER_KEY);
+    when(userAppService.authenticateUser(any(Credentials.class))).thenReturn(TOKEN);
     userViewAssembler = new UserViewAssembler();
     UserResource userResource = new UserResource(userAppService, userViewAssembler);
     ResourceConfig resourceConfig =
         ResourceConfigBuilder.aResourceConfig().withResource(userResource).build();
     addResourceConfig(resourceConfig);
-    when(userAppService.createUser(any())).thenReturn(USER_KEY);
-    when(userAppService.authenticateUser(any())).thenReturn(TOKEN);
   }
 
   @After
@@ -58,7 +59,7 @@ public class UserResourceIT {
   }
 
   @Test
-  public void postingUserPath_shouldHaveExpectedStatusCode() {
+  public void creatingUser_shouldHaveExpectedStatusCode() {
     JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
 
     getBaseScenario()
@@ -71,7 +72,7 @@ public class UserResourceIT {
   }
 
   @Test
-  public void postingUserPath_shouldProvideLocationCreatedUser() {
+  public void creatingUser_shouldProvideLocationCreatedUser() {
     JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
 
     String expectedLocation = toUri(USER_ROUTE, USER_KEY);
@@ -85,29 +86,29 @@ public class UserResourceIT {
   }
 
   @Test
-  public void postingUserAuthenticationPath_shouldHaveExpectedStatusCode() {
-    String path = toPath(USER_ROUTE, AUTHENTICATION_ROUTE);
+  public void authenticatingUser_shouldHaveExpectedStatusCode() {
     JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
+    String route = toPath(USER_ROUTE, AUTHENTICATION_ROUTE);
 
     getBaseScenario()
         .given()
         .body(request.toString())
         .when()
-        .post(path)
+        .post(route)
         .then()
         .statusCode(Status.OK.getStatusCode());
   }
 
   @Test
-  public void postingUserAuthenticationPath_shouldProvideProperlyFormattedResponse() {
-    String path = toPath(USER_ROUTE, AUTHENTICATION_ROUTE);
+  public void authenticatingUser_shouldProvideProperlyFormattedResponse() {
     JSONObject request = RequestBodyGenerator.createCredentialRequestBody();
+    String route = toPath(USER_ROUTE, AUTHENTICATION_ROUTE);
 
     getBaseScenario()
         .given()
         .body(request.toString())
         .when()
-        .post(path)
+        .post(route)
         .then()
         .body(matchesJsonSchema("user/AuthenticationResponse"));
   }

@@ -1,13 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.underwriting;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
+import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 
 import javax.ws.rs.core.Response;
 
 public class QuoteExpiredErrorMappingIT extends ErrorMappingIT {
-  private static final QuoteId QUOTE_ID = new QuoteId();
+  private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
 
   @Override
   public Throwable getError() {

@@ -1,7 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
+import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
+import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -14,6 +17,7 @@ import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALI
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_ZIP_CODE_VALUE;
 
 public class RequestBodyGenerator {
+
   public static JSONObject createQuoteRequestBody() {
     QuoteRequest quoteRequest = QuoteFormGenerator.createQuoteRequest();
     JSONObject json = new JSONObject();
@@ -97,15 +101,36 @@ public class RequestBodyGenerator {
     return json;
   }
 
-  private static String toRequestBody(Date date) {
-    return date.getValue().toString();
-  }
-
   public static JSONObject createCredentialRequestBody() {
     CredentialsRequest credentialsRequest = CredentialsGenerator.createCredentialsRequest();
     JSONObject json = new JSONObject();
     json.put("username", credentialsRequest.getUsername());
     json.put("password", credentialsRequest.getPassword());
     return json;
+  }
+
+  public static JSONObject createClaimRequestBody() {
+    ClaimRequest claimRequest = ClaimGenerator.createClaimRequest();
+    JSONObject json = new JSONObject();
+    json.put("sinisterType", claimRequest.getSinisterType().toString());
+    json.put("lossDeclarations", toRequestBody(claimRequest.getLossDeclarations()));
+    return json;
+  }
+
+  private static JSONArray toRequestBody(LossDeclarations lossDeclarations) {
+    JSONArray json = new JSONArray();
+    lossDeclarations
+        .getCollection()
+        .forEach(
+            (key, value) ->
+                json.put(
+                    new JSONObject()
+                        .put("category", key.toString())
+                        .put("amount", value.getValue().floatValue())));
+    return json;
+  }
+
+  private static String toRequestBody(Date date) {
+    return date.getValue().toString();
   }
 }

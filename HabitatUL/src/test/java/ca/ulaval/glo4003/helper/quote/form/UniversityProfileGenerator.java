@@ -5,6 +5,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfi
 import com.github.javafaker.Faker;
 
 public class UniversityProfileGenerator {
+  private UniversityProfileGenerator() {}
+
   public static UniversityProfileRequest createUniversityProfileRequest() {
     return new UniversityProfileRequest(
         createIdul(), createNi(), createCycle(), createDegree(), createProgram());

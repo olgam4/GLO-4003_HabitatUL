@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;
 import org.junit.*;
@@ -25,10 +26,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteResourceIT {
+  private static final QuoteDto QUOTE_DTO = QuoteGenerator.createQuoteDto();
+  private static final String QUOTE_ID_REPRESENTATION = QUOTE_DTO.getQuoteId().toRepresentation();
+
   @Mock private QuoteAppService quoteAppService;
   @Mock private UserAppService userAppService;
-
-  private QuoteDto quoteDto;
 
   @BeforeClass
   public static void setUpClass() {
@@ -42,19 +44,9 @@ public class QuoteResourceIT {
 
   @Before
   public void setUp() {
+    when(quoteAppService.requestQuote(any(QuoteFormDto.class))).thenReturn(QUOTE_DTO);
     QuoteResource quoteResource =
-        new QuoteResource(quoteAppService, new QuoteViewAssembler(), userAppService);
-    quoteDto = QuoteGenerator.createQuoteDto();
-    when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
-    registerResource(quoteResource);
-  }
-
-  @After
-  public void tearDown() {
-    resetServer();
-  }
-
-  private void registerResource(QuoteResource quoteResource) {
+        new QuoteResource(quoteAppService, userAppService, new QuoteViewAssembler());
     ResourceConfig resourceConfig =
         ResourceConfigBuilder.aResourceConfig()
             .withResource(quoteResource)
@@ -63,8 +55,13 @@ public class QuoteResourceIT {
     addResourceConfig(resourceConfig);
   }
 
+  @After
+  public void tearDown() {
+    resetServer();
+  }
+
   @Test
-  public void postingQuotePath_shouldHaveExpectedStatusCode() {
+  public void creatingQuote_shouldHaveExpectedStatusCode() {
     JSONObject request = RequestBodyGenerator.createQuoteRequestBody();
 
     int expectedStatusCode = Response.Status.CREATED.getStatusCode();
@@ -78,10 +75,10 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingQuotePath_shouldProvideLocationCreatedQuote() {
+  public void creatingQuote_shouldProvideLocationCreatedQuote() {
     JSONObject request = RequestBodyGenerator.createQuoteRequestBody();
 
-    String expectedLocation = toUri(QUOTE_ROUTE, quoteDto.getQuoteId().toRepresentation());
+    String expectedLocation = toUri(QUOTE_ROUTE, QUOTE_ID_REPRESENTATION);
     getBaseScenario()
         .given()
         .body(request.toString())
@@ -92,7 +89,7 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingQuotePath_shouldProvideProperlyFormattedResponse() {
+  public void creatingQuote_shouldProvideProperlyFormattedResponse() {
     JSONObject request = RequestBodyGenerator.createQuoteRequestBody();
 
     getBaseScenario()
@@ -105,10 +102,10 @@ public class QuoteResourceIT {
   }
 
   @Test
-  public void postingPurchaseQuotePath_shouldHaveExpectedStatusCode() {
-    String path = toPath(QUOTE_ROUTE, quoteDto.getQuoteId().toRepresentation(), PURCHASE_ROUTE);
+  public void purchasingQuote_shouldHaveExpectedStatusCode() {
+    String route = toPath(QUOTE_ROUTE, QUOTE_ID_REPRESENTATION, PURCHASE_ROUTE);
 
     int expectedStatusCode = Response.Status.OK.getStatusCode();
-    getBaseScenario().when().post(path).then().statusCode(expectedStatusCode);
+    getBaseScenario().when().post(route).then().statusCode(expectedStatusCode);
   }
 }

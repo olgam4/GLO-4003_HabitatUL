@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class EnumSampler {
+  private EnumSampler() {}
+
   public static <T extends Enum<T>> List<T> sample(Class<T> enumeration, int size) {
     return IntStream.range(0, size).mapToObj(i -> sample(enumeration)).collect(Collectors.toList());
   }

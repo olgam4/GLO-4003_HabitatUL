@@ -6,6 +6,8 @@ import com.github.javafaker.Faker;
 import java.util.concurrent.TimeUnit;
 
 public class TokenPayloadGenerator {
+  private TokenPayloadGenerator() {}
+
   public static TokenPayload createValidTokenPayload() {
     Faker faker = Faker.instance();
     return new TokenPayload(

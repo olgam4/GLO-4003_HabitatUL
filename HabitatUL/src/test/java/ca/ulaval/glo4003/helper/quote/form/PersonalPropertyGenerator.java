@@ -17,6 +17,8 @@ import java.util.stream.Stream;
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
 
 public class PersonalPropertyGenerator {
+  private PersonalPropertyGenerator() {}
+
   public static PersonalPropertyRequest createPersonalPropertyRequest() {
     return new PersonalPropertyRequest(createCoverageAmount(), createAnimals());
   }

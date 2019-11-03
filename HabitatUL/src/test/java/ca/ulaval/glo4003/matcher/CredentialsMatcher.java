@@ -7,6 +7,8 @@ import org.hamcrest.Matcher;
 import static org.hamcrest.Matchers.*;
 
 public class CredentialsMatcher {
+  private CredentialsMatcher() {}
+
   public static Matcher<Credentials> matchesCredentials(
       final CredentialsRequest credentialsRequest) {
     return allOf(

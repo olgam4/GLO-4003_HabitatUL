@@ -24,9 +24,9 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteResourceTest {
-  private static final QuoteId QUOTE_ID = new QuoteId();
   private static final SecurityContext SECURITY_CONTEXT =
       SecurityContextGenerator.createSecurityContext();
+  private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
 
   @Mock private QuoteAppService quoteAppService;
   @Mock private UserAppService userAppService;
@@ -41,8 +41,8 @@ public class QuoteResourceTest {
     quoteRequest = QuoteFormGenerator.createQuoteRequest();
     quoteViewAssembler = new QuoteViewAssembler();
     quoteDto = QuoteGenerator.createQuoteDto();
-    subject = new QuoteResource(quoteAppService, quoteViewAssembler, userAppService);
     when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
+    subject = new QuoteResource(quoteAppService, userAppService, quoteViewAssembler);
   }
 
   @Test

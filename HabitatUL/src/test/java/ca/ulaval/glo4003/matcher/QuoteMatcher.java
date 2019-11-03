@@ -19,6 +19,8 @@ import java.util.Optional;
 import static org.hamcrest.Matchers.*;
 
 public class QuoteMatcher {
+  private QuoteMatcher() {}
+
   public static Matcher<Quote> matchesQuote(final Quote quote) {
     return allOf(
         hasProperty("quoteId", equalTo(quote.getQuoteId())),

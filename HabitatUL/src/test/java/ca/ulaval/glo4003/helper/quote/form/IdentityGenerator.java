@@ -14,6 +14,8 @@ import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.cre
 import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.createUniversityProfileRequest;
 
 public class IdentityGenerator {
+  private IdentityGenerator() {}
+
   public static IdentityRequest createIdentityRequest() {
     return new IdentityRequest(
         createFirstName(),
