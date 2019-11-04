@@ -16,6 +16,7 @@ import java.util.Collection;
 
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountSmallerThan;
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createLossCategory;
 
 @RunWith(Enclosed.class)
@@ -48,7 +49,7 @@ public class LossDeclarationsDeserializerIT {
       super(value);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
     public static Collection parameters() {
       return Arrays.asList(new Object[][] {{VALID_VALUE}});
     }
@@ -67,7 +68,7 @@ public class LossDeclarationsDeserializerIT {
       super(value);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
     public static Collection parameters() {
       return Arrays.asList(
           new Object[][] {

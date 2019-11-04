@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_ZIP_CODE_VALUE;
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 
 @RunWith(Enclosed.class)
 public class ZipCodeDeserializerIT {
@@ -25,7 +26,7 @@ public class ZipCodeDeserializerIT {
       super(value);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
     public static Collection parameters() {
       return Arrays.asList(new Object[][] {{VALID_ZIP_CODE_VALUE}});
     }
@@ -44,7 +45,7 @@ public class ZipCodeDeserializerIT {
       super(value);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
     public static Collection parameters() {
       return Arrays.asList(
           new Object[][] {

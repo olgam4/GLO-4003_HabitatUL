@@ -3,42 +3,22 @@ package ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability;
 import ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT;
 import static org.junit.Assert.*;
 
+@RunWith(Enclosed.class)
 public class CivilLiabilityTest {
   private static final int MIN_NUMBER_OF_UNITS = 1;
 
   private CivilLiability subject;
-
-  @Test
-  public void completingCivilLiability_withAmount_shouldUseProvidedAmount() {
-    validateScenario(
-        CivilLiabilityLimit.ONE_MILLION,
-        CivilLiabilityLimit.ONE_MILLION,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT,
-        Integer.MAX_VALUE);
-    validateScenario(
-        CivilLiabilityLimit.TWO_MILLION,
-        CivilLiabilityLimit.TWO_MILLION,
-        MIN_NUMBER_OF_UNITS,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT);
-  }
-
-  @Test
-  public void completingCivilLiability_withoutAmount_shouldUseDefaultAmount() {
-    validateScenario(
-        CivilLiabilityLimit.ONE_MILLION,
-        null,
-        MIN_NUMBER_OF_UNITS,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT);
-    validateScenario(
-        CivilLiabilityLimit.TWO_MILLION,
-        null,
-        MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT,
-        Integer.MAX_VALUE);
-  }
 
   @Test
   public void checkingIfFormIsFilled_withUnfilledForm_shouldReturnFalse() {
@@ -54,16 +34,69 @@ public class CivilLiabilityTest {
     assertTrue(subject.isFilled());
   }
 
-  private void validateScenario(
-      CivilLiabilityLimit expectedAmount,
-      CivilLiabilityLimit initialAmount,
-      int minNumberOfUnits,
-      int maxNumberOfUnits) {
-    subject = new CivilLiability(initialAmount);
-    int numberOfUnits = Faker.instance().number().numberBetween(minNumberOfUnits, maxNumberOfUnits);
+  @RunWith(Parameterized.class)
+  public static class CompletingCivilLiabilityTest {
+    private CivilLiabilityLimit expectedAmount;
+    private CivilLiabilityLimit initialAmount;
+    private int minNumberOfUnits;
+    private int maxNumberOfUnits;
 
-    CivilLiability civilLiability = subject.completeWithDefaultValues(numberOfUnits);
+    public CompletingCivilLiabilityTest(
+        String title,
+        CivilLiabilityLimit expectedAmount,
+        CivilLiabilityLimit initialAmount,
+        int minNumberOfUnits,
+        int maxNumberOfUnits) {
+      this.expectedAmount = expectedAmount;
+      this.initialAmount = initialAmount;
+      this.minNumberOfUnits = minNumberOfUnits;
+      this.maxNumberOfUnits = maxNumberOfUnits;
+    }
 
-    assertEquals(expectedAmount, civilLiability.getLimit());
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
+    public static Collection parameters() {
+      return Arrays.asList(
+          new Object[][] {
+            {
+              "with 1M provided limit and 2M default limit should use provided limit",
+              CivilLiabilityLimit.ONE_MILLION,
+              CivilLiabilityLimit.ONE_MILLION,
+              MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT,
+              Integer.MAX_VALUE
+            },
+            {
+              "with 2M provided limit and 1M default limit should use provided limit",
+              CivilLiabilityLimit.TWO_MILLION,
+              CivilLiabilityLimit.TWO_MILLION,
+              MIN_NUMBER_OF_UNITS,
+              MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT
+            },
+            {
+              "without provided limit and 1M default limit should use default limit",
+              CivilLiabilityLimit.ONE_MILLION,
+              null,
+              MIN_NUMBER_OF_UNITS,
+              MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT
+            },
+            {
+              "without provided limit and 2M default limit should use default limit",
+              CivilLiabilityLimit.TWO_MILLION,
+              null,
+              MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT,
+              Integer.MAX_VALUE
+            },
+          });
+    }
+
+    @Test
+    public void completingCivilLiability() {
+      CivilLiability subject = new CivilLiability(initialAmount);
+      int numberOfUnits =
+          Faker.instance().number().numberBetween(minNumberOfUnits, maxNumberOfUnits);
+
+      CivilLiability civilLiability = subject.completeWithDefaultValues(numberOfUnits);
+
+      assertEquals(expectedAmount, civilLiability.getLimit());
+    }
   }
 }

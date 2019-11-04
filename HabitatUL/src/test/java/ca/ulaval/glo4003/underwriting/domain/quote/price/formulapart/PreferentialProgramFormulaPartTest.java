@@ -13,17 +13,24 @@ import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdju
 import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
 import com.github.javafaker.Faker;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(Parameterized.class)
 public class PreferentialProgramFormulaPartTest {
   private static final Money BASE_PRICE = MoneyGenerator.createMoney();
   private static final Money PRICE_ADJUSTMENT = MoneyBuilder.aMoney().withAmount(10f).build();
@@ -54,11 +61,62 @@ public class PreferentialProgramFormulaPartTest {
   private static final Identity IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE =
       IdentityBuilder.anIdentity().withUniversityProfile(UNFILLED_UNIVERSITY_PROFILE).build();
 
+  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().silent();
   @Mock private PreferentialProgramAdjustmentProvider preferentialProgramAdjustmentProvider;
   @Mock private QuotePriceAdjustment quotePriceAdjustment;
   @Mock private QuotePriceAdjustment anotherQuotePriceAdjustment;
 
   private PreferentialProgramFormulaPart subject;
+  private Identity namedInsuredIdentity;
+  private Identity additionalInsuredIdentity;
+  private Money expectedAdjustmentAmount;
+
+  public PreferentialProgramFormulaPartTest(
+      String title,
+      Identity namedInsuredIdentity,
+      Identity additionalInsuredIdentity,
+      Money expectedAdjustmentAmount) {
+    this.namedInsuredIdentity = namedInsuredIdentity;
+    this.additionalInsuredIdentity = additionalInsuredIdentity;
+    this.expectedAdjustmentAmount = expectedAdjustmentAmount;
+  }
+
+  @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
+  public static Collection parameters() {
+    return Arrays.asList(
+        new Object[][] {
+          {
+            "with named and additional insureds not eligible should compute null adjustment",
+            IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
+            IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
+            Money.ZERO
+          },
+          {
+            "with named insured eligible should compute associated adjustment",
+            IDENTITY,
+            IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
+            PRICE_ADJUSTMENT
+          },
+          {
+            "with additional insured eligible should compute associated adjustment",
+            IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
+            IDENTITY,
+            PRICE_ADJUSTMENT
+          },
+          {
+            "with named insured with smaller adjustment should compute smaller adjustment",
+            ANOTHER_IDENTITY,
+            IDENTITY,
+            SMALLER_PRICE_ADJUSTMENT
+          },
+          {
+            "with additional insured with smaller adjustment should compute smaller adjustment",
+            IDENTITY,
+            ANOTHER_IDENTITY,
+            SMALLER_PRICE_ADJUSTMENT
+          },
+        });
+  }
 
   @Before
   public void setUp() {
@@ -73,21 +131,7 @@ public class PreferentialProgramFormulaPartTest {
   }
 
   @Test
-  public void computingFormulaPart_shouldComputeAdjustmentAmount() {
-    validateScenario(
-        IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
-        IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE,
-        Money.ZERO);
-    validateScenario(IDENTITY, IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE, PRICE_ADJUSTMENT);
-    validateScenario(IDENTITY_WITH_UNFILLED_UNIVERSITY_PROFILE, IDENTITY, PRICE_ADJUSTMENT);
-    validateScenario(IDENTITY, ANOTHER_IDENTITY, SMALLER_PRICE_ADJUSTMENT);
-    validateScenario(ANOTHER_IDENTITY, IDENTITY, SMALLER_PRICE_ADJUSTMENT);
-  }
-
-  private void validateScenario(
-      Identity namedInsuredIdentity,
-      Identity additionalInsuredIdentity,
-      Money expectedAdjustmentAmount) {
+  public void computingFormulaPart() {
     QuoteForm quoteForm =
         QuoteFormBuilder.aQuoteForm()
             .withPersonalInformation(namedInsuredIdentity)

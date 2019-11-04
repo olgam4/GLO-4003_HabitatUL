@@ -11,68 +11,134 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiab
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.validation.CivilLiabilityLimitQuoteFormValidation.MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.validation.CivilLiabilityLimitQuoteFormValidation.MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT;
 
+@RunWith(Enclosed.class)
 public class CivilLiabilityLimitQuoteFormValidationTest {
   private static final int MIN_NUMBER_OF_UNITS = 1;
 
-  private CivilLiabilityLimitQuoteFormValidation subject;
+  @RunWith(Parameterized.class)
+  public static class ValidTestCase extends TestCase {
+    public ValidTestCase(
+        String title,
+        CivilLiabilityLimit civilLiabilityLimit,
+        int minNumberOfUnits,
+        int maxNumberOfUnits) {
+      super(civilLiabilityLimit, minNumberOfUnits, maxNumberOfUnits);
+    }
 
-  @Before
-  public void setUp() {
-    subject = new CivilLiabilityLimitQuoteFormValidation();
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
+    public static Collection parameters() {
+      return Arrays.asList(
+          new Object[][] {
+            {
+              "with 1M limit and 1-3 units should not throw",
+              CivilLiabilityLimit.ONE_MILLION,
+              MIN_NUMBER_OF_UNITS,
+              MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT
+            },
+            {
+              "with 1M limit and 4-49 units should not throw",
+              CivilLiabilityLimit.ONE_MILLION,
+              MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT,
+              MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT
+            },
+            {
+              "with 2M limit and 4-49 units should not throw",
+              CivilLiabilityLimit.TWO_MILLION,
+              MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT,
+              MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT
+            },
+            {
+              "with 2M limit and 50+ units should not throw",
+              CivilLiabilityLimit.TWO_MILLION,
+              MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT,
+              Integer.MAX_VALUE
+            },
+          });
+    }
+
+    @Test
+    public void validatingQuoteForm() {
+      super.validatingQuoteForm();
+    }
   }
 
-  @Test
-  public void validatingQuoteForm_withValidCivilLiabilityLimit_shouldNotThrow() {
-    validateScenario(
-        CivilLiabilityLimit.ONE_MILLION,
-        MIN_NUMBER_OF_UNITS,
-        MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT);
-    validateScenario(
-        CivilLiabilityLimit.ONE_MILLION,
-        MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT,
-        MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT);
-    validateScenario(
-        CivilLiabilityLimit.TWO_MILLION,
-        MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT,
-        MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT);
-    validateScenario(
-        CivilLiabilityLimit.TWO_MILLION,
-        MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT,
-        Integer.MAX_VALUE);
+  @RunWith(Parameterized.class)
+  public static class InvalidTestCase extends TestCase {
+    public InvalidTestCase(
+        String title,
+        CivilLiabilityLimit civilLiabilityLimit,
+        int minNumberOfUnits,
+        int maxNumberOfUnits) {
+      super(civilLiabilityLimit, minNumberOfUnits, maxNumberOfUnits);
+    }
+
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
+    public static Collection parameters() {
+      return Arrays.asList(
+          new Object[][] {
+            {
+              "with 2M limit and 1-3 units should throw",
+              CivilLiabilityLimit.TWO_MILLION,
+              MIN_NUMBER_OF_UNITS,
+              MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT
+            },
+            {
+              "with 1M limit and 50+ units should throw",
+              CivilLiabilityLimit.ONE_MILLION,
+              MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT,
+              Integer.MAX_VALUE
+            },
+          });
+    }
+
+    @Test(expected = QuoteCivilLiabilityLimitError.class)
+    public void validatingQuoteForm() {
+      super.validatingQuoteForm();
+    }
   }
 
-  @Test(expected = QuoteCivilLiabilityLimitError.class)
-  public void validatingQuoteForm_withTooBigCivilLiabilityLimit_shouldThrow() {
-    validateScenario(
-        CivilLiabilityLimit.TWO_MILLION,
-        MIN_NUMBER_OF_UNITS,
-        MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT);
-  }
+  public abstract static class TestCase {
+    private CivilLiabilityLimitQuoteFormValidation subject;
+    private CivilLiabilityLimit civilLiabilityLimit;
+    private int minNumberOfUnits;
+    private int maxNumberOfUnits;
 
-  @Test(expected = QuoteCivilLiabilityLimitError.class)
-  public void validatingQuoteForm_withTooSmallCivilLiabilityLimit_shouldThrow() {
-    validateScenario(
-        CivilLiabilityLimit.ONE_MILLION,
-        MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT,
-        Integer.MAX_VALUE);
-  }
+    public TestCase(
+        CivilLiabilityLimit civilLiabilityLimit, int minNumberOfUnits, int maxNumberOfUnits) {
+      this.civilLiabilityLimit = civilLiabilityLimit;
+      this.minNumberOfUnits = minNumberOfUnits;
+      this.maxNumberOfUnits = maxNumberOfUnits;
+    }
 
-  private void validateScenario(
-      CivilLiabilityLimit civilLiabilityLimit, int minNumberOfUnits, int maxNumberOfUnits) {
-    int numberOfUnits = Faker.instance().number().numberBetween(minNumberOfUnits, maxNumberOfUnits);
-    Building building = BuildingBuilder.aBuilding().withNumberOfUnits(numberOfUnits).build();
-    CivilLiability civilLiability =
-        CivilLiabilityBuilder.aCivilLiability().withAmount(civilLiabilityLimit).build();
-    QuoteForm quoteForm =
-        QuoteFormBuilder.aQuoteForm()
-            .withBuilding(building)
-            .withCivilLiability(civilLiability)
-            .build();
+    @Before
+    public void setUp() {
+      subject = new CivilLiabilityLimitQuoteFormValidation();
+    }
 
-    subject.validate(quoteForm);
+    public void validatingQuoteForm() {
+      int numberOfUnits =
+          Faker.instance().number().numberBetween(minNumberOfUnits, maxNumberOfUnits);
+      Building building = BuildingBuilder.aBuilding().withNumberOfUnits(numberOfUnits).build();
+      CivilLiability civilLiability =
+          CivilLiabilityBuilder.aCivilLiability().withAmount(civilLiabilityLimit).build();
+      QuoteForm quoteForm =
+          QuoteFormBuilder.aQuoteForm()
+              .withBuilding(building)
+              .withCivilLiability(civilLiability)
+              .build();
+
+      subject.validate(quoteForm);
+    }
   }
 }

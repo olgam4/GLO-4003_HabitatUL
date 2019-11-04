@@ -13,6 +13,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+
 @RunWith(Enclosed.class)
 public class GenderDeserializerIT {
   private static final String VALID_VALUE = "MALE";
@@ -25,7 +27,7 @@ public class GenderDeserializerIT {
       super(value);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
     public static Collection parameters() {
       return Arrays.asList(new Object[][] {{VALID_VALUE}});
     }
@@ -44,7 +46,7 @@ public class GenderDeserializerIT {
       super(value);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
     public static Collection parameters() {
       return Arrays.asList(
           new Object[][] {
