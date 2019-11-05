@@ -4,6 +4,8 @@ import ca.ulaval.glo4003.administration.application.user.error.CouldNotAuthentic
 import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUserError;
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
+import ca.ulaval.glo4003.coverage.application.claim.error.ClaimNotFoundError;
+import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.coverage.domain.policy.error.NotDeclaredBicycleError;
@@ -47,7 +49,9 @@ public class ErrorResponseFactory {
   }
 
   private static void registerCoverageErrors() {
+    STATUS_MAP.put(ClaimNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(CouldNotOpenClaimError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidLossDeclarationsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(LossDeclarationsExceedCoverageAmountError.class, Status.BAD_REQUEST);

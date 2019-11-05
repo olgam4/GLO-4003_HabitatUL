@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
+import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
+import ca.ulaval.glo4003.coverage.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
@@ -23,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
@@ -90,7 +93,7 @@ public class PolicyAppServiceTest {
   }
 
   @Test
-  public void openingClaim_shouldCreateClaim() {
+  public void openingClaim_shouldCreateClaim() throws ClaimAlreadyCreatedException {
     subject.openClaim(POLICY_ID, claimCreationDto);
 
     verify(claimRepository).create(claim);
@@ -106,6 +109,16 @@ public class PolicyAppServiceTest {
   @Test(expected = PolicyNotFoundError.class)
   public void openingClaim_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.openClaim(POLICY_ID, claimCreationDto);
+  }
+
+  @Test(expected = CouldNotOpenClaimError.class)
+  public void openingClaim_withAlreadyCreatedClaim_shouldThrow()
+      throws ClaimAlreadyCreatedException {
+    Mockito.doThrow(ClaimAlreadyCreatedException.class)
+        .when(claimRepository)
+        .create(any(Claim.class));
 
     subject.openClaim(POLICY_ID, claimCreationDto);
   }

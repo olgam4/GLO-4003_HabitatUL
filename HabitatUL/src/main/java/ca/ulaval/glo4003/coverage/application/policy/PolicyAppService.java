@@ -2,10 +2,12 @@ package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
+import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
+import ca.ulaval.glo4003.coverage.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyFactory;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
@@ -67,6 +69,8 @@ public class PolicyAppService {
       return claim.getClaimId();
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
+    } catch (ClaimAlreadyCreatedException e) {
+      throw new CouldNotOpenClaimError();
     }
   }
 }

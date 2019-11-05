@@ -227,7 +227,7 @@ public class UserAppServiceTest {
   }
 
   @Test
-  public void gettingPolicies_shouldDelegatePolicyRegistry() {
+  public void gettingPolicies_shouldGetPolicyKeys() {
     subject.getPolicies(USER_KEY);
 
     verify(policyRegistry).getPolicyKeys(USER_KEY);

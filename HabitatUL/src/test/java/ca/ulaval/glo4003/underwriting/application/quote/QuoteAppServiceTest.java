@@ -93,7 +93,9 @@ public class QuoteAppServiceTest {
   @Test(expected = CouldNotRequestQuoteError.class)
   public void requestingQuote_withQuoteAlreadyCreated_shouldThrow()
       throws QuoteAlreadyCreatedException {
-    Mockito.doThrow(QuoteAlreadyCreatedException.class).when(quoteRepository).create(quote);
+    Mockito.doThrow(QuoteAlreadyCreatedException.class)
+        .when(quoteRepository)
+        .create(any(Quote.class));
 
     subject.requestQuote(quoteFormDto);
   }

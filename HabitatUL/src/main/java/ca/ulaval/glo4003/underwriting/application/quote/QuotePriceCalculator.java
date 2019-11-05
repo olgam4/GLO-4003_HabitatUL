@@ -35,7 +35,6 @@ public class QuotePriceCalculator {
     quotePriceFormula.addFormulaPart(
         new GraduateStudentFormulaPart(
             ServiceLocator.resolve(GraduateStudentAdjustmentProvider.class)));
-    // TODO: add other formula parts
     return quotePriceFormula;
   }
 

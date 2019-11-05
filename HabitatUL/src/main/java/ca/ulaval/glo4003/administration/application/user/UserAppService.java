@@ -145,10 +145,6 @@ public class UserAppService implements AccessController {
     }
   }
 
-  public List<String> getPolicies(String userKey) {
-    return policyRegistry.getPolicyKeys(userKey);
-  }
-
   public void processQuotePayment(String quoteKey, Money payment) {
     try {
       String userKey = quoteRegistry.getUserKey(quoteKey);
@@ -158,5 +154,9 @@ public class UserAppService implements AccessController {
       // TODO: put in a queue for later reprocessing
       e.printStackTrace();
     }
+  }
+
+  public List<String> getPolicies(String userKey) {
+    return policyRegistry.getPolicyKeys(userKey);
   }
 }

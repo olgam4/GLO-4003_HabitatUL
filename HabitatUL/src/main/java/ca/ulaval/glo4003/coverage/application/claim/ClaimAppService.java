@@ -2,9 +2,11 @@ package ca.ulaval.glo4003.coverage.application.claim;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
+import ca.ulaval.glo4003.coverage.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
+import ca.ulaval.glo4003.coverage.domain.claim.exception.ClaimNotFoundException;
 
 public class ClaimAppService {
   private ClaimRepository claimRepository;
@@ -20,7 +22,11 @@ public class ClaimAppService {
   }
 
   public ClaimDto getClaim(ClaimId claimId) {
-    Claim claim = claimRepository.getById(claimId);
-    return claimAssembler.from(claim);
+    try {
+      Claim claim = claimRepository.getById(claimId);
+      return claimAssembler.from(claim);
+    } catch (ClaimNotFoundException e) {
+      throw new ClaimNotFoundError(claimId);
+    }
   }
 }
