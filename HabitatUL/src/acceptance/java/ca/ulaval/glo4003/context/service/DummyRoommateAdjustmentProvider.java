@@ -1,13 +1,14 @@
 package ca.ulaval.glo4003.context.service;
 
-import ca.ulaval.glo4003.context.QuotePriceAdjustmentGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.RoommateAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.input.GenderInput;
+import ca.ulaval.glo4003.context.PremiumAdjustmentGenerator;
 
 public class DummyRoommateAdjustmentProvider implements RoommateAdjustmentProvider {
   @Override
-  public QuotePriceAdjustment getAdjustment(Gender namedInsuredGender, Gender roommateGender) {
-    return QuotePriceAdjustmentGenerator.create();
+  public PremiumAdjustment getAdjustment(
+      GenderInput namedInsuredGender, GenderInput roommateGender) {
+    return PremiumAdjustmentGenerator.create();
   }
 }

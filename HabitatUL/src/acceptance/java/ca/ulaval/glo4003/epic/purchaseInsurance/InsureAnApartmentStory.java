@@ -27,9 +27,9 @@ public class InsureAnApartmentStory {
   }
 
   @Test
-  public void anonymousStudentWantsToReceiveQuotePrice() {
+  public void anonymousStudentWantsToReceiveQuotePremium() {
     QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
 
-    assertNotNull(quoteDto.getPrice());
+    assertNotNull(quoteDto.getPremium());
   }
 }

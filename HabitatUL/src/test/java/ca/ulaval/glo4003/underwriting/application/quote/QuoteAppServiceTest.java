@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
@@ -22,6 +24,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.matcher.PremiumMatcher.matchesQuotePremiumInput;
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteDto;
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteForm;
 import static org.junit.Assert.assertThat;
@@ -30,11 +33,11 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Money PRICE = MoneyGenerator.createMoney();
+  private static final Money PREMIUM = MoneyGenerator.createMoney();
   private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
 
   @Mock private QuoteFormValidator quoteFormValidator;
-  @Mock private QuotePriceCalculator quotePriceCalculator;
+  @Mock private PremiumCalculator premiumCalculator;
   @Mock private Quote quote;
   @Mock private QuoteFactory quoteFactory;
   @Mock private QuoteRepository quoteRepository;
@@ -42,14 +45,16 @@ public class QuoteAppServiceTest {
   private QuoteAppService subject;
   private QuoteFormDto quoteFormDto;
   private QuoteAssembler quoteAssembler;
+  private QuotePremiumAssembler quotePremiumAssembler;
 
   @Before
   public void setUp() throws QuoteNotFoundException {
-    quoteAssembler = new QuoteAssembler();
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
+    quoteAssembler = new QuoteAssembler();
+    quotePremiumAssembler = new QuotePremiumAssembler();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
     when(quote.getQuoteForm()).thenReturn(QuoteFormGenerator.createQuoteForm());
-    when(quotePriceCalculator.compute(any(QuoteForm.class))).thenReturn(PRICE);
+    when(premiumCalculator.computeQuotePremium(any(QuotePremiumInput.class))).thenReturn(PREMIUM);
     when(quoteFactory.create(any(Money.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
@@ -57,7 +62,8 @@ public class QuoteAppServiceTest {
         new QuoteAppService(
             quoteAssembler,
             quoteFormValidator,
-            quotePriceCalculator,
+            quotePremiumAssembler,
+            premiumCalculator,
             quoteFactory,
             quoteRepository);
   }
@@ -70,10 +76,10 @@ public class QuoteAppServiceTest {
   }
 
   @Test
-  public void requestingQuote_shouldComputeQuotePrice() {
+  public void requestingQuote_shouldComputeQuotePremium() {
     subject.requestQuote(quoteFormDto);
 
-    verify(quotePriceCalculator).compute(argThat(matchesQuoteForm(quoteFormDto)));
+    verify(premiumCalculator).computeQuotePremium(argThat(matchesQuotePremiumInput(quoteFormDto)));
   }
 
   @Test
@@ -85,9 +91,9 @@ public class QuoteAppServiceTest {
 
   @Test
   public void requestingQuote_shouldProduceCorrespondingQuoteDto() {
-    QuoteDto observedQuoteDto = subject.requestQuote(quoteFormDto);
+    QuoteDto quoteDto = subject.requestQuote(quoteFormDto);
 
-    assertThat(observedQuoteDto, matchesQuoteDto(quote));
+    assertThat(quoteDto, matchesQuoteDto(quote));
   }
 
   @Test(expected = CouldNotRequestQuoteError.class)

@@ -123,12 +123,12 @@ public class UlRegistrationQuoteFormValidationTest {
   }
 
   public abstract static class TestCase {
-    private final Identity namedInsuredIdentity;
-    private final Identity additionalInsuredIdentity;
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().silent();
     @Mock private UlRegistrarOffice ulRegistrarOffice;
 
     private UlRegistrationQuoteFormValidation subject;
+    private Identity namedInsuredIdentity;
+    private Identity additionalInsuredIdentity;
 
     public TestCase(Identity namedInsuredIdentity, Identity additionalInsuredIdentity) {
       this.namedInsuredIdentity = namedInsuredIdentity;

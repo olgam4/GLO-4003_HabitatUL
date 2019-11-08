@@ -19,7 +19,7 @@ public class QuoteBuilder {
   private static final QuoteForm DEFAULT_QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
   private static final DateTime DEFAULT_EXPIRATION_DATE = TemporalGenerator.createFutureDateTime();
   private static final Period DEFAULT_EFFECTIVE_PERIOD = TemporalGenerator.createPeriod();
-  private static final Money DEFAULT_PRICE = MoneyGenerator.createMoney();
+  private static final Money DEFAULT_PREMIUM = MoneyGenerator.createMoney();
   private static final Boolean DEFAULT_PURCHASED = Faker.instance().bool().bool();
   private static final ClockProvider DEFAULT_CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
 
@@ -27,7 +27,7 @@ public class QuoteBuilder {
   private QuoteForm quoteForm = DEFAULT_QUOTE_FORM;
   private DateTime expirationDate = DEFAULT_EXPIRATION_DATE;
   private Period effectivePeriod = DEFAULT_EFFECTIVE_PERIOD;
-  private Money price = DEFAULT_PRICE;
+  private Money premium = DEFAULT_PREMIUM;
   private Boolean purchased = DEFAULT_PURCHASED;
   private ClockProvider clockProvider = DEFAULT_CLOCK_PROVIDER;
 
@@ -59,6 +59,6 @@ public class QuoteBuilder {
 
   public Quote build() {
     return new Quote(
-        quoteId, quoteForm, expirationDate, effectivePeriod, price, purchased, clockProvider);
+        quoteId, quoteForm, expirationDate, effectivePeriod, premium, purchased, clockProvider);
   }
 }

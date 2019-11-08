@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
@@ -15,7 +17,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 public class QuoteAppService {
   private QuoteAssembler quoteAssembler;
   private QuoteFormValidator quoteFormValidator;
-  private QuotePriceCalculator quotePriceCalculator;
+  private QuotePremiumAssembler quotePremiumAssembler;
+  private PremiumCalculator premiumCalculator;
   private QuoteFactory quoteFactory;
   private QuoteRepository quoteRepository;
 
@@ -23,7 +26,8 @@ public class QuoteAppService {
     this(
         new QuoteAssembler(),
         new QuoteFormValidator(),
-        new QuotePriceCalculator(),
+        new QuotePremiumAssembler(),
+        new PremiumCalculator(),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
             ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
@@ -34,12 +38,14 @@ public class QuoteAppService {
   public QuoteAppService(
       QuoteAssembler quoteAssembler,
       QuoteFormValidator quoteFormValidator,
-      QuotePriceCalculator quotePriceCalculator,
+      QuotePremiumAssembler quotePremiumAssembler,
+      PremiumCalculator premiumCalculator,
       QuoteFactory quoteFactory,
       QuoteRepository quoteRepository) {
     this.quoteFormValidator = quoteFormValidator;
     this.quoteAssembler = quoteAssembler;
-    this.quotePriceCalculator = quotePriceCalculator;
+    this.quotePremiumAssembler = quotePremiumAssembler;
+    this.premiumCalculator = premiumCalculator;
     this.quoteFactory = quoteFactory;
     this.quoteRepository = quoteRepository;
   }
@@ -48,8 +54,9 @@ public class QuoteAppService {
     try {
       QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
       quoteFormValidator.validate(quoteForm);
-      Money quotePrice = quotePriceCalculator.compute(quoteForm);
-      Quote quote = quoteFactory.create(quotePrice, quoteForm);
+      QuotePremiumInput quotePremiumInput = quotePremiumAssembler.from(quoteForm);
+      Money quotePremium = premiumCalculator.computeQuotePremium(quotePremiumInput);
+      Quote quote = quoteFactory.create(quotePremium, quoteForm);
       quoteRepository.create(quote);
       return quoteAssembler.from(quote);
     } catch (QuoteAlreadyCreatedException e) {

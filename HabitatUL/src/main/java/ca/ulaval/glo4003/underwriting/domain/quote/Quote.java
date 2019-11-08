@@ -15,7 +15,7 @@ public class Quote extends AggregateRoot {
   private QuoteForm quoteForm;
   private DateTime expirationDate;
   private Period effectivePeriod;
-  private Money price;
+  private Money premium;
   private Boolean purchased;
   private ClockProvider clockProvider;
 
@@ -24,14 +24,14 @@ public class Quote extends AggregateRoot {
       QuoteForm quoteForm,
       DateTime expirationDate,
       Period effectivePeriod,
-      Money price,
+      Money premium,
       Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
     this.quoteForm = quoteForm;
     this.expirationDate = expirationDate;
     this.effectivePeriod = effectivePeriod;
-    this.price = price;
+    this.premium = premium;
     this.purchased = purchased;
     this.clockProvider = clockProvider;
   }
@@ -52,8 +52,8 @@ public class Quote extends AggregateRoot {
     return effectivePeriod;
   }
 
-  public Money getPrice() {
-    return price;
+  public Money getPremium() {
+    return premium;
   }
 
   public boolean isExpired() {
@@ -74,6 +74,6 @@ public class Quote extends AggregateRoot {
 
   private void registerQuotePurchaseEvent() {
     Date now = Date.now(clockProvider.getClock());
-    registerEvent(new QuotePurchasedEvent(quoteId, quoteForm, effectivePeriod, price, now));
+    registerEvent(new QuotePurchasedEvent(quoteId, quoteForm, effectivePeriod, premium, now));
   }
 }

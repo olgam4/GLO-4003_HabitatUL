@@ -10,17 +10,17 @@ public class QuotePurchasedEvent extends Event {
   private final QuoteId quoteId;
   private final QuoteForm quoteForm;
   private final Period effectivePeriod;
-  private final Money price;
+  private final Money premium;
   private final Date purchaseDate;
 
   public QuotePurchasedEvent(
       QuoteId quoteId,
       QuoteForm quoteForm,
       Period effectivePeriod,
-      Money price,
+      Money premium,
       Date purchaseDate) {
     this.quoteId = quoteId;
-    this.price = price;
+    this.premium = premium;
     this.quoteForm = quoteForm;
     this.effectivePeriod = effectivePeriod;
     this.purchaseDate = purchaseDate;
@@ -38,8 +38,8 @@ public class QuotePurchasedEvent extends Event {
     return effectivePeriod;
   }
 
-  public Money getPrice() {
-    return price;
+  public Money getPremium() {
+    return premium;
   }
 
   public Date getPurchaseDate() {

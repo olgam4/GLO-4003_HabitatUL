@@ -21,7 +21,7 @@ public class QuoteFactory {
     this.clockProvider = clockProvider;
   }
 
-  public Quote create(Money price, QuoteForm quoteForm) {
+  public Quote create(Money quotePremium, QuoteForm quoteForm) {
     QuoteId quoteId = new QuoteId();
     DateTime expirationDate =
         DateTime.now(clockProvider.getClock())
@@ -31,6 +31,6 @@ public class QuoteFactory {
         quoteForm.getEffectiveDate().plus(quoteEffectivePeriodProvider.getQuoteEffectivePeriod());
     Period effectivePeriod = new Period(effectivePeriodStartDate, effectivePeriodEndDate);
     return new Quote(
-        quoteId, quoteForm, expirationDate, effectivePeriod, price, false, clockProvider);
+        quoteId, quoteForm, expirationDate, effectivePeriod, quotePremium, false, clockProvider);
   }
 }

@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.context.service;
 
-import ca.ulaval.glo4003.context.QuotePriceAdjustmentGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.CivilLiabilityLimitAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.input.CivilLiabilityLimitInput;
+import ca.ulaval.glo4003.context.PremiumAdjustmentGenerator;
 
 public class DummyCivilLiabilityLimitAdjustmentProvider
     implements CivilLiabilityLimitAdjustmentProvider {
   @Override
-  public QuotePriceAdjustment getAdjustment(CivilLiabilityLimit civilLiabilityLimit) {
-    return QuotePriceAdjustmentGenerator.create();
+  public PremiumAdjustment getAdjustment(CivilLiabilityLimitInput civilLiabilityLimit) {
+    return PremiumAdjustmentGenerator.create();
   }
 }

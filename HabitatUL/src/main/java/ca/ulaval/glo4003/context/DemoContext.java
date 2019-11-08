@@ -17,6 +17,20 @@ import ca.ulaval.glo4003.administration.persistence.user.InMemoryPolicyRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryQuoteRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryTokenRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryUsernameRegistry;
+import ca.ulaval.glo4003.calculator.domain.premium.QuoteBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.HardCodedQuoteBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals.HardCodedAnimalsAdjustmentLimitsProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals.HardCodedAnimalsAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.civilliabilitylimit.HardCodedCivilLiabilityLimitAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.graduatestudent.HardCodedGraduateStudentAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.preferentialprogram.JsonPreferentialProgramAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.roommate.HardCodedRoommateAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.coverage.communication.policy.PolicyBoundedContextEventHandler;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimRepository;
@@ -36,13 +50,11 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.FloorFormatter;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCodeFormatter;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOffice;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.*;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.ConfigBasedQuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.CanadianZipCodeFormatter;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.location.UsCanadianConventionFloorFormatter;
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
-import ca.ulaval.glo4003.underwriting.infrastructure.quote.price.*;
 import ca.ulaval.glo4003.underwriting.persistence.quote.EventPublisherQuoteRepositoryDecorator;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
@@ -119,7 +131,7 @@ public class DemoContext implements Context {
         QuoteValidityPeriodProvider.class, new ConfigBasedQuoteValidityPeriodProvider());
     ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
     ServiceLocator.register(
-        QuoteBasePriceCalculator.class, new HardCodedQuoteBasePriceCalculator());
+        QuoteBasePremiumCalculator.class, new HardCodedQuoteBasePremiumCalculator());
     ServiceLocator.register(
         CivilLiabilityLimitAdjustmentProvider.class,
         new HardCodedCivilLiabilityLimitAdjustmentProvider());

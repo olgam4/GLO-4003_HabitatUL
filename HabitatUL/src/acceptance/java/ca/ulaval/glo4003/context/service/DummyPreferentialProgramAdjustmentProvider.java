@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.context.service;
 
-import ca.ulaval.glo4003.context.QuotePriceAdjustmentGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.PreferentialProgramAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
+import ca.ulaval.glo4003.context.PremiumAdjustmentGenerator;
 
 public class DummyPreferentialProgramAdjustmentProvider
     implements PreferentialProgramAdjustmentProvider {
   @Override
-  public QuotePriceAdjustment getAdjustment(String cycle, String degree, String program) {
-    return QuotePriceAdjustmentGenerator.create();
+  public PremiumAdjustment getAdjustment(String cycle, String degree, String program) {
+    return PremiumAdjustmentGenerator.create();
   }
 }

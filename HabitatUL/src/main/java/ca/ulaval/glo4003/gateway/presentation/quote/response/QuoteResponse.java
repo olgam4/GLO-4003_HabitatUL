@@ -6,22 +6,22 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"quoteId", "price", "effectivePeriod", "expirationDate", "coverageOverview"})
+@JsonPropertyOrder({"quoteId", "premium", "effectivePeriod", "expirationDate", "coverageOverview"})
 public class QuoteResponse {
   private QuoteId quoteId;
-  private Money price;
+  private Money premium;
   private Period effectivePeriod;
   private DateTime expirationDate;
   private QuoteCoverageOverviewResponse coverageOverview;
 
   public QuoteResponse(
       QuoteId quoteId,
-      Money price,
+      Money premium,
       Period effectivePeriod,
       DateTime expirationDate,
       QuoteCoverageOverviewResponse coverageOverview) {
     this.quoteId = quoteId;
-    this.price = price;
+    this.premium = premium;
     this.effectivePeriod = effectivePeriod;
     this.expirationDate = expirationDate;
     this.coverageOverview = coverageOverview;
@@ -31,8 +31,8 @@ public class QuoteResponse {
     return quoteId;
   }
 
-  public Money getPrice() {
-    return price;
+  public Money getPremium() {
+    return premium;
   }
 
   public Period getEffectivePeriod() {

@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.context.service;
 
-import ca.ulaval.glo4003.context.QuotePriceAdjustmentGenerator;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.AnimalsAdjustmentProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.price.adjustment.QuotePriceAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.input.AnimalBreedInput;
+import ca.ulaval.glo4003.context.PremiumAdjustmentGenerator;
 
 public class DummyAnimalsAdjustmentProvider implements AnimalsAdjustmentProvider {
   @Override
-  public QuotePriceAdjustment getAdjustment(AnimalBreed breed, Integer count) {
-    return QuotePriceAdjustmentGenerator.create();
+  public PremiumAdjustment getAdjustment(AnimalBreedInput breed, Integer count) {
+    return PremiumAdjustmentGenerator.create();
   }
 }

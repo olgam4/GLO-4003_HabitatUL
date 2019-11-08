@@ -22,7 +22,7 @@ public class QuoteAssembler {
   public QuoteDto from(Quote quote) {
     return new QuoteDto(
         quote.getQuoteId(),
-        quote.getPrice(),
+        quote.getPremium(),
         quote.getEffectivePeriod(),
         quote.getExpirationDate(),
         from(quote.getQuoteForm()));

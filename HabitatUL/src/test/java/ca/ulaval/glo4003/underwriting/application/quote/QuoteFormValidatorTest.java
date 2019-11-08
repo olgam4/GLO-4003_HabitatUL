@@ -29,7 +29,7 @@ public class QuoteFormValidatorTest {
   }
 
   @Test
-  public void computingQuotePrice_shouldConsiderAllValidations() {
+  public void validatingQuoteForm_shouldConsiderAllValidations() {
     subject.validate(QUOTE_FORM);
 
     verify(quoteFormValidation).validate(QUOTE_FORM);

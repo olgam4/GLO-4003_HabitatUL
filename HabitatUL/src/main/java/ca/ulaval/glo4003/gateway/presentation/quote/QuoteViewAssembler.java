@@ -105,12 +105,12 @@ public class QuoteViewAssembler {
 
   public QuoteResponse from(QuoteDto quoteDto) {
     QuoteId quoteId = quoteDto.getQuoteId();
-    Money price = quoteDto.getPrice();
+    Money premium = quoteDto.getPremium();
     Period effectivePeriod = quoteDto.getEffectivePeriod();
     DateTime expirationDate = quoteDto.getExpirationDate();
     QuoteCoverageOverviewResponse coverage =
         fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview());
-    return new QuoteResponse(quoteId, price, effectivePeriod, expirationDate, coverage);
+    return new QuoteResponse(quoteId, premium, effectivePeriod, expirationDate, coverage);
   }
 
   private QuoteCoverageOverviewResponse fromQuoteCoverageOverviewDto(

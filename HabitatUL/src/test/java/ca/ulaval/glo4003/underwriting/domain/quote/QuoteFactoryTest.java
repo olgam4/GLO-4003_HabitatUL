@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteFactoryTest {
   private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
-  private static final Money PRICE = MoneyGenerator.createMoney();
+  private static final Money PREMIUM = MoneyGenerator.createMoney();
   private static final Duration VALIDITY_PERIOD = TemporalGenerator.createDuration();
   private static final java.time.Period COVERAGE_PERIOD = TemporalGenerator.createJavaTimePeriod();
 
@@ -41,7 +41,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
-    Quote quote = subject.create(PRICE, QuoteFormGenerator.createQuoteForm());
+    Quote quote = subject.create(PREMIUM, QuoteFormGenerator.createQuoteForm());
 
     DateTime expectedExpirationDate =
         DateTime.from(LocalDateTime.now(CLOCK_PROVIDER.getClock()).plus(VALIDITY_PERIOD));
@@ -50,7 +50,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(PRICE, QuoteFormGenerator.createQuoteForm());
+    Quote quote = subject.create(PREMIUM, QuoteFormGenerator.createQuoteForm());
 
     assertFalse(quote.isPurchased());
   }

@@ -8,19 +8,19 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
 public class QuoteDto extends DataTransferObject {
   private final QuoteId quoteId;
-  private final Money price;
+  private final Money premium;
   private final DateTime expirationDate;
   private final Period effectivePeriod;
   private final QuoteCoverageOverviewDto coverageOverview;
 
   public QuoteDto(
       QuoteId quoteId,
-      Money price,
+      Money premium,
       Period effectivePeriod,
       DateTime expirationDate,
       QuoteCoverageOverviewDto coverageOverview) {
     this.quoteId = quoteId;
-    this.price = price;
+    this.premium = premium;
     this.effectivePeriod = effectivePeriod;
     this.expirationDate = expirationDate;
     this.coverageOverview = coverageOverview;
@@ -30,8 +30,8 @@ public class QuoteDto extends DataTransferObject {
     return quoteId;
   }
 
-  public Money getPrice() {
-    return price;
+  public Money getPremium() {
+    return premium;
   }
 
   public Period getEffectivePeriod() {
