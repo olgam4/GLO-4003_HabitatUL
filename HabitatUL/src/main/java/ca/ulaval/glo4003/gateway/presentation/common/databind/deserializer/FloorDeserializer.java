@@ -2,9 +2,9 @@ package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidFloorError;
+import ca.ulaval.glo4003.shared.domain.address.Floor;
+import ca.ulaval.glo4003.shared.domain.address.FloorFormatter;
 import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.FloorFormatter;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.administration.infrastructure.user;
 
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
-import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
+import ca.ulaval.glo4003.shared.infrastructure.io.ConfigFileReader;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

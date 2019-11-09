@@ -10,7 +10,10 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.quote.form.LocationGenerator.*;
+import static ca.ulaval.glo4003.helper.AddressGenerator.createFloor;
+import static ca.ulaval.glo4003.helper.AddressGenerator.createZipCode;
+import static ca.ulaval.glo4003.helper.quote.form.LocationGenerator.createApartmentNumber;
+import static ca.ulaval.glo4003.helper.quote.form.LocationGenerator.createStreetNumber;
 
 public class LocationRequestTest {
   private LocationRequest subject;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.zipcode;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
+import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

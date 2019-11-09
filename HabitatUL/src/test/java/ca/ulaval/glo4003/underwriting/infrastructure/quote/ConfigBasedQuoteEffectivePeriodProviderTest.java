@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.infrastructure.quote;
 
-import ca.ulaval.glo4003.shared.infrastructure.ConfigFileReader;
+import ca.ulaval.glo4003.shared.infrastructure.io.ConfigFileReader;
 import com.github.javafaker.Faker;
 import org.junit.Test;
 import org.junit.runner.RunWith;

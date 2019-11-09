@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.floor;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
+import ca.ulaval.glo4003.shared.domain.address.Floor;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

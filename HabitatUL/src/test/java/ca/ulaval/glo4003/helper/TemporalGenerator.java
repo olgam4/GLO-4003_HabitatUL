@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
-import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import com.github.javafaker.Faker;
 
 import java.time.*;
@@ -104,5 +103,24 @@ public class TemporalGenerator {
 
   public static ClockProvider getClockProvider() {
     return new FixedClockProvider();
+  }
+
+  private static class FixedClockProvider implements ClockProvider {
+    private Instant instant;
+    private ZoneId zoneId;
+
+    public FixedClockProvider() {
+      this(Instant.now(), ZoneOffset.UTC);
+    }
+
+    public FixedClockProvider(Instant instant, ZoneId zoneId) {
+      this.instant = instant;
+      this.zoneId = zoneId;
+    }
+
+    @Override
+    public Clock getClock() {
+      return Clock.fixed(instant, zoneId);
+    }
   }
 }

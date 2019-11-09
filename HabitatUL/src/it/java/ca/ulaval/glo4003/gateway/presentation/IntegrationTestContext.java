@@ -1,18 +1,17 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
-import ca.ulaval.glo4003.context.Context;
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.gateway.presentation.common.databind.LocalZoneIdProvider;
+import ca.ulaval.glo4003.shared.domain.address.FloorFormatter;
+import ca.ulaval.glo4003.shared.domain.address.ZipCodeFormatter;
 import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.FloorFormatter;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCodeFormatter;
+import ca.ulaval.glo4003.shared.presentation.temporal.LocalZoneIdProvider;
 import com.github.javafaker.Faker;
 
 import java.time.ZoneId;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IntegrationTestContext implements Context {
+public class IntegrationTestContext {
   public static final String VALID_FLOOR_VALUE = "RC";
   public static final String VALID_ZIP_CODE_VALUE = "G3A 0G4";
 
@@ -40,7 +39,6 @@ public class IntegrationTestContext implements Context {
     };
   }
 
-  @Override
   public void execute() {
     disableLogging();
     registerServices();

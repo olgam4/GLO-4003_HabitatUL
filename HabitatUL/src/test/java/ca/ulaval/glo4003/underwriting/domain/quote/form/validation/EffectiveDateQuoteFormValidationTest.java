@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteEffectiveDateError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EffectiveDateQuoteFormValidationTest {
-  private static final ClockProvider CLOCK_PROVIDER = new FixedClockProvider();
+  private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
   private static final Date VALID_EFFECTIVE_DATE =
       Date.from(LocalDate.now(CLOCK_PROVIDER.getClock()));
   private static final Period EFFECTIVE_PERIOD = TemporalGenerator.createJavaTimePeriod();

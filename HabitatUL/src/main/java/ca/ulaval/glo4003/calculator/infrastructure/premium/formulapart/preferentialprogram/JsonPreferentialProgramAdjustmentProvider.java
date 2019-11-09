@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePrem
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
-import ca.ulaval.glo4003.shared.infrastructure.JsonFileReader;
+import ca.ulaval.glo4003.shared.infrastructure.io.JsonFileReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

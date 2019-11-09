@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.location;
 
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+import ca.ulaval.glo4003.shared.domain.address.Floor;
+import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 
 public class Location extends ValueObject {
   private ZipCode zipCode;

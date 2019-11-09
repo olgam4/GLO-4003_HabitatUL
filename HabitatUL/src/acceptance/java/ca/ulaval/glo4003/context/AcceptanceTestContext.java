@@ -10,8 +10,8 @@ import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.G
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
 import ca.ulaval.glo4003.context.service.*;
+import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
-import ca.ulaval.glo4003.shared.infrastructure.FixedClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
@@ -19,14 +19,13 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOf
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
-public class AcceptanceTestContext implements Context {
+public class AcceptanceTestContext {
   public AcceptanceTestContext() {
     ServiceLocator.reset();
   }
 
-  @Override
   public void execute() {
-    ServiceLocator.register(ClockProvider.class, new FixedClockProvider());
+    ServiceLocator.register(ClockProvider.class, TemporalGenerator.getClockProvider());
     ServiceLocator.register(
         QuoteEffectivePeriodProvider.class, new DummyQuoteEffectivePeriodProvider());
     ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());

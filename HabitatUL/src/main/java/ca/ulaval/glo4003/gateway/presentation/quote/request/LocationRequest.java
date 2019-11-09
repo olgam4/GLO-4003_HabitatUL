@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Floor;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.ZipCode;
+import ca.ulaval.glo4003.shared.domain.address.Floor;
+import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 
 import javax.validation.constraints.NotNull;
 

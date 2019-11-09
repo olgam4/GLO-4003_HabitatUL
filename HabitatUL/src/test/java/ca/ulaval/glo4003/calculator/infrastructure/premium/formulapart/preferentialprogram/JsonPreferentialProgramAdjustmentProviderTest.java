@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.preferen
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.shared.infrastructure.JsonFileReader;
+import ca.ulaval.glo4003.shared.infrastructure.io.JsonFileReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
