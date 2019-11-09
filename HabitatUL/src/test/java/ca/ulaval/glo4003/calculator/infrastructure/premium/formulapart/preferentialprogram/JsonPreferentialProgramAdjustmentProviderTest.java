@@ -72,6 +72,13 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
     return Arrays.asList(
         new Object[][] {
           {
+            "without program should compute null adjustment",
+            null,
+            null,
+            null,
+            new NullPremiumAdjustment()
+          },
+          {
             "with bachelor preferential program should compute associated adjustment",
             FIRST_CYCLE,
             BACHELOR,

@@ -1,10 +1,16 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.QuoteBasePremiumCalculator;
-import ca.ulaval.glo4003.calculator.domain.premium.QuotePremiumFormula;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumFormula;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumFormula;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsFormulaPart;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.bikeprice.BikePriceAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.bikeprice.BikePriceFormulaPart;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitFormulaPart;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
@@ -13,22 +19,24 @@ import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogr
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramFormulaPart;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateFormulaPart;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 public class PremiumCalculator {
   private QuotePremiumFormula quotePremiumFormula;
+  private BikePremiumFormula bikePremiumFormula;
 
   public PremiumCalculator() {
-    this(assembleFormula());
+    this(assembleQuotePremiumFormula(), assembleBikePremiumFormula());
   }
 
-  public PremiumCalculator(QuotePremiumFormula quotePremiumFormula) {
+  public PremiumCalculator(
+      QuotePremiumFormula quotePremiumFormula, BikePremiumFormula bikePremiumFormula) {
     this.quotePremiumFormula = quotePremiumFormula;
+    this.bikePremiumFormula = bikePremiumFormula;
   }
 
-  private static QuotePremiumFormula assembleFormula() {
+  private static QuotePremiumFormula assembleQuotePremiumFormula() {
     QuotePremiumFormula quotePremiumFormula =
         new QuotePremiumFormula(ServiceLocator.resolve(QuoteBasePremiumCalculator.class));
     quotePremiumFormula.addFormulaPart(
@@ -49,7 +57,19 @@ public class PremiumCalculator {
     return quotePremiumFormula;
   }
 
+  private static BikePremiumFormula assembleBikePremiumFormula() {
+    BikePremiumFormula bikePremiumFormula =
+        new BikePremiumFormula(ServiceLocator.resolve(BikeBasePremiumCalculator.class));
+    bikePremiumFormula.addFormulaPart(
+        new BikePriceFormulaPart(ServiceLocator.resolve(BikePriceAdjustmentProvider.class)));
+    return bikePremiumFormula;
+  }
+
   public Money computeQuotePremium(QuotePremiumInput quotePremiumInput) {
     return quotePremiumFormula.compute(quotePremiumInput);
+  }
+
+  public Money computeBikePremium(BikePremiumInput bikePremiumInput) {
+    return bikePremiumFormula.compute(bikePremiumInput);
   }
 }

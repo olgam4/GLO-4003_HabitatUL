@@ -30,6 +30,7 @@ public class HardCodedGraduateStudentAdjustmentProviderTest {
   public static Collection parameters() {
     return Arrays.asList(
         new Object[][] {
+          {"without cycle should compute null adjustment", null, new NullPremiumAdjustment()},
           {"with first cycle should compute null adjustment", "1er", new NullPremiumAdjustment()},
           {
             "with second cycle should compute associated adjustment",

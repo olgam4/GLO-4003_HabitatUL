@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.GenderInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.input.UniversityProgramInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.premium.UniversityProgramInputBuilder;
@@ -45,14 +45,14 @@ public class GraduateStudentFormulaPartTest {
   }
 
   @Test
-  public void computingFormulaPart_shouldGetGraduateStudentAdjustment() {
+  public void computingFormulaPart_shouldGetAdjustment() {
     subject.compute(QUOTE_PREMIUM_INPUT, BASE_PREMIUM);
 
     verify(graduateStudentAdjustmentProvider).getAdjustment(CYCLE);
   }
 
   @Test
-  public void computingFormulaPart_shouldApplyAdjustmentOnBasePremium() {
+  public void computingFormulaPart_shouldApplyAdjustment() {
     subject.compute(QUOTE_PREMIUM_INPUT, BASE_PREMIUM);
 
     verify(premiumAdjustment).apply(BASE_PREMIUM);

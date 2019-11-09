@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.roommate
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
-import ca.ulaval.glo4003.calculator.domain.premium.input.GenderInput;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

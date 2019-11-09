@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.roommate
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.GenderInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.calculator.domain.premium.input.GenderInput.*;
+import static ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput.*;
 import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 
@@ -37,6 +37,12 @@ public class HardCodedRoommateAdjustmentProviderTest {
   public static Collection parameters() {
     return Arrays.asList(
         new Object[][] {
+          {
+            "without roommate should compute null adjustment",
+            MALE,
+            null,
+            new NullPremiumAdjustment()
+          },
           {
             "with male named insured and male roommate should compute associated adjustment",
             MALE,

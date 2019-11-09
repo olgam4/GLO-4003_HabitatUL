@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.calculator.domain.premium.input.*;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;

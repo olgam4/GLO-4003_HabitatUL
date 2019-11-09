@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.input.UniversityProgramInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.premium.UniversityProgramInputBuilder;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;

@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NoPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.AnimalBreedInput;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -52,7 +52,7 @@ public class AnimalsFormulaPartTest {
   }
 
   @Test
-  public void computingFormulaPart_shouldGetAnimalsAdjustments() {
+  public void computingFormulaPart_shouldGetAdjustments() {
     subject.compute(QUOTE_PREMIUM_INPUT, BASE_PREMIUM);
 
     verify(animalsAdjustmentProvider, times(ANIMAL_COLLECTION.size())).getAdjustment(any(), any());

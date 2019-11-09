@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.input.UniversityProgramInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import com.github.javafaker.Faker;
 
 public class UniversityProgramInputGenerator {

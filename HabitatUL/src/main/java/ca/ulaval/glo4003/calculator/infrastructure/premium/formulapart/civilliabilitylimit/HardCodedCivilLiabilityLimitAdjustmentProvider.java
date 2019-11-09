@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.civillia
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
-import ca.ulaval.glo4003.calculator.domain.premium.input.CivilLiabilityLimitInput;
 
 import java.util.EnumMap;
 import java.util.Map;

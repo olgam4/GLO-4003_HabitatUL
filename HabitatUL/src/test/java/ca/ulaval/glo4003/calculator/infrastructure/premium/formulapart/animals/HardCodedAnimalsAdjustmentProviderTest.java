@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.AnimalBreedInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,15 +18,15 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class HardCodedAnimalsAdjustmentProviderTest {
-  private static final int COUNT = Faker.instance().number().randomDigit();
+  private static final Integer COUNT = Faker.instance().number().randomDigit();
 
   private HardCodedAnimalsAdjustmentProvider subject;
   private AnimalBreedInput breed;
-  private int count;
+  private Integer count;
   private PremiumAdjustment expectedAdjustment;
 
   public HardCodedAnimalsAdjustmentProviderTest(
-      String title, AnimalBreedInput breed, int count, PremiumAdjustment expectedAdjustment) {
+      String title, AnimalBreedInput breed, Integer count, PremiumAdjustment expectedAdjustment) {
     this.breed = breed;
     this.count = count;
     this.expectedAdjustment = expectedAdjustment;
@@ -36,6 +36,9 @@ public class HardCodedAnimalsAdjustmentProviderTest {
   public static Collection parameters() {
     return Arrays.asList(
         new Object[][] {
+          {
+            "without animal should compute null adjustment", null, null, new NullPremiumAdjustment()
+          },
           {
             "with 1 cat should compute associated adjustment",
             AnimalBreedInput.CAT,

@@ -1,6 +1,10 @@
 package ca.ulaval.glo4003.helper.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.input.*;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 
 import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.*;
 

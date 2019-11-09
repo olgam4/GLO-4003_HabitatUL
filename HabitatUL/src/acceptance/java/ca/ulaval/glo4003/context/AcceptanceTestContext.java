@@ -1,8 +1,10 @@
 package ca.ulaval.glo4003.context;
 
-import ca.ulaval.glo4003.calculator.domain.premium.QuoteBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formulapart.bikeprice.BikePriceAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
@@ -50,5 +52,8 @@ public class AcceptanceTestContext implements Context {
         RoommateAdjustmentProvider.class, new DummyRoommateAdjustmentProvider());
     ServiceLocator.register(
         GraduateStudentAdjustmentProvider.class, new DummyGraduateStudentAdjustmentProvider());
+    ServiceLocator.register(BikeBasePremiumCalculator.class, new DummyBikeBasePremiumCalculator());
+    ServiceLocator.register(
+        BikePriceAdjustmentProvider.class, new DummyBikePriceAdjustmentProvider());
   }
 }

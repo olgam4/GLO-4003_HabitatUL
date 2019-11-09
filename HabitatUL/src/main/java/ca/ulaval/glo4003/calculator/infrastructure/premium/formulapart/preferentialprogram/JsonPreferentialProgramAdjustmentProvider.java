@@ -28,6 +28,8 @@ public class JsonPreferentialProgramAdjustmentProvider
   }
 
   private static String normalize(String value) {
+    if (value == null) return null;
+
     String normalizedValue = Normalizer.normalize(value, Normalizer.Form.NFD);
     return normalizedValue
         .replaceAll("[^\\p{ASCII}]", "")

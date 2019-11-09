@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.GenderInput;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;

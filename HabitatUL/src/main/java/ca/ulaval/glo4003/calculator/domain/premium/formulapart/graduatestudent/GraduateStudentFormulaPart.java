@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formulapart.QuotePremiumFormulaPart;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumFormulaPart;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 public class GraduateStudentFormulaPart implements QuotePremiumFormulaPart {

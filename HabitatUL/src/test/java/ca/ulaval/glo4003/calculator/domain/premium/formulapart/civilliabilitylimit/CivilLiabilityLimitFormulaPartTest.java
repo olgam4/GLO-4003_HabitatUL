@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.input.CivilLiabilityLimitInput;
-import ca.ulaval.glo4003.calculator.domain.premium.input.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -43,14 +43,14 @@ public class CivilLiabilityLimitFormulaPartTest {
   }
 
   @Test
-  public void computingFormulaPart_shouldGetCivilLiabilityLimitAdjustment() {
+  public void computingFormulaPart_shouldGetAdjustment() {
     subject.compute(QUOTE_PREMIUM_INPUT, BASE_PREMIUM);
 
     verify(civilLiabilityLimitAdjustmentProvider).getAdjustment(CIVIL_LIABILITY_LIMIT);
   }
 
   @Test
-  public void computingFormulaPart_shouldApplyAdjustmentOnBasePremium() {
+  public void computingFormulaPart_shouldApplyAdjustment() {
     subject.compute(QUOTE_PREMIUM_INPUT, BASE_PREMIUM);
 
     verify(premiumAdjustment).apply(BASE_PREMIUM);

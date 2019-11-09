@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
-import ca.ulaval.glo4003.calculator.domain.premium.input.AnimalBreedInput;
 
 import java.util.EnumMap;
 import java.util.Map;
