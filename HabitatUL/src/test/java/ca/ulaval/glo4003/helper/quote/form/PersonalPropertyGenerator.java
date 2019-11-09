@@ -15,16 +15,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
+import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBike;
+import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBikeRequest;
 
 public class PersonalPropertyGenerator {
   private PersonalPropertyGenerator() {}
 
   public static PersonalPropertyRequest createPersonalPropertyRequest() {
-    return new PersonalPropertyRequest(createCoverageAmount(), createAnimals());
+    return new PersonalPropertyRequest(
+        createCoverageAmount(), createAnimals(), createBikeRequest());
   }
 
   public static PersonalProperty createPersonalProperty() {
-    return new PersonalProperty(createCoverageAmount(), createAnimals());
+    return new PersonalProperty(createCoverageAmount(), createAnimals(), createBike());
   }
 
   public static Amount createCoverageAmount() {

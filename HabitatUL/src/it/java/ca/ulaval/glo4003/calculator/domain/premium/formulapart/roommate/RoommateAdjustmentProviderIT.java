@@ -1,16 +1,16 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createGenderInput;
+import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class RoommateAdjustmentProviderIT {
-  private static final GenderInput NAMED_INSURED_GENDER = createGenderInput();
-  private static final GenderInput ROOMMATE_GENDER = createGenderInput();
+  private static final Gender NAMED_INSURED_GENDER = createGender();
+  private static final Gender ROOMMATE_GENDER = createGender();
 
   private RoommateAdjustmentProvider subject;
 

@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustm
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumFormulaPart;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.util.Optional;
@@ -18,8 +18,8 @@ public class RoommateFormulaPart implements QuotePremiumFormulaPart {
 
   @Override
   public Money compute(QuotePremiumInput quotePremiumInput, Money basePremium) {
-    GenderInput namedInsuredGender = quotePremiumInput.getNamedInsuredGender();
-    Optional<GenderInput> additionalInsuredGender =
+    Gender namedInsuredGender = quotePremiumInput.getNamedInsuredGender();
+    Optional<Gender> additionalInsuredGender =
         Optional.ofNullable(quotePremiumInput.getAdditionalInsuredGender());
     PremiumAdjustment adjustment =
         additionalInsuredGender

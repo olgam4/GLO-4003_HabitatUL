@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 

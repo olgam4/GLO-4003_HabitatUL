@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidGenderError;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;

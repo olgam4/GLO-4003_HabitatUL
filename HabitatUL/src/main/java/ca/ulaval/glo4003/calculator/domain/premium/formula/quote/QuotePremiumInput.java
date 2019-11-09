@@ -2,22 +2,22 @@ package ca.ulaval.glo4003.calculator.domain.premium.formula.quote;
 
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 
 public class QuotePremiumInput extends ValueObject {
-  private final GenderInput namedInsuredGender;
+  private final Gender namedInsuredGender;
   private final UniversityProgramInput namedInsuredUniversityProgram;
-  private final GenderInput additionalInsuredGender;
+  private final Gender additionalInsuredGender;
   private final UniversityProgramInput additionalInsuredUniversityProgram;
   private final AnimalsInput animals;
   private final CivilLiabilityLimitInput civilLiabilityLimit;
 
   public QuotePremiumInput(
-      GenderInput namedInsuredGender,
+      Gender namedInsuredGender,
       UniversityProgramInput namedInsuredUniversityProgram,
-      GenderInput additionalInsuredGender,
+      Gender additionalInsuredGender,
       UniversityProgramInput additionalInsuredUniversityProgram,
       AnimalsInput animals,
       CivilLiabilityLimitInput civilLiabilityLimit) {
@@ -29,7 +29,7 @@ public class QuotePremiumInput extends ValueObject {
     this.civilLiabilityLimit = civilLiabilityLimit;
   }
 
-  public GenderInput getNamedInsuredGender() {
+  public Gender getNamedInsuredGender() {
     return namedInsuredGender;
   }
 
@@ -37,7 +37,7 @@ public class QuotePremiumInput extends ValueObject {
     return namedInsuredUniversityProgram;
   }
 
-  public GenderInput getAdditionalInsuredGender() {
+  public Gender getAdditionalInsuredGender() {
     return additionalInsuredGender;
   }
 

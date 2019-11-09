@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInp
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
 import ca.ulaval.glo4003.helper.EnumSampler;
 import com.github.javafaker.Faker;
 
@@ -14,21 +13,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
+
 public class QuotePremiumInputGenerator {
   private QuotePremiumInputGenerator() {}
 
   public static QuotePremiumInput create() {
     return new QuotePremiumInput(
-        createGenderInput(),
+        createGender(),
         UniversityProgramInputGenerator.create(),
-        createGenderInput(),
+        createGender(),
         UniversityProgramInputGenerator.create(),
         createAnimalsInput(),
         createCivilLiabilityLimitInput());
-  }
-
-  public static GenderInput createGenderInput() {
-    return EnumSampler.sample(GenderInput.class);
   }
 
   public static AnimalsInput createAnimalsInput() {

@@ -193,7 +193,7 @@ public class QuoteRequestTest {
             createLocationRequest(),
             createFutureDate(),
             createBuildingRequest(),
-            new PersonalPropertyRequest(null, null),
+            new PersonalPropertyRequest(null, null, null),
             createCivilLiabilityRequest());
 
     Set<ConstraintViolation<QuoteRequest>> violations = validator.validate(subject);

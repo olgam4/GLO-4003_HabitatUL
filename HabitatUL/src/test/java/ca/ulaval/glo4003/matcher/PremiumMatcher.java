@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.matcher;
 
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.*;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
@@ -22,15 +24,13 @@ public class PremiumMatcher {
       final QuoteFormDto quoteFormDto) {
     return allOf(
         hasProperty(
-            "namedInsuredGender",
-            matchesGenderInput(quoteFormDto.getPersonalInformation().getGender())),
+            "namedInsuredGender", equalTo(quoteFormDto.getPersonalInformation().getGender())),
         hasProperty(
             "namedInsuredUniversityProgram",
             matchesUniversityProgramInput(
                 quoteFormDto.getPersonalInformation().getUniversityProfile())),
         hasProperty(
-            "additionalInsuredGender",
-            matchesGenderInput(quoteFormDto.getAdditionalInsured().getGender())),
+            "additionalInsuredGender", equalTo(quoteFormDto.getAdditionalInsured().getGender())),
         hasProperty(
             "additionalInsuredUniversityProgram",
             matchesUniversityProgramInput(
@@ -40,17 +40,6 @@ public class PremiumMatcher {
         hasProperty(
             "civilLiabilityLimit",
             matchesCivilLiabilityLimitInput(quoteFormDto.getCivilLiability().getLimit())));
-  }
-
-  private static Matcher<GenderInput> matchesGenderInput(final Gender gender) {
-    switch (gender) {
-      case MALE:
-        return equalTo(GenderInput.MALE);
-      case FEMALE:
-        return equalTo(GenderInput.FEMALE);
-      default:
-        return equalTo(GenderInput.OTHER);
-    }
   }
 
   private static Matcher<UniversityProgramInput> matchesUniversityProgramInput(

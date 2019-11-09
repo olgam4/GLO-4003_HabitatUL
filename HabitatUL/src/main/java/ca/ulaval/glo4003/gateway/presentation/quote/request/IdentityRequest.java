@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

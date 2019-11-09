@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
+package ca.ulaval.glo4003.shared.domain.identity;
 
 import org.junit.Test;
 

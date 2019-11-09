@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.roommate
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput;
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,21 +12,21 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.GenderInput.*;
 import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.shared.domain.identity.Gender.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class HardCodedRoommateAdjustmentProviderTest {
-  private final GenderInput namedInsuredGender;
-  private final GenderInput roommateGender;
+  private final Gender namedInsuredGender;
+  private final Gender roommateGender;
   private final PremiumAdjustment expectedAdjustment;
   private HardCodedRoommateAdjustmentProvider subject;
 
   public HardCodedRoommateAdjustmentProviderTest(
       String title,
-      GenderInput namedInsuredGender,
-      GenderInput roommateGender,
+      Gender namedInsuredGender,
+      Gender roommateGender,
       PremiumAdjustment expectedAdjustment) {
     this.namedInsuredGender = namedInsuredGender;
     this.roommateGender = roommateGender;

@@ -6,10 +6,12 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 public class PersonalProperty extends ValueObject {
   private Amount coverageAmount;
   private Animals animals;
+  private Bike bike;
 
-  public PersonalProperty(Amount coverageAmount, Animals animals) {
+  public PersonalProperty(Amount coverageAmount, Animals animals, Bike bike) {
     this.coverageAmount = coverageAmount;
     this.animals = animals;
+    this.bike = bike;
   }
 
   public Amount getCoverageAmount() {
@@ -18,5 +20,9 @@ public class PersonalProperty extends ValueObject {
 
   public Animals getAnimals() {
     return animals;
+  }
+
+  public Bike getBike() {
+    return bike;
   }
 }

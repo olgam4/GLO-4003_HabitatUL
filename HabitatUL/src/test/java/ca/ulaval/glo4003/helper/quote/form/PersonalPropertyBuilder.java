@@ -2,17 +2,21 @@ package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
+import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBike;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createAnimals;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createCoverageAmount;
 
 public class PersonalPropertyBuilder {
   private static final Amount DEFAULT_COVERAGE_AMOUNT = createCoverageAmount();
   private static final Animals DEFAULT_ANIMALS = createAnimals();
+  private static final Bike DEFAULT_BIKE = createBike();
 
   private Amount coverageAmount = DEFAULT_COVERAGE_AMOUNT;
   private Animals animals = DEFAULT_ANIMALS;
+  private Bike bike = DEFAULT_BIKE;
 
   private PersonalPropertyBuilder() {}
 
@@ -26,6 +30,6 @@ public class PersonalPropertyBuilder {
   }
 
   public PersonalProperty build() {
-    return new PersonalProperty(coverageAmount, animals);
+    return new PersonalProperty(coverageAmount, animals, bike);
   }
 }

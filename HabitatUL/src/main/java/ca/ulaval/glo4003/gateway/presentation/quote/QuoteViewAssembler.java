@@ -3,20 +3,15 @@ package ca.ulaval.glo4003.gateway.presentation.quote;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteCoverageOverviewResponse;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
-import ca.ulaval.glo4003.shared.domain.money.Money;
-import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
-import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteCoverageOverviewDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
-import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
+import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 import java.util.Optional;
@@ -27,6 +22,7 @@ import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.Ci
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity.UNFILLED_IDENTITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals.UNFILLED_ANIMALS;
+import static ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike.UNFILLED_BIKE;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {
@@ -87,9 +83,22 @@ public class QuoteViewAssembler {
 
   private PersonalProperty fromPersonalPropertyRequest(
       PersonalPropertyRequest personalPropertyRequest) {
-    Amount coverageAmount = personalPropertyRequest.getCoverageAmount();
-    Animals animals = personalPropertyRequest.getAnimals().orElse(UNFILLED_ANIMALS);
-    return new PersonalProperty(coverageAmount, animals);
+    return new PersonalProperty(
+        personalPropertyRequest.getCoverageAmount(),
+        personalPropertyRequest.getAnimals().orElse(UNFILLED_ANIMALS),
+        fromBikeRequest(personalPropertyRequest.getBike()));
+  }
+
+  private Bike fromBikeRequest(Optional<BikeRequest> bikeRequest) {
+    return bikeRequest.map(this::fromBikeRequest).orElse(UNFILLED_BIKE);
+  }
+
+  private Bike fromBikeRequest(BikeRequest bikeRequest) {
+    return new Bike(
+        bikeRequest.getPrice(),
+        bikeRequest.getBrand(),
+        bikeRequest.getModel(),
+        bikeRequest.getYear());
   }
 
   private CivilLiability fromCivilLiabilityRequest(
@@ -104,13 +113,12 @@ public class QuoteViewAssembler {
   }
 
   public QuoteResponse from(QuoteDto quoteDto) {
-    QuoteId quoteId = quoteDto.getQuoteId();
-    Money premium = quoteDto.getPremium();
-    Period effectivePeriod = quoteDto.getEffectivePeriod();
-    DateTime expirationDate = quoteDto.getExpirationDate();
-    QuoteCoverageOverviewResponse coverage =
-        fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview());
-    return new QuoteResponse(quoteId, premium, effectivePeriod, expirationDate, coverage);
+    return new QuoteResponse(
+        quoteDto.getQuoteId(),
+        quoteDto.getPremium(),
+        quoteDto.getEffectivePeriod(),
+        quoteDto.getExpirationDate(),
+        fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview()));
   }
 
   private QuoteCoverageOverviewResponse fromQuoteCoverageOverviewDto(

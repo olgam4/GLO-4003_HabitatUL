@@ -29,7 +29,7 @@ public class PolicyTest {
   public void setUp() {
     subject =
         PolicyBuilder.aPolicy()
-            .withCoveragePeriod(TemporalGenerator.createActivePeriod())
+            .withCoveragePeriod(TemporalGenerator.createFuturePeriod())
             .withCoverageAmount(COVERAGE_AMOUNT)
             .build();
   }

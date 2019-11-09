@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.*;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
@@ -15,23 +17,12 @@ import java.util.Map;
 public class QuotePremiumAssembler {
   public QuotePremiumInput from(QuoteForm quoteForm) {
     return new QuotePremiumInput(
-        from(quoteForm.getPersonalInformation().getGender()),
+        quoteForm.getPersonalInformation().getGender(),
         from(quoteForm.getPersonalInformation().getUniversityProfile()),
-        from(quoteForm.getAdditionalInsured().getGender()),
+        quoteForm.getAdditionalInsured().getGender(),
         from(quoteForm.getAdditionalInsured().getUniversityProfile()),
         from(quoteForm.getPersonalProperty().getAnimals()),
         from(quoteForm.getCivilLiability().getLimit()));
-  }
-
-  private GenderInput from(Gender gender) {
-    switch (gender) {
-      case MALE:
-        return GenderInput.MALE;
-      case FEMALE:
-        return GenderInput.FEMALE;
-      default:
-        return GenderInput.OTHER;
-    }
   }
 
   private UniversityProgramInput from(UniversityProfile universityProfile) {

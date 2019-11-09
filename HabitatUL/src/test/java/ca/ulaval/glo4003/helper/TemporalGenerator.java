@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.helper;
 
-import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
+import ca.ulaval.glo4003.shared.domain.temporal.*;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
+import ca.ulaval.glo4003.shared.domain.temporal.Year;
 import com.github.javafaker.Faker;
 
 import java.time.*;
@@ -87,7 +86,7 @@ public class TemporalGenerator {
     return new Period(startDate, endDate);
   }
 
-  public static Period createActivePeriod() {
+  public static Period createFuturePeriod() {
     Date startDate = createDateBefore(getNowDate());
     Date endDate = createDateAfter(getNowDate());
     return new Period(startDate, endDate);
@@ -99,6 +98,10 @@ public class TemporalGenerator {
 
   public static Duration createDuration() {
     return Duration.of(Faker.instance().number().randomDigitNotZero(), ChronoUnit.MINUTES);
+  }
+
+  public static Year createYear() {
+    return Year.from(java.time.Year.from(createDateTime().getValue()));
   }
 
   public static ClockProvider getClockProvider() {

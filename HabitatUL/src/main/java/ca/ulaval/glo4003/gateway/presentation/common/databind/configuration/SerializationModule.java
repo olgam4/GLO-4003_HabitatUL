@@ -9,15 +9,16 @@ import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.serializer.*;
 import ca.ulaval.glo4003.shared.domain.address.Floor;
 import ca.ulaval.glo4003.shared.domain.address.ZipCode;
+import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
+import ca.ulaval.glo4003.shared.domain.temporal.Year;
 import ca.ulaval.glo4003.shared.presentation.temporal.LocalZoneIdProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Gender;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
@@ -55,6 +56,7 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
     deserializers.addDeserializer(PreventionSystems.class, new PreventionSystemsDeserializer());
     deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
+    deserializers.addDeserializer(Year.class, new YearDeserializer());
     deserializers.addDeserializer(ZipCode.class, new ZipCodeDeserializer());
     setupContext.addDeserializers(deserializers);
   }

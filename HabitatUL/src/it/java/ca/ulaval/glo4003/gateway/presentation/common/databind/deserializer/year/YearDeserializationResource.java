@@ -1,6 +1,6 @@
-package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.gender;
+package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.year;
 
-import ca.ulaval.glo4003.shared.domain.identity.Gender;
+import ca.ulaval.glo4003.shared.domain.temporal.Year;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -13,14 +13,14 @@ import static ca.ulaval.glo4003.gateway.presentation.common.databind.deserialize
 
 @Path(DESERIALIZE_ROUTE)
 @Produces(MediaType.APPLICATION_JSON)
-public class GenderDeserializationResource {
+public class YearDeserializationResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response getDeserialization(GenderDeserializationRequest request) {
+  public Response getDeserialization(YearDeserializationRequest request) {
     return Response.ok().build();
   }
 
-  public static class GenderDeserializationRequest {
-    public Gender value;
+  public static class YearDeserializationRequest {
+    public Year value;
   }
 }
