@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.context;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BaseCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
@@ -19,40 +20,39 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOf
 import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
+import static ca.ulaval.glo4003.context.ServiceLocator.register;
+import static ca.ulaval.glo4003.context.ServiceLocator.reset;
+
 public class AcceptanceTestContext {
   public AcceptanceTestContext() {
-    ServiceLocator.reset();
+    reset();
   }
 
   public void execute() {
-    ServiceLocator.register(ClockProvider.class, TemporalGenerator.getClockProvider());
-    ServiceLocator.register(
-        QuoteEffectivePeriodProvider.class, new DummyQuoteEffectivePeriodProvider());
-    ServiceLocator.register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
+    register(ClockProvider.class, TemporalGenerator.getClockProvider());
+    register(QuoteEffectivePeriodProvider.class, new DummyQuoteEffectivePeriodProvider());
+    register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
     registerCalculationServices();
-    ServiceLocator.register(
-        QuoteValidityPeriodProvider.class, new DummyQuoteValidityPeriodProvider());
-    ServiceLocator.register(QuoteRepository.class, new InMemoryQuoteRepository());
+    register(QuoteValidityPeriodProvider.class, new DummyQuoteValidityPeriodProvider());
+    register(QuoteRepository.class, new InMemoryQuoteRepository());
   }
 
   private void registerCalculationServices() {
-    ServiceLocator.register(
-        QuoteBasePremiumCalculator.class, new DummyQuoteBasePremiumCalculator());
-    ServiceLocator.register(
+    register(QuoteBasePremiumCalculator.class, new DummyQuoteBasePremiumCalculator());
+    register(
         CivilLiabilityLimitAdjustmentProvider.class,
         new DummyCivilLiabilityLimitAdjustmentProvider());
-    ServiceLocator.register(AnimalsAdjustmentProvider.class, new DummyAnimalsAdjustmentProvider());
-    ServiceLocator.register(
-        AnimalsAdjustmentLimitsProvider.class, new DummyAnimalsAdjustmentLimitsProvider());
-    ServiceLocator.register(
+    register(AnimalsAdjustmentProvider.class, new DummyAnimalsAdjustmentProvider());
+    register(AnimalsAdjustmentLimitsProvider.class, new DummyAnimalsAdjustmentLimitsProvider());
+    register(
         PreferentialProgramAdjustmentProvider.class,
         new DummyPreferentialProgramAdjustmentProvider());
-    ServiceLocator.register(
-        RoommateAdjustmentProvider.class, new DummyRoommateAdjustmentProvider());
-    ServiceLocator.register(
-        GraduateStudentAdjustmentProvider.class, new DummyGraduateStudentAdjustmentProvider());
-    ServiceLocator.register(BikeBasePremiumCalculator.class, new DummyBikeBasePremiumCalculator());
-    ServiceLocator.register(
-        BikePriceAdjustmentProvider.class, new DummyBikePriceAdjustmentProvider());
+    register(RoommateAdjustmentProvider.class, new DummyRoommateAdjustmentProvider());
+    register(GraduateStudentAdjustmentProvider.class, new DummyGraduateStudentAdjustmentProvider());
+    register(BikeBasePremiumCalculator.class, new DummyBikeBasePremiumCalculator());
+    register(BikePriceAdjustmentProvider.class, new DummyBikePriceAdjustmentProvider());
+    register(
+        BaseCoverageMaximumBikePriceProvider.class,
+        new DummyBaseCoverageMaximumBikePriceProvider());
   }
 }

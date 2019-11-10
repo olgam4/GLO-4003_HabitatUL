@@ -16,7 +16,7 @@ public class HardCodedBikePriceAdjustmentProvider implements BikePriceAdjustment
   static final Amount MAXIMUM_BIKE_PRICE_BASE_COVERAGE =
       new Amount(BigDecimal.valueOf(MAXIMUM_BIKE_PRICE_VALUE_BASE_COVERAGE));
   private static final Amount MINIMUM_BIKE_PRICE_BEFORE_SURCHARGE =
-      MAXIMUM_BIKE_PRICE_BASE_COVERAGE.add(new Amount(BigDecimal.ONE));
+      MAXIMUM_BIKE_PRICE_BASE_COVERAGE.add(Amount.ONE);
   private static final NavigableMap<Amount, Float> LOOKUP_MAP = new TreeMap<>();
 
   static {

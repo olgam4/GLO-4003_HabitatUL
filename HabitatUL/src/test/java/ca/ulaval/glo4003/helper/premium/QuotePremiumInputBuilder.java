@@ -5,7 +5,9 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsIn
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 
+import static ca.ulaval.glo4003.helper.premium.BikePremiumInputGenerator.createBikePrice;
 import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createAnimalsInput;
 import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
 import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
@@ -18,6 +20,7 @@ public class QuotePremiumInputBuilder {
   private static final UniversityProgramInput DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM =
       UniversityProgramInputGenerator.create();
   private static final AnimalsInput DEFAULT_ANIMALS = createAnimalsInput();
+  private static final Amount DEFAULT_BIKE_PRICE = createBikePrice();
   private static final CivilLiabilityLimitInput DEFAULT_CIVIL_LIABILITY_LIMIT =
       createCivilLiabilityLimitInput();
 
@@ -28,6 +31,7 @@ public class QuotePremiumInputBuilder {
   private UniversityProgramInput additionalInsuredUniversityProgram =
       DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM;
   private AnimalsInput animals = DEFAULT_ANIMALS;
+  private Amount bikePrice = DEFAULT_BIKE_PRICE;
   private CivilLiabilityLimitInput civilLiabilityLimit = DEFAULT_CIVIL_LIABILITY_LIMIT;
 
   private QuotePremiumInputBuilder() {}
@@ -64,6 +68,16 @@ public class QuotePremiumInputBuilder {
     return this;
   }
 
+  public QuotePremiumInputBuilder withoutBikePrice() {
+    this.bikePrice = null;
+    return this;
+  }
+
+  public QuotePremiumInputBuilder withBikePrice(Amount bikePrice) {
+    this.bikePrice = bikePrice;
+    return this;
+  }
+
   public QuotePremiumInput build() {
     return new QuotePremiumInput(
         namedInsuredGender,
@@ -71,6 +85,7 @@ public class QuotePremiumInputBuilder {
         additionalInsuredGender,
         additionalInsuredUniversityProgram,
         animals,
+        bikePrice,
         civilLiabilityLimit);
   }
 }

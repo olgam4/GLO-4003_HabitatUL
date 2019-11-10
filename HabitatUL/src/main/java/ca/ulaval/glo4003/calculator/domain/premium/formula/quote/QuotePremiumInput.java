@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiab
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 public class QuotePremiumInput extends ValueObject {
   private final Gender namedInsuredGender;
@@ -12,6 +13,7 @@ public class QuotePremiumInput extends ValueObject {
   private final Gender additionalInsuredGender;
   private final UniversityProgramInput additionalInsuredUniversityProgram;
   private final AnimalsInput animals;
+  private final Amount bikePrice;
   private final CivilLiabilityLimitInput civilLiabilityLimit;
 
   public QuotePremiumInput(
@@ -20,12 +22,14 @@ public class QuotePremiumInput extends ValueObject {
       Gender additionalInsuredGender,
       UniversityProgramInput additionalInsuredUniversityProgram,
       AnimalsInput animals,
+      Amount bikePrice,
       CivilLiabilityLimitInput civilLiabilityLimit) {
     this.namedInsuredGender = namedInsuredGender;
     this.namedInsuredUniversityProgram = namedInsuredUniversityProgram;
     this.additionalInsuredGender = additionalInsuredGender;
     this.additionalInsuredUniversityProgram = additionalInsuredUniversityProgram;
     this.animals = animals;
+    this.bikePrice = bikePrice;
     this.civilLiabilityLimit = civilLiabilityLimit;
   }
 
@@ -47,6 +51,10 @@ public class QuotePremiumInput extends ValueObject {
 
   public AnimalsInput getAnimals() {
     return animals;
+  }
+
+  public Amount getBikePrice() {
+    return bikePrice;
   }
 
   public CivilLiabilityLimitInput getCivilLiabilityLimit() {

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 public class Amount extends ValueObject {
   public static final Amount ZERO = new Amount(BigDecimal.ZERO);
+  public static final Amount ONE = new Amount(BigDecimal.ONE);
 
   static final int DECIMAL_PRECISION = 2;
   static final int ROUNDING = BigDecimal.ROUND_HALF_UP;

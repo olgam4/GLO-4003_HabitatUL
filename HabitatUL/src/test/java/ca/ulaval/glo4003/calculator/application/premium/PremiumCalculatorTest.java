@@ -1,49 +1,106 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumFormula;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumFormula;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.BaseCoveragePremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.BikeAddendaPremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.premium.BikePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PremiumCalculatorTest {
+@RunWith(Enclosed.class)
+public class PremiumCalculatorTest extends PremiumCalculatorTestSetUp {
   private static final QuotePremiumInput QUOTE_PREMIUM_INPUT = QuotePremiumInputGenerator.create();
-  private static final Money PREMIUM = MoneyGenerator.createMoney();
+  private static final BikePremiumInput BIKE_PREMIUM_INPUT = BikePremiumInputGenerator.create();
 
-  @Mock private QuotePremiumFormula quotePremiumFormula;
-  @Mock private BikePremiumFormula bikePremiumFormula;
+  @Test
+  public void computingBikeAddendaPremium_shouldComputeBikeAddendaPremiumFormula() {
+    subject.computeBikeAddendaPremium(BIKE_PREMIUM_INPUT);
 
-  private PremiumCalculator subject;
-
-  @Before
-  public void setUp() {
-    when(quotePremiumFormula.compute(any(QuotePremiumInput.class))).thenReturn(PREMIUM);
-    subject = new PremiumCalculator(quotePremiumFormula, bikePremiumFormula);
+    verify(bikeAddendaPremiumFormula).compute(BIKE_PREMIUM_INPUT);
   }
 
   @Test
-  public void computingQuotePremium_shouldComputeQuotePremiumFormula() {
-    subject.computeQuotePremium(QUOTE_PREMIUM_INPUT);
+  public void computingBikeAddendaPremium_shouldReturnComputedPremium() {
+    Money bikeAddendaPremium = subject.computeBikeAddendaPremium(BIKE_PREMIUM_INPUT);
 
-    verify(quotePremiumFormula).compute(QUOTE_PREMIUM_INPUT);
+    assertEquals(BIKE_ADDENDA_PREMIUM, bikeAddendaPremium);
   }
 
-  @Test
-  public void computingQuotePremium_shouldReturnComputedQuotePremium() {
-    Money quotePremium = subject.computeQuotePremium(QUOTE_PREMIUM_INPUT);
+  @RunWith(Parameterized.class)
+  public static class computingQuotePremiumTest extends PremiumCalculatorTestSetUp {
+    private QuotePremiumInput quotePremiumInput;
+    private List<PremiumDetail> expectedAdditionalPremiumDetails;
 
-    assertEquals(PREMIUM, quotePremium);
+    public computingQuotePremiumTest(
+        String title,
+        QuotePremiumInput quotePremiumInput,
+        List<PremiumDetail> expectedAdditionalPremiumDetails) {
+      this.quotePremiumInput = quotePremiumInput;
+      this.expectedAdditionalPremiumDetails = expectedAdditionalPremiumDetails;
+    }
+
+    @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
+    public static Collection parameters() {
+      return Arrays.asList(
+          new Object[][] {
+            {
+              "without bike price should not add bike addenda",
+              QuotePremiumInputBuilder.aQuotePremiumInput().withoutBikePrice().build(),
+              Collections.emptyList()
+            },
+            {
+              "with bike price covered by base coverage should not add bike addenda",
+              QuotePremiumInputBuilder.aQuotePremiumInput()
+                  .withBikePrice(
+                      MoneyGenerator.createAmountSmallerThan(BASE_COVERAGE_MAXIMUM_BIKE_PRICE))
+                  .build(),
+              Collections.emptyList()
+            },
+            {
+              "with bike price exceeding base coverage should add bike addenda",
+              QuotePremiumInputBuilder.aQuotePremiumInput()
+                  .withBikePrice(
+                      MoneyGenerator.createAmountGreaterThan(BASE_COVERAGE_MAXIMUM_BIKE_PRICE))
+                  .build(),
+              Arrays.asList(new BikeAddendaPremiumDetail(BIKE_ADDENDA_PREMIUM))
+            }
+          });
+    }
+
+    @Test
+    public void computingQuotePremium_shouldComputeQuoteBaseCoveragePremiumFormula() {
+      subject.computeQuotePremium(QUOTE_PREMIUM_INPUT);
+
+      verify(quoteBaseCoveragePremiumFormula).compute(QUOTE_PREMIUM_INPUT);
+    }
+
+    @Test
+    public void computingQuotePremium_shouldReturnCorrespondingPremiumDetails() {
+      PremiumDetails premiumDetails = subject.computeQuotePremium(quotePremiumInput);
+
+      BaseCoveragePremiumDetail baseCoveragePremiumDetail =
+          new BaseCoveragePremiumDetail(BASE_COVERAGE_PREMIUM);
+      assertTrue(premiumDetails.getCollection().contains(baseCoveragePremiumDetail));
+      assertTrue(premiumDetails.getCollection().containsAll(expectedAdditionalPremiumDetails));
+    }
   }
 }

@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.premium.PremiumDetailsGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -33,7 +34,8 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteAppServiceTest {
-  private static final Money PREMIUM = MoneyGenerator.createMoney();
+  private static final PremiumDetails PREMIUM_DETAILS =
+      PremiumDetailsGenerator.createPremiumDetails();
   private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
 
   @Mock private QuoteFormValidator quoteFormValidator;
@@ -45,16 +47,17 @@ public class QuoteAppServiceTest {
   private QuoteAppService subject;
   private QuoteFormDto quoteFormDto;
   private QuoteAssembler quoteAssembler;
-  private QuotePremiumAssembler quotePremiumAssembler;
+  private PremiumAssembler premiumAssembler;
 
   @Before
   public void setUp() throws QuoteNotFoundException {
     quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
     quoteAssembler = new QuoteAssembler();
-    quotePremiumAssembler = new QuotePremiumAssembler();
+    premiumAssembler = new PremiumAssembler();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
     when(quote.getQuoteForm()).thenReturn(QuoteFormGenerator.createQuoteForm());
-    when(premiumCalculator.computeQuotePremium(any(QuotePremiumInput.class))).thenReturn(PREMIUM);
+    when(premiumCalculator.computeQuotePremium(any(QuotePremiumInput.class)))
+        .thenReturn(PREMIUM_DETAILS);
     when(quoteFactory.create(any(Money.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
@@ -62,7 +65,7 @@ public class QuoteAppServiceTest {
         new QuoteAppService(
             quoteAssembler,
             quoteFormValidator,
-            quotePremiumAssembler,
+            premiumAssembler,
             premiumCalculator,
             quoteFactory,
             quoteRepository);

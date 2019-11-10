@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static ca.ulaval.glo4003.helper.premium.BikePremiumInputGenerator.createBikePrice;
 import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
 
 public class QuotePremiumInputGenerator {
@@ -25,6 +26,7 @@ public class QuotePremiumInputGenerator {
         createGender(),
         UniversityProgramInputGenerator.create(),
         createAnimalsInput(),
+        createBikePrice(),
         createCivilLiabilityLimitInput());
   }
 

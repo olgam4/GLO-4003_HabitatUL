@@ -1,10 +1,11 @@
 package ca.ulaval.glo4003.coverage.domain.claim;
 
+import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.util.Map;
 
-public class LossDeclarations {
+public class LossDeclarations extends ValueObject {
   private Map<LossCategory, Amount> collection;
 
   public LossDeclarations(Map<LossCategory, Amount> collection) {

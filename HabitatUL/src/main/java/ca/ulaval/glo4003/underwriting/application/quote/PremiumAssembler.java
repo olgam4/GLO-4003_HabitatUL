@@ -14,14 +14,15 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals
 import java.util.EnumMap;
 import java.util.Map;
 
-public class QuotePremiumAssembler {
-  public QuotePremiumInput from(QuoteForm quoteForm) {
+public class PremiumAssembler {
+  public QuotePremiumInput toQuotePremiumInput(QuoteForm quoteForm) {
     return new QuotePremiumInput(
         quoteForm.getPersonalInformation().getGender(),
         from(quoteForm.getPersonalInformation().getUniversityProfile()),
         quoteForm.getAdditionalInsured().getGender(),
         from(quoteForm.getAdditionalInsured().getUniversityProfile()),
         from(quoteForm.getPersonalProperty().getAnimals()),
+        quoteForm.getPersonalProperty().getBike().getPrice(),
         from(quoteForm.getCivilLiability().getLimit()));
   }
 
