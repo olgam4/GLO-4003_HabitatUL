@@ -1,0 +1,33 @@
+{
+  "definitions": {
+    "premiumDetails": {
+      "type": "array",
+      "items": {
+        "description": "premium detail",
+        "$ref": "#/definitions/premiumDetail"
+      }
+    },
+    "premiumDetail": {
+      "required": [
+        "coverage",
+        "premium"
+      ],
+      "type": "object",
+      "properties": {
+        "coverage": {
+          "description": "coverage name",
+          "type": "string",
+          "enum": [
+            "basic block",
+            "bike endorsement",
+            "other"
+          ]
+        },
+        "premium": {
+          "description": "coverage premium",
+          "$ref": "Shared.json#/definitions/money"
+        }
+      }
+    }
+  }
+}

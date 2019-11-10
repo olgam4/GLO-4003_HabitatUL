@@ -1,19 +1,20 @@
 package ca.ulaval.glo4003.calculator.domain.premium.detail;
 
+import ca.ulaval.glo4003.calculator.domain.Coverage;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 public class PremiumDetail extends ValueObject {
-  private final String coverageName;
+  private final Coverage coverage;
   private final Money premium;
 
-  public PremiumDetail(String coverageName, Money premium) {
-    this.coverageName = coverageName;
+  public PremiumDetail(Coverage coverage, Money premium) {
+    this.coverage = coverage;
     this.premium = premium;
   }
 
-  public String getCoverageName() {
-    return coverageName;
+  public Coverage getCoverage() {
+    return coverage;
   }
 
   public Money getPremium() {

@@ -5,8 +5,8 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
-import static ca.ulaval.glo4003.helper.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.helper.TemporalGenerator.*;
+import static ca.ulaval.glo4003.helper.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator.createQuoteForm;
 
 public class QuoteGenerator {
@@ -22,7 +22,7 @@ public class QuoteGenerator {
         createQuoteForm(),
         createFutureDateTime(),
         createPeriod(),
-        createMoney(),
+        createPremiumDetails(),
         false,
         getClockProvider());
   }

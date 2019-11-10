@@ -4,10 +4,11 @@
   "title": "quote response",
   "required": [
     "quoteId",
-    "premium",
-    "effectivePeriod",
     "expirationDate",
-    "coverageOverview"
+    "effectivePeriod",
+    "coverageOverview",
+    "totalPremium",
+    "premiumDetails"
   ],
   "properties": {
     "quoteId": {
@@ -15,9 +16,9 @@
       "type": "string",
       "$ref": "../Shared.json#/definitions/uuid"
     },
-    "premium": {
-      "description": "quote premium",
-      "$ref": "../Shared.json#/definitions/money"
+    "expirationDate": {
+      "description": "quote expiration",
+      "$ref": "../Shared.json#/definitions/dateTime"
     },
     "effectivePeriod": {
       "description": "quote effective period",
@@ -31,10 +32,6 @@
         }
       }
     },
-    "expirationDate": {
-      "description": "quote expiration",
-      "$ref": "../Shared.json#/definitions/dateTime"
-    },
     "coverageOverview": {
       "description": "quote coverage overview",
       "properties": {
@@ -45,6 +42,14 @@
           "$ref": "../Shared.json#/definitions/amount"
         }
       }
+    },
+    "totalPremium": {
+      "description": "quote total premium",
+      "$ref": "../Shared.json#/definitions/money"
+    },
+    "premiumDetails": {
+      "description": "quote premium details",
+      "$ref": "../Calculator.json#/definitions/premiumDetails"
     }
   }
 }

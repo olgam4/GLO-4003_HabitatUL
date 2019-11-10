@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import org.junit.Before;
@@ -15,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import static ca.ulaval.glo4003.helper.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteFactoryTest {
   private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
-  private static final Money PREMIUM = MoneyGenerator.createMoney();
+  private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
   private static final Duration VALIDITY_PERIOD = TemporalGenerator.createDuration();
   private static final java.time.Period COVERAGE_PERIOD = TemporalGenerator.createJavaTimePeriod();
 
@@ -41,7 +41,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldProperlyComputeExpirationDate() {
-    Quote quote = subject.create(PREMIUM, QuoteFormGenerator.createQuoteForm());
+    Quote quote = subject.create(PREMIUM_DETAILS, QuoteFormGenerator.createQuoteForm());
 
     DateTime expectedExpirationDate =
         DateTime.from(LocalDateTime.now(CLOCK_PROVIDER.getClock()).plus(VALIDITY_PERIOD));
@@ -50,7 +50,7 @@ public class QuoteFactoryTest {
 
   @Test
   public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(PREMIUM, QuoteFormGenerator.createQuoteForm());
+    Quote quote = subject.create(PREMIUM_DETAILS, QuoteFormGenerator.createQuoteForm());
 
     assertFalse(quote.isPurchased());
   }

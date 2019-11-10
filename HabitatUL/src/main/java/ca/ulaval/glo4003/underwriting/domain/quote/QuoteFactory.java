@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
@@ -21,7 +21,7 @@ public class QuoteFactory {
     this.clockProvider = clockProvider;
   }
 
-  public Quote create(Money quotePremium, QuoteForm quoteForm) {
+  public Quote create(PremiumDetails premiumDetails, QuoteForm quoteForm) {
     QuoteId quoteId = new QuoteId();
     DateTime expirationDate =
         DateTime.now(clockProvider.getClock())
@@ -31,6 +31,6 @@ public class QuoteFactory {
         quoteForm.getEffectiveDate().plus(quoteEffectivePeriodProvider.getQuoteEffectivePeriod());
     Period effectivePeriod = new Period(effectivePeriodStartDate, effectivePeriodEndDate);
     return new Quote(
-        quoteId, quoteForm, expirationDate, effectivePeriod, quotePremium, false, clockProvider);
+        quoteId, quoteForm, expirationDate, effectivePeriod, premiumDetails, false, clockProvider);
   }
 }

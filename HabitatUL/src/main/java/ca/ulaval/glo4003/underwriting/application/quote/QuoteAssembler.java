@@ -22,10 +22,10 @@ public class QuoteAssembler {
   public QuoteDto from(Quote quote) {
     return new QuoteDto(
         quote.getQuoteId(),
-        quote.getPremium(),
-        quote.getEffectivePeriod(),
         quote.getExpirationDate(),
-        from(quote.getQuoteForm()));
+        quote.getEffectivePeriod(),
+        from(quote.getQuoteForm()),
+        quote.getPremiumDetails());
   }
 
   private QuoteCoverageOverviewDto from(QuoteForm quoteForm) {

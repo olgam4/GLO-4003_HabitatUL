@@ -30,6 +30,7 @@ public class InsureAnApartmentStory {
   public void anonymousStudentWantsToReceiveQuotePremium() {
     QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
 
-    assertNotNull(quoteDto.getPremium());
+    assertNotNull(quoteDto.getPremiumDetails());
+    assertNotNull(quoteDto.getPremiumDetails().computeTotalPremium());
   }
 }

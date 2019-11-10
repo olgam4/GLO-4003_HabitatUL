@@ -14,7 +14,8 @@ class MediatorChanneler {
         QuotePaymentRequestedEvent.class,
         event ->
             new QuotePaymentRequestedEvent(
-                event.getQuoteId().toRepresentation(), event.getPremium()));
+                event.getQuoteId().toRepresentation(),
+                event.getPremiumDetails().computeTotalPremium()));
 
     mediator.addChannel(
         QuotePurchasedEvent.class,

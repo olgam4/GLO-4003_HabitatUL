@@ -24,7 +24,7 @@ public class QuoteMatcher {
   public static Matcher<Quote> matchesQuote(final Quote quote) {
     return allOf(
         hasProperty("quoteId", equalTo(quote.getQuoteId())),
-        hasProperty("premium", equalTo(quote.getPremium())),
+        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())),
         hasProperty("purchased", equalTo(quote.isPurchased())),
         hasProperty("effectivePeriod", equalTo(quote.getEffectivePeriod())),
         hasProperty("expirationDate", equalTo(quote.getExpirationDate())));
@@ -33,7 +33,7 @@ public class QuoteMatcher {
   public static Matcher<QuoteDto> matchesQuoteDto(final Quote quote) {
     return allOf(
         hasProperty("quoteId", equalTo(quote.getQuoteId())),
-        hasProperty("premium", equalTo(quote.getPremium())),
+        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())),
         hasProperty("effectivePeriod", equalTo(quote.getEffectivePeriod())),
         hasProperty("expirationDate", equalTo(quote.getExpirationDate())));
   }

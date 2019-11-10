@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BaseCoverageMaximumBikePriceProvider;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeAddendaPremiumFormula;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeEndorsementPremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBaseCoveragePremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
@@ -19,12 +19,12 @@ import static org.mockito.Mockito.when;
 
 public class PremiumCalculatorTestSetUp {
   static final Money BASE_COVERAGE_PREMIUM = MoneyGenerator.createMoney();
-  static final Money BIKE_ADDENDA_PREMIUM = MoneyGenerator.createMoney();
+  static final Money BIKE_ENDORSEMENT_PREMIUM = MoneyGenerator.createMoney();
   static final Amount BASE_COVERAGE_MAXIMUM_BIKE_PRICE = MoneyGenerator.createAmount();
 
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().silent();
   @Mock protected QuoteBaseCoveragePremiumFormula quoteBaseCoveragePremiumFormula;
-  @Mock protected BikeAddendaPremiumFormula bikeAddendaPremiumFormula;
+  @Mock protected BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula;
   @Mock protected BaseCoverageMaximumBikePriceProvider baseCoverageMaximumBikePriceProvider;
 
   protected PremiumCalculator subject;
@@ -33,14 +33,14 @@ public class PremiumCalculatorTestSetUp {
   public void setUp() {
     when(quoteBaseCoveragePremiumFormula.compute(any(QuotePremiumInput.class)))
         .thenReturn(BASE_COVERAGE_PREMIUM);
-    when(bikeAddendaPremiumFormula.compute(any(BikePremiumInput.class)))
-        .thenReturn(BIKE_ADDENDA_PREMIUM);
+    when(bikeEndorsementPremiumFormula.compute(any(BikePremiumInput.class)))
+        .thenReturn(BIKE_ENDORSEMENT_PREMIUM);
     when(baseCoverageMaximumBikePriceProvider.getMaximumBikePrice())
         .thenReturn(BASE_COVERAGE_MAXIMUM_BIKE_PRICE);
     subject =
         new PremiumCalculator(
             quoteBaseCoveragePremiumFormula,
-            bikeAddendaPremiumFormula,
+            bikeEndorsementPremiumFormula,
             baseCoverageMaximumBikePriceProvider);
   }
 }

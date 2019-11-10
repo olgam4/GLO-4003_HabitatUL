@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.helper.premium;
 
+import ca.ulaval.glo4003.calculator.domain.Coverage;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.BaseCoveragePremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
@@ -29,8 +30,8 @@ public class PremiumDetailsGenerator {
     return new PremiumDetail(createCoverageName(), createPremium());
   }
 
-  private static String createCoverageName() {
-    return Faker.instance().commerce().productName();
+  private static Coverage createCoverageName() {
+    return Coverage.OTHER;
   }
 
   private static Money createPremium() {

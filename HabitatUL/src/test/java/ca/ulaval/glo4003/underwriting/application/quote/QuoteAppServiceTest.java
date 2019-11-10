@@ -6,7 +6,6 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInp
 import ca.ulaval.glo4003.helper.premium.PremiumDetailsGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
@@ -58,7 +57,7 @@ public class QuoteAppServiceTest {
     when(quote.getQuoteForm()).thenReturn(QuoteFormGenerator.createQuoteForm());
     when(premiumCalculator.computeQuotePremium(any(QuotePremiumInput.class)))
         .thenReturn(PREMIUM_DETAILS);
-    when(quoteFactory.create(any(Money.class), any(QuoteForm.class))).thenReturn(quote);
+    when(quoteFactory.create(any(PremiumDetails.class), any(QuoteForm.class))).thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
     subject =

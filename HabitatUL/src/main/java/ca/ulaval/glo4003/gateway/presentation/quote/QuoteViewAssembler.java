@@ -115,10 +115,10 @@ public class QuoteViewAssembler {
   public QuoteResponse from(QuoteDto quoteDto) {
     return new QuoteResponse(
         quoteDto.getQuoteId(),
-        quoteDto.getPremium(),
-        quoteDto.getEffectivePeriod(),
         quoteDto.getExpirationDate(),
-        fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview()));
+        quoteDto.getEffectivePeriod(),
+        fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview()),
+        quoteDto.getPremiumDetails());
   }
 
   private QuoteCoverageOverviewResponse fromQuoteCoverageOverviewDto(

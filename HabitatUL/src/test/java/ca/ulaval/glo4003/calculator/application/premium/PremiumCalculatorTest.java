@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
 import ca.ulaval.glo4003.calculator.domain.premium.detail.BaseCoveragePremiumDetail;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.BikeAddendaPremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.BikeEndorsementPremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
@@ -32,17 +32,17 @@ public class PremiumCalculatorTest extends PremiumCalculatorTestSetUp {
   private static final BikePremiumInput BIKE_PREMIUM_INPUT = BikePremiumInputGenerator.create();
 
   @Test
-  public void computingBikeAddendaPremium_shouldComputeBikeAddendaPremiumFormula() {
-    subject.computeBikeAddendaPremium(BIKE_PREMIUM_INPUT);
+  public void computingBikeEndorsementPremium_shouldComputeBikeEndorsementPremiumFormula() {
+    subject.computeBikeEndorsementPremium(BIKE_PREMIUM_INPUT);
 
-    verify(bikeAddendaPremiumFormula).compute(BIKE_PREMIUM_INPUT);
+    verify(bikeEndorsementPremiumFormula).compute(BIKE_PREMIUM_INPUT);
   }
 
   @Test
-  public void computingBikeAddendaPremium_shouldReturnComputedPremium() {
-    Money bikeAddendaPremium = subject.computeBikeAddendaPremium(BIKE_PREMIUM_INPUT);
+  public void computingBikeEndorsementPremium_shouldReturnComputedPremium() {
+    Money endorsementPremium = subject.computeBikeEndorsementPremium(BIKE_PREMIUM_INPUT);
 
-    assertEquals(BIKE_ADDENDA_PREMIUM, bikeAddendaPremium);
+    assertEquals(BIKE_ENDORSEMENT_PREMIUM, endorsementPremium);
   }
 
   @RunWith(Parameterized.class)
@@ -63,12 +63,12 @@ public class PremiumCalculatorTest extends PremiumCalculatorTestSetUp {
       return Arrays.asList(
           new Object[][] {
             {
-              "without bike price should not add bike addenda",
+              "without bike price should not add bike endorsement",
               QuotePremiumInputBuilder.aQuotePremiumInput().withoutBikePrice().build(),
               Collections.emptyList()
             },
             {
-              "with bike price covered by base coverage should not add bike addenda",
+              "with bike price covered by base coverage should not add bike endorsement",
               QuotePremiumInputBuilder.aQuotePremiumInput()
                   .withBikePrice(
                       MoneyGenerator.createAmountSmallerThan(BASE_COVERAGE_MAXIMUM_BIKE_PRICE))
@@ -76,12 +76,12 @@ public class PremiumCalculatorTest extends PremiumCalculatorTestSetUp {
               Collections.emptyList()
             },
             {
-              "with bike price exceeding base coverage should add bike addenda",
+              "with bike price exceeding base coverage should add bike endorsement",
               QuotePremiumInputBuilder.aQuotePremiumInput()
                   .withBikePrice(
                       MoneyGenerator.createAmountGreaterThan(BASE_COVERAGE_MAXIMUM_BIKE_PRICE))
                   .build(),
-              Arrays.asList(new BikeAddendaPremiumDetail(BIKE_ADDENDA_PREMIUM))
+              Arrays.asList(new BikeEndorsementPremiumDetail(BIKE_ENDORSEMENT_PREMIUM))
             }
           });
     }
