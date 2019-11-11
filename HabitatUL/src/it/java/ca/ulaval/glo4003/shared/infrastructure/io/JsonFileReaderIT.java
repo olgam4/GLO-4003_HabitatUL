@@ -17,7 +17,7 @@ public class JsonFileReaderIT {
 
   @Test
   public void readingJsonFile_withExistingFile_shouldReturnContent() {
-    JSONObject content = subject.read("Test.json");
+    JSONObject content = subject.read("test.json");
 
     JSONObject expectedContent = getTestJsonFileContent();
     assertTrue(content.similar(expectedContent));

@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.detail.BaseCoveragePremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.BasicBlockCoveragePremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.BikeEndorsementPremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BaseCoverageMaximumBikePriceProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeEndorsementPremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBaseCoveragePremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
@@ -30,46 +30,45 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import java.util.Optional;
 
 public class PremiumCalculator {
-  private QuoteBaseCoveragePremiumFormula quoteBaseCoveragePremiumFormula;
+  private QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
   private BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula;
-  private BaseCoverageMaximumBikePriceProvider baseCoverageMaximumBikePriceProvider;
+  private BasicBlockCoverageMaximumBikePriceProvider basicBlockCoverageMaximumBikePriceProvider;
 
   public PremiumCalculator() {
     this(
-        assembleQuoteBaseCoveragePremiumFormula(),
+        assembleQuoteBasicBlockPremiumFormula(),
         assembleBikeEndorsementPremiumFormula(),
-        ServiceLocator.resolve(BaseCoverageMaximumBikePriceProvider.class));
+        ServiceLocator.resolve(BasicBlockCoverageMaximumBikePriceProvider.class));
   }
 
   public PremiumCalculator(
-      QuoteBaseCoveragePremiumFormula quoteBaseCoveragePremiumFormula,
+      QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula,
       BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula,
-      BaseCoverageMaximumBikePriceProvider baseCoverageMaximumBikePriceProvider) {
-    this.quoteBaseCoveragePremiumFormula = quoteBaseCoveragePremiumFormula;
+      BasicBlockCoverageMaximumBikePriceProvider basicBlockCoverageMaximumBikePriceProvider) {
+    this.quoteBasicBlockPremiumFormula = quoteBasicBlockPremiumFormula;
     this.bikeEndorsementPremiumFormula = bikeEndorsementPremiumFormula;
-    this.baseCoverageMaximumBikePriceProvider = baseCoverageMaximumBikePriceProvider;
+    this.basicBlockCoverageMaximumBikePriceProvider = basicBlockCoverageMaximumBikePriceProvider;
   }
 
-  private static QuoteBaseCoveragePremiumFormula assembleQuoteBaseCoveragePremiumFormula() {
-    QuoteBaseCoveragePremiumFormula quoteBaseCoveragePremiumFormula =
-        new QuoteBaseCoveragePremiumFormula(
-            ServiceLocator.resolve(QuoteBasePremiumCalculator.class));
-    quoteBaseCoveragePremiumFormula.addFormulaPart(
+  private static QuoteBasicBlockPremiumFormula assembleQuoteBasicBlockPremiumFormula() {
+    QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula =
+        new QuoteBasicBlockPremiumFormula(ServiceLocator.resolve(QuoteBasePremiumCalculator.class));
+    quoteBasicBlockPremiumFormula.addFormulaPart(
         new CivilLiabilityLimitFormulaPart(
             ServiceLocator.resolve(CivilLiabilityLimitAdjustmentProvider.class)));
-    quoteBaseCoveragePremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addFormulaPart(
         new AnimalsFormulaPart(
             ServiceLocator.resolve(AnimalsAdjustmentProvider.class),
             ServiceLocator.resolve(AnimalsAdjustmentLimitsProvider.class)));
-    quoteBaseCoveragePremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addFormulaPart(
         new PreferentialProgramFormulaPart(
             ServiceLocator.resolve(PreferentialProgramAdjustmentProvider.class)));
-    quoteBaseCoveragePremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addFormulaPart(
         new RoommateFormulaPart(ServiceLocator.resolve(RoommateAdjustmentProvider.class)));
-    quoteBaseCoveragePremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addFormulaPart(
         new GraduateStudentFormulaPart(
             ServiceLocator.resolve(GraduateStudentAdjustmentProvider.class)));
-    return quoteBaseCoveragePremiumFormula;
+    return quoteBasicBlockPremiumFormula;
   }
 
   private static BikeEndorsementPremiumFormula assembleBikeEndorsementPremiumFormula() {
@@ -81,9 +80,9 @@ public class PremiumCalculator {
   }
 
   public PremiumDetails computeQuotePremium(QuotePremiumInput quotePremiumInput) {
-    Money baseCoveragePremium = quoteBaseCoveragePremiumFormula.compute(quotePremiumInput);
+    Money basicBlockPremium = quoteBasicBlockPremiumFormula.compute(quotePremiumInput);
     PremiumDetails premiumDetails =
-        new PremiumDetails(new BaseCoveragePremiumDetail(baseCoveragePremium));
+        new PremiumDetails(new BasicBlockCoveragePremiumDetail(basicBlockPremium));
     premiumDetails = addBikeEndorsementOnDemand(quotePremiumInput, premiumDetails);
     return premiumDetails;
   }
@@ -96,9 +95,9 @@ public class PremiumCalculator {
   }
 
   private PremiumDetails addBikeEndorsement(PremiumDetails premiumDetails, Amount bikePrice) {
-    Amount baseCoverageMaximumBikePrice =
-        baseCoverageMaximumBikePriceProvider.getMaximumBikePrice();
-    if (bikePrice.isGreaterThan(baseCoverageMaximumBikePrice)) {
+    Amount basicBlockCoverageMaximumBikePrice =
+        basicBlockCoverageMaximumBikePriceProvider.getMaximumBikePrice();
+    if (bikePrice.isGreaterThan(basicBlockCoverageMaximumBikePrice)) {
       Money bikeEndorsementPremium = computeBikeEndorsementPremium(new BikePremiumInput(bikePrice));
       premiumDetails =
           premiumDetails.addPremiumDetail(new BikeEndorsementPremiumDetail(bikeEndorsementPremium));

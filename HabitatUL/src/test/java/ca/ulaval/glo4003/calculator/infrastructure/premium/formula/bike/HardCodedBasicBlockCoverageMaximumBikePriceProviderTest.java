@@ -4,15 +4,15 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBaseCoverageMaximumBikePriceProvider.MAXIMUM_BIKE_PRICE;
+import static ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBasicBlockCoverageMaximumBikePriceProvider.MAXIMUM_BIKE_PRICE;
 import static org.junit.Assert.assertEquals;
 
-public class HardCodedBaseCoverageMaximumBikePriceProviderTest {
-  private HardCodedBaseCoverageMaximumBikePriceProvider subject;
+public class HardCodedBasicBlockCoverageMaximumBikePriceProviderTest {
+  private HardCodedBasicBlockCoverageMaximumBikePriceProvider subject;
 
   @Before
   public void setUp() {
-    subject = new HardCodedBaseCoverageMaximumBikePriceProvider();
+    subject = new HardCodedBasicBlockCoverageMaximumBikePriceProvider();
   }
 
   @Test

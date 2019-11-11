@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.underwriting.application.quote;
 import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.premium.PremiumDetailsGenerator;
+import ca.ulaval.glo4003.helper.calculator.PremiumDetailsGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -54,7 +54,6 @@ public class QuoteAppServiceTest {
     quoteAssembler = new QuoteAssembler();
     premiumAssembler = new PremiumAssembler();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
-    when(quote.getQuoteForm()).thenReturn(QuoteFormGenerator.createQuoteForm());
     when(premiumCalculator.computeQuotePremium(any(QuotePremiumInput.class)))
         .thenReturn(PREMIUM_DETAILS);
     when(quoteFactory.create(any(PremiumDetails.class), any(QuoteForm.class))).thenReturn(quote);

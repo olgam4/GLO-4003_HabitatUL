@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.application.quote.dto;
 
+import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.application.DataTransferObject;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
@@ -10,19 +11,19 @@ public class QuoteDto extends DataTransferObject {
   private final QuoteId quoteId;
   private final DateTime expirationDate;
   private final Period effectivePeriod;
-  private final QuoteCoverageOverviewDto coverageOverview;
+  private final CoverageDetails coverageDetails;
   private final PremiumDetails premiumDetails;
 
   public QuoteDto(
       QuoteId quoteId,
       DateTime expirationDate,
       Period effectivePeriod,
-      QuoteCoverageOverviewDto coverageOverview,
+      CoverageDetails coverageDetails,
       PremiumDetails premiumDetails) {
     this.quoteId = quoteId;
     this.expirationDate = expirationDate;
     this.effectivePeriod = effectivePeriod;
-    this.coverageOverview = coverageOverview;
+    this.coverageDetails = coverageDetails;
     this.premiumDetails = premiumDetails;
   }
 
@@ -38,8 +39,8 @@ public class QuoteDto extends DataTransferObject {
     return effectivePeriod;
   }
 
-  public QuoteCoverageOverviewDto getCoverageOverview() {
-    return coverageOverview;
+  public CoverageDetails getCoverageDetails() {
+    return coverageDetails;
   }
 
   public PremiumDetails getPremiumDetails() {

@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BaseCoverageMaximumBikePriceProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeEndorsementPremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBaseCoveragePremiumFormula;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
@@ -23,24 +23,26 @@ public class PremiumCalculatorTestSetUp {
   static final Amount BASE_COVERAGE_MAXIMUM_BIKE_PRICE = MoneyGenerator.createAmount();
 
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().silent();
-  @Mock protected QuoteBaseCoveragePremiumFormula quoteBaseCoveragePremiumFormula;
+  @Mock protected QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
   @Mock protected BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula;
-  @Mock protected BaseCoverageMaximumBikePriceProvider baseCoverageMaximumBikePriceProvider;
+
+  @Mock
+  protected BasicBlockCoverageMaximumBikePriceProvider basicBlockCoverageMaximumBikePriceProvider;
 
   protected PremiumCalculator subject;
 
   @Before
   public void setUp() {
-    when(quoteBaseCoveragePremiumFormula.compute(any(QuotePremiumInput.class)))
+    when(quoteBasicBlockPremiumFormula.compute(any(QuotePremiumInput.class)))
         .thenReturn(BASE_COVERAGE_PREMIUM);
     when(bikeEndorsementPremiumFormula.compute(any(BikePremiumInput.class)))
         .thenReturn(BIKE_ENDORSEMENT_PREMIUM);
-    when(baseCoverageMaximumBikePriceProvider.getMaximumBikePrice())
+    when(basicBlockCoverageMaximumBikePriceProvider.getMaximumBikePrice())
         .thenReturn(BASE_COVERAGE_MAXIMUM_BIKE_PRICE);
     subject =
         new PremiumCalculator(
-            quoteBaseCoveragePremiumFormula,
+            quoteBasicBlockPremiumFormula,
             bikeEndorsementPremiumFormula,
-            baseCoverageMaximumBikePriceProvider);
+            basicBlockCoverageMaximumBikePriceProvider);
   }
 }

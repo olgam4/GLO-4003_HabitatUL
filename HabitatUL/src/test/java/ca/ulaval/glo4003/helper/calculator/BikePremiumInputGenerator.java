@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.helper.premium;
+package ca.ulaval.glo4003.helper.calculator;
 
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;

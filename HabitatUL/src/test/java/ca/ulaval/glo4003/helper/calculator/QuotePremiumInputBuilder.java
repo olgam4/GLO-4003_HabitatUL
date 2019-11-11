@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.helper.premium;
+package ca.ulaval.glo4003.helper.calculator;
 
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
@@ -7,9 +7,9 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.Universit
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-import static ca.ulaval.glo4003.helper.premium.BikePremiumInputGenerator.createBikePrice;
-import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createAnimalsInput;
-import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
+import static ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator.createBikePrice;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimalsInput;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
 import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
 
 public class QuotePremiumInputBuilder {

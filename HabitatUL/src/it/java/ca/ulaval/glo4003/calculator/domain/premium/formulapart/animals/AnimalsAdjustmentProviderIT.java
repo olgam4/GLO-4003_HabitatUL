@@ -6,7 +6,7 @@ import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createAnimalBreedInput;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimalBreedInput;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class AnimalsAdjustmentProviderIT {

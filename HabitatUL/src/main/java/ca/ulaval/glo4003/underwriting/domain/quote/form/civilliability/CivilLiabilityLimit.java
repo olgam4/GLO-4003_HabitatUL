@@ -21,11 +21,11 @@ public enum CivilLiabilityLimit {
   }
 
   private final String representation;
-  private final Amount value;
+  private final Amount amount;
 
-  CivilLiabilityLimit(String representation, Amount value) {
+  CivilLiabilityLimit(String representation, Amount amount) {
     this.representation = representation;
-    this.value = value;
+    this.amount = amount;
   }
 
   public static CivilLiabilityLimit getEnum(String rawValue) throws InvalidArgumentException {
@@ -37,7 +37,7 @@ public enum CivilLiabilityLimit {
     return representation;
   }
 
-  public Amount getValue() {
-    return value;
+  public Amount getAmount() {
+    return amount;
   }
 }

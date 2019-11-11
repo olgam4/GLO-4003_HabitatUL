@@ -1,15 +1,18 @@
 package ca.ulaval.glo4003.calculator.domain.premium.detail;
 
-import ca.ulaval.glo4003.helper.premium.PremiumDetailsBuilder;
+import ca.ulaval.glo4003.calculator.domain.CoverageCategory;
+import ca.ulaval.glo4003.helper.EnumSampler;
+import ca.ulaval.glo4003.helper.calculator.PremiumDetailsBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static ca.ulaval.glo4003.helper.premium.PremiumDetailsGenerator.*;
-import static org.junit.Assert.assertEquals;
+import static ca.ulaval.glo4003.helper.calculator.PremiumDetailsGenerator.*;
+import static org.junit.Assert.*;
 
 public class PremiumDetailsTest {
   private static final PremiumDetail PREMIUM_DETAIL = createPremiumDetail();
@@ -42,14 +45,36 @@ public class PremiumDetailsTest {
   }
 
   @Test
+  public void checkingIfCoverageCategoryIsIncluded_withIncludedCoverageCategory_shouldBeTrue() {
+    PremiumDetail premiumDetail = createPremiumDetail();
+    subject =
+        PremiumDetailsBuilder.aPremiumDetails().withAdditionalPremiumDetail(premiumDetail).build();
+
+    assertTrue(subject.includes(premiumDetail.getCoverage()));
+  }
+
+  @Test
+  public void checkingIfCoverageCategoryIsIncluded_withoutIncludedCoverageCategory_shouldBeFalse() {
+    subject = PremiumDetailsBuilder.aPremiumDetails().withoutAdditionalPremiumDetail().build();
+
+    List<CoverageCategory> coverageCategories =
+        subject.getCollection().stream()
+            .map(PremiumDetail::getCoverage)
+            .collect(Collectors.toList());
+    CoverageCategory sample = EnumSampler.sample(CoverageCategory.class, coverageCategories);
+    assertFalse(subject.includes(sample));
+  }
+
+  @Test
   public void computingTotalPremium_shouldComputeTotalPremium() {
-    BaseCoveragePremiumDetail baseCoveragePremiumDetail = createBaseCoveragePremiumDetail();
+    BasicBlockCoveragePremiumDetail basicBlockCoveragePremiumDetail =
+        createBasicBlockCoveragePremiumDetail();
     PremiumDetail firstAdditionalCoveragePremiumDetail = createPremiumDetail();
     PremiumDetail secondAdditionalCoveragePremiumDetail = createPremiumDetail();
     PremiumDetail thirdAdditionalCoveragePremiumDetail = createPremiumDetail();
     subject =
         PremiumDetailsBuilder.aPremiumDetails()
-            .withBaseCoveragePremiumDetail(baseCoveragePremiumDetail)
+            .withBasicBlockCoveragePremiumDetail(basicBlockCoveragePremiumDetail)
             .withAdditionalPremiumDetail(firstAdditionalCoveragePremiumDetail)
             .withAdditionalPremiumDetail(secondAdditionalCoveragePremiumDetail)
             .withAdditionalPremiumDetail(thirdAdditionalCoveragePremiumDetail)
@@ -58,7 +83,7 @@ public class PremiumDetailsTest {
     Money totalPremium = subject.computeTotalPremium();
 
     Money expectedTotalPremium =
-        baseCoveragePremiumDetail
+        basicBlockCoveragePremiumDetail
             .getPremium()
             .add(firstAdditionalCoveragePremiumDetail.getPremium())
             .add(secondAdditionalCoveragePremiumDetail.getPremium())

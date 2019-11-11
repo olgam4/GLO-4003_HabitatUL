@@ -20,8 +20,9 @@ public class EnumSampler {
 
   public static <T extends Enum<T>> T sample(Class<T> enumeration, List<T> exceptions) {
     List<T> values = Arrays.asList(enumeration.getEnumConstants());
-    values.removeAll(exceptions);
-    return sampleValue(values);
+    List<T> filteredValues =
+        values.stream().filter(x -> !exceptions.contains(x)).collect(Collectors.toList());
+    return sampleValue(filteredValues);
   }
 
   private static <T extends Enum<T>> T sampleValue(List<T> values) {

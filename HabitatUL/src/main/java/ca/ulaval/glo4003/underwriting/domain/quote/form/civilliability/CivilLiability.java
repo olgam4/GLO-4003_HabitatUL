@@ -19,7 +19,7 @@ public class CivilLiability extends ValueObject {
   }
 
   public Amount getCoverageAmount() {
-    return limit.getValue();
+    return limit.getAmount();
   }
 
   public CivilLiability completeWithDefaultValues(int numberOfUnits) {

@@ -1,7 +1,7 @@
-package ca.ulaval.glo4003.helper.premium;
+package ca.ulaval.glo4003.helper.calculator;
 
-import ca.ulaval.glo4003.calculator.domain.Coverage;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.BaseCoveragePremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.CoverageCategory;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.BasicBlockCoveragePremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
@@ -10,11 +10,13 @@ import com.github.javafaker.Faker;
 
 import java.util.stream.IntStream;
 
+import static ca.ulaval.glo4003.helper.calculator.CoverageCategoryGenerator.createCoverageCategory;
+
 public class PremiumDetailsGenerator {
   private PremiumDetailsGenerator() {}
 
   public static PremiumDetails createPremiumDetails() {
-    PremiumDetails premiumDetails = new PremiumDetails(createBaseCoveragePremiumDetail());
+    PremiumDetails premiumDetails = new PremiumDetails(createBasicBlockCoveragePremiumDetail());
     int numberAdditionalCoverages = Faker.instance().number().randomDigit();
     IntStream.range(0, numberAdditionalCoverages)
         .mapToObj(i -> createPremiumDetail())
@@ -22,19 +24,21 @@ public class PremiumDetailsGenerator {
     return premiumDetails;
   }
 
-  public static BaseCoveragePremiumDetail createBaseCoveragePremiumDetail() {
-    return new BaseCoveragePremiumDetail(createPremium());
+  public static BasicBlockCoveragePremiumDetail createBasicBlockCoveragePremiumDetail() {
+    return new BasicBlockCoveragePremiumDetail(createPremium());
   }
 
   public static PremiumDetail createPremiumDetail() {
-    return new PremiumDetail(createCoverageName(), createPremium());
-  }
-
-  private static Coverage createCoverageName() {
-    return Coverage.OTHER;
+    return new DummyPremiumDetail(createCoverageCategory(), createPremium());
   }
 
   private static Money createPremium() {
     return MoneyGenerator.createMoneyGreaterThan(Money.ZERO);
+  }
+
+  private static class DummyPremiumDetail extends PremiumDetail {
+    DummyPremiumDetail(CoverageCategory coverage, Money premium) {
+      super(coverage, premium);
+    }
   }
 }

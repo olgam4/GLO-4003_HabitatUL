@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiab
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class CivilLiabilityLimitAdjustmentProviderIT {

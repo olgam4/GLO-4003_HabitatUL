@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.context;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BaseCoverageMaximumBikePriceProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
@@ -52,7 +52,7 @@ public class AcceptanceTestContext {
     register(BikeBasePremiumCalculator.class, new DummyBikeBasePremiumCalculator());
     register(BikePriceAdjustmentProvider.class, new DummyBikePriceAdjustmentProvider());
     register(
-        BaseCoverageMaximumBikePriceProvider.class,
-        new DummyBaseCoverageMaximumBikePriceProvider());
+        BasicBlockCoverageMaximumBikePriceProvider.class,
+        new DummyBasicBlockCoverageMaximumBikePriceProvider());
   }
 }

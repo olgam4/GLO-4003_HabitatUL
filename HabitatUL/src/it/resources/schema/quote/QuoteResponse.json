@@ -6,7 +6,7 @@
     "quoteId",
     "expirationDate",
     "effectivePeriod",
-    "coverageOverview",
+    "coverageDetails",
     "totalPremium",
     "premiumDetails"
   ],
@@ -32,16 +32,9 @@
         }
       }
     },
-    "coverageOverview": {
-      "description": "quote coverage overview",
-      "properties": {
-        "personalProperty": {
-          "$ref": "../Shared.json#/definitions/amount"
-        },
-        "civilLiability": {
-          "$ref": "../Shared.json#/definitions/amount"
-        }
-      }
+    "coverageDetails": {
+      "description": "quote coverage details",
+      "$ref": "../Calculator.json#/definitions/coverageDetails"
     },
     "totalPremium": {
       "description": "quote total premium",

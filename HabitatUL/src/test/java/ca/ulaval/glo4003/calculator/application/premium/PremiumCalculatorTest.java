@@ -1,15 +1,15 @@
 package ca.ulaval.glo4003.calculator.application.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.detail.BaseCoveragePremiumDetail;
+import ca.ulaval.glo4003.calculator.domain.premium.detail.BasicBlockCoveragePremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.BikeEndorsementPremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.premium.BikePremiumInputGenerator;
-import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
-import ca.ulaval.glo4003.helper.premium.QuotePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -87,19 +87,19 @@ public class PremiumCalculatorTest extends PremiumCalculatorTestSetUp {
     }
 
     @Test
-    public void computingQuotePremium_shouldComputeQuoteBaseCoveragePremiumFormula() {
+    public void computingQuotePremium_shouldComputeQuoteBasicBlockPremiumFormula() {
       subject.computeQuotePremium(QUOTE_PREMIUM_INPUT);
 
-      verify(quoteBaseCoveragePremiumFormula).compute(QUOTE_PREMIUM_INPUT);
+      verify(quoteBasicBlockPremiumFormula).compute(QUOTE_PREMIUM_INPUT);
     }
 
     @Test
     public void computingQuotePremium_shouldReturnCorrespondingPremiumDetails() {
       PremiumDetails premiumDetails = subject.computeQuotePremium(quotePremiumInput);
 
-      BaseCoveragePremiumDetail baseCoveragePremiumDetail =
-          new BaseCoveragePremiumDetail(BASE_COVERAGE_PREMIUM);
-      assertTrue(premiumDetails.getCollection().contains(baseCoveragePremiumDetail));
+      BasicBlockCoveragePremiumDetail basicBlockCoveragePremiumDetail =
+          new BasicBlockCoveragePremiumDetail(BASE_COVERAGE_PREMIUM);
+      assertTrue(premiumDetails.getCollection().contains(basicBlockCoveragePremiumDetail));
       assertTrue(premiumDetails.getCollection().containsAll(expectedAdditionalPremiumDetails));
     }
   }

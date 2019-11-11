@@ -1,5 +1,15 @@
 {
   "definitions": {
+    "coverageCategory": {
+      "type": "string",
+      "enum": [
+        "basic block",
+        "bike endorsement",
+        "civil liability",
+        "personal property",
+        "other"
+      ]
+    },
     "premiumDetails": {
       "type": "array",
       "items": {
@@ -16,16 +26,35 @@
       "properties": {
         "coverage": {
           "description": "coverage name",
-          "type": "string",
-          "enum": [
-            "basic block",
-            "bike endorsement",
-            "other"
-          ]
+          "$ref": "#/definitions/coverageCategory"
         },
         "premium": {
           "description": "coverage premium",
           "$ref": "Shared.json#/definitions/money"
+        }
+      }
+    },
+    "coverageDetails": {
+      "type": "array",
+      "items": {
+        "description": "coverage detail",
+        "$ref": "#/definitions/coverageDetail"
+      }
+    },
+    "coverageDetail": {
+      "required": [
+        "coverage",
+        "amount"
+      ],
+      "type": "object",
+      "properties": {
+        "coverage": {
+          "description": "coverage name",
+          "$ref": "#/definitions/coverageCategory"
+        },
+        "amount": {
+          "description": "coverage amount",
+          "$ref": "Shared.json#/definitions/amount"
         }
       }
     }

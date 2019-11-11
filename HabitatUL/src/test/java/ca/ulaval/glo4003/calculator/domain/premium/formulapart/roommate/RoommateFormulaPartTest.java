@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.premium.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;

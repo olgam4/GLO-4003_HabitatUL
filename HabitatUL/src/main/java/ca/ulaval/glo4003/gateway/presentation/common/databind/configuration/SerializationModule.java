@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.configuration;
 
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
+import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
@@ -66,6 +67,7 @@ public class SerializationModule extends Module {
     SimpleSerializers serializers = new SimpleSerializers();
     serializers.addSerializer(Amount.class, new AmountSerializer());
     serializers.addSerializer(ClaimId.class, new ClaimIdSerializer());
+    serializers.addSerializer(CoverageDetails.class, new CoverageDetailsSerializer());
     serializers.addSerializer(Date.class, new DateSerializer());
     serializers.addSerializer(DateTime.class, new DateTimeSerializer(getLocalZoneId()));
     serializers.addSerializer(Money.class, new MoneySerializer());

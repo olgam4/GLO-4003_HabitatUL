@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
+import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
@@ -15,6 +16,7 @@ public class Quote extends AggregateRoot {
   private QuoteForm quoteForm;
   private DateTime expirationDate;
   private Period effectivePeriod;
+  private CoverageDetails coverageDetails;
   private PremiumDetails premiumDetails;
   private Boolean purchased;
   private ClockProvider clockProvider;
@@ -24,6 +26,7 @@ public class Quote extends AggregateRoot {
       QuoteForm quoteForm,
       DateTime expirationDate,
       Period effectivePeriod,
+      CoverageDetails coverageDetails,
       PremiumDetails premiumDetails,
       Boolean purchased,
       ClockProvider clockProvider) {
@@ -31,6 +34,7 @@ public class Quote extends AggregateRoot {
     this.quoteForm = quoteForm;
     this.expirationDate = expirationDate;
     this.effectivePeriod = effectivePeriod;
+    this.coverageDetails = coverageDetails;
     this.premiumDetails = premiumDetails;
     this.purchased = purchased;
     this.clockProvider = clockProvider;
@@ -50,6 +54,10 @@ public class Quote extends AggregateRoot {
 
   public Period getEffectivePeriod() {
     return effectivePeriod;
+  }
+
+  public CoverageDetails getCoverageDetails() {
+    return coverageDetails;
   }
 
   public PremiumDetails getPremiumDetails() {

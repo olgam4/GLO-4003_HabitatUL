@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
-import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteCoverageOverviewResponse;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteCoverageOverviewDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
@@ -117,14 +115,7 @@ public class QuoteViewAssembler {
         quoteDto.getQuoteId(),
         quoteDto.getExpirationDate(),
         quoteDto.getEffectivePeriod(),
-        fromQuoteCoverageOverviewDto(quoteDto.getCoverageOverview()),
+        quoteDto.getCoverageDetails(),
         quoteDto.getPremiumDetails());
-  }
-
-  private QuoteCoverageOverviewResponse fromQuoteCoverageOverviewDto(
-      QuoteCoverageOverviewDto quoteCoverageOverviewDto) {
-    return new QuoteCoverageOverviewResponse(
-        quoteCoverageOverviewDto.getPersonalProperty(),
-        quoteCoverageOverviewDto.getCivilLiability());
   }
 }

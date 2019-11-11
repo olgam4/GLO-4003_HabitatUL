@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
-public abstract class BaseCoverageMaximumBikePriceProviderIT {
-  private BaseCoverageMaximumBikePriceProvider subject;
+public abstract class BasicBlockCoverageMaximumBikePriceProviderIT {
+  private BasicBlockCoverageMaximumBikePriceProvider subject;
 
   @Before
   public void setUp() {
@@ -21,5 +21,5 @@ public abstract class BaseCoverageMaximumBikePriceProviderIT {
     assertNotNull(maximumBikePrice);
   }
 
-  public abstract BaseCoverageMaximumBikePriceProvider createSubject();
+  public abstract BasicBlockCoverageMaximumBikePriceProvider createSubject();
 }

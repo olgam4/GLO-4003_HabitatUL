@@ -11,7 +11,7 @@ import java.util.Set;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
 import static ca.ulaval.glo4003.helper.TemporalGenerator.createYear;
-import static ca.ulaval.glo4003.helper.premium.BikePremiumInputGenerator.createBikePrice;
+import static ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator.createBikePrice;
 import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBrand;
 import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createModel;
 

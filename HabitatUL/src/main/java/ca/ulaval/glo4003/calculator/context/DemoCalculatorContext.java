@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.calculator.context;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BaseCoverageMaximumBikePriceProvider;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
@@ -10,7 +10,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylim
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
-import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBaseCoverageMaximumBikePriceProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.quote.HardCodedQuoteBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals.HardCodedAnimalsAdjustmentLimitsProvider;
@@ -40,7 +40,7 @@ public class DemoCalculatorContext {
     register(BikeBasePremiumCalculator.class, new HardCodedBikeBasePremiumCalculator());
     register(BikePriceAdjustmentProvider.class, new HardCodedBikePriceAdjustmentProvider());
     register(
-        BaseCoverageMaximumBikePriceProvider.class,
-        new HardCodedBaseCoverageMaximumBikePriceProvider());
+        BasicBlockCoverageMaximumBikePriceProvider.class,
+        new HardCodedBasicBlockCoverageMaximumBikePriceProvider());
   }
 }

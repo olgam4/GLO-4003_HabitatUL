@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.response;
 
+import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
   "quoteId",
   "expirationDate",
   "effectivePeriod",
-  "coverageOverview",
+  "coverageDetails",
   "totalPremium",
   "premiumDetails"
 })
@@ -20,7 +21,7 @@ public class QuoteResponse {
   private QuoteId quoteId;
   private DateTime expirationDate;
   private Period effectivePeriod;
-  private QuoteCoverageOverviewResponse coverageOverview;
+  private CoverageDetails coverageDetails;
   private Money totalPremium;
   private PremiumDetails premiumDetails;
 
@@ -28,12 +29,12 @@ public class QuoteResponse {
       QuoteId quoteId,
       DateTime expirationDate,
       Period effectivePeriod,
-      QuoteCoverageOverviewResponse coverageOverview,
+      CoverageDetails coverageDetails,
       PremiumDetails premiumDetails) {
     this.quoteId = quoteId;
     this.expirationDate = expirationDate;
     this.effectivePeriod = effectivePeriod;
-    this.coverageOverview = coverageOverview;
+    this.coverageDetails = coverageDetails;
     this.totalPremium = premiumDetails.computeTotalPremium();
     this.premiumDetails = premiumDetails;
   }
@@ -50,8 +51,8 @@ public class QuoteResponse {
     return effectivePeriod;
   }
 
-  public QuoteCoverageOverviewResponse getCoverageOverview() {
-    return coverageOverview;
+  public CoverageDetails getCoverageDetails() {
+    return coverageDetails;
   }
 
   public Money getTotalPremium() {
