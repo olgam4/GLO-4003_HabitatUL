@@ -68,6 +68,21 @@ public class AmountTest {
   }
 
   @Test
+  public void checkingIfAmountIsGreaterOrEqual_withSmallerValue_shouldBeGreater() {
+    assertTrue(subject.isGreaterOrEqual(SMALLER_VALUE));
+  }
+
+  @Test
+  public void checkingIfAmountIsGreaterOrEqual_withSameValue_shouldBeEqual() {
+    assertTrue(subject.isGreaterOrEqual(SAME_VALUE));
+  }
+
+  @Test
+  public void checkingIfAmountIsGreaterOrEqual_withGreaterValue_shouldBeSmaller() {
+    assertFalse(subject.isGreaterOrEqual(GREATER_VALUE));
+  }
+
+  @Test
   public void checkingIfAmountIsBetween_withValueBetween_shouldBeBetween() {
     assertTrue(subject.isBetween(SMALLER_VALUE, GREATER_VALUE));
   }

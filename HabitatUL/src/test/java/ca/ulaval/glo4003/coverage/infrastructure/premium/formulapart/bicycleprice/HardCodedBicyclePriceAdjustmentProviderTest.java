@@ -10,11 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.bicycleprice.HardCodedBicyclePriceAdjustmentProvider.MAXIMUM_BICYCLE_PRICE_BASE_COVERAGE;
-import static ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.bicycleprice.HardCodedBicyclePriceAdjustmentProvider.MAXIMUM_BICYCLE_PRICE_VALUE_BASE_COVERAGE;
+import static ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.bicycleprice.HardCodedBicyclePriceAdjustmentProvider.MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE;
 import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 
@@ -52,22 +52,24 @@ public class HardCodedBicyclePriceAdjustmentProviderTest {
           {
             String.format(
                 "with bicycle price smaller than %s should compute null adjustment",
-                MAXIMUM_BICYCLE_PRICE_VALUE_BASE_COVERAGE),
-            MoneyGenerator.createAmountSmallerThan(MAXIMUM_BICYCLE_PRICE_BASE_COVERAGE),
+                MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE),
+            MoneyGenerator.createAmountSmallerThan(
+                new Amount(BigDecimal.valueOf(MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE))),
             new NullPremiumAdjustment()
           },
           {
             String.format(
-                "with bicycle price equal to %s should compute null adjustment",
-                MAXIMUM_BICYCLE_PRICE_VALUE_BASE_COVERAGE),
-            MAXIMUM_BICYCLE_PRICE_BASE_COVERAGE,
-            new NullPremiumAdjustment()
+                "with bicycle price equal to %s should compute associated adjustment",
+                MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE),
+            new Amount(BigDecimal.valueOf(MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE)),
+            new MultiplicativePremiumAdjustment(0.01f)
           },
           {
             String.format(
                 "with bicycle price greater than %s should compute associated adjustment",
-                MAXIMUM_BICYCLE_PRICE_VALUE_BASE_COVERAGE),
-            MoneyGenerator.createAmountGreaterThan(MAXIMUM_BICYCLE_PRICE_BASE_COVERAGE),
+                MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE),
+            MoneyGenerator.createAmountGreaterThan(
+                new Amount(BigDecimal.valueOf(MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE))),
             new MultiplicativePremiumAdjustment(0.01f)
           },
         });

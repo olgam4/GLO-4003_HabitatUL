@@ -12,11 +12,9 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 public class HardCodedBicyclePriceAdjustmentProvider implements BicyclePriceAdjustmentProvider {
-  static final int MAXIMUM_BICYCLE_PRICE_VALUE_BASE_COVERAGE = 1500;
-  static final Amount MAXIMUM_BICYCLE_PRICE_BASE_COVERAGE =
-      new Amount(BigDecimal.valueOf(MAXIMUM_BICYCLE_PRICE_VALUE_BASE_COVERAGE));
+  static final int MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE = 1500;
   private static final Amount MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE =
-      MAXIMUM_BICYCLE_PRICE_BASE_COVERAGE.add(Amount.ONE);
+      new Amount(BigDecimal.valueOf(MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE));
   private static final NavigableMap<Amount, Float> LOOKUP_MAP = new TreeMap<>();
 
   static {

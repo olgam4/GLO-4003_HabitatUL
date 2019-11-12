@@ -25,7 +25,7 @@ public class AdditionalCoverageResolver {
     Amount basicBlockCoverageMaximumBicyclePrice =
         basicBlockCoverageMaximumBicyclePriceProvider.getMaximumBicyclePrice();
     return Optional.ofNullable(quoteForm.getPersonalProperty().getBicycle().getPrice())
-        .map(x -> x.isGreaterThan(basicBlockCoverageMaximumBicyclePrice))
+        .map(x -> x.isGreaterOrEqual(basicBlockCoverageMaximumBicyclePrice))
         .orElse(false);
   }
 }

@@ -62,6 +62,11 @@ public class AdditionalCoverageResolverTest {
             false
           },
           {
+            "with bicycle worth the maximum basic block coverage value should be true",
+            BicycleBuilder.aBicycle().withPrice(BASIC_BLOCK_MAXIMUM_BICYCLE_PRICE).build(),
+            true
+          },
+          {
             "with bicycle exceeding basic block coverage should be true",
             BicycleBuilder.aBicycle()
                 .withPrice(
