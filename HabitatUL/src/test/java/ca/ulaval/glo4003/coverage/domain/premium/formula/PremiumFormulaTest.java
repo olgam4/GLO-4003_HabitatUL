@@ -20,8 +20,8 @@ public abstract class PremiumFormulaTest<T> {
   private static final Money ANOTHER_PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
 
   @Mock private BasePremiumCalculator basePremiumCalculator;
-  @Mock private PremiumFormulaPart formulaPart;
-  @Mock private PremiumFormulaPart anotherFormulaPart;
+  @Mock private PremiumFormulaPart premiumFormulaPart;
+  @Mock private PremiumFormulaPart anotherPremiumFormulaPart;
 
   private PremiumFormula subject;
   private T input;
@@ -30,23 +30,23 @@ public abstract class PremiumFormulaTest<T> {
   public void setUp() {
     input = createInput();
     when(basePremiumCalculator.compute(eq(input))).thenReturn(BASE_PREMIUM);
-    when(formulaPart.compute(eq(input), any(Money.class))).thenReturn(PREMIUM_ADJUSTMENT);
-    when(anotherFormulaPart.compute(eq(input), any(Money.class)))
+    when(premiumFormulaPart.compute(eq(input), any(Money.class))).thenReturn(PREMIUM_ADJUSTMENT);
+    when(anotherPremiumFormulaPart.compute(eq(input), any(Money.class)))
         .thenReturn(ANOTHER_PREMIUM_ADJUSTMENT);
     subject = new PremiumFormula(basePremiumCalculator);
   }
 
   @Test
-  public void computingPremium_withoutAdjustments_shouldReturnBasePremium() {
+  public void computingPremium_withoutAdditionalParts_shouldReturnBasePremium() {
     Money premium = subject.compute(input);
 
     assertEquals(BASE_PREMIUM, premium);
   }
 
   @Test
-  public void computingPremium_withAdjustments_shouldReturnAdjustedPremium() {
-    subject.addFormulaPart(formulaPart);
-    subject.addFormulaPart(anotherFormulaPart);
+  public void computingPremium_withAdditionalParts_shouldConsiderAllFormulaParts() {
+    subject.addFormulaPart(premiumFormulaPart);
+    subject.addFormulaPart(anotherPremiumFormulaPart);
 
     Money premium = subject.compute(input);
 

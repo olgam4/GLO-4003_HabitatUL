@@ -27,7 +27,7 @@ public class CoverageDomainService {
   }
 
   public CoverageDto requestQuoteCoverage(QuoteForm quoteForm) {
-    formValidator.validate(quoteForm);
+    formValidator.validateQuoteForm(quoteForm);
     CoverageDetails coverageDetails = coverageSummarizer.summarizeQuoteCoverage(quoteForm);
     PremiumDetails premiumDetails = premiumCalculator.computeQuotePremium(quoteForm);
     return new CoverageDto(coverageDetails, premiumDetails);

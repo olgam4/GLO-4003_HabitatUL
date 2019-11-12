@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain;
 
 public enum CoverageCategory {
   BASIC_BLOCK("basic block"),
-  BIKE_ENDORSEMENT("bike endorsement"),
+  BICYCLE_ENDORSEMENT("bicycle endorsement"),
   CIVIL_LIABILITY("civil liability"),
   PERSONAL_PROPERTY("personal property");
 

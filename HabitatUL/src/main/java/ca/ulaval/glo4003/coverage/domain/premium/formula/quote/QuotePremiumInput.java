@@ -13,7 +13,7 @@ public class QuotePremiumInput extends ValueObject {
   private final Gender additionalInsuredGender;
   private final UniversityProgram additionalInsuredUniversityProgram;
   private final Animals animals;
-  private final Amount bikePrice;
+  private final Amount bicyclePrice;
   private final CivilLiabilityLimit civilLiabilityLimit;
 
   public QuotePremiumInput(
@@ -22,14 +22,14 @@ public class QuotePremiumInput extends ValueObject {
       Gender additionalInsuredGender,
       UniversityProgram additionalInsuredUniversityProgram,
       Animals animals,
-      Amount bikePrice,
+      Amount bicyclePrice,
       CivilLiabilityLimit civilLiabilityLimit) {
     this.namedInsuredGender = namedInsuredGender;
     this.namedInsuredUniversityProgram = namedInsuredUniversityProgram;
     this.additionalInsuredGender = additionalInsuredGender;
     this.additionalInsuredUniversityProgram = additionalInsuredUniversityProgram;
     this.animals = animals;
-    this.bikePrice = bikePrice;
+    this.bicyclePrice = bicyclePrice;
     this.civilLiabilityLimit = civilLiabilityLimit;
   }
 
@@ -53,8 +53,8 @@ public class QuotePremiumInput extends ValueObject {
     return animals;
   }
 
-  public Amount getBikePrice() {
-    return bikePrice;
+  public Amount getBicyclePrice() {
+    return bicyclePrice;
   }
 
   public CivilLiabilityLimit getCivilLiabilityLimit() {

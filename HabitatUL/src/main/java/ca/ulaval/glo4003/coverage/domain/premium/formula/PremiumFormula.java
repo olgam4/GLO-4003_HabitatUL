@@ -7,21 +7,21 @@ import java.util.List;
 
 public class PremiumFormula<T> {
   private BasePremiumCalculator<T> basePremiumCalculator;
-  private List<PremiumFormulaPart<T>> formulaParts = new ArrayList<>();
+  private List<PremiumFormulaPart<T>> premiumFormulaParts = new ArrayList<>();
 
   public PremiumFormula(BasePremiumCalculator<T> basePremiumCalculator) {
     this.basePremiumCalculator = basePremiumCalculator;
   }
 
   public void addFormulaPart(PremiumFormulaPart<T> formulaPart) {
-    formulaParts.add(formulaPart);
+    premiumFormulaParts.add(formulaPart);
   }
 
   public Money compute(T premiumInput) {
     Money basePremium = basePremiumCalculator.compute(premiumInput);
     Money premium = basePremium;
 
-    for (PremiumFormulaPart formulaPart : formulaParts) {
+    for (PremiumFormulaPart formulaPart : premiumFormulaParts) {
       Money premiumAdjustment = formulaPart.compute(premiumInput, basePremium);
       premium = premium.add(premiumAdjustment);
     }

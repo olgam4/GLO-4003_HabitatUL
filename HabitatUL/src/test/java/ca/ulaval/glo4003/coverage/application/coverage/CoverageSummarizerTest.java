@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.coverage.application.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.BikeEndorsementCoverageDetail;
+import ca.ulaval.glo4003.coverage.application.AdditionalCoverageResolver;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.BicycleEndorsementCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
@@ -30,8 +31,8 @@ public class CoverageSummarizerTest {
 
   @Test
   public void
-      summarizingQuoteCoverage_withoutBikeEndorsement_shouldReturnCorrespondingCoverageDetails() {
-    when(additionalCoverageResolver.shouldIncludeBikeEndorsement(any(QuoteForm.class)))
+      summarizingQuoteCoverage_withoutBicycleEndorsement_shouldReturnCorrespondingCoverageDetails() {
+    when(additionalCoverageResolver.shouldIncludeBicycleEndorsement(any(QuoteForm.class)))
         .thenReturn(false);
 
     CoverageDetails coverageDetails = subject.summarizeQuoteCoverage(QUOTE_FORM);
@@ -47,8 +48,8 @@ public class CoverageSummarizerTest {
 
   @Test
   public void
-      summarizingQuoteCoverage_withBikeEndorsement_shouldReturnCorrespondingCoverageDetails() {
-    when(additionalCoverageResolver.shouldIncludeBikeEndorsement(any(QuoteForm.class)))
+      summarizingQuoteCoverage_withBicycleEndorsement_shouldReturnCorrespondingCoverageDetails() {
+    when(additionalCoverageResolver.shouldIncludeBicycleEndorsement(any(QuoteForm.class)))
         .thenReturn(true);
 
     CoverageDetails coverageDetails = subject.summarizeQuoteCoverage(QUOTE_FORM);
@@ -59,8 +60,8 @@ public class CoverageSummarizerTest {
                 QUOTE_FORM.getPersonalProperty().getCoverageAmount())
             .withCivilLiabilityCoverageDetail(QUOTE_FORM.getCivilLiability().getLimit())
             .withAdditionalCoverageDetail(
-                new BikeEndorsementCoverageDetail(
-                    QUOTE_FORM.getPersonalProperty().getBike().getPrice()))
+                new BicycleEndorsementCoverageDetail(
+                    QUOTE_FORM.getPersonalProperty().getBicycle().getPrice()))
             .build();
     assertEquals(expectedCoverageDetails, coverageDetails);
   }

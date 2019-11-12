@@ -6,9 +6,9 @@ import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
 import ca.ulaval.glo4003.coverage.domain.form.location.Location;
-import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
-import ca.ulaval.glo4003.gateway.presentation.coverage.request.BikeRequest;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -22,7 +22,7 @@ import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabili
 import static ca.ulaval.glo4003.coverage.domain.form.identity.Identity.UNFILLED_IDENTITY;
 import static ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
 import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals.UNFILLED_ANIMALS;
-import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike.UNFILLED_BIKE;
+import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle.UNFILLED_BICYCLE;
 
 public class QuoteViewAssembler {
   public RequestQuoteDto from(QuoteRequest quoteRequest) {
@@ -91,19 +91,19 @@ public class QuoteViewAssembler {
     return new PersonalProperty(
         personalPropertyRequest.getCoverageAmount(),
         personalPropertyRequest.getAnimals().orElse(UNFILLED_ANIMALS),
-        fromBikeRequest(personalPropertyRequest.getBike()));
+        fromBicycleRequest(personalPropertyRequest.getBicycle()));
   }
 
-  private Bike fromBikeRequest(Optional<BikeRequest> bikeRequest) {
-    return bikeRequest.map(this::fromBikeRequest).orElse(UNFILLED_BIKE);
+  private Bicycle fromBicycleRequest(Optional<BicycleRequest> bicycleRequest) {
+    return bicycleRequest.map(this::fromBicycleRequest).orElse(UNFILLED_BICYCLE);
   }
 
-  private Bike fromBikeRequest(BikeRequest bikeRequest) {
-    return new Bike(
-        bikeRequest.getPrice(),
-        bikeRequest.getBrand(),
-        bikeRequest.getModel(),
-        bikeRequest.getYear());
+  private Bicycle fromBicycleRequest(BicycleRequest bicycleRequest) {
+    return new Bicycle(
+        bicycleRequest.getPrice(),
+        bicycleRequest.getBrand(),
+        bicycleRequest.getModel(),
+        bicycleRequest.getYear());
   }
 
   private CivilLiability fromCivilLiabilityRequest(

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator.createGender;
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BikeGenerator.createBikePrice;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicyclePrice;
 
 public class QuotePremiumInputGenerator {
   private QuotePremiumInputGenerator() {}
@@ -27,7 +27,7 @@ public class QuotePremiumInputGenerator {
         createGender(),
         UniversityProgramGenerator.createUniversityProgram(),
         createAnimals(),
-        createBikePrice(),
+        createBicyclePrice(),
         createCivilLiabilityLimit());
   }
 

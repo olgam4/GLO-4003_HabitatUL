@@ -23,6 +23,6 @@ public class NotDeclaredBicycleErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return "sorry, you can not claim the loss of a bike that was not declared on your insurance policy";
+    return "sorry, you can not claim the loss of a bicycle that was not declared on your policy";
   }
 }

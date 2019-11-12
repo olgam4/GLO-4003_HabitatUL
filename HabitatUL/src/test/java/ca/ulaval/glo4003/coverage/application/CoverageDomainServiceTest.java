@@ -45,7 +45,7 @@ public class CoverageDomainServiceTest {
   public void requestingQuoteCoverage_shouldValidateForm() {
     subject.requestQuoteCoverage(QUOTE_FORM);
 
-    verify(formValidator).validate(QUOTE_FORM);
+    verify(formValidator).validateQuoteForm(QUOTE_FORM);
   }
 
   @Test

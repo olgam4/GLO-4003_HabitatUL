@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.coverage.application.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.BikeEndorsementCoverageDetail;
+import ca.ulaval.glo4003.coverage.application.AdditionalCoverageResolver;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.BicycleEndorsementCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
@@ -23,7 +24,7 @@ public class CoverageSummarizer {
         new CoverageDetails(
             createPersonalPropertyCoverageDetail(quoteForm),
             createCivilLiabilityCoverageDetail(quoteForm));
-    coverageDetails = addBikeEndorsementOnDemand(quoteForm, coverageDetails);
+    coverageDetails = addBicycleEndorsementOnDemand(quoteForm, coverageDetails);
     return coverageDetails;
   }
 
@@ -35,18 +36,19 @@ public class CoverageSummarizer {
     return new CivilLiabilityCoverageDetail(quoteForm.getCivilLiability().getLimit());
   }
 
-  private CoverageDetails addBikeEndorsementOnDemand(
+  private CoverageDetails addBicycleEndorsementOnDemand(
       QuoteForm quoteForm, CoverageDetails coverageDetails) {
-    if (additionalCoverageResolver.shouldIncludeBikeEndorsement(quoteForm)) {
-      coverageDetails = addBikeEndorsement(quoteForm, coverageDetails);
+    if (additionalCoverageResolver.shouldIncludeBicycleEndorsement(quoteForm)) {
+      coverageDetails = addBicycleEndorsement(quoteForm, coverageDetails);
     }
     return coverageDetails;
   }
 
-  private CoverageDetails addBikeEndorsement(QuoteForm quoteForm, CoverageDetails coverageDetails) {
-    Amount bikePrice = quoteForm.getPersonalProperty().getBike().getPrice();
+  private CoverageDetails addBicycleEndorsement(
+      QuoteForm quoteForm, CoverageDetails coverageDetails) {
+    Amount bicyclePrice = quoteForm.getPersonalProperty().getBicycle().getPrice();
     coverageDetails =
-        coverageDetails.addCoverageDetail(new BikeEndorsementCoverageDetail(bikePrice));
+        coverageDetails.addCoverageDetail(new BicycleEndorsementCoverageDetail(bicyclePrice));
     return coverageDetails;
   }
 }

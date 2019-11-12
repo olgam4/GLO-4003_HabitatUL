@@ -1,23 +1,22 @@
 package ca.ulaval.glo4003.coverage.application.premium;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.application.PremiumAssembler;
-import ca.ulaval.glo4003.coverage.application.coverage.AdditionalCoverageResolver;
+import ca.ulaval.glo4003.coverage.application.AdditionalCoverageResolver;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BasicBlockCoveragePremiumDetail;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.BikeEndorsementPremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.BicycleEndorsementPremiumDetail;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BikeBasePremiumCalculator;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BikeEndorsementPremiumFormula;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BikePremiumInput;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementBasePremiumCalculator;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumFormula;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumInput;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasePremiumCalculator;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsFormulaPart;
-import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bikeprice.BikePriceAdjustmentProvider;
-import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bikeprice.BikePriceFormulaPart;
+import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bicycleprice.BicycleEndorsementPriceFormulaPart;
+import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bicycleprice.BicyclePriceAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
@@ -31,84 +30,91 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 public class PremiumCalculator {
   private PremiumAssembler premiumAssembler;
   private AdditionalCoverageResolver additionalCoverageResolver;
-  private QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
-  private BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula;
+  private QuotePremiumFormula quotePremiumFormula;
+  private BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula;
 
   public PremiumCalculator() {
     this(
         new PremiumAssembler(),
         new AdditionalCoverageResolver(),
         assembleQuoteBasicBlockPremiumFormula(),
-        assembleBikeEndorsementPremiumFormula());
+        assembleBicycleEndorsementPremiumFormula());
   }
 
   public PremiumCalculator(
       PremiumAssembler premiumAssembler,
       AdditionalCoverageResolver additionalCoverageResolver,
-      QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula,
-      BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula) {
+      QuotePremiumFormula quotePremiumFormula,
+      BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula) {
     this.premiumAssembler = premiumAssembler;
     this.additionalCoverageResolver = additionalCoverageResolver;
-    this.quoteBasicBlockPremiumFormula = quoteBasicBlockPremiumFormula;
-    this.bikeEndorsementPremiumFormula = bikeEndorsementPremiumFormula;
+    this.quotePremiumFormula = quotePremiumFormula;
+    this.bicycleEndorsementPremiumFormula = bicycleEndorsementPremiumFormula;
   }
 
-  private static QuoteBasicBlockPremiumFormula assembleQuoteBasicBlockPremiumFormula() {
-    QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula =
-        new QuoteBasicBlockPremiumFormula(ServiceLocator.resolve(QuoteBasePremiumCalculator.class));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+  private static QuotePremiumFormula assembleQuoteBasicBlockPremiumFormula() {
+    QuotePremiumFormula quotePremiumFormula =
+        new QuotePremiumFormula(ServiceLocator.resolve(QuoteBasePremiumCalculator.class));
+    quotePremiumFormula.addFormulaPart(
         new CivilLiabilityLimitFormulaPart(
             ServiceLocator.resolve(CivilLiabilityLimitAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quotePremiumFormula.addFormulaPart(
         new AnimalsFormulaPart(
             ServiceLocator.resolve(AnimalsAdjustmentProvider.class),
             ServiceLocator.resolve(AnimalsAdjustmentLimitsProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quotePremiumFormula.addFormulaPart(
         new PreferentialProgramFormulaPart(
             ServiceLocator.resolve(PreferentialProgramAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quotePremiumFormula.addFormulaPart(
         new RoommateFormulaPart(ServiceLocator.resolve(RoommateAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quotePremiumFormula.addFormulaPart(
         new GraduateStudentFormulaPart(
             ServiceLocator.resolve(GraduateStudentAdjustmentProvider.class)));
-    return quoteBasicBlockPremiumFormula;
+    return quotePremiumFormula;
   }
 
-  private static BikeEndorsementPremiumFormula assembleBikeEndorsementPremiumFormula() {
-    BikeEndorsementPremiumFormula bikeEndorsementPremiumFormula =
-        new BikeEndorsementPremiumFormula(ServiceLocator.resolve(BikeBasePremiumCalculator.class));
-    bikeEndorsementPremiumFormula.addFormulaPart(
-        new BikePriceFormulaPart(ServiceLocator.resolve(BikePriceAdjustmentProvider.class)));
-    return bikeEndorsementPremiumFormula;
+  private static BicycleEndorsementPremiumFormula assembleBicycleEndorsementPremiumFormula() {
+    BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula =
+        new BicycleEndorsementPremiumFormula(
+            ServiceLocator.resolve(BicycleEndorsementBasePremiumCalculator.class));
+    bicycleEndorsementPremiumFormula.addFormulaPart(
+        new BicycleEndorsementPriceFormulaPart(
+            ServiceLocator.resolve(BicyclePriceAdjustmentProvider.class)));
+    return bicycleEndorsementPremiumFormula;
   }
 
   public PremiumDetails computeQuotePremium(QuoteForm quoteForm) {
     QuotePremiumInput quotePremiumInput = premiumAssembler.toQuotePremiumInput(quoteForm);
-    Money basicBlockPremium = quoteBasicBlockPremiumFormula.compute(quotePremiumInput);
+    Money basicBlockPremium = quotePremiumFormula.compute(quotePremiumInput);
     PremiumDetails premiumDetails =
         new PremiumDetails(new BasicBlockCoveragePremiumDetail(basicBlockPremium));
-    premiumDetails = addBikeEndorsementOnDemand(quoteForm, premiumDetails);
+    premiumDetails = addBicycleEndorsementOnDemand(quoteForm, premiumDetails);
     return premiumDetails;
   }
 
-  private PremiumDetails addBikeEndorsementOnDemand(
+  private PremiumDetails addBicycleEndorsementOnDemand(
       QuoteForm quoteForm, PremiumDetails premiumDetails) {
-    if (additionalCoverageResolver.shouldIncludeBikeEndorsement(quoteForm)) {
-      BikePremiumInput bikePremiumInput = premiumAssembler.toBikePremiumInput(quoteForm);
-      premiumDetails = addBikeEndorsement(bikePremiumInput, premiumDetails);
+    if (additionalCoverageResolver.shouldIncludeBicycleEndorsement(quoteForm)) {
+      BicycleEndorsementPremiumInput bicycleEndorsementPremiumInput =
+          premiumAssembler.toBicycleEndorsementPremiumInput(quoteForm);
+      premiumDetails = addBicycleEndorsement(bicycleEndorsementPremiumInput, premiumDetails);
     }
     return premiumDetails;
   }
 
-  private PremiumDetails addBikeEndorsement(
-      BikePremiumInput bikePremiumInput, PremiumDetails premiumDetails) {
-    Money bikeEndorsementPremium = computeBikeEndorsementPremium(bikePremiumInput);
+  private PremiumDetails addBicycleEndorsement(
+      BicycleEndorsementPremiumInput bicycleEndorsementPremiumInput,
+      PremiumDetails premiumDetails) {
+    Money bicycleEndorsementPremium =
+        computeBicycleEndorsementPremium(bicycleEndorsementPremiumInput);
     premiumDetails =
-        premiumDetails.addPremiumDetail(new BikeEndorsementPremiumDetail(bikeEndorsementPremium));
+        premiumDetails.addPremiumDetail(
+            new BicycleEndorsementPremiumDetail(bicycleEndorsementPremium));
     return premiumDetails;
   }
 
-  public Money computeBikeEndorsementPremium(BikePremiumInput bikePremiumInput) {
-    return bikeEndorsementPremiumFormula.compute(bikePremiumInput);
+  public Money computeBicycleEndorsementPremium(
+      BicycleEndorsementPremiumInput bicycleEndorsementPremiumInput) {
+    return bicycleEndorsementPremiumFormula.compute(bicycleEndorsementPremiumInput);
   }
 }

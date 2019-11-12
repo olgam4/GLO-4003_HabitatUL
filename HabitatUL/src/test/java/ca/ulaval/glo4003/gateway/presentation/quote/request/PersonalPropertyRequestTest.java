@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.gateway.presentation.coverage.request.BikeRequest;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BikeGenerator.createBikeRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycleRequest;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createAnimals;
 
@@ -26,7 +26,7 @@ public class PersonalPropertyRequestTest {
 
   @Test
   public void validatingRequest_shouldEnforceNotNullCoverageAmount() {
-    subject = new PersonalPropertyRequest(null, createAnimals(), createBikeRequest());
+    subject = new PersonalPropertyRequest(null, createAnimals(), createBicycleRequest());
 
     Set<ConstraintViolation<PersonalPropertyRequest>> violations = validator.validate(subject);
 
@@ -34,13 +34,13 @@ public class PersonalPropertyRequestTest {
   }
 
   @Test
-  public void validatingRequest_shouldEnforceValidBike() {
+  public void validatingRequest_shouldEnforceValidBicycle() {
     subject =
         new PersonalPropertyRequest(
-            createCoverageAmount(), createAnimals(), new BikeRequest(null, null, null, null));
+            createCoverageAmount(), createAnimals(), new BicycleRequest(null, null, null, null));
 
     Set<ConstraintViolation<PersonalPropertyRequest>> violations = validator.validate(subject);
 
-    assertViolationDetected(violations, "bike");
+    assertViolationDetected(violations, "bicycle");
   }
 }

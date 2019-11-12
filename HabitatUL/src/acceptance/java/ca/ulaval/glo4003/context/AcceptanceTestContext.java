@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.context.service.*;
-import ca.ulaval.glo4003.coverage.domain.form.validation.UlRegistrarOffice;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BikeBasePremiumCalculator;
+import ca.ulaval.glo4003.coverage.domain.form.validationpart.UlRegistrarOffice;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BasicBlockCoverageMaximumBicyclePriceProvider;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
-import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bikeprice.BikePriceAdjustmentProvider;
+import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bicycleprice.BicyclePriceAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
@@ -49,10 +49,12 @@ public class AcceptanceTestContext {
         new DummyPreferentialProgramAdjustmentProvider());
     register(RoommateAdjustmentProvider.class, new DummyRoommateAdjustmentProvider());
     register(GraduateStudentAdjustmentProvider.class, new DummyGraduateStudentAdjustmentProvider());
-    register(BikeBasePremiumCalculator.class, new DummyBikeBasePremiumCalculator());
-    register(BikePriceAdjustmentProvider.class, new DummyBikePriceAdjustmentProvider());
     register(
-        BasicBlockCoverageMaximumBikePriceProvider.class,
-        new DummyBasicBlockCoverageMaximumBikePriceProvider());
+        BicycleEndorsementBasePremiumCalculator.class,
+        new DummyBicycleEndorsementBasePremiumCalculator());
+    register(BicyclePriceAdjustmentProvider.class, new DummyBicyclePriceAdjustmentProvider());
+    register(
+        BasicBlockCoverageMaximumBicyclePriceProvider.class,
+        new DummyBasicBlockCoverageMaximumBicyclePriceProvider());
   }
 }
