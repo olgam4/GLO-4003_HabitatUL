@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
 
-import ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator;
 import org.junit.Test;
 
+import static ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
+import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.createUniversityProfile;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,14 +12,14 @@ public class UniversityProfileTest {
 
   @Test
   public void checkingIfFormIsFilled_withUnfilledForm_shouldReturnFalse() {
-    subject = new UniversityProfile(null, null, null, null, null);
+    subject = new UniversityProfile(null, null, UNFILLED_UNIVERSITY_PROGRAM);
 
     assertFalse(subject.isFilled());
   }
 
   @Test
   public void checkingIfFormIsFilled_withFilledForm_shouldReturnTrue() {
-    subject = UniversityProfileGenerator.createUniversityProfile();
+    subject = createUniversityProfile();
 
     assertTrue(subject.isFilled());
   }

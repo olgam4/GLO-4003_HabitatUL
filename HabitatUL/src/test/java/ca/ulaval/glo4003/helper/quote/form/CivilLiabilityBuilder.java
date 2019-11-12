@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 
-import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 
 public class CivilLiabilityBuilder {
   private static final CivilLiabilityLimit DEFAULT_AMOUNT = createCivilLiabilityLimit();

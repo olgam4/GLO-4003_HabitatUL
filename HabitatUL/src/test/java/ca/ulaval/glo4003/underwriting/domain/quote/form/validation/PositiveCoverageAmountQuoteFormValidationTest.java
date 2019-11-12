@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
-import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.quote.form.PersonalPropertyBuilder;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
@@ -9,6 +8,9 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 import org.junit.Before;
 import org.junit.Test;
+
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountSmallerThanZero;
 
 public class PositiveCoverageAmountQuoteFormValidationTest {
   private PositiveCoverageAmountQuoteFormValidation subject;
@@ -21,7 +23,7 @@ public class PositiveCoverageAmountQuoteFormValidationTest {
 
   @Test
   public void validatingQuoteForm_withPositiveCoverageAmount_shouldNotThrow() {
-    Amount coverageAmount = MoneyGenerator.createAmountGreaterThan(Amount.ZERO);
+    Amount coverageAmount = createAmountGreaterThanZero();
     PersonalProperty personalProperty =
         PersonalPropertyBuilder.aPersonalProperty().withCoverageAmount(coverageAmount).build();
     quoteForm = QuoteFormBuilder.aQuoteForm().withPersonalProperty(personalProperty).build();
@@ -40,7 +42,7 @@ public class PositiveCoverageAmountQuoteFormValidationTest {
 
   @Test(expected = QuotePositiveCoverageAmountError.class)
   public void validatingQuoteForm_withNegativeCoverageAmount_shouldThrow() {
-    Amount coverageAmount = MoneyGenerator.createAmountSmallerThan(Amount.ZERO);
+    Amount coverageAmount = createAmountSmallerThanZero();
     PersonalProperty personalProperty =
         PersonalPropertyBuilder.aPersonalProperty().withCoverageAmount(coverageAmount).build();
     quoteForm = QuoteFormBuilder.aQuoteForm().withPersonalProperty(personalProperty).build();

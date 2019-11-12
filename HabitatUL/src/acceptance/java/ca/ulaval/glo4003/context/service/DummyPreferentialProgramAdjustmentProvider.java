@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.context.PremiumAdjustmentGenerator;
 public class DummyPreferentialProgramAdjustmentProvider
     implements PreferentialProgramAdjustmentProvider {
   @Override
-  public PremiumAdjustment getAdjustment(String cycle, String degree, String program) {
+  public PremiumAdjustment getAdjustment(String cycle, String degree, String major) {
     return PremiumAdjustmentGenerator.create();
   }
 }

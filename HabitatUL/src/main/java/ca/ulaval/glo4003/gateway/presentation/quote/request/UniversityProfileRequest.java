@@ -1,22 +1,18 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public class UniversityProfileRequest {
   @NotNull private String idul;
   @NotNull private String ni;
-  @NotNull private String cycle;
-  @NotNull private String degree;
-  @NotNull private String program;
+  @NotNull @Valid private UniversityProgramRequest program;
 
   private UniversityProfileRequest() {}
 
-  public UniversityProfileRequest(
-      String idul, String ni, String cycle, String degree, String program) {
+  public UniversityProfileRequest(String idul, String ni, UniversityProgramRequest program) {
     this.idul = idul;
     this.ni = ni;
-    this.cycle = cycle;
-    this.degree = degree;
     this.program = program;
   }
 
@@ -28,15 +24,7 @@ public class UniversityProfileRequest {
     return ni;
   }
 
-  public String getCycle() {
-    return cycle;
-  }
-
-  public String getDegree() {
-    return degree;
-  }
-
-  public String getProgram() {
+  public UniversityProgramRequest getProgram() {
     return program;
   }
 }

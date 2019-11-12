@@ -1,38 +1,39 @@
 package ca.ulaval.glo4003.helper.calculator;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import static ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator.createBikePrice;
-import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimalsInput;
-import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimals;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createUniversityProgram;
 import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
 
 public class QuotePremiumInputBuilder {
   private static final Gender DEFAULT_NAMED_INSURED_GENDER = createGender();
-  private static final UniversityProgramInput DEFAULT_NAMED_INSURED_UNIVERSITY_PROGRAM =
-      UniversityProgramInputGenerator.create();
+  private static final UniversityProgram DEFAULT_NAMED_INSURED_UNIVERSITY_PROGRAM =
+      createUniversityProgram();
   private static final Gender DEFAULT_ADDITIONAL_INSURED_GENDER = createGender();
-  private static final UniversityProgramInput DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM =
-      UniversityProgramInputGenerator.create();
-  private static final AnimalsInput DEFAULT_ANIMALS = createAnimalsInput();
+  private static final UniversityProgram DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM =
+      createUniversityProgram();
+  private static final Animals DEFAULT_ANIMALS = createAnimals();
   private static final Amount DEFAULT_BIKE_PRICE = createBikePrice();
-  private static final CivilLiabilityLimitInput DEFAULT_CIVIL_LIABILITY_LIMIT =
-      createCivilLiabilityLimitInput();
+  private static final CivilLiabilityLimit DEFAULT_CIVIL_LIABILITY_LIMIT =
+      createCivilLiabilityLimit();
 
   private Gender namedInsuredGender = DEFAULT_NAMED_INSURED_GENDER;
-  private UniversityProgramInput namedInsuredUniversityProgram =
+  private UniversityProgram namedInsuredUniversityProgram =
       DEFAULT_NAMED_INSURED_UNIVERSITY_PROGRAM;
   private Gender additionalInsuredGender = DEFAULT_ADDITIONAL_INSURED_GENDER;
-  private UniversityProgramInput additionalInsuredUniversityProgram =
+  private UniversityProgram additionalInsuredUniversityProgram =
       DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM;
-  private AnimalsInput animals = DEFAULT_ANIMALS;
+  private Animals animals = DEFAULT_ANIMALS;
   private Amount bikePrice = DEFAULT_BIKE_PRICE;
-  private CivilLiabilityLimitInput civilLiabilityLimit = DEFAULT_CIVIL_LIABILITY_LIMIT;
+  private CivilLiabilityLimit civilLiabilityLimit = DEFAULT_CIVIL_LIABILITY_LIMIT;
 
   private QuotePremiumInputBuilder() {}
 
@@ -40,8 +41,7 @@ public class QuotePremiumInputBuilder {
     return new QuotePremiumInputBuilder();
   }
 
-  public QuotePremiumInputBuilder withCivilLiabilityLimit(
-      CivilLiabilityLimitInput civilLiabilityLimit) {
+  public QuotePremiumInputBuilder withCivilLiabilityLimit(CivilLiabilityLimit civilLiabilityLimit) {
     this.civilLiabilityLimit = civilLiabilityLimit;
     return this;
   }
@@ -52,7 +52,7 @@ public class QuotePremiumInputBuilder {
   }
 
   public QuotePremiumInputBuilder withNamedInsuredUniversityProgram(
-      UniversityProgramInput universityProgram) {
+      UniversityProgram universityProgram) {
     this.namedInsuredUniversityProgram = universityProgram;
     return this;
   }
@@ -63,7 +63,7 @@ public class QuotePremiumInputBuilder {
   }
 
   public QuotePremiumInputBuilder withAdditionalInsuredUniversityProgram(
-      UniversityProgramInput universityProgram) {
+      UniversityProgram universityProgram) {
     this.additionalInsuredUniversityProgram = universityProgram;
     return this;
   }

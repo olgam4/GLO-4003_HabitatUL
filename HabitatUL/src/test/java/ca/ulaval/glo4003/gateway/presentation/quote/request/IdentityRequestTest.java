@@ -90,7 +90,7 @@ public class IdentityRequestTest {
             createLastName(),
             createBirthDate(),
             createGender(),
-            new UniversityProfileRequest(null, null, null, null, null));
+            new UniversityProfileRequest(null, null, null));
 
     Set<ConstraintViolation<IdentityRequest>> violations = validator.validate(subject);
 

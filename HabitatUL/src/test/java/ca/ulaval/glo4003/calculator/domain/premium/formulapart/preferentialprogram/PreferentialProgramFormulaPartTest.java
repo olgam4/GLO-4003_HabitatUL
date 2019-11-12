@@ -1,14 +1,12 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
-import ca.ulaval.glo4003.helper.calculator.UniversityProgramInputBuilder;
-import ca.ulaval.glo4003.helper.calculator.UniversityProgramInputGenerator;
+import ca.ulaval.glo4003.helper.calculator.UniversityProgramBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
-import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +19,9 @@ import org.mockito.junit.MockitoRule;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
 import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -32,26 +32,24 @@ public class PreferentialProgramFormulaPartTest {
   private static final Money PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
   private static final Money SMALLER_PREMIUM_ADJUSTMENT =
       MoneyGenerator.createMoneySmallerThan(PREMIUM_ADJUSTMENT);
-  private static final String CYCLE = Faker.instance().university().prefix();
-  private static final String DEGREE = Faker.instance().educator().campus();
-  private static final String PROGRAM = Faker.instance().educator().course();
-  private static final UniversityProgramInput FILLED_UNIVERSITY_PROGRAM_INPUT =
-      UniversityProgramInputBuilder.aUniversityProgramInput()
+  private static final String CYCLE = createCycle();
+  private static final String DEGREE = createDegree();
+  private static final String MAJOR = createMajor();
+  private static final UniversityProgram FILLED_UNIVERSITY_PROGRAM =
+      UniversityProgramBuilder.aUniversityProgram()
           .withCycle(CYCLE)
           .withDegree(DEGREE)
-          .withProgram(PROGRAM)
+          .withMajor(MAJOR)
           .build();
-  private static final String ANOTHER_CYCLE = Faker.instance().university().suffix();
-  private static final String ANOTHER_DEGREE = Faker.instance().educator().university();
-  private static final String ANOTHER_PROGRAM = Faker.instance().educator().secondarySchool();
-  private static final UniversityProgramInput ANOTHER_FILLED_UNIVERSITY_PROGRAM_INPUT =
-      UniversityProgramInputBuilder.aUniversityProgramInput()
+  private static final String ANOTHER_CYCLE = createCycle();
+  private static final String ANOTHER_DEGREE = createDegree();
+  private static final String ANOTHER_MAJOR = createMajor();
+  private static final UniversityProgram ANOTHER_FILLED_UNIVERSITY_PROGRAM =
+      UniversityProgramBuilder.aUniversityProgram()
           .withCycle(ANOTHER_CYCLE)
           .withDegree(ANOTHER_DEGREE)
-          .withProgram(ANOTHER_PROGRAM)
+          .withMajor(ANOTHER_MAJOR)
           .build();
-  private static final UniversityProgramInput UNFILLED_UNIVERSITY_PROGRAM_INPUT =
-      UniversityProgramInputGenerator.createUnfilled();
 
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().silent();
   @Mock private PreferentialProgramAdjustmentProvider preferentialProgramAdjustmentProvider;
@@ -59,14 +57,14 @@ public class PreferentialProgramFormulaPartTest {
   @Mock private PremiumAdjustment anotherPremiumAdjustment;
 
   private PreferentialProgramFormulaPart subject;
-  private UniversityProgramInput namedInsuredUniversityProgram;
-  private UniversityProgramInput additionalInsuredUniversityProgram;
+  private UniversityProgram namedInsuredUniversityProgram;
+  private UniversityProgram additionalInsuredUniversityProgram;
   private Money expectedPremiumAdjustment;
 
   public PreferentialProgramFormulaPartTest(
       String title,
-      UniversityProgramInput namedInsuredUniversityProgram,
-      UniversityProgramInput additionalInsuredUniversityProgram,
+      UniversityProgram namedInsuredUniversityProgram,
+      UniversityProgram additionalInsuredUniversityProgram,
       Money expectedPremiumAdjustment) {
     this.namedInsuredUniversityProgram = namedInsuredUniversityProgram;
     this.additionalInsuredUniversityProgram = additionalInsuredUniversityProgram;
@@ -79,32 +77,32 @@ public class PreferentialProgramFormulaPartTest {
         new Object[][] {
           {
             "with named and additional insureds not eligible should compute null adjustment",
-            UNFILLED_UNIVERSITY_PROGRAM_INPUT,
-            UNFILLED_UNIVERSITY_PROGRAM_INPUT,
+            UNFILLED_UNIVERSITY_PROGRAM,
+            UNFILLED_UNIVERSITY_PROGRAM,
             Money.ZERO
           },
           {
             "with named insured eligible should compute associated adjustment",
-            FILLED_UNIVERSITY_PROGRAM_INPUT,
-            UNFILLED_UNIVERSITY_PROGRAM_INPUT,
+            FILLED_UNIVERSITY_PROGRAM,
+            UNFILLED_UNIVERSITY_PROGRAM,
             PREMIUM_ADJUSTMENT
           },
           {
             "with additional insured eligible should compute associated adjustment",
-            UNFILLED_UNIVERSITY_PROGRAM_INPUT,
-            FILLED_UNIVERSITY_PROGRAM_INPUT,
+            UNFILLED_UNIVERSITY_PROGRAM,
+            FILLED_UNIVERSITY_PROGRAM,
             PREMIUM_ADJUSTMENT
           },
           {
             "with named insured with smaller adjustment should compute smaller adjustment",
-            ANOTHER_FILLED_UNIVERSITY_PROGRAM_INPUT,
-            FILLED_UNIVERSITY_PROGRAM_INPUT,
+            ANOTHER_FILLED_UNIVERSITY_PROGRAM,
+            FILLED_UNIVERSITY_PROGRAM,
             SMALLER_PREMIUM_ADJUSTMENT
           },
           {
             "with additional insured with smaller adjustment should compute smaller adjustment",
-            FILLED_UNIVERSITY_PROGRAM_INPUT,
-            ANOTHER_FILLED_UNIVERSITY_PROGRAM_INPUT,
+            FILLED_UNIVERSITY_PROGRAM,
+            ANOTHER_FILLED_UNIVERSITY_PROGRAM,
             SMALLER_PREMIUM_ADJUSTMENT
           },
         });
@@ -112,11 +110,11 @@ public class PreferentialProgramFormulaPartTest {
 
   @Before
   public void setUp() {
-    when(preferentialProgramAdjustmentProvider.getAdjustment(CYCLE, DEGREE, PROGRAM))
+    when(preferentialProgramAdjustmentProvider.getAdjustment(CYCLE, DEGREE, MAJOR))
         .thenReturn(premiumAdjustment);
     when(premiumAdjustment.apply(any(Money.class))).thenReturn(PREMIUM_ADJUSTMENT);
     when(preferentialProgramAdjustmentProvider.getAdjustment(
-            ANOTHER_CYCLE, ANOTHER_DEGREE, ANOTHER_PROGRAM))
+            ANOTHER_CYCLE, ANOTHER_DEGREE, ANOTHER_MAJOR))
         .thenReturn(anotherPremiumAdjustment);
     when(anotherPremiumAdjustment.apply(any(Money.class))).thenReturn(SMALLER_PREMIUM_ADJUSTMENT);
     subject = new PreferentialProgramFormulaPart(preferentialProgramAdjustmentProvider);

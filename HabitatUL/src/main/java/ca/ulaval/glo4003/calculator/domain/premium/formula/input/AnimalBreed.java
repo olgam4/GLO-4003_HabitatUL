@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty;
+package ca.ulaval.glo4003.calculator.domain.premium.formula.input;
 
 import java.util.HashMap;
 import java.util.Map;

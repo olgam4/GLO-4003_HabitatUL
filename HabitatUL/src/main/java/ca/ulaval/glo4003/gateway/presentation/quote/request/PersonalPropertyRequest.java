@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

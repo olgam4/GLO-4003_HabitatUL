@@ -24,7 +24,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.matcher.PremiumMatcher.matchesQuotePremiumInput;
+import static ca.ulaval.glo4003.matcher.CalculatorMatcher.matchesQuotePremiumInput;
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteDto;
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteForm;
 import static org.junit.Assert.assertThat;

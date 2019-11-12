@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumFormulaPart;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.util.Optional;
@@ -35,7 +35,7 @@ public class PreferentialProgramFormulaPart implements QuotePremiumFormulaPart {
 
   private Optional<Money> computeNamedInsuredPremiumAdjustment(
       QuotePremiumInput quotePremiumInput, Money basePremium) {
-    UniversityProgramInput namedInsuredUniversityProgram =
+    UniversityProgram namedInsuredUniversityProgram =
         quotePremiumInput.getNamedInsuredUniversityProgram();
     Money premiumAdjustment = computePremiumAdjustment(namedInsuredUniversityProgram, basePremium);
     return Optional.ofNullable(premiumAdjustment);
@@ -43,20 +43,19 @@ public class PreferentialProgramFormulaPart implements QuotePremiumFormulaPart {
 
   private Optional<Money> computeAdditionalInsuredPremiumAdjustment(
       QuotePremiumInput quotePremiumInput, Money basePremium) {
-    UniversityProgramInput additionalInsuredUniversityProgramInput =
+    UniversityProgram additionalInsuredUniversityProgram =
         quotePremiumInput.getAdditionalInsuredUniversityProgram();
     Money premiumAdjustment =
-        computePremiumAdjustment(additionalInsuredUniversityProgramInput, basePremium);
+        computePremiumAdjustment(additionalInsuredUniversityProgram, basePremium);
     return Optional.ofNullable(premiumAdjustment);
   }
 
-  private Money computePremiumAdjustment(
-      UniversityProgramInput universityProgramInput, Money basePremium) {
-    if (!universityProgramInput.isCompleted()) return null;
+  private Money computePremiumAdjustment(UniversityProgram universityProgram, Money basePremium) {
+    if (!universityProgram.isFilled()) return null;
 
-    String cycle = universityProgramInput.getCycle();
-    String degree = universityProgramInput.getDegree();
-    String program = universityProgramInput.getProgram();
+    String cycle = universityProgram.getCycle();
+    String degree = universityProgram.getDegree();
+    String program = universityProgram.getMajor();
 
     PremiumAdjustment adjustment =
         preferentialProgramAdjustmentProvider.getAdjustment(cycle, degree, program);

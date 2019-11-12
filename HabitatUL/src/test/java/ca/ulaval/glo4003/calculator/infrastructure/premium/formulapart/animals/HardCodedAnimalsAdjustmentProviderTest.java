@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.AnimalBreed;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +21,12 @@ public class HardCodedAnimalsAdjustmentProviderTest {
   private static final Integer COUNT = Faker.instance().number().randomDigit();
 
   private HardCodedAnimalsAdjustmentProvider subject;
-  private AnimalBreedInput breed;
+  private AnimalBreed breed;
   private Integer count;
   private PremiumAdjustment expectedAdjustment;
 
   public HardCodedAnimalsAdjustmentProviderTest(
-      String title, AnimalBreedInput breed, Integer count, PremiumAdjustment expectedAdjustment) {
+      String title, AnimalBreed breed, Integer count, PremiumAdjustment expectedAdjustment) {
     this.breed = breed;
     this.count = count;
     this.expectedAdjustment = expectedAdjustment;
@@ -41,37 +41,37 @@ public class HardCodedAnimalsAdjustmentProviderTest {
           },
           {
             "with 1 cat should compute associated adjustment",
-            AnimalBreedInput.CAT,
+            AnimalBreed.CAT,
             1,
             new MultiplicativePremiumAdjustment(0.01f)
           },
           {
             "with 1 dog should compute associated adjustment",
-            AnimalBreedInput.DOG,
+            AnimalBreed.DOG,
             1,
             new MultiplicativePremiumAdjustment(0.05f)
           },
           {
             "with 1 gold fish should compute associated adjustment",
-            AnimalBreedInput.GOLD_FISH,
+            AnimalBreed.GOLD_FISH,
             1,
             new MultiplicativePremiumAdjustment(-0.01f)
           },
           {
             "with 1 snake should compute associated adjustment",
-            AnimalBreedInput.SNAKE,
+            AnimalBreed.SNAKE,
             1,
             new MultiplicativePremiumAdjustment(1f)
           },
           {
             "with multiple animals of the same breed should take into account their multiplicity",
-            AnimalBreedInput.CAT,
+            AnimalBreed.CAT,
             COUNT,
             new MultiplicativePremiumAdjustment(0.01f * COUNT)
           },
           {
             "with other animal should compute null adjustment",
-            AnimalBreedInput.OTHER,
+            AnimalBreed.OTHER,
             1,
             new NullPremiumAdjustment()
           },

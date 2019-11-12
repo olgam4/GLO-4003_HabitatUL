@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.civilliabilitylimit;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

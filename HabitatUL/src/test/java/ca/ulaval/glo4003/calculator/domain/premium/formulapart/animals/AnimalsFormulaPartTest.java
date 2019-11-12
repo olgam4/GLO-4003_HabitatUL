@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NoPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.AnimalBreed;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class AnimalsFormulaPartTest {
   private static final QuotePremiumInput QUOTE_PREMIUM_INPUT = QuotePremiumInputGenerator.create();
-  private static final Map<AnimalBreedInput, Integer> ANIMAL_COLLECTION =
+  private static final Map<AnimalBreed, Integer> ANIMAL_COLLECTION =
       QUOTE_PREMIUM_INPUT.getAnimals().getCollection();
   private static final Money BASE_PREMIUM = MoneyGenerator.createMoney();
   private static final Money PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
@@ -40,7 +40,7 @@ public class AnimalsFormulaPartTest {
   @Before
   public void setUp() {
     when(premiumAdjustment.apply(any(Money.class))).thenReturn(PREMIUM_ADJUSTMENT);
-    when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreedInput.class), any(Integer.class)))
+    when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreed.class), any(Integer.class)))
         .thenReturn(premiumAdjustment);
     when(minimumPremiumAdjustment.apply(any(Money.class))).thenReturn(MINIMUM_PREMIUM_ADJUSTMENT);
     when(maximumPremiumAdjustment.apply(any(Money.class))).thenReturn(MAXIMUM_PREMIUM_ADJUSTMENT);
@@ -73,7 +73,7 @@ public class AnimalsFormulaPartTest {
 
   @Test
   public void computingFormulaPart_shouldCapAdjustmentToMinimumAdjustment() {
-    when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreedInput.class), any(Integer.class)))
+    when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreed.class), any(Integer.class)))
         .thenReturn(minimumPremiumAdjustment);
     when(animalsAdjustmentLimitsProvider.getMinimumAdjustment(any(Money.class)))
         .thenReturn(maximumPremiumAdjustment);
@@ -85,7 +85,7 @@ public class AnimalsFormulaPartTest {
 
   @Test
   public void computingFormulaPart_shouldCapAdjustmentToMaximumAdjustment() {
-    when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreedInput.class), any(Integer.class)))
+    when(animalsAdjustmentProvider.getAdjustment(any(AnimalBreed.class), any(Integer.class)))
         .thenReturn(maximumPremiumAdjustment);
     when(animalsAdjustmentLimitsProvider.getMaximumAdjustment(any(Money.class)))
         .thenReturn(minimumPremiumAdjustment);

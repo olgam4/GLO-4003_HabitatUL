@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimitInput;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -22,8 +22,7 @@ import static org.mockito.Mockito.when;
 public class CivilLiabilityLimitFormulaPartTest {
   private static final Money BASE_PREMIUM = MoneyGenerator.createMoney();
   private static final Money PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
-  private static final CivilLiabilityLimitInput CIVIL_LIABILITY_LIMIT =
-      createCivilLiabilityLimitInput();
+  private static final CivilLiabilityLimit CIVIL_LIABILITY_LIMIT = createCivilLiabilityLimit();
   private static final QuotePremiumInput QUOTE_PREMIUM_INPUT =
       QuotePremiumInputBuilder.aQuotePremiumInput()
           .withCivilLiabilityLimit(CIVIL_LIABILITY_LIMIT)
@@ -36,7 +35,7 @@ public class CivilLiabilityLimitFormulaPartTest {
 
   @Before
   public void setUp() {
-    when(civilLiabilityLimitAdjustmentProvider.getAdjustment(any(CivilLiabilityLimitInput.class)))
+    when(civilLiabilityLimitAdjustmentProvider.getAdjustment(any(CivilLiabilityLimit.class)))
         .thenReturn(premiumAdjustment);
     when(premiumAdjustment.apply(any(Money.class))).thenReturn(PREMIUM_ADJUSTMENT);
     subject = new CivilLiabilityLimitFormulaPart(civilLiabilityLimitAdjustmentProvider);

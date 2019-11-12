@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.civillia
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +18,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class HardCodedCivilLiabilityLimitAdjustmentProviderTest {
   private HardCodedCivilLiabilityLimitAdjustmentProvider subject;
-  private CivilLiabilityLimitInput civilLiabilityLimit;
+  private CivilLiabilityLimit civilLiabilityLimit;
   private PremiumAdjustment expectedAdjustment;
 
   public HardCodedCivilLiabilityLimitAdjustmentProviderTest(
-      String title,
-      CivilLiabilityLimitInput civilLiabilityLimit,
-      PremiumAdjustment expectedAdjustment) {
+      String title, CivilLiabilityLimit civilLiabilityLimit, PremiumAdjustment expectedAdjustment) {
     this.civilLiabilityLimit = civilLiabilityLimit;
     this.expectedAdjustment = expectedAdjustment;
   }
@@ -40,12 +38,12 @@ public class HardCodedCivilLiabilityLimitAdjustmentProviderTest {
           },
           {
             "with 1M civil liability limit should compute null adjustment",
-            CivilLiabilityLimitInput.ONE_MILLION,
+            CivilLiabilityLimit.ONE_MILLION,
             new NullPremiumAdjustment()
           },
           {
             "with 2M civil liability limit should compute associated adjustment",
-            CivilLiabilityLimitInput.TWO_MILLION,
+            CivilLiabilityLimit.TWO_MILLION,
             new MultiplicativePremiumAdjustment(0.25f)
           },
         });

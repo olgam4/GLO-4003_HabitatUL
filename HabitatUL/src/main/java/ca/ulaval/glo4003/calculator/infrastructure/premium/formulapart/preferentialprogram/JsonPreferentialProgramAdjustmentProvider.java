@@ -79,10 +79,10 @@ public class JsonPreferentialProgramAdjustmentProvider
   }
 
   @Override
-  public PremiumAdjustment getAdjustment(String cycle, String degree, String program) {
+  public PremiumAdjustment getAdjustment(String cycle, String degree, String major) {
     String normalizedCycle = normalize(cycle);
     String normalizedDegree = normalize(degree);
-    String normalizedProgram = normalize(program);
+    String normalizedProgram = normalize(major);
     Map<String, Map<String, PremiumAdjustment>> degreeMap =
         adjustments.getOrDefault(normalizedCycle, new HashMap<>());
     Map<String, PremiumAdjustment> programMap =

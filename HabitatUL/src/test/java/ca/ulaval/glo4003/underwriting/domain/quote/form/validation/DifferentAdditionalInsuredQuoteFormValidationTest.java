@@ -28,8 +28,6 @@ public class DifferentAdditionalInsuredQuoteFormValidationTest {
         new UniversityProfile(
             identity.getUniversityProfile().getIdul(),
             identity.getUniversityProfile().getIdentificationNumber(),
-            identity.getUniversityProfile().getCycle(),
-            identity.getUniversityProfile().getDegree(),
             identity.getUniversityProfile().getProgram()));
   }
 

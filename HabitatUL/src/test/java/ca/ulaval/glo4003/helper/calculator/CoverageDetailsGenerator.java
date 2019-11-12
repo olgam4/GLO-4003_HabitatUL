@@ -5,14 +5,14 @@ import ca.ulaval.glo4003.calculator.domain.coverage.detail.CivilLiabilityCoverag
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetail;
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.PersonalPropertyCoverageDetail;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.github.javafaker.Faker;
 
 import java.util.stream.IntStream;
 
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
 import static ca.ulaval.glo4003.helper.calculator.CoverageCategoryGenerator.createCoverageCategory;
-import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 
 public class CoverageDetailsGenerator {
   private CoverageDetailsGenerator() {}
@@ -41,7 +41,7 @@ public class CoverageDetailsGenerator {
   }
 
   private static Amount createCoverageAmount() {
-    return MoneyGenerator.createAmountGreaterThan(Amount.ZERO);
+    return createAmountGreaterThanZero();
   }
 
   private static class DummyCoverageDetail extends CoverageDetail {

@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.helper.calculator;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.AnimalBreed;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalBreedInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
 import ca.ulaval.glo4003.helper.EnumSampler;
 import com.github.javafaker.Faker;
 
@@ -22,36 +22,36 @@ public class QuotePremiumInputGenerator {
   public static QuotePremiumInput create() {
     return new QuotePremiumInput(
         createGender(),
-        UniversityProgramInputGenerator.create(),
+        UniversityProgramGenerator.createUniversityProgram(),
         createGender(),
-        UniversityProgramInputGenerator.create(),
-        createAnimalsInput(),
+        UniversityProgramGenerator.createUniversityProgram(),
+        createAnimals(),
         createBikePrice(),
-        createCivilLiabilityLimitInput());
+        createCivilLiabilityLimit());
   }
 
-  public static AnimalsInput createAnimalsInput() {
-    return new AnimalsInput(getRandomAnimalMap());
+  public static Animals createAnimals() {
+    return new Animals(getRandomAnimalMap());
   }
 
-  private static Map<AnimalBreedInput, Integer> getRandomAnimalMap() {
-    Map<AnimalBreedInput, Integer> animals = new HashMap<>();
+  private static Map<AnimalBreed, Integer> getRandomAnimalMap() {
+    Map<AnimalBreed, Integer> animals = new HashMap<>();
     getRandomAnimalList()
         .forEach(animal -> animals.put(animal, animals.getOrDefault(animal, 0) + 1));
     return animals;
   }
 
-  private static List<AnimalBreedInput> getRandomAnimalList() {
-    return Stream.generate(QuotePremiumInputGenerator::createAnimalBreedInput)
+  private static List<AnimalBreed> getRandomAnimalList() {
+    return Stream.generate(QuotePremiumInputGenerator::createAnimalBreed)
         .limit(Faker.instance().number().randomDigitNotZero())
         .collect(Collectors.toList());
   }
 
-  public static AnimalBreedInput createAnimalBreedInput() {
-    return EnumSampler.sample(AnimalBreedInput.class);
+  public static AnimalBreed createAnimalBreed() {
+    return EnumSampler.sample(AnimalBreed.class);
   }
 
-  public static CivilLiabilityLimitInput createCivilLiabilityLimitInput() {
-    return EnumSampler.sample(CivilLiabilityLimitInput.class);
+  public static CivilLiabilityLimit createCivilLiabilityLimit() {
+    return EnumSampler.sample(CivilLiabilityLimit.class);
   }
 }

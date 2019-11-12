@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteCivilLiabilityLimitError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 
 public class CivilLiabilityLimitQuoteFormValidation implements QuoteFormValidation {
   static final int MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT = 4;

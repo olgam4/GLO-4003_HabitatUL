@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -14,12 +15,12 @@ import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Persona
 
 import java.util.Optional;
 
+import static ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals.UNFILLED_ANIMALS;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building.NO_COMMERCIAL_USE;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems.UNFILLED_PREVENTION_SYSTEMS;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity.UNFILLED_IDENTITY;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
-import static ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals.UNFILLED_ANIMALS;
 import static ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike.UNFILLED_BIKE;
 
 public class QuoteViewAssembler {
@@ -59,9 +60,14 @@ public class QuoteViewAssembler {
     return new UniversityProfile(
         universityProfileRequest.getIdul(),
         universityProfileRequest.getNi(),
-        universityProfileRequest.getCycle(),
-        universityProfileRequest.getDegree(),
-        universityProfileRequest.getProgram());
+        from(universityProfileRequest.getProgram()));
+  }
+
+  private UniversityProgram from(UniversityProgramRequest universityProgramRequest) {
+    return new UniversityProgram(
+        universityProgramRequest.getCycle(),
+        universityProgramRequest.getDegree(),
+        universityProgramRequest.getMajor());
   }
 
   private Location fromLocationRequest(LocationRequest locationRequest) {

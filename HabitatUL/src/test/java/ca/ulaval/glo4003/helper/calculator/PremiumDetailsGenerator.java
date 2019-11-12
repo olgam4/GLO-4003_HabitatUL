@@ -4,12 +4,12 @@ import ca.ulaval.glo4003.calculator.domain.CoverageCategory;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.BasicBlockCoveragePremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import com.github.javafaker.Faker;
 
 import java.util.stream.IntStream;
 
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createMoneyGreaterThanZero;
 import static ca.ulaval.glo4003.helper.calculator.CoverageCategoryGenerator.createCoverageCategory;
 
 public class PremiumDetailsGenerator {
@@ -33,7 +33,7 @@ public class PremiumDetailsGenerator {
   }
 
   private static Money createPremium() {
-    return MoneyGenerator.createMoneyGreaterThan(Money.ZERO);
+    return createMoneyGreaterThanZero();
   }
 
   private static class DummyPremiumDetail extends PremiumDetail {

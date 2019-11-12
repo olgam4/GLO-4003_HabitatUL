@@ -1,11 +1,12 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
 import ca.ulaval.glo4003.gateway.presentation.quote.request.BikeRequest;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike;
 import com.github.javafaker.Faker;
+
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
 
 public class BikeGenerator {
   private BikeGenerator() {}
@@ -21,7 +22,7 @@ public class BikeGenerator {
   }
 
   private static Amount createBikePrice() {
-    return MoneyGenerator.createAmountGreaterThan(Amount.ZERO);
+    return createAmountGreaterThanZero();
   }
 
   public static String createModel() {

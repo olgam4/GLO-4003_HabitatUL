@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
-import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createAnimalBreed;
+import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimalBreed;
 
 @RunWith(Enclosed.class)
 public class AnimalsDeserializerIT {

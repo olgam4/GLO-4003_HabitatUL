@@ -26,6 +26,10 @@ public class MoneyGenerator {
     return new Money(amount);
   }
 
+  public static Money createMoneyGreaterThanZero() {
+    return createMoneyGreaterThan(Money.ZERO);
+  }
+
   public static Amount createAmount() {
     double randomDouble =
         Faker.instance()
@@ -48,6 +52,14 @@ public class MoneyGenerator {
             .number()
             .randomDouble(MAX_NUMBER_OF_DECIMALS, amount.getValue().intValue(), Integer.MAX_VALUE);
     return new Amount(new BigDecimal(randomDouble));
+  }
+
+  public static Amount createAmountSmallerThanZero() {
+    return createAmountSmallerThan(Amount.ZERO);
+  }
+
+  public static Amount createAmountGreaterThanZero() {
+    return createAmountGreaterThan(Amount.ZERO);
   }
 
   public static Amount createAmountBetween(Amount min, Amount max) {

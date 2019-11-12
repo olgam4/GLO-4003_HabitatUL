@@ -1,23 +1,21 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+
+import static ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
 
 public class UniversityProfile extends ValueObject {
   public static final UniversityProfile UNFILLED_UNIVERSITY_PROFILE =
-      new UniversityProfile(null, null, null, null, null);
+      new UniversityProfile(null, null, UNFILLED_UNIVERSITY_PROGRAM);
 
   private final String idul;
   private final String identificationNumber;
-  private final String cycle;
-  private final String degree;
-  private final String program;
+  private final UniversityProgram program;
 
-  public UniversityProfile(
-      String idul, String identificationNumber, String cycle, String degree, String program) {
+  public UniversityProfile(String idul, String identificationNumber, UniversityProgram program) {
     this.idul = idul;
     this.identificationNumber = identificationNumber;
-    this.cycle = cycle;
-    this.degree = degree;
     this.program = program;
   }
 
@@ -29,15 +27,7 @@ public class UniversityProfile extends ValueObject {
     return identificationNumber;
   }
 
-  public String getCycle() {
-    return cycle;
-  }
-
-  public String getDegree() {
-    return degree;
-  }
-
-  public String getProgram() {
+  public UniversityProgram getProgram() {
     return program;
   }
 

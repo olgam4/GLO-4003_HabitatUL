@@ -1,29 +1,29 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formula.quote;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.AnimalsInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.CivilLiabilityLimitInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 public class QuotePremiumInput extends ValueObject {
   private final Gender namedInsuredGender;
-  private final UniversityProgramInput namedInsuredUniversityProgram;
+  private final UniversityProgram namedInsuredUniversityProgram;
   private final Gender additionalInsuredGender;
-  private final UniversityProgramInput additionalInsuredUniversityProgram;
-  private final AnimalsInput animals;
+  private final UniversityProgram additionalInsuredUniversityProgram;
+  private final Animals animals;
   private final Amount bikePrice;
-  private final CivilLiabilityLimitInput civilLiabilityLimit;
+  private final CivilLiabilityLimit civilLiabilityLimit;
 
   public QuotePremiumInput(
       Gender namedInsuredGender,
-      UniversityProgramInput namedInsuredUniversityProgram,
+      UniversityProgram namedInsuredUniversityProgram,
       Gender additionalInsuredGender,
-      UniversityProgramInput additionalInsuredUniversityProgram,
-      AnimalsInput animals,
+      UniversityProgram additionalInsuredUniversityProgram,
+      Animals animals,
       Amount bikePrice,
-      CivilLiabilityLimitInput civilLiabilityLimit) {
+      CivilLiabilityLimit civilLiabilityLimit) {
     this.namedInsuredGender = namedInsuredGender;
     this.namedInsuredUniversityProgram = namedInsuredUniversityProgram;
     this.additionalInsuredGender = additionalInsuredGender;
@@ -37,7 +37,7 @@ public class QuotePremiumInput extends ValueObject {
     return namedInsuredGender;
   }
 
-  public UniversityProgramInput getNamedInsuredUniversityProgram() {
+  public UniversityProgram getNamedInsuredUniversityProgram() {
     return namedInsuredUniversityProgram;
   }
 
@@ -45,11 +45,11 @@ public class QuotePremiumInput extends ValueObject {
     return additionalInsuredGender;
   }
 
-  public UniversityProgramInput getAdditionalInsuredUniversityProgram() {
+  public UniversityProgram getAdditionalInsuredUniversityProgram() {
     return additionalInsuredUniversityProgram;
   }
 
-  public AnimalsInput getAnimals() {
+  public Animals getAnimals() {
     return animals;
   }
 
@@ -57,7 +57,7 @@ public class QuotePremiumInput extends ValueObject {
     return bikePrice;
   }
 
-  public CivilLiabilityLimitInput getCivilLiabilityLimit() {
+  public CivilLiabilityLimit getCivilLiabilityLimit() {
     return civilLiabilityLimit;
   }
 }

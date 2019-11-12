@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteUniversityProfileError;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
@@ -33,11 +34,8 @@ public class UlRegistrationQuoteFormValidation implements QuoteFormValidation {
     if (universityProfile.isFilled()) {
       String idul = universityProfile.getIdul();
       String identificationNumber = universityProfile.getIdentificationNumber();
-      String cycle = universityProfile.getCycle();
-      String degree = universityProfile.getDegree();
-      String program = universityProfile.getProgram();
-      if (!ulRegistrarOffice.isValidRegistration(
-          idul, identificationNumber, cycle, degree, program)) {
+      UniversityProgram program = universityProfile.getProgram();
+      if (!ulRegistrarOffice.isValidRegistration(idul, identificationNumber, program)) {
         throw new QuoteUniversityProfileError();
       }
     }

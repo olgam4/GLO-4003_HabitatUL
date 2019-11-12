@@ -10,7 +10,9 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.*;
+import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createUniversityProgramRequest;
+import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.createIdul;
+import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.createNi;
 
 public class UniversityProfileRequestTest {
   private UniversityProfileRequest subject;
@@ -23,9 +25,7 @@ public class UniversityProfileRequestTest {
 
   @Test
   public void validatingRequest_shouldEnforceNotNullIdul() {
-    subject =
-        new UniversityProfileRequest(
-            null, createNi(), createCycle(), createDegree(), createProgram());
+    subject = new UniversityProfileRequest(null, createNi(), createUniversityProgramRequest());
 
     Set<ConstraintViolation<UniversityProfileRequest>> violations = validator.validate(subject);
 
@@ -34,9 +34,7 @@ public class UniversityProfileRequestTest {
 
   @Test
   public void validatingRequest_shouldEnforceNotNullNi() {
-    subject =
-        new UniversityProfileRequest(
-            createIdul(), null, createCycle(), createDegree(), createProgram());
+    subject = new UniversityProfileRequest(createIdul(), null, createUniversityProgramRequest());
 
     Set<ConstraintViolation<UniversityProfileRequest>> violations = validator.validate(subject);
 
@@ -44,34 +42,22 @@ public class UniversityProfileRequestTest {
   }
 
   @Test
-  public void validatingRequest_shouldEnforceNotNullCycle() {
-    subject =
-        new UniversityProfileRequest(
-            createIdul(), createNi(), null, createDegree(), createProgram());
-
-    Set<ConstraintViolation<UniversityProfileRequest>> violations = validator.validate(subject);
-
-    assertViolationDetected(violations, "cycle", NotNull.class);
-  }
-
-  @Test
-  public void validatingRequest_shouldEnforceNotNullDegree() {
-    subject =
-        new UniversityProfileRequest(
-            createIdul(), createNi(), createCycle(), null, createProgram());
-
-    Set<ConstraintViolation<UniversityProfileRequest>> violations = validator.validate(subject);
-
-    assertViolationDetected(violations, "degree", NotNull.class);
-  }
-
-  @Test
   public void validatingRequest_shouldEnforceNotNullProgram() {
-    subject =
-        new UniversityProfileRequest(createIdul(), createNi(), createCycle(), createDegree(), null);
+    subject = new UniversityProfileRequest(createIdul(), createNi(), null);
 
     Set<ConstraintViolation<UniversityProfileRequest>> violations = validator.validate(subject);
 
     assertViolationDetected(violations, "program", NotNull.class);
+  }
+
+  @Test
+  public void validatingRequest_shouldEnforceValidProgram() {
+    subject =
+        new UniversityProfileRequest(
+            createIdul(), createNi(), new UniversityProgramRequest(null, null, null));
+
+    Set<ConstraintViolation<UniversityProfileRequest>> violations = validator.validate(subject);
+
+    assertViolationDetected(violations, "program");
   }
 }

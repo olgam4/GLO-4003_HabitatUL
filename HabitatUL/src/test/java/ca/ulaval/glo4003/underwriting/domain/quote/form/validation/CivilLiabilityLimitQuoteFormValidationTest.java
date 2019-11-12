@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.helper.quote.form.BuildingBuilder;
 import ca.ulaval.glo4003.helper.quote.form.CivilLiabilityBuilder;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;
@@ -7,7 +8,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteCivilLiabilityLimi
 import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiabilityLimit;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

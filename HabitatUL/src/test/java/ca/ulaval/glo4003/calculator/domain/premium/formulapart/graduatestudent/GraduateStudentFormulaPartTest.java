@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.input.UniversityProgramInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
-import ca.ulaval.glo4003.helper.calculator.UniversityProgramInputBuilder;
+import ca.ulaval.glo4003.helper.calculator.UniversityProgramBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.createCycle;
+import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createCycle;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -24,8 +24,8 @@ public class GraduateStudentFormulaPartTest {
   private static final Money BASE_PREMIUM = MoneyGenerator.createMoney();
   private static final Money PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
   private static final String CYCLE = createCycle();
-  private static final UniversityProgramInput UNIVERSITY_PROGRAM =
-      UniversityProgramInputBuilder.aUniversityProgramInput().withCycle(CYCLE).build();
+  private static final UniversityProgram UNIVERSITY_PROGRAM =
+      UniversityProgramBuilder.aUniversityProgram().withCycle(CYCLE).build();
   private static final QuotePremiumInput QUOTE_PREMIUM_INPUT =
       QuotePremiumInputBuilder.aQuotePremiumInput()
           .withNamedInsuredUniversityProgram(UNIVERSITY_PROGRAM)

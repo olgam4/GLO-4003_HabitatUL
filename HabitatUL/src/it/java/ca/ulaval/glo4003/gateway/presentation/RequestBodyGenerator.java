@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
+import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
@@ -9,7 +10,6 @@ import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Animals;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -47,9 +47,15 @@ public class RequestBodyGenerator {
     JSONObject json = new JSONObject();
     json.put("idul", universityProfileRequest.getIdul());
     json.put("ni", universityProfileRequest.getNi());
-    json.put("cycle", universityProfileRequest.getCycle());
-    json.put("degree", universityProfileRequest.getDegree());
-    json.put("program", universityProfileRequest.getProgram());
+    json.put("program", toRequestBody(universityProfileRequest.getProgram()));
+    return json;
+  }
+
+  private static JSONObject toRequestBody(UniversityProgramRequest universityProgramRequest) {
+    JSONObject json = new JSONObject();
+    json.put("cycle", universityProgramRequest.getCycle());
+    json.put("degree", universityProgramRequest.getDegree());
+    json.put("major", universityProgramRequest.getMajor());
     return json;
   }
 
