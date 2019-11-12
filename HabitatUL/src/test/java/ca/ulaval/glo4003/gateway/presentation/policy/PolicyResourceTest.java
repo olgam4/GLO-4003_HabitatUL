@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
@@ -17,7 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.core.SecurityContext;
 
-import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesClaimCreationDto;
+import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesOpenClaimDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -42,7 +42,7 @@ public class PolicyResourceTest {
   public void setUp() {
     claimRequest = ClaimGenerator.createClaimRequest();
     policyViewAssembler = new PolicyViewAssembler();
-    when(policyAppService.openClaim(any(PolicyId.class), any(ClaimCreationDto.class)))
+    when(policyAppService.openClaim(any(PolicyId.class), any(OpenClaimDto.class)))
         .thenReturn(CLAIM_ID);
     subject = new PolicyResource(policyAppService, userAppService, policyViewAssembler);
   }
@@ -60,7 +60,6 @@ public class PolicyResourceTest {
   public void openingClaim_shouldDelegateToPolicyAppService() {
     subject.openClaim(SECURITY_CONTEXT, POLICY_ID, claimRequest);
 
-    verify(policyAppService)
-        .openClaim(eq(POLICY_ID), argThat(matchesClaimCreationDto(claimRequest)));
+    verify(policyAppService).openClaim(eq(POLICY_ID), argThat(matchesOpenClaimDto(claimRequest)));
   }
 }

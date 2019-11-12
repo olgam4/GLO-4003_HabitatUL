@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.Animals;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;

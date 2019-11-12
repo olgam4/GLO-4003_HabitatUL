@@ -16,8 +16,8 @@ import java.net.URI;
 import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
 
 @Path(QuoteResource.QUOTE_ROUTE)
-@Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class QuoteResource {
   public static final String QUOTE_ROUTE = "/quotes";
   public static final String PURCHASE_ROUTE = "/purchase";

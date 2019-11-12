@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
 
 import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.*;
 

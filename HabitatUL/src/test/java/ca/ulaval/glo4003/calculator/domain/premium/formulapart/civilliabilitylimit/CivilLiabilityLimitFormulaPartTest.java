@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit;
 
+import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;

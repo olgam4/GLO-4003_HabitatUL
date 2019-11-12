@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.Animals;
+import ca.ulaval.glo4003.gateway.presentation.calculator.request.BikeRequest;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import javax.validation.Valid;

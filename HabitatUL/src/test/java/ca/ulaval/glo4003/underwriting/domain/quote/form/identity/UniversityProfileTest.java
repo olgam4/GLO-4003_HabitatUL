@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.domain.quote.form.identity;
 
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
+import static ca.ulaval.glo4003.calculator.domain.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
 import static ca.ulaval.glo4003.helper.quote.form.UniversityProfileGenerator.createUniversityProfile;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

@@ -17,8 +17,8 @@ import java.net.URI;
 import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
 
 @Path(UserResource.USER_ROUTE)
-@Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
   public static final String USER_ROUTE = "/users";
   public static final String AUTHENTICATION_ROUTE = "/authenticate";

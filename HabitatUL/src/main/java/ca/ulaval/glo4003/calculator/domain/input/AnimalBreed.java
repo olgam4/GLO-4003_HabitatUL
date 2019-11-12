@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.calculator.domain.premium.formula.input;
+package ca.ulaval.glo4003.calculator.domain.input;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals;
 
+import ca.ulaval.glo4003.calculator.domain.input.AnimalBreed;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.AnimalBreed;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

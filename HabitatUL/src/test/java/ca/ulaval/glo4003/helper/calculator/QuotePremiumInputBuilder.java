@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.helper.calculator;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-import static ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator.createBikePrice;
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.createBikePrice;
 import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimals;
 import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createUniversityProgram;

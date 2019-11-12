@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.coverage.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
+import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
@@ -58,12 +58,11 @@ public class PolicyAppService {
     }
   }
 
-  public ClaimId openClaim(PolicyId policyId, ClaimCreationDto claimCreationDto) {
+  public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {
       Policy policy = policyRepository.getById(policyId);
       Claim claim =
-          claimFactory.create(
-              claimCreationDto.getSinisterType(), claimCreationDto.getLossDeclarations());
+          claimFactory.create(openClaimDto.getSinisterType(), openClaimDto.getLossDeclarations());
       policy.openClaim(claim);
       claimRepository.create(claim);
       return claim.getClaimId();

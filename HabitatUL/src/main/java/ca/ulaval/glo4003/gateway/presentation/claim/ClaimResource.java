@@ -6,14 +6,12 @@ import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.gateway.presentation.claim.response.ClaimResponse;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path(ClaimResource.CLAIM_ROUTE)
+@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ClaimResource {
   public static final String CLAIM_ROUTE = "/claims";

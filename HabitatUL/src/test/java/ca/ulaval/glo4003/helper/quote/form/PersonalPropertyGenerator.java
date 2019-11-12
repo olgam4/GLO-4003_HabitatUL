@@ -5,9 +5,9 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.createBike;
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.createBikeRequest;
 import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimals;
-import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBike;
-import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBikeRequest;
 
 public class PersonalPropertyGenerator {
   private PersonalPropertyGenerator() {}

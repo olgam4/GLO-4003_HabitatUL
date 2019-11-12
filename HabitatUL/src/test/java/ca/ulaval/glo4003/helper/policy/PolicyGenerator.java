@@ -1,21 +1,30 @@
 package ca.ulaval.glo4003.helper.policy;
 
+import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.coverage.domain.policy.Policy;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import com.github.javafaker.Faker;
+
+import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.helper.TemporalGenerator.createPeriod;
+import static ca.ulaval.glo4003.helper.TemporalGenerator.getClockProvider;
 
 public class PolicyGenerator {
   private PolicyGenerator() {}
+
+  public static OpenClaimDto createOpenClaimDto() {
+    return new OpenClaimDto(
+        ClaimGenerator.createSinisterType(), ClaimGenerator.createLossDeclarations());
+  }
 
   public static Policy createPolicy() {
     return new Policy(
         createPolicyId(),
         Faker.instance().internet().uuid(),
-        TemporalGenerator.createPeriod(),
-        MoneyGenerator.createAmount(),
-        TemporalGenerator.getClockProvider());
+        createPeriod(),
+        createAmountGreaterThanZero(),
+        getClockProvider());
   }
 
   public static PolicyId createPolicyId() {

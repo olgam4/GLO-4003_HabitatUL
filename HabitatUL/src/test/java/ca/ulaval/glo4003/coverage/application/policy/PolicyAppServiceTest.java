@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.application.policy;
 
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
+import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimFactory;
@@ -16,7 +16,7 @@ import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyAlreadyCreatedEx
 import ca.ulaval.glo4003.coverage.domain.policy.exception.PolicyNotFoundException;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.TemporalGenerator;
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
+import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -43,6 +43,7 @@ public class PolicyAppServiceTest {
   private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmount();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final ClaimId CLAIM_ID = createClaimId();
+  private static final OpenClaimDto OPEN_CLAIM_DTO = PolicyGenerator.createOpenClaimDto();
 
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
@@ -52,7 +53,6 @@ public class PolicyAppServiceTest {
   @Mock private ClaimRepository claimRepository;
 
   private PolicyAppService subject;
-  private ClaimCreationDto claimCreationDto;
 
   @Before
   public void setUp() throws PolicyNotFoundException {
@@ -61,7 +61,6 @@ public class PolicyAppServiceTest {
     when(claimFactory.create(any(), any())).thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
     subject = new PolicyAppService(policyFactory, policyRepository, claimFactory, claimRepository);
-    claimCreationDto = ClaimGenerator.createClaimCreationDto();
   }
 
   @Test
@@ -80,28 +79,28 @@ public class PolicyAppServiceTest {
 
   @Test
   public void openingClaim_shouldGetPolicyById() throws PolicyNotFoundException {
-    subject.openClaim(POLICY_ID, claimCreationDto);
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     verify(policyRepository).getById(POLICY_ID);
   }
 
   @Test
   public void openingClaim_shouldOpenClaim() {
-    subject.openClaim(POLICY_ID, claimCreationDto);
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     verify(policy).openClaim(claim);
   }
 
   @Test
   public void openingClaim_shouldCreateClaim() throws ClaimAlreadyCreatedException {
-    subject.openClaim(POLICY_ID, claimCreationDto);
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     verify(claimRepository).create(claim);
   }
 
   @Test
   public void openingClaim_shouldReturnClaimId() {
-    ClaimId claimId = subject.openClaim(POLICY_ID, claimCreationDto);
+    ClaimId claimId = subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     assertEquals(CLAIM_ID, claimId);
   }
@@ -110,7 +109,7 @@ public class PolicyAppServiceTest {
   public void openingClaim_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
-    subject.openClaim(POLICY_ID, claimCreationDto);
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
   }
 
   @Test(expected = CouldNotOpenClaimError.class)
@@ -120,6 +119,6 @@ public class PolicyAppServiceTest {
         .when(claimRepository)
         .create(any(Claim.class));
 
-    subject.openClaim(POLICY_ID, claimCreationDto);
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
   }
 }

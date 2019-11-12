@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
+import ca.ulaval.glo4003.gateway.presentation.calculator.request.BikeRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,8 +11,8 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.createBikeRequest;
 import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimals;
-import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBikeRequest;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createCoverageAmount;
 
 public class PersonalPropertyRequestTest {

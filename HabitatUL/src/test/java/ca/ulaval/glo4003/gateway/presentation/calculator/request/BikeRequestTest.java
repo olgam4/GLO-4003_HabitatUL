@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.quote.request;
+package ca.ulaval.glo4003.gateway.presentation.calculator.request;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +11,7 @@ import java.util.Set;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
 import static ca.ulaval.glo4003.helper.TemporalGenerator.createYear;
-import static ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator.createBikePrice;
-import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBrand;
-import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createModel;
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.*;
 
 public class BikeRequestTest {
   private BikeRequest subject;

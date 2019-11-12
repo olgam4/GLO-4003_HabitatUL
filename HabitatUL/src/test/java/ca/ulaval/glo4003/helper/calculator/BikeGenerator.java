@@ -1,27 +1,25 @@
-package ca.ulaval.glo4003.helper.quote.form;
+package ca.ulaval.glo4003.helper.calculator;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.request.BikeRequest;
-import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.calculator.domain.input.Bike;
+import ca.ulaval.glo4003.gateway.presentation.calculator.request.BikeRequest;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike;
 import com.github.javafaker.Faker;
 
 import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.helper.TemporalGenerator.createYear;
 
 public class BikeGenerator {
   private BikeGenerator() {}
 
   public static BikeRequest createBikeRequest() {
-    return new BikeRequest(
-        createBikePrice(), createBrand(), createModel(), TemporalGenerator.createYear());
+    return new BikeRequest(createBikePrice(), createBrand(), createModel(), createYear());
   }
 
   public static Bike createBike() {
-    return new Bike(
-        createBikePrice(), createBrand(), createModel(), TemporalGenerator.createYear());
+    return new Bike(createBikePrice(), createBrand(), createModel(), createYear());
   }
 
-  private static Amount createBikePrice() {
+  public static Amount createBikePrice() {
     return createAmountGreaterThanZero();
   }
 

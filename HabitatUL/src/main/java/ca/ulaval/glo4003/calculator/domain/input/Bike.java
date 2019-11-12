@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty;
+package ca.ulaval.glo4003.calculator.domain.input;
 
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;

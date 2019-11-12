@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.matcher;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;

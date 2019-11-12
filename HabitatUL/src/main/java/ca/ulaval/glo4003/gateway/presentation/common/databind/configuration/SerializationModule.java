@@ -2,9 +2,9 @@ package ca.ulaval.glo4003.gateway.presentation.common.databind.configuration;
 
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.calculator.domain.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram;
 
+import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.MoneyGenerator;
 import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
@@ -19,7 +19,7 @@ import org.mockito.junit.MockitoRule;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.calculator.domain.premium.formula.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
+import static ca.ulaval.glo4003.calculator.domain.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
 import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.*;
 import static org.junit.Assert.assertEquals;

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.quote.request;
+package ca.ulaval.glo4003.gateway.presentation.calculator.request;
 
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.Year;

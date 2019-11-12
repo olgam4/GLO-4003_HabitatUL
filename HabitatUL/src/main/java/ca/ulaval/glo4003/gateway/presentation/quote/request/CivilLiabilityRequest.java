@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
 
 import javax.validation.constraints.NotNull;
 

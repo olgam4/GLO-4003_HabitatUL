@@ -1,24 +1,24 @@
-package ca.ulaval.glo4003.calculator.domain.premium.formula.input;
+package ca.ulaval.glo4003.calculator.domain.input;
 
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createUniversityProgram;
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.createBike;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class UniversityProgramTest {
-  private UniversityProgram subject;
+public class BikeTest {
+  private Bike subject;
 
   @Test
   public void checkingIfFormIsFilled_withUnfilledForm_shouldReturnFalse() {
-    subject = new UniversityProgram(null, null, null);
+    subject = new Bike(null, null, null, null);
 
     assertFalse(subject.isFilled());
   }
 
   @Test
   public void checkingIfFormIsFilled_withFilledForm_shouldReturnTrue() {
-    subject = createUniversityProgram();
+    subject = createBike();
 
     assertTrue(subject.isFilled());
   }

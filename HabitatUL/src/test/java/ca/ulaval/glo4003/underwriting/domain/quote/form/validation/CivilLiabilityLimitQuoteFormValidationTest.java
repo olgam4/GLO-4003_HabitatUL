@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote.form.validation;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
 import ca.ulaval.glo4003.helper.quote.form.BuildingBuilder;
 import ca.ulaval.glo4003.helper.quote.form.CivilLiabilityBuilder;
 import ca.ulaval.glo4003.helper.quote.form.QuoteFormBuilder;

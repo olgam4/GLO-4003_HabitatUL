@@ -1,12 +1,12 @@
 package ca.ulaval.glo4003.helper.quote.form;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.input.Bike;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.Bike;
 import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
+import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.createBike;
 import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimals;
-import static ca.ulaval.glo4003.helper.quote.form.BikeGenerator.createBike;
 import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createCoverageAmount;
 
 public class PersonalPropertyBuilder {

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimCreationDto;
 import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator;
@@ -56,7 +56,7 @@ public class PolicyResourceIT {
   @Before
   public void setUp() {
     when(userAppService.getPolicies(any(String.class))).thenReturn(POLICIES_ID);
-    when(policyAppService.openClaim(any(PolicyId.class), any(ClaimCreationDto.class)))
+    when(policyAppService.openClaim(any(PolicyId.class), any(OpenClaimDto.class)))
         .thenReturn(CLAIM_ID);
     PolicyResource policyResource =
         new PolicyResource(policyAppService, userAppService, new PolicyViewAssembler());
