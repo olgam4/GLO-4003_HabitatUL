@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 
 import javax.validation.constraints.NotNull;
 

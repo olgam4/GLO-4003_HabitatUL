@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator.form.personalproperty;
 
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.PersonalProperty;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.PersonalPropertyRequest;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator.form.location;
 
-import ca.ulaval.glo4003.calculator.domain.form.location.Location;
+import ca.ulaval.glo4003.coverage.domain.form.location.Location;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.LocationRequest;
 import com.github.javafaker.Faker;
 

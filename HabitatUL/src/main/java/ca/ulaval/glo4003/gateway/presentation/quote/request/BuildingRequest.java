@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems;
+import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

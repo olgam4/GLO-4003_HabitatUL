@@ -1,12 +1,12 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.BikeEndorsementCoverageDetail;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CivilLiabilityCoverageDetail;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.PersonalPropertyCoverageDetail;
-import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.BikeEndorsementPremiumDetail;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.BikeEndorsementCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.BikeEndorsementPremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.calculator.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.calculator.premium.PremiumDetailsBuilder;

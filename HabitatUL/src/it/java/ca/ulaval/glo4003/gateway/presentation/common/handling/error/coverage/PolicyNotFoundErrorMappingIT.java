@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
-import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
+import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 
 import javax.ws.rs.core.Response;
 

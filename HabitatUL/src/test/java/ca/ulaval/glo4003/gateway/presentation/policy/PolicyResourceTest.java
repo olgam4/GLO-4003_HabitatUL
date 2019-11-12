@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
-import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
-import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.helper.shared.SecurityContextGenerator;
+import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
+import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

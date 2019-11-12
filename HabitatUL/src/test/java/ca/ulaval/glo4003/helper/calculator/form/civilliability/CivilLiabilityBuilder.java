@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.calculator.form.civilliability;
 
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 
 import static ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 

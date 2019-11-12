@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.claim;
 
-import ca.ulaval.glo4003.coverage.domain.claim.*;
+import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.math.BigDecimal;

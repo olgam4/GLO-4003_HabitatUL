@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
-import ca.ulaval.glo4003.coverage.domain.claim.LossCategory;
-import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidLossDeclarationsError;
+import ca.ulaval.glo4003.insuring.domain.claim.LossCategory;
+import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

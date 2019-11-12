@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.helper.calculator.form;
 
-import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
-import ca.ulaval.glo4003.calculator.domain.form.building.Building;
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.calculator.domain.form.identity.Identity;
-import ca.ulaval.glo4003.calculator.domain.form.location.Location;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.PersonalProperty;
+import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.form.building.Building;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability;
+import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
+import ca.ulaval.glo4003.coverage.domain.form.location.Location;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
 import static ca.ulaval.glo4003.helper.calculator.form.building.BuildingGenerator.createBuilding;

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
-import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.policy.response.PoliciesResponse;
+import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 
 import java.util.List;
 

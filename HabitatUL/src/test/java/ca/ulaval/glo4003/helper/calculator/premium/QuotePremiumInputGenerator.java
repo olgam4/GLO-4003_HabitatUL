@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.helper.calculator.premium;
 
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.AnimalBreed;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.AnimalBreed;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramGenerator;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import com.github.javafaker.Faker;

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.helper.calculator.form.building;
 
-import ca.ulaval.glo4003.calculator.domain.form.building.Building;
-import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystem;
-import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems;
+import ca.ulaval.glo4003.coverage.domain.form.building.Building;
+import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystem;
+import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.BuildingRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import com.github.javafaker.Faker;

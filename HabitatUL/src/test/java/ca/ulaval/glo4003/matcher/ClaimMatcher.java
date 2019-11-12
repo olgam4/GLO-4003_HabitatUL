@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.matcher;
 
-import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.coverage.domain.claim.Claim;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
+import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
+import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.Matchers.*;

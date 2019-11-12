@@ -4,17 +4,19 @@ import ca.ulaval.glo4003.administration.application.user.error.CouldNotAuthentic
 import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUserError;
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
-import ca.ulaval.glo4003.coverage.application.claim.error.ClaimNotFoundError;
-import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
-import ca.ulaval.glo4003.coverage.domain.policy.error.ClaimOutsideCoveragePeriodError;
-import ca.ulaval.glo4003.coverage.domain.policy.error.LossDeclarationsExceedCoverageAmountError;
-import ca.ulaval.glo4003.coverage.domain.policy.error.NotDeclaredBicycleError;
-import ca.ulaval.glo4003.coverage.domain.policy.error.PolicyNotFoundError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.*;
+import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
+import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.LossDeclarationsExceedCoverageAmountError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.NotDeclaredBicycleError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.shared.domain.handling.Error;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.*;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
+import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.HashMap;
@@ -27,9 +29,10 @@ public class ErrorResponseFactory {
   static {
     registerGenericErrors();
     registerSharedErrors();
+    registerCoverageErrors();
     registerAdministrationErrors();
     registerUnderwritingErrors();
-    registerCoverageErrors();
+    registerInsuringErrors();
   }
 
   private static void registerGenericErrors() {
@@ -46,13 +49,32 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(InvalidZipCodeError.class, Status.BAD_REQUEST);
   }
 
+  private static void registerCoverageErrors() {
+    STATUS_MAP.put(CivilLiabilityLimitError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(DifferentAdditionalInsuredError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidAnimalsError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidPreventionSystemsError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(PositiveCoverageAmountError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteEffectiveDateError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(StudentNamedInsuredError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(UniversityProfileError.class, Status.BAD_REQUEST);
+  }
+
   private static void registerAdministrationErrors() {
     STATUS_MAP.put(CouldNotAuthenticateUserError.class, Status.INTERNAL_SERVER_ERROR);
     STATUS_MAP.put(CouldNotCreateUserError.class, Status.INTERNAL_SERVER_ERROR);
     STATUS_MAP.put(InvalidCredentialsError.class, Status.UNAUTHORIZED);
   }
 
-  private static void registerCoverageErrors() {
+  private static void registerUnderwritingErrors() {
+    STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.INTERNAL_SERVER_ERROR);
+    STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(QuoteNotFoundError.class, Status.NOT_FOUND);
+  }
+
+  private static void registerInsuringErrors() {
     STATUS_MAP.put(ClaimNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CouldNotOpenClaimError.class, Status.BAD_REQUEST);
@@ -61,22 +83,6 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(LossDeclarationsExceedCoverageAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyNotFoundError.class, Status.NOT_FOUND);
-  }
-
-  private static void registerUnderwritingErrors() {
-    STATUS_MAP.put(CouldNotRequestQuoteError.class, Status.INTERNAL_SERVER_ERROR);
-    STATUS_MAP.put(InvalidAnimalsError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(InvalidPreventionSystemsError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteAlreadyPurchasedError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteCivilLiabilityLimitError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteDifferentAdditionalInsuredError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteEffectiveDateError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteExpiredError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuotePositiveCoverageAmountError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteNotFoundError.class, Status.NOT_FOUND);
-    STATUS_MAP.put(QuoteStudentNamedInsuredError.class, Status.BAD_REQUEST);
-    STATUS_MAP.put(QuoteUniversityProfileError.class, Status.BAD_REQUEST);
   }
 
   public ErrorResponse createErrorResponse(Error error) {

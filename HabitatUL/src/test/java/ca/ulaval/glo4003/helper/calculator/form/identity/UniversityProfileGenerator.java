@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator.form.identity;
 
-import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProfile;
+import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.UniversityProfileRequest;
 import com.github.javafaker.Faker;
 

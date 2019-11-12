@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
-import ca.ulaval.glo4003.gateway.presentation.calculator.request.BikeRequest;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.BikeRequest;
 import org.junit.Before;
 import org.junit.Test;
 

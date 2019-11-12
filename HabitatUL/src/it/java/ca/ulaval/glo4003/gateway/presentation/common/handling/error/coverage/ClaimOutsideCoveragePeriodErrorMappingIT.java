@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
+import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
 
 import javax.ws.rs.core.Response;
 

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.helper.calculator.form.personalproperty;
 
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Bike;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.PersonalProperty;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import static ca.ulaval.glo4003.helper.calculator.form.personalproperty.BikeGenerator.createBike;

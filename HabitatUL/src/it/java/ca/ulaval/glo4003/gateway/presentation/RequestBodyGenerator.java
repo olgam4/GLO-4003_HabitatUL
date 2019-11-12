@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
-import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
-import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
 import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
+import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;

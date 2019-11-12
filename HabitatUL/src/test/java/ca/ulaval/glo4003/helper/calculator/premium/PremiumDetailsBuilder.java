@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.helper.calculator.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.detail.BasicBlockCoveragePremiumDetail;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetail;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.BasicBlockCoveragePremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 
 import java.util.ArrayList;
 import java.util.List;

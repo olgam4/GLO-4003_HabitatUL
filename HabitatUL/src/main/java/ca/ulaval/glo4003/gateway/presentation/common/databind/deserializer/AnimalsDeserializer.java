@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.AnimalBreed;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.AnimalBreed;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidAnimalsError;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

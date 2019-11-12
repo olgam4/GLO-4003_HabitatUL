@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator.form;
 
-import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 

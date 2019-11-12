@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.underwriting;
 
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.QuoteEffectiveDateError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
-import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteEffectiveDateError;
 
 import javax.ws.rs.core.Response;
 

@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.helper.calculator.coverage;
 
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CivilLiabilityCoverageDetail;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetail;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.PersonalPropertyCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
 
 import java.util.ArrayList;
 import java.util.List;

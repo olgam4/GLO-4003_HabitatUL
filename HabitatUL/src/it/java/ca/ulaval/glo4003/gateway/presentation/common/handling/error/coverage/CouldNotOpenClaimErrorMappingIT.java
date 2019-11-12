@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
 
-import ca.ulaval.glo4003.coverage.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
+import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 
 import javax.ws.rs.core.Response;
 

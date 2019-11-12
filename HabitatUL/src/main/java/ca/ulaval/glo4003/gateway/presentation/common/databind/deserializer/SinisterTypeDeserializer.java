@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
-import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidSinisterTypeError;
+import ca.ulaval.glo4003.insuring.domain.claim.SinisterType;
 import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

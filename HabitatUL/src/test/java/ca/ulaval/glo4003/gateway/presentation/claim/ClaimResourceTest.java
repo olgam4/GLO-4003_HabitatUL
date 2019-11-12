@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.claim;
 
-import ca.ulaval.glo4003.coverage.application.claim.ClaimAppService;
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
-import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
+import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
+import ca.ulaval.glo4003.insuring.application.claim.dto.ClaimDto;
+import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

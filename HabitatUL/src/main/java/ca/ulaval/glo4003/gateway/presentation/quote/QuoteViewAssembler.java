@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.quote;
 
-import ca.ulaval.glo4003.calculator.domain.form.building.Building;
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.calculator.domain.form.identity.Identity;
-import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProfile;
-import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram;
-import ca.ulaval.glo4003.calculator.domain.form.location.Location;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Bike;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.PersonalProperty;
-import ca.ulaval.glo4003.gateway.presentation.calculator.request.BikeRequest;
+import ca.ulaval.glo4003.coverage.domain.form.building.Building;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability;
+import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
+import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
+import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
+import ca.ulaval.glo4003.coverage.domain.form.location.Location;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.BikeRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
@@ -16,13 +16,13 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 
 import java.util.Optional;
 
-import static ca.ulaval.glo4003.calculator.domain.form.building.Building.NO_COMMERCIAL_USE;
-import static ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems.UNFILLED_PREVENTION_SYSTEMS;
-import static ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;
-import static ca.ulaval.glo4003.calculator.domain.form.identity.Identity.UNFILLED_IDENTITY;
-import static ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
-import static ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals.UNFILLED_ANIMALS;
-import static ca.ulaval.glo4003.calculator.domain.form.personalproperty.Bike.UNFILLED_BIKE;
+import static ca.ulaval.glo4003.coverage.domain.form.building.Building.NO_COMMERCIAL_USE;
+import static ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems.UNFILLED_PREVENTION_SYSTEMS;
+import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;
+import static ca.ulaval.glo4003.coverage.domain.form.identity.Identity.UNFILLED_IDENTITY;
+import static ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
+import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals.UNFILLED_ANIMALS;
+import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike.UNFILLED_BIKE;
 
 public class QuoteViewAssembler {
   public QuoteFormDto from(QuoteRequest quoteRequest) {

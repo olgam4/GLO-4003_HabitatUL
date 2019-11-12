@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.context.service;
 
-import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.context.PremiumAdjustmentGenerator;
+import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 
 public class DummyGraduateStudentAdjustmentProvider implements GraduateStudentAdjustmentProvider {
   @Override

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.claim;
 
-import ca.ulaval.glo4003.coverage.domain.claim.LossCategory;
-import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.insuring.domain.claim.LossCategory;
+import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.util.HashMap;

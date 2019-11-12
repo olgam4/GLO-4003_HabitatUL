@@ -1,15 +1,15 @@
 package ca.ulaval.glo4003.gateway.presentation.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
-import ca.ulaval.glo4003.coverage.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.coverage.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
-import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
+import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
+import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import com.github.javafaker.Faker;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;

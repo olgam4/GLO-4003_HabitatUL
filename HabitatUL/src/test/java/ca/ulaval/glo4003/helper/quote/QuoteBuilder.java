@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.helper.quote;
 
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
-import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;

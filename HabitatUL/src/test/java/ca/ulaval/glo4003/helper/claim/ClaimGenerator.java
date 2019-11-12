@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.helper.claim;
 
-import ca.ulaval.glo4003.coverage.application.claim.ClaimAssembler;
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
-import ca.ulaval.glo4003.coverage.domain.claim.*;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
+import ca.ulaval.glo4003.insuring.application.claim.ClaimAssembler;
+import ca.ulaval.glo4003.insuring.application.claim.dto.ClaimDto;
+import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.github.javafaker.Faker;
 

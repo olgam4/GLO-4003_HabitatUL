@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator.form.identity;
 
-import ca.ulaval.glo4003.calculator.domain.form.identity.Identity;
+import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;

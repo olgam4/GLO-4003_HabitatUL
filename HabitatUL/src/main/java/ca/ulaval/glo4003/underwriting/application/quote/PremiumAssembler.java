@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
-import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 
 public class PremiumAssembler {
   // TODO: should be moved into calculator

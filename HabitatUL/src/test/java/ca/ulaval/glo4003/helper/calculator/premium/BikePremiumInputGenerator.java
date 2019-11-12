@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.calculator.premium;
 
-import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BikePremiumInput;
 import ca.ulaval.glo4003.helper.calculator.form.personalproperty.BikeGenerator;
 
 public class BikePremiumInputGenerator {

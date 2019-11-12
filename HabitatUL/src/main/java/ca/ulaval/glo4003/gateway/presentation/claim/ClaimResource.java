@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.claim;
 
-import ca.ulaval.glo4003.coverage.application.claim.ClaimAppService;
-import ca.ulaval.glo4003.coverage.application.claim.dto.ClaimDto;
-import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
 import ca.ulaval.glo4003.gateway.presentation.claim.response.ClaimResponse;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
+import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
+import ca.ulaval.glo4003.insuring.application.claim.dto.ClaimDto;
+import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

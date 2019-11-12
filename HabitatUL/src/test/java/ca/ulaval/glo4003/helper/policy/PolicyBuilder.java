@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.helper.policy;
 
-import ca.ulaval.glo4003.coverage.domain.policy.Policy;
-import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
+import ca.ulaval.glo4003.insuring.domain.policy.Policy;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;

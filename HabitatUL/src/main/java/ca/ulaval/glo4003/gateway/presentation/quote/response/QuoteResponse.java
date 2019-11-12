@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.response;
 
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;

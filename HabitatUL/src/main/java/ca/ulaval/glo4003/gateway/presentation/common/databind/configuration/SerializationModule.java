@@ -1,17 +1,17 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.configuration;
 
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
-import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
-import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems;
-import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
-import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.domain.claim.ClaimId;
-import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
-import ca.ulaval.glo4003.coverage.domain.claim.SinisterType;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.serializer.*;
+import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.insuring.domain.claim.SinisterType;
 import ca.ulaval.glo4003.shared.domain.address.Floor;
 import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;

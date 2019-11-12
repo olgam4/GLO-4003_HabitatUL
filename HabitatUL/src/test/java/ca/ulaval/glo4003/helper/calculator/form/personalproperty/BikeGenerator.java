@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.calculator.form.personalproperty;
 
-import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Bike;
-import ca.ulaval.glo4003.gateway.presentation.calculator.request.BikeRequest;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.BikeRequest;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.github.javafaker.Faker;
 

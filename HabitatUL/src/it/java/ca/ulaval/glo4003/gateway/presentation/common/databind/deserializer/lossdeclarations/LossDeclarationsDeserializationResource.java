@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.lossdeclarations;
 
-import ca.ulaval.glo4003.coverage.domain.claim.LossDeclarations;
+import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
