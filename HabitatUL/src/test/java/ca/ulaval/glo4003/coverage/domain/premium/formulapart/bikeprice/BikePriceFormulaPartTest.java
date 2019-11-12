@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.bikeprice;
 
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bike.BikePremiumInput;
-import ca.ulaval.glo4003.helper.calculator.premium.BikePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.coverage.premium.BikePremiumInputGenerator;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;

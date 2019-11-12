@@ -11,7 +11,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import org.hamcrest.Matcher;
 
@@ -39,15 +39,15 @@ public class QuoteMatcher {
         hasProperty("expirationDate", equalTo(quote.getExpirationDate())));
   }
 
-  public static Matcher<QuoteForm> matchesQuoteForm(final QuoteFormDto quoteFormDto) {
+  public static Matcher<QuoteForm> matchesQuoteForm(final RequestQuoteDto requestQuoteDto) {
     return allOf(
-        hasProperty("personalInformation", equalTo(quoteFormDto.getPersonalInformation())),
-        hasProperty("additionalInsured", equalTo(quoteFormDto.getAdditionalInsured())),
-        hasProperty("location", equalTo(quoteFormDto.getLocation())),
-        hasProperty("effectiveDate", equalTo(quoteFormDto.getEffectiveDate())),
-        hasProperty("building", equalTo(quoteFormDto.getBuilding())),
-        hasProperty("personalProperty", equalTo(quoteFormDto.getPersonalProperty())),
-        hasProperty("civilLiability", equalTo(quoteFormDto.getCivilLiability())));
+        hasProperty("personalInformation", equalTo(requestQuoteDto.getPersonalInformation())),
+        hasProperty("additionalInsured", equalTo(requestQuoteDto.getAdditionalInsured())),
+        hasProperty("location", equalTo(requestQuoteDto.getLocation())),
+        hasProperty("effectiveDate", equalTo(requestQuoteDto.getEffectiveDate())),
+        hasProperty("building", equalTo(requestQuoteDto.getBuilding())),
+        hasProperty("personalProperty", equalTo(requestQuoteDto.getPersonalProperty())),
+        hasProperty("civilLiability", equalTo(requestQuoteDto.getCivilLiability())));
   }
 
   public static Matcher<Identity> matchesIdentity(final IdentityRequest identityRequest) {
@@ -108,8 +108,7 @@ public class QuoteMatcher {
     return allOf(hasProperty("limit", equalTo(civilLiabilityRequest.get().getLimit())));
   }
 
-  public static Matcher<QuoteFormDto> matchesQuoteFormDto(final QuoteRequest quoteRequest) {
-    System.out.println(quoteRequest);
+  public static Matcher<RequestQuoteDto> matchesRequestQuoteDto(final QuoteRequest quoteRequest) {
     return allOf(
         hasProperty("personalInformation", matchesIdentity(quoteRequest.getPersonalInformation())),
         hasProperty(

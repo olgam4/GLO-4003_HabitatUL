@@ -10,11 +10,11 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.calculator.form.building.BuildingGenerator.createBuildingRequest;
-import static ca.ulaval.glo4003.helper.calculator.form.civilliability.CivilLiabilityGenerator.createCivilLiabilityRequest;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator.createIdentityRequest;
-import static ca.ulaval.glo4003.helper.calculator.form.location.LocationGenerator.createLocationRequest;
-import static ca.ulaval.glo4003.helper.calculator.form.personalproperty.PersonalPropertyGenerator.createPersonalPropertyRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.building.BuildingGenerator.createBuildingRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.civilliability.CivilLiabilityGenerator.createCivilLiabilityRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator.createIdentityRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.location.LocationGenerator.createLocationRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createPersonalPropertyRequest;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFutureDate;
 
 public class QuoteRequestTest {

@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
 import javax.validation.Valid;
@@ -42,8 +42,8 @@ public class QuoteResource {
 
   @POST
   public Response requestQuote(@Valid QuoteRequest quoteRequest) {
-    QuoteFormDto quoteFormDto = quoteViewAssembler.from(quoteRequest);
-    QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
+    RequestQuoteDto requestQuoteDto = quoteViewAssembler.from(quoteRequest);
+    QuoteDto quoteDto = quoteAppService.requestQuote(requestQuoteDto);
     String quoteIdString = quoteDto.getQuoteId().toRepresentation();
     URI location = UriBuilder.fromPath(CONTEXT_PATH).path(QUOTE_ROUTE).path(quoteIdString).build();
     return Response.created(location).entity(quoteViewAssembler.from(quoteDto)).build();

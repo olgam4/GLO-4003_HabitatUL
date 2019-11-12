@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.form.civilliability;
 
-import ca.ulaval.glo4003.helper.calculator.form.civilliability.CivilLiabilityGenerator;
+import ca.ulaval.glo4003.helper.coverage.form.civilliability.CivilLiabilityGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;

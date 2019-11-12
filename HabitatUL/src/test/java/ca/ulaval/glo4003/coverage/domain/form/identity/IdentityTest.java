@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.form.identity;
 
-import ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator;
+import ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

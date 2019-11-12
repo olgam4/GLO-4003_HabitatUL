@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.gateway.presentation.common.handling.MockedDeserializat
 
 import javax.ws.rs.core.Response;
 
-import static ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator.createAnimals;
+import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createAnimals;
 
 public class InvalidAnimalsErrorMappingIT extends ErrorMappingIT {
   private static final String INVALID_VALUE = createAnimals().toString();

@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;
 import org.junit.*;
@@ -44,7 +44,7 @@ public class QuoteResourceIT {
 
   @Before
   public void setUp() {
-    when(quoteAppService.requestQuote(any(QuoteFormDto.class))).thenReturn(QUOTE_DTO);
+    when(quoteAppService.requestQuote(any(RequestQuoteDto.class))).thenReturn(QUOTE_DTO);
     QuoteResource quoteResource =
         new QuoteResource(quoteAppService, userAppService, new QuoteViewAssembler());
     ResourceConfig resourceConfig =

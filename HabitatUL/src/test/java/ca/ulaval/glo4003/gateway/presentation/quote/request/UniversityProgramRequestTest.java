@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramGenerator.*;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.*;
 
 public class UniversityProgramRequestTest {
   private UniversityProgramRequest subject;

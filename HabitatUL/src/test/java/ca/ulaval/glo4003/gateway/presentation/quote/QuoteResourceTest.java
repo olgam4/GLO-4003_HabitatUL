@@ -2,7 +2,6 @@ package ca.ulaval.glo4003.gateway.presentation.quote;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
-import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.shared.SecurityContextGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
@@ -16,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.core.SecurityContext;
 
-import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteFormDto;
+import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesRequestQuoteDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,7 +37,7 @@ public class QuoteResourceTest {
 
   @Before
   public void setUp() {
-    quoteRequest = QuoteFormGenerator.createQuoteRequest();
+    quoteRequest = QuoteGenerator.createQuoteRequest();
     quoteViewAssembler = new QuoteViewAssembler();
     quoteDto = QuoteGenerator.createQuoteDto();
     when(quoteAppService.requestQuote(any())).thenReturn(quoteDto);
@@ -49,7 +48,7 @@ public class QuoteResourceTest {
   public void requestingQuote_shouldDelegateToQuoteAppService() {
     subject.requestQuote(quoteRequest);
 
-    verify(quoteAppService).requestQuote(argThat(matchesQuoteFormDto(quoteRequest)));
+    verify(quoteAppService).requestQuote(argThat(matchesRequestQuoteDto(quoteRequest)));
   }
 
   @Test

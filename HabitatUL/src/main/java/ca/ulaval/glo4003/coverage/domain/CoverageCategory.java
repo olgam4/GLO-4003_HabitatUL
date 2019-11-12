@@ -4,8 +4,7 @@ public enum CoverageCategory {
   BASIC_BLOCK("basic block"),
   BIKE_ENDORSEMENT("bike endorsement"),
   CIVIL_LIABILITY("civil liability"),
-  PERSONAL_PROPERTY("personal property"),
-  OTHER("other");
+  PERSONAL_PROPERTY("personal property");
 
   private final String name;
 

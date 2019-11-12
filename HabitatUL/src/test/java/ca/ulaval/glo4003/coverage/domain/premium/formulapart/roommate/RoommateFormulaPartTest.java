@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.roommate;
 
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoRule;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator.createGender;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator.createGender;
 import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

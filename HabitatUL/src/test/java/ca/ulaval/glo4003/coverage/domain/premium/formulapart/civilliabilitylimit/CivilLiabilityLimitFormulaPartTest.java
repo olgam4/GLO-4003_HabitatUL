@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimi
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

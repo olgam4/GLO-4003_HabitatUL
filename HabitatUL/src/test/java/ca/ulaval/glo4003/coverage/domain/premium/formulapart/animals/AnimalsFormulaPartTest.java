@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.NoPremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;

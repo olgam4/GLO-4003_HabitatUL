@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.coverage.infrastructure.premium.formula.quote;
 
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,14 +1,12 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.application.form.validation.QuoteFormValidator;
-import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
+import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.application.dto.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
@@ -17,18 +15,14 @@ import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundExcept
 
 public class QuoteAppService {
   private QuoteAssembler quoteAssembler;
-  private QuoteFormValidator quoteFormValidator;
-  private PremiumAssembler premiumAssembler;
-  private PremiumCalculator premiumCalculator;
+  private CoverageDomainService coverageDomainService;
   private QuoteFactory quoteFactory;
   private QuoteRepository quoteRepository;
 
   public QuoteAppService() {
     this(
         new QuoteAssembler(),
-        new QuoteFormValidator(),
-        new PremiumAssembler(),
-        new PremiumCalculator(),
+        new CoverageDomainService(),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
             ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
@@ -38,26 +32,22 @@ public class QuoteAppService {
 
   public QuoteAppService(
       QuoteAssembler quoteAssembler,
-      QuoteFormValidator quoteFormValidator,
-      PremiumAssembler premiumAssembler,
-      PremiumCalculator premiumCalculator,
+      CoverageDomainService coverageDomainService,
       QuoteFactory quoteFactory,
       QuoteRepository quoteRepository) {
-    this.quoteFormValidator = quoteFormValidator;
     this.quoteAssembler = quoteAssembler;
-    this.premiumAssembler = premiumAssembler;
-    this.premiumCalculator = premiumCalculator;
+    this.coverageDomainService = coverageDomainService;
     this.quoteFactory = quoteFactory;
     this.quoteRepository = quoteRepository;
   }
 
-  public QuoteDto requestQuote(QuoteFormDto quoteFormDto) {
+  public QuoteDto requestQuote(RequestQuoteDto requestQuoteDto) {
     try {
-      QuoteForm quoteForm = quoteAssembler.from(quoteFormDto);
-      quoteFormValidator.validate(quoteForm);
-      QuotePremiumInput quotePremiumInput = premiumAssembler.toQuotePremiumInput(quoteForm);
-      PremiumDetails premiumDetails = premiumCalculator.computeQuotePremium(quotePremiumInput);
-      Quote quote = quoteFactory.create(premiumDetails, quoteForm);
+      QuoteForm quoteForm = quoteAssembler.from(requestQuoteDto);
+      CoverageDto coverageDto = coverageDomainService.requestQuoteCoverage(quoteForm);
+      Quote quote =
+          quoteFactory.create(
+              quoteForm, coverageDto.getCoverageDetails(), coverageDto.getPremiumDetails());
       quoteRepository.create(quote);
       return quoteAssembler.from(quote);
     } catch (QuoteAlreadyCreatedException e) {

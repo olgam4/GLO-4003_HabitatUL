@@ -11,9 +11,9 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.calculator.form.personalproperty.BikeGenerator.createBikeRequest;
-import static ca.ulaval.glo4003.helper.calculator.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
-import static ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator.createAnimals;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BikeGenerator.createBikeRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
+import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createAnimals;
 
 public class PersonalPropertyRequestTest {
   private PersonalPropertyRequest subject;

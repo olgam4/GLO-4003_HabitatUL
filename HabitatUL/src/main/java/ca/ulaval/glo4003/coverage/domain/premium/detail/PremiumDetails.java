@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.coverage.domain.premium.detail;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
@@ -28,13 +27,6 @@ public class PremiumDetails extends ValueObject {
 
   public List<PremiumDetail> getCollection() {
     return new ArrayList<>(collection);
-  }
-
-  public boolean includes(CoverageCategory coverageCategory) {
-    return !collection.stream()
-        .filter(x -> x.getCoverage().equals(coverageCategory))
-        .collect(Collectors.toList())
-        .isEmpty();
   }
 
   public Money computeTotalPremium() {

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.premium.formula.bike;
 
-import ca.ulaval.glo4003.helper.calculator.premium.BikePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.coverage.premium.BikePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;

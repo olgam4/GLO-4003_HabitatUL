@@ -1,10 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.BikeEndorsementCoverageDetail;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
@@ -26,11 +22,11 @@ public class QuoteFactory {
     this.clockProvider = clockProvider;
   }
 
-  public Quote create(PremiumDetails premiumDetails, QuoteForm quoteForm) {
+  public Quote create(
+      QuoteForm quoteForm, CoverageDetails coverageDetails, PremiumDetails premiumDetails) {
     QuoteId quoteId = new QuoteId();
     DateTime expirationDate = createExpirationDate();
     Period effectivePeriod = createEffectivePeriod(quoteForm);
-    CoverageDetails coverageDetails = createCoverageDetails(premiumDetails, quoteForm);
 
     return new Quote(
         quoteId,
@@ -53,37 +49,5 @@ public class QuoteFactory {
     Date effectivePeriodEndDate =
         quoteForm.getEffectiveDate().plus(quoteEffectivePeriodProvider.getQuoteEffectivePeriod());
     return new Period(effectivePeriodStartDate, effectivePeriodEndDate);
-  }
-
-  private CoverageDetails createCoverageDetails(
-      PremiumDetails premiumDetails, QuoteForm quoteForm) {
-    CoverageDetails coverageDetails =
-        new CoverageDetails(
-            createPersonalPropertyCoverageDetail(quoteForm),
-            createCivilLiabilityCoverageDetail(quoteForm));
-    coverageDetails =
-        addBikeEndorsementCoverageDetailOnDemand(premiumDetails, quoteForm, coverageDetails);
-    return coverageDetails;
-  }
-
-  private PersonalPropertyCoverageDetail createPersonalPropertyCoverageDetail(QuoteForm quoteForm) {
-    return new PersonalPropertyCoverageDetail(quoteForm.getPersonalProperty().getCoverageAmount());
-  }
-
-  private CivilLiabilityCoverageDetail createCivilLiabilityCoverageDetail(QuoteForm quoteForm) {
-    return new CivilLiabilityCoverageDetail(quoteForm.getCivilLiability().getLimit());
-  }
-
-  private CoverageDetails addBikeEndorsementCoverageDetailOnDemand(
-      PremiumDetails premiumDetails, QuoteForm quoteForm, CoverageDetails coverageDetails) {
-    if (premiumDetails.includes(CoverageCategory.BIKE_ENDORSEMENT)) {
-      coverageDetails =
-          coverageDetails.addCoverageDetail(createBikeEndorsementCoverageDetail(quoteForm));
-    }
-    return coverageDetails;
-  }
-
-  private BikeEndorsementCoverageDetail createBikeEndorsementCoverageDetail(QuoteForm quoteForm) {
-    return new BikeEndorsementCoverageDetail(quoteForm.getPersonalProperty().getBike().getPrice());
   }
 }

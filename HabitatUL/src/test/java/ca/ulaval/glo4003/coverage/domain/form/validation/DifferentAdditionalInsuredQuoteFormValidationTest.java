@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.DifferentAdditionalInsuredError;
-import ca.ulaval.glo4003.helper.calculator.form.QuoteFormBuilder;
-import ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator;
+import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
+import ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator;
 import org.junit.Before;
 import org.junit.Test;
 

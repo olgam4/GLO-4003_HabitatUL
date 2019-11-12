@@ -10,9 +10,9 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProfileGenerator.createIdul;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProfileGenerator.createNi;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramGenerator.createUniversityProgramRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createIdul;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createNi;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.createUniversityProgramRequest;
 
 public class UniversityProfileRequestTest {
   private UniversityProfileRequest subject;

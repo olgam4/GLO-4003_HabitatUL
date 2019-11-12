@@ -12,7 +12,7 @@ import ca.ulaval.glo4003.gateway.presentation.coverage.request.BikeRequest;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.gateway.presentation.quote.response.QuoteResponse;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 
 import java.util.Optional;
 
@@ -25,8 +25,8 @@ import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals.UN
 import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bike.UNFILLED_BIKE;
 
 public class QuoteViewAssembler {
-  public QuoteFormDto from(QuoteRequest quoteRequest) {
-    return new QuoteFormDto(
+  public RequestQuoteDto from(QuoteRequest quoteRequest) {
+    return new RequestQuoteDto(
         fromIdentityRequest(quoteRequest.getPersonalInformation()),
         fromIdentityRequest(quoteRequest.getAdditionalInsured()),
         fromLocationRequest(quoteRequest.getLocation()),

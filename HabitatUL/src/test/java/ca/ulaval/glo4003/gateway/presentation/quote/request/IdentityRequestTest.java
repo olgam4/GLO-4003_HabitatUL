@@ -10,8 +10,8 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator.*;
-import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProfileGenerator.createUniversityProfileRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator.*;
+import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createUniversityProfileRequest;
 
 public class IdentityRequestTest {
   private IdentityRequest subject;

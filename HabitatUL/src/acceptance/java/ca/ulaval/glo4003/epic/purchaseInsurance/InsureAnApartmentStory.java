@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.epic.purchaseInsurance;
 
 import ca.ulaval.glo4003.AcceptanceTestHelper;
-import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
-import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
+import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class InsureAnApartmentStory {
   private QuoteAppService quoteAppService;
-  private QuoteFormDto quoteFormDto;
+  private RequestQuoteDto requestQuoteDto;
 
   @BeforeClass
   public static void setUpClass() {
@@ -23,12 +23,12 @@ public class InsureAnApartmentStory {
   @Before
   public void setUp() {
     quoteAppService = new QuoteAppService();
-    quoteFormDto = QuoteFormGenerator.createQuoteFormDto();
+    requestQuoteDto = QuoteGenerator.createRequestQuoteDto();
   }
 
   @Test
   public void anonymousStudentWantsToReceiveQuotePremium() {
-    QuoteDto quoteDto = quoteAppService.requestQuote(quoteFormDto);
+    QuoteDto quoteDto = quoteAppService.requestQuote(requestQuoteDto);
 
     assertNotNull(quoteDto.getPremiumDetails());
     assertNotNull(quoteDto.getPremiumDetails().computeTotalPremium());
