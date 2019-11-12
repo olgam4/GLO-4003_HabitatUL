@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent;
 
-import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
-import ca.ulaval.glo4003.helper.calculator.UniversityProgramBuilder;
+import ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramBuilder;
+import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createCycle;
+import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramGenerator.createCycle;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

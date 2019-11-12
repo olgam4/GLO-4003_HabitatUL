@@ -1,14 +1,15 @@
 package ca.ulaval.glo4003.underwriting.application.quote.dto;
 
+import ca.ulaval.glo4003.calculator.domain.form.building.Building;
+import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiability;
+import ca.ulaval.glo4003.calculator.domain.form.identity.Identity;
+import ca.ulaval.glo4003.calculator.domain.form.location.Location;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.shared.application.DataTransferObject;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 
 public class QuoteFormDto extends DataTransferObject {
+  // TODO: rename using use case CreateQuoteDto
   private final Identity personalInformation;
   private final Identity additionalInsured;
   private final Location location;

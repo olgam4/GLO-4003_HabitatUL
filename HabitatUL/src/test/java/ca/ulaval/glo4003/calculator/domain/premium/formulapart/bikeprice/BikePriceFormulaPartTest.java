@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.calculator.domain.premium.formulapart.bikeprice;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.calculator.BikePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.calculator.premium.BikePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;

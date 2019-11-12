@@ -10,8 +10,8 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.TemporalGenerator.createYear;
-import static ca.ulaval.glo4003.helper.calculator.BikeGenerator.*;
+import static ca.ulaval.glo4003.helper.calculator.form.personalproperty.BikeGenerator.*;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createYear;
 
 public class BikeRequestTest {
   private BikeRequest subject;

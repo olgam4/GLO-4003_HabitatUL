@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram;
 
-import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumFormulaPart;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;

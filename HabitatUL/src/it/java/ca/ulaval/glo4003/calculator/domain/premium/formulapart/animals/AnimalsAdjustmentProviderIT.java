@@ -1,12 +1,12 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.animals;
 
-import ca.ulaval.glo4003.calculator.domain.input.AnimalBreed;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createAnimalBreed;
+import static ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator.createAnimalBreed;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class AnimalsAdjustmentProviderIT {

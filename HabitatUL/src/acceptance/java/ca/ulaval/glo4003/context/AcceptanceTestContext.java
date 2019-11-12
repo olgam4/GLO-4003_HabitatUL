@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.context;
 
+import ca.ulaval.glo4003.calculator.domain.form.validation.UlRegistrarOffice;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
@@ -10,14 +11,13 @@ import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylim
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.context.service.*;
-import ca.ulaval.glo4003.helper.TemporalGenerator;
+import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.validation.UlRegistrarOffice;
-import ca.ulaval.glo4003.underwriting.infrastructure.quote.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;

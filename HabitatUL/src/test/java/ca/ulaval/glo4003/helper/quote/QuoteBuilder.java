@@ -1,19 +1,19 @@
 package ca.ulaval.glo4003.helper.quote;
 
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.helper.TemporalGenerator;
-import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import com.github.javafaker.Faker;
 
-import static ca.ulaval.glo4003.helper.calculator.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.calculator.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.helper.calculator.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.helper.calculator.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteId;
 
 public class QuoteBuilder {

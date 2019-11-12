@@ -6,8 +6,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca.ulaval.glo4003.helper.calculator.CoverageDetailsGenerator.createCoverageDetail;
-import static ca.ulaval.glo4003.helper.calculator.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.helper.calculator.coverage.CoverageDetailsGenerator.createCoverageDetail;
+import static ca.ulaval.glo4003.helper.calculator.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static org.junit.Assert.assertEquals;
 
 public class CoverageDetailsTest {

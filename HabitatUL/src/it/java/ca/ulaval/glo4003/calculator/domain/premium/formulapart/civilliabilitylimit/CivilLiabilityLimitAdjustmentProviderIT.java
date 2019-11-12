@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylimit;
 
-import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class CivilLiabilityLimitAdjustmentProviderIT {

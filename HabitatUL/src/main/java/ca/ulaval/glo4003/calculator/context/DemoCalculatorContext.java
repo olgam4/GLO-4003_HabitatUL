@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.calculator.context;
 
+import ca.ulaval.glo4003.calculator.domain.form.validation.UlRegistrarOffice;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasePremiumCalculator;
@@ -10,6 +11,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.formulapart.civilliabilitylim
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
+import ca.ulaval.glo4003.calculator.infrastructure.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBasicBlockCoverageMaximumBikePriceProvider;
 import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.bike.HardCodedBikeBasePremiumCalculator;
 import ca.ulaval.glo4003.calculator.infrastructure.premium.formula.quote.HardCodedQuoteBasePremiumCalculator;
@@ -25,6 +27,7 @@ import static ca.ulaval.glo4003.context.ServiceLocator.register;
 
 public class DemoCalculatorContext {
   public void execute() {
+    register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
     register(QuoteBasePremiumCalculator.class, new HardCodedQuoteBasePremiumCalculator());
     register(
         CivilLiabilityLimitAdjustmentProvider.class,

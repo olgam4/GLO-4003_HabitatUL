@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formula.quote;
 
-import ca.ulaval.glo4003.calculator.domain.input.Animals;
-import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
-import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;

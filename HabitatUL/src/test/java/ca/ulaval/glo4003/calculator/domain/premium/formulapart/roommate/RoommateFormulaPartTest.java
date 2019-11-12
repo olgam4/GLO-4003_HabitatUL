@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.calculator.domain.premium.formulapart.roommate;
 
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
@@ -18,8 +18,8 @@ import org.mockito.junit.MockitoRule;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
-import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createGender;
+import static ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator.createGender;
+import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

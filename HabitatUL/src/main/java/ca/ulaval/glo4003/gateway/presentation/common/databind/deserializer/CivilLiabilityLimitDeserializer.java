@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
-import ca.ulaval.glo4003.calculator.domain.input.CivilLiabilityLimit;
+import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidCivilLiabilityLimitError;
 import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import com.fasterxml.jackson.core.JsonParser;

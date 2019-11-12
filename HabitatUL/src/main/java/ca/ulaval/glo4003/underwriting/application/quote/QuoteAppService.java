@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.calculator.application.form.validation.QuoteFormValidator;
 import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.context.ServiceLocator;
@@ -12,7 +14,6 @@ import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError
 import ca.ulaval.glo4003.underwriting.domain.quote.*;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuoteAppService {
   private QuoteAssembler quoteAssembler;

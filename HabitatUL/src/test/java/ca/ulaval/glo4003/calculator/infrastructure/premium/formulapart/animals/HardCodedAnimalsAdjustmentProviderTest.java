@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.calculator.infrastructure.premium.formulapart.animals;
 
-import ca.ulaval.glo4003.calculator.domain.input.AnimalBreed;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
@@ -13,7 +13,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)

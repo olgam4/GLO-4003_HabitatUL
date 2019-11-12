@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formula.quote;
 
-import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputGenerator;
+import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;

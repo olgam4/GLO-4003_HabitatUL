@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikeEndorsementP
 import ca.ulaval.glo4003.calculator.domain.premium.formula.bike.BikePremiumInput;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;

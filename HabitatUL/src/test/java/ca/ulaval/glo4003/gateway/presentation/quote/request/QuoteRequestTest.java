@@ -10,12 +10,12 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.TemporalGenerator.createFutureDate;
-import static ca.ulaval.glo4003.helper.quote.form.BuildingGenerator.createBuildingRequest;
-import static ca.ulaval.glo4003.helper.quote.form.CivilLiabilityGenerator.createCivilLiabilityRequest;
-import static ca.ulaval.glo4003.helper.quote.form.IdentityGenerator.createIdentityRequest;
-import static ca.ulaval.glo4003.helper.quote.form.LocationGenerator.createLocationRequest;
-import static ca.ulaval.glo4003.helper.quote.form.PersonalPropertyGenerator.createPersonalPropertyRequest;
+import static ca.ulaval.glo4003.helper.calculator.form.building.BuildingGenerator.createBuildingRequest;
+import static ca.ulaval.glo4003.helper.calculator.form.civilliability.CivilLiabilityGenerator.createCivilLiabilityRequest;
+import static ca.ulaval.glo4003.helper.calculator.form.identity.IdentityGenerator.createIdentityRequest;
+import static ca.ulaval.glo4003.helper.calculator.form.location.LocationGenerator.createLocationRequest;
+import static ca.ulaval.glo4003.helper.calculator.form.personalproperty.PersonalPropertyGenerator.createPersonalPropertyRequest;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFutureDate;
 
 public class QuoteRequestTest {
   private QuoteRequest subject;

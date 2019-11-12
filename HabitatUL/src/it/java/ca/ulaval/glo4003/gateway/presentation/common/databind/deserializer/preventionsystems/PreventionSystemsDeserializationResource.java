@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.preventionsystems;
 
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
+import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.animals;
 
-import ca.ulaval.glo4003.calculator.domain.input.Animals;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

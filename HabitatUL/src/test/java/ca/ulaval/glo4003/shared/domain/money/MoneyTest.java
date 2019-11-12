@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.shared.domain.money;
 
-import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Test;
 

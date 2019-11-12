@@ -1,18 +1,18 @@
 package ca.ulaval.glo4003.matcher;
 
-import ca.ulaval.glo4003.calculator.domain.input.Animals;
-import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
+import ca.ulaval.glo4003.calculator.domain.form.building.Building;
+import ca.ulaval.glo4003.calculator.domain.form.civilliability.CivilLiability;
+import ca.ulaval.glo4003.calculator.domain.form.identity.Identity;
+import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProfile;
+import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.location.Location;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.Animals;
+import ca.ulaval.glo4003.calculator.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.gateway.presentation.quote.request.*;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.Building;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.civilliability.CivilLiability;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.Identity;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.identity.UniversityProfile;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.location.Location;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.personalproperty.PersonalProperty;
 import org.hamcrest.Matcher;
 
 import java.util.Optional;

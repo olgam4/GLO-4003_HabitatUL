@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.administration.communication.user;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.application.user.event.PolicyAssociatedEvent;
 import ca.ulaval.glo4003.administration.application.user.event.QuotePaymentRequestedEvent;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import com.github.javafaker.Faker;
 import org.junit.Before;

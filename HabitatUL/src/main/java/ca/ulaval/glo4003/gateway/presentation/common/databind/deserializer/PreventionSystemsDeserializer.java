@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer;
 
+import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystem;
+import ca.ulaval.glo4003.calculator.domain.form.building.PreventionSystems;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidPreventionSystemsError;
 import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystem;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.building.PreventionSystems;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;

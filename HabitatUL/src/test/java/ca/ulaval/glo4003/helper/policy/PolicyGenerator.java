@@ -6,9 +6,9 @@ import ca.ulaval.glo4003.coverage.domain.policy.PolicyId;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import com.github.javafaker.Faker;
 
-import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThanZero;
-import static ca.ulaval.glo4003.helper.TemporalGenerator.createPeriod;
-import static ca.ulaval.glo4003.helper.TemporalGenerator.getClockProvider;
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPeriod;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 
 public class PolicyGenerator {
   private PolicyGenerator() {}

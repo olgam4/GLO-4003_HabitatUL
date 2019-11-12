@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 
-import static ca.ulaval.glo4003.helper.EnumSampler.sample;
-import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountBetween;
-import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmountGreaterThan;
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.*;
+import static ca.ulaval.glo4003.helper.shared.EnumSampler.sample;
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountBetween;
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThan;
 
 public class ClaimBuilder {
   private static final ClaimId DEFAULT_CLAIM_ID = createClaimId();

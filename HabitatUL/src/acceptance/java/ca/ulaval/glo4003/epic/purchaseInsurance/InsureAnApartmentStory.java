@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.epic.purchaseInsurance;
 
 import ca.ulaval.glo4003.AcceptanceTestHelper;
-import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;

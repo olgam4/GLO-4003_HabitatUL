@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.calculator.domain.premium.formulapart.preferentialprogram;
 
-import ca.ulaval.glo4003.calculator.domain.input.UniversityProgram;
+import ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram;
 import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.MoneyGenerator;
-import ca.ulaval.glo4003.helper.calculator.QuotePremiumInputBuilder;
-import ca.ulaval.glo4003.helper.calculator.UniversityProgramBuilder;
+import ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramBuilder;
+import ca.ulaval.glo4003.helper.calculator.premium.QuotePremiumInputBuilder;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,9 +19,9 @@ import org.mockito.junit.MockitoRule;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.calculator.domain.input.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
-import static ca.ulaval.glo4003.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
-import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.*;
+import static ca.ulaval.glo4003.calculator.domain.form.identity.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
+import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramGenerator.*;
+import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

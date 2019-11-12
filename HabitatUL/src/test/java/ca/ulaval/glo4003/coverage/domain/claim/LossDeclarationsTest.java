@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.MoneyGenerator.createAmount;
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmount;
 import static org.junit.Assert.assertEquals;
 
 public class LossDeclarationsTest {

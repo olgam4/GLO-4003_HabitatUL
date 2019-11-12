@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.calculator.domain.premium.adjustment.PremiumAdjustment;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.calculator.UniversityProgramGenerator.createCycle;
+import static ca.ulaval.glo4003.helper.calculator.form.identity.UniversityProgramGenerator.createCycle;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class GraduateStudentAdjustmentProviderIT {

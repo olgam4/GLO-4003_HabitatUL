@@ -11,8 +11,8 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.quote.form.BuildingGenerator.createCommercialUse;
-import static ca.ulaval.glo4003.helper.quote.form.BuildingGenerator.createPreventionSystems;
+import static ca.ulaval.glo4003.helper.calculator.form.building.BuildingGenerator.createCommercialUse;
+import static ca.ulaval.glo4003.helper.calculator.form.building.BuildingGenerator.createPreventionSystems;
 
 public class BuildingRequestTest {
   private BuildingRequest subject;

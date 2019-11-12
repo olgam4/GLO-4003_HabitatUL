@@ -5,12 +5,12 @@ import ca.ulaval.glo4003.calculator.domain.coverage.detail.BikeEndorsementCovera
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.calculator.domain.coverage.detail.PersonalPropertyCoverageDetail;
+import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class QuoteFactory {
   private QuoteValidityPeriodProvider quoteValidityPeriodProvider;

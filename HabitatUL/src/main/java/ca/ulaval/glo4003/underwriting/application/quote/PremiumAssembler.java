@@ -1,9 +1,10 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 
 public class PremiumAssembler {
+  // TODO: should be moved into calculator
   public QuotePremiumInput toQuotePremiumInput(QuoteForm quoteForm) {
     return new QuotePremiumInput(
         quoteForm.getPersonalInformation().getGender(),

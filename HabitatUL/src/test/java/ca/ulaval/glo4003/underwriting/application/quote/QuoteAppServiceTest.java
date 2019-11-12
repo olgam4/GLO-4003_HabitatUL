@@ -1,11 +1,13 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
+import ca.ulaval.glo4003.calculator.application.form.validation.QuoteFormValidator;
 import ca.ulaval.glo4003.calculator.application.premium.PremiumCalculator;
+import ca.ulaval.glo4003.calculator.domain.form.QuoteForm;
 import ca.ulaval.glo4003.calculator.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.calculator.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.calculator.PremiumDetailsGenerator;
+import ca.ulaval.glo4003.helper.calculator.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.helper.calculator.premium.PremiumDetailsGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
-import ca.ulaval.glo4003.helper.quote.form.QuoteFormGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteFormDto;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
@@ -16,7 +18,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
-import ca.ulaval.glo4003.underwriting.domain.quote.form.QuoteForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
