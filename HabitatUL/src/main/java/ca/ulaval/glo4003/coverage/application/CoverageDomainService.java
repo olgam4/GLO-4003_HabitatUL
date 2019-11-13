@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.coverage.application;
 
 import ca.ulaval.glo4003.coverage.application.coverage.CoverageSummarizer;
-import ca.ulaval.glo4003.coverage.application.dto.CoverageDto;
-import ca.ulaval.glo4003.coverage.application.form.validation.FormValidator;
+import ca.ulaval.glo4003.coverage.application.form.FormValidator;
 import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;

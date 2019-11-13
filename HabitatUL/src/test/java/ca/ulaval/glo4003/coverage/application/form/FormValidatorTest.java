@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.coverage.application.form.validation;
+package ca.ulaval.glo4003.coverage.application.form;
 
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidation;

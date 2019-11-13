@@ -2,7 +2,9 @@ package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.administration.application.user.event.PolicyAssociatedEvent;
 import ca.ulaval.glo4003.administration.application.user.event.QuotePaymentRequestedEvent;
+import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyIssuedEvent;
 import ca.ulaval.glo4003.mediator.Mediator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuotePurchasedEvent;
@@ -25,6 +27,7 @@ class MediatorChanneler {
                 event.getQuoteId().toRepresentation(),
                 event.getEffectivePeriod(),
                 event.getPurchaseDate(),
+                from(event.getQuoteForm()),
                 event.getCoverageDetails(),
                 event.getPremiumDetails()));
 
@@ -33,5 +36,16 @@ class MediatorChanneler {
         PolicyAssociatedEvent.class,
         event ->
             new PolicyAssociatedEvent(event.getPolicyId().toRepresentation(), event.getQuoteKey()));
+  }
+
+  private static PolicyInformation from(QuoteForm quoteForm) {
+    return new PolicyInformation(
+        quoteForm.getPersonalInformation(),
+        quoteForm.getAdditionalInsured(),
+        quoteForm.getLocation(),
+        quoteForm.getEffectiveDate(),
+        quoteForm.getBuilding(),
+        quoteForm.getPersonalProperty(),
+        quoteForm.getCivilLiability());
   }
 }

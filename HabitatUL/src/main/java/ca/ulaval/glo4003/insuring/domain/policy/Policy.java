@@ -24,6 +24,7 @@ public class Policy extends AggregateRoot {
   private PolicyId policyId;
   private String quoteKey;
   private Period coveragePeriod;
+  private PolicyInformation policyInformation;
   private CoverageDetails coverageDetails;
   private PremiumDetails premiumDetails;
   private ClockProvider clockProvider;
@@ -32,12 +33,14 @@ public class Policy extends AggregateRoot {
       PolicyId policyId,
       String quoteKey,
       Period coveragePeriod,
+      PolicyInformation policyInformation,
       CoverageDetails coverageDetails,
       PremiumDetails premiumDetails,
       ClockProvider clockProvider) {
     this.policyId = policyId;
     this.quoteKey = quoteKey;
     this.coveragePeriod = coveragePeriod;
+    this.policyInformation = policyInformation;
     this.coverageDetails = coverageDetails;
     this.premiumDetails = premiumDetails;
     this.clockProvider = clockProvider;

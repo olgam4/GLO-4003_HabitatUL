@@ -51,6 +51,7 @@ public class PolicyAppService {
               policyPurchasedEvent.getQuoteKey(),
               policyPurchasedEvent.getCoveragePeriod(),
               policyPurchasedEvent.getPurchaseDate(),
+              policyPurchasedEvent.getPolicyInformation(),
               policyPurchasedEvent.getCoverageDetails(),
               policyPurchasedEvent.getPremiumDetails());
       policy.issue();

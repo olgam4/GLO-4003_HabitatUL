@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.coverage.application.dto;
+package ca.ulaval.glo4003.coverage.application;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;

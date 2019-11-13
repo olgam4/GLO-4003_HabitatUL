@@ -19,12 +19,19 @@ public class PolicyFactory {
       String quoteKey,
       Period coveragePeriod,
       Date purchaseDate,
+      PolicyInformation policyInformation,
       CoverageDetails coverageDetails,
       PremiumDetails premiumDetails) {
     PolicyId policyId = new PolicyId();
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
     return new Policy(
-        policyId, quoteKey, adjustedCoveragePeriod, coverageDetails, premiumDetails, clockProvider);
+        policyId,
+        quoteKey,
+        adjustedCoveragePeriod,
+        policyInformation,
+        coverageDetails,
+        premiumDetails,
+        clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

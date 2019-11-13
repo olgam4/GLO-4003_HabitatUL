@@ -1,22 +1,20 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
-import ca.ulaval.glo4003.insuring.domain.claim.Claim;
-import ca.ulaval.glo4003.insuring.domain.claim.ClaimFactory;
-import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
-import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
+import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
-import ca.ulaval.glo4003.insuring.domain.policy.Policy;
-import ca.ulaval.glo4003.insuring.domain.policy.PolicyFactory;
-import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
-import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
+import ca.ulaval.glo4003.insuring.domain.policy.*;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,9 +48,17 @@ public class PolicyAppServiceTest {
 
   @Before
   public void setUp() throws PolicyNotFoundException {
-    when(policyFactory.create(any(), any(), any(), any(), any())).thenReturn(policy);
+    when(policyFactory.create(
+            any(String.class),
+            any(Period.class),
+            any(Date.class),
+            any(PolicyInformation.class),
+            any(CoverageDetails.class),
+            any(PremiumDetails.class)))
+        .thenReturn(policy);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
-    when(claimFactory.create(any(), any())).thenReturn(claim);
+    when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
+        .thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
     subject = new PolicyAppService(policyFactory, policyRepository, claimFactory, claimRepository);
   }

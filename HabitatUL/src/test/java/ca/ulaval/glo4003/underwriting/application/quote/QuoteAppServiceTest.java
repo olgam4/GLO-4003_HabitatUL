@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
-import ca.ulaval.glo4003.coverage.application.dto.CoverageDto;
+import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;

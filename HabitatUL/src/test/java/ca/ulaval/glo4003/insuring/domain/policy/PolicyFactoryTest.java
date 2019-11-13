@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 
@@ -25,6 +26,7 @@ public class PolicyFactoryTest {
       createDateBefore(COVERAGE_PERIOD.getStartDate());
   private static final Date AFTER_COVERAGE_PERIOD_START_DATE =
       createDateAfter(COVERAGE_PERIOD.getStartDate());
+  private static final PolicyInformation POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
 
@@ -43,6 +45,7 @@ public class PolicyFactoryTest {
             QUOTE_KEY,
             COVERAGE_PERIOD,
             BEFORE_COVERAGE_PERIOD_START_DATE,
+            POLICY_INFORMATION,
             COVERAGE_DETAILS,
             PREMIUM_DETAILS);
 
@@ -59,6 +62,7 @@ public class PolicyFactoryTest {
             QUOTE_KEY,
             COVERAGE_PERIOD,
             AFTER_COVERAGE_PERIOD_START_DATE,
+            POLICY_INFORMATION,
             COVERAGE_DETAILS,
             PREMIUM_DETAILS);
 
