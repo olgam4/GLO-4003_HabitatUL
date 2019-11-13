@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.policy;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
+import ca.ulaval.glo4003.gateway.presentation.policy.request.ModificationRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
@@ -22,6 +23,7 @@ import static ca.ulaval.glo4003.gateway.presentation.claim.ClaimResource.CLAIM_R
 @Produces(MediaType.APPLICATION_JSON)
 public class PolicyResource {
   public static final String POLICY_ROUTE = "/policies";
+  public static final String MODIFY_POLICY_ROUTE = "/modifications";
   public static final String OPEN_CLAIM_ROUTE = "/open-claim";
   private static final String POLICY_ID_PARAM_NAME = "policyId";
 
@@ -48,6 +50,16 @@ public class PolicyResource {
     String userKey = securityContext.getUserPrincipal().getName();
     List<String> policies = userAppService.getPolicies(userKey);
     return Response.ok(policyViewAssembler.from(policies)).build();
+  }
+
+  @POST
+  @Secured
+  @Path("/{" + POLICY_ID_PARAM_NAME + "}" + MODIFY_POLICY_ROUTE)
+  public Response modifyPolicy(
+      @Context SecurityContext securityContext,
+      @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
+      @Valid ModificationRequest modificationRequest) {
+    return Response.ok().build();
   }
 
   @POST

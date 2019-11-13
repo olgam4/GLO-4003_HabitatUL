@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.coverage.form.personalproperty;
 
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.PersonalPropertyRequest;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.PersonalPropertyRequest;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;

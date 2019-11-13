@@ -1,7 +1,6 @@
-package ca.ulaval.glo4003.gateway.presentation.quote.request;
+package ca.ulaval.glo4003.gateway.presentation.coverage.request;
 
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
-import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import javax.validation.Valid;

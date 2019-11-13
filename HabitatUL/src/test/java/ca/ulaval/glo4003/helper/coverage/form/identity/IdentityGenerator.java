@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.coverage.form.identity;
 
 import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.IdentityRequest;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.IdentityRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;

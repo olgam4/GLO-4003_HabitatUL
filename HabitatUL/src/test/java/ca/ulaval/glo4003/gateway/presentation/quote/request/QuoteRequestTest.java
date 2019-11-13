@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.quote.request;
 
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.*;
 import org.junit.Before;
 import org.junit.Test;
 

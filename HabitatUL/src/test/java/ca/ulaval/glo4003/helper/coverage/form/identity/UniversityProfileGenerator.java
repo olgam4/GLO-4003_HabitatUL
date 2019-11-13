@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.coverage.form.identity;
 
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.UniversityProfileRequest;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.UniversityProfileRequest;
 import com.github.javafaker.Faker;
 
 import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.createUniversityProgram;

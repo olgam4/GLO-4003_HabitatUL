@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
@@ -57,6 +58,8 @@ public class PolicyAppService {
       e.printStackTrace();
     }
   }
+
+  public void modifyPolicy(PolicyId policyId, ModifyPolicyDto modifyPolicyDto) {}
 
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {
