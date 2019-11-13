@@ -1,5 +1,9 @@
 package ca.ulaval.glo4003.coverage.domain.coverage.detail;
 
+import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
+import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
+import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,5 +42,27 @@ public class CoverageDetailsTest {
 
     collection.add(COVERAGE_DETAIL);
     assertEquals(collection, coverageDetails.getCollection());
+  }
+
+  @Test
+  public void gettingCoverageAmount_withExistingCoverageCategory_shouldReturnAssociatedAmount() {
+    Amount personalPropertyCoverageAmount = MoneyGenerator.createAmount();
+    subject =
+        CoverageDetailsBuilder.aCoverageDetails()
+            .withPersonalPropertyCoverageDetail(personalPropertyCoverageAmount)
+            .build();
+
+    Amount coverageAmount = subject.getCoverageAmount(CoverageCategory.PERSONAL_PROPERTY);
+
+    assertEquals(personalPropertyCoverageAmount, coverageAmount);
+  }
+
+  @Test
+  public void gettingCoverageAmount_withoutExistingCoverageCategory_shouldReturnNullAmount() {
+    subject = CoverageDetailsBuilder.aCoverageDetails().build();
+
+    Amount coverageAmount = subject.getCoverageAmount(CoverageCategory.BASIC_BLOCK);
+
+    assertEquals(Amount.ZERO, coverageAmount);
   }
 }

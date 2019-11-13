@@ -1,5 +1,8 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
+import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.LossCategory;
@@ -21,19 +24,22 @@ public class Policy extends AggregateRoot {
   private PolicyId policyId;
   private String quoteKey;
   private Period coveragePeriod;
-  private Amount coverageAmount;
+  private CoverageDetails coverageDetails;
+  private PremiumDetails premiumDetails;
   private ClockProvider clockProvider;
 
   public Policy(
       PolicyId policyId,
       String quoteKey,
       Period coveragePeriod,
-      Amount coverageAmount,
+      CoverageDetails coverageDetails,
+      PremiumDetails premiumDetails,
       ClockProvider clockProvider) {
     this.policyId = policyId;
     this.quoteKey = quoteKey;
     this.coveragePeriod = coveragePeriod;
-    this.coverageAmount = coverageAmount;
+    this.coverageDetails = coverageDetails;
+    this.premiumDetails = premiumDetails;
     this.clockProvider = clockProvider;
   }
 
@@ -79,7 +85,8 @@ public class Policy extends AggregateRoot {
 
   private void checkIfLossDeclarationsExceedCoverageAmount(LossDeclarations lossDeclarations) {
     Amount totalLosses = lossDeclarations.computeTotalLosses();
-    if (totalLosses.isGreaterThan(coverageAmount)) {
+    if (totalLosses.isGreaterThan(
+        coverageDetails.getCoverageAmount(CoverageCategory.PERSONAL_PROPERTY))) {
       throw new LossDeclarationsExceedCoverageAmountError();
     }
   }

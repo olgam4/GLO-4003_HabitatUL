@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.policy.request.ModificationRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
@@ -59,6 +60,7 @@ public class PolicyResource {
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @Valid ModificationRequest modificationRequest) {
+    ModifyPolicyDto modifyPolicyDto = policyViewAssembler.from(modificationRequest);
     return Response.ok().build();
   }
 

@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimFactory;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
@@ -16,10 +17,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.temporal.Date;
-import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 public class PolicyAppService {
   private PolicyFactory policyFactory;
@@ -46,10 +44,15 @@ public class PolicyAppService {
     this.claimRepository = claimRepository;
   }
 
-  public void issuePolicy(
-      String quoteKey, Period coveragePeriod, Date purchaseDate, Amount coverageAmount) {
+  public void issuePolicy(PolicyPurchasedEvent policyPurchasedEvent) {
     try {
-      Policy policy = policyFactory.create(quoteKey, coveragePeriod, purchaseDate, coverageAmount);
+      Policy policy =
+          policyFactory.create(
+              policyPurchasedEvent.getQuoteKey(),
+              policyPurchasedEvent.getCoveragePeriod(),
+              policyPurchasedEvent.getPurchaseDate(),
+              policyPurchasedEvent.getCoverageDetails(),
+              policyPurchasedEvent.getPremiumDetails());
       policy.issue();
       policyRepository.create(policy);
     } catch (PolicyAlreadyCreatedException e) {
@@ -59,7 +62,13 @@ public class PolicyAppService {
     }
   }
 
-  public void modifyPolicy(PolicyId policyId, ModifyPolicyDto modifyPolicyDto) {}
+  public void modifyPolicy(PolicyId policyId, ModifyPolicyDto modifyPolicyDto) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
+  }
 
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {

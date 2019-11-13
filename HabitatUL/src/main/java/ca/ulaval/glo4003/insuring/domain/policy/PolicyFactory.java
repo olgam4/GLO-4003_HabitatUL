@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
-import ca.ulaval.glo4003.shared.domain.money.Amount;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -15,10 +16,15 @@ public class PolicyFactory {
   }
 
   public Policy create(
-      String quoteKey, Period coveragePeriod, Date purchaseDate, Amount coverageAmount) {
+      String quoteKey,
+      Period coveragePeriod,
+      Date purchaseDate,
+      CoverageDetails coverageDetails,
+      PremiumDetails premiumDetails) {
     PolicyId policyId = new PolicyId();
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
-    return new Policy(policyId, quoteKey, adjustedCoveragePeriod, coverageAmount, clockProvider);
+    return new Policy(
+        policyId, quoteKey, adjustedCoveragePeriod, coverageDetails, premiumDetails, clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

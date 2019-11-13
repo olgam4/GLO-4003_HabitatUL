@@ -83,6 +83,7 @@ public class Quote extends AggregateRoot {
   private void registerQuotePurchaseEvent() {
     Date now = Date.now(clockProvider.getClock());
     registerEvent(
-        new QuotePurchasedEvent(quoteId, quoteForm, effectivePeriod, premiumDetails, now));
+        new QuotePurchasedEvent(
+            quoteId, quoteForm, effectivePeriod, coverageDetails, premiumDetails, now));
   }
 }

@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
-import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
-import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -12,18 +11,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyFactoryTest {
-  private static final ClockProvider CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
+  private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final String QUOTE_KEY = Faker.instance().internet().uuid();
-  private static final Period COVERAGE_PERIOD = TemporalGenerator.createPeriod();
+  private static final Period COVERAGE_PERIOD = createPeriod();
   private static final Date BEFORE_COVERAGE_PERIOD_START_DATE =
-      TemporalGenerator.createDateBefore(COVERAGE_PERIOD.getStartDate());
+      createDateBefore(COVERAGE_PERIOD.getStartDate());
   private static final Date AFTER_COVERAGE_PERIOD_START_DATE =
-      TemporalGenerator.createDateAfter(COVERAGE_PERIOD.getStartDate());
-  private static final Amount COVERAGE_AMOUNT = MoneyGenerator.createAmount();
+      createDateAfter(COVERAGE_PERIOD.getStartDate());
+  private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
+  private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
 
   private PolicyFactory subject;
 
@@ -37,7 +40,11 @@ public class PolicyFactoryTest {
       creatingPolicy_withCoveragePeriodStartingAfterPurchaseDate_shouldNotAdjustCoveragePeriod() {
     Policy policy =
         subject.create(
-            QUOTE_KEY, COVERAGE_PERIOD, BEFORE_COVERAGE_PERIOD_START_DATE, COVERAGE_AMOUNT);
+            QUOTE_KEY,
+            COVERAGE_PERIOD,
+            BEFORE_COVERAGE_PERIOD_START_DATE,
+            COVERAGE_DETAILS,
+            PREMIUM_DETAILS);
 
     Period expectedPeriod =
         new Period(COVERAGE_PERIOD.getStartDate(), COVERAGE_PERIOD.getEndDate());
@@ -49,7 +56,11 @@ public class PolicyFactoryTest {
       creatingPolicy_withCoveragePeriodStartingBeforePurchaseDate_shouldAdjustCoveragePeriod() {
     Policy policy =
         subject.create(
-            QUOTE_KEY, COVERAGE_PERIOD, AFTER_COVERAGE_PERIOD_START_DATE, COVERAGE_AMOUNT);
+            QUOTE_KEY,
+            COVERAGE_PERIOD,
+            AFTER_COVERAGE_PERIOD_START_DATE,
+            COVERAGE_DETAILS,
+            PREMIUM_DETAILS);
 
     Period expectedPeriod =
         new Period(

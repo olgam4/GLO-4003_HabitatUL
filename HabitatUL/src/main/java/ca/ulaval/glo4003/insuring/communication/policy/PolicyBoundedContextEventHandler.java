@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.insuring.communication.policy;
 
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.insuring.application.policy.event.PolicyCreationRequestedEvent;
+import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.mediator.Mediator;
 
 public class PolicyBoundedContextEventHandler {
@@ -12,15 +12,10 @@ public class PolicyBoundedContextEventHandler {
   }
 
   public void register(Mediator mediator) {
-    mediator.addListener(
-        PolicyCreationRequestedEvent.class, this::handlePolicyCreationRequestedEvent);
+    mediator.addListener(PolicyPurchasedEvent.class, this::handlePolicyPurchasedEvent);
   }
 
-  void handlePolicyCreationRequestedEvent(PolicyCreationRequestedEvent event) {
-    policyAppService.issuePolicy(
-        event.getQuoteKey(),
-        event.getCoveragePeriod(),
-        event.getPurchaseDate(),
-        event.getCoverageAmount());
+  void handlePolicyPurchasedEvent(PolicyPurchasedEvent event) {
+    policyAppService.issuePolicy(event);
   }
 }

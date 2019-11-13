@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.mediator.Event;
@@ -10,6 +11,7 @@ public class QuotePurchasedEvent extends Event {
   private final QuoteId quoteId;
   private final QuoteForm quoteForm;
   private final Period effectivePeriod;
+  private final CoverageDetails coverageDetails;
   private final PremiumDetails premiumDetails;
   private final Date purchaseDate;
 
@@ -17,11 +19,13 @@ public class QuotePurchasedEvent extends Event {
       QuoteId quoteId,
       QuoteForm quoteForm,
       Period effectivePeriod,
+      CoverageDetails coverageDetails,
       PremiumDetails premiumDetails,
       Date purchaseDate) {
     this.quoteId = quoteId;
     this.quoteForm = quoteForm;
     this.effectivePeriod = effectivePeriod;
+    this.coverageDetails = coverageDetails;
     this.premiumDetails = premiumDetails;
     this.purchaseDate = purchaseDate;
   }
@@ -36,6 +40,10 @@ public class QuotePurchasedEvent extends Event {
 
   public Period getEffectivePeriod() {
     return effectivePeriod;
+  }
+
+  public CoverageDetails getCoverageDetails() {
+    return coverageDetails;
   }
 
   public PremiumDetails getPremiumDetails() {

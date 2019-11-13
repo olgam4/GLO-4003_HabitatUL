@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.coverage.domain.coverage.detail;
 
+import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,5 +29,13 @@ public class CoverageDetails extends ValueObject {
 
   public List<CoverageDetail> getCollection() {
     return new ArrayList<>(collection);
+  }
+
+  public Amount getCoverageAmount(CoverageCategory coverageCategory) {
+    return collection.stream()
+        .filter(x -> x.getCoverage().equals(coverageCategory))
+        .findFirst()
+        .map(CoverageDetail::getAmount)
+        .orElse(Amount.ZERO);
   }
 }
