@@ -10,6 +10,7 @@ import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.administration.domain.user.exception.PaymentFailedException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -35,8 +36,7 @@ import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserAppServiceTest {
@@ -125,7 +125,7 @@ public class UserAppServiceTest {
 
   @Test(expected = CouldNotCreateUserError.class)
   public void creatingUser_withInvalidPassword_shouldThrow() throws InvalidPasswordException {
-    Mockito.doThrow(InvalidPasswordException.class)
+    doThrow(InvalidPasswordException.class)
         .when(passwordValidator)
         .registerPassword(USER_KEY, CREDENTIALS.getPassword());
 
@@ -241,7 +241,7 @@ public class UserAppServiceTest {
   }
 
   @Test
-  public void processingQuotePayment_shouldProcessPayment() {
+  public void processingQuotePayment_shouldProcessPayment() throws PaymentFailedException {
     subject.processQuotePayment(QUOTE_KEY, PAYMENT);
 
     verify(paymentProcessor).process(USER_KEY, PAYMENT);

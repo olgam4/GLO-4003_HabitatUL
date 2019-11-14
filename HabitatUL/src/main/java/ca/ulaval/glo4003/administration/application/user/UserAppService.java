@@ -10,6 +10,7 @@ import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
+import ca.ulaval.glo4003.administration.domain.user.exception.PaymentFailedException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
@@ -149,7 +150,7 @@ public class UserAppService implements AccessController {
     try {
       String userKey = quoteRegistry.getUserKey(quoteKey);
       paymentProcessor.process(userKey, payment);
-    } catch (KeyNotFoundException e) {
+    } catch (KeyNotFoundException | PaymentFailedException e) {
       // TODO: log event
       // TODO: put in a queue for later reprocessing
       e.printStackTrace();
