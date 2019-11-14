@@ -37,5 +37,5 @@ public abstract class InvalidTestCasesCustomDeserializerIT extends CustomDeseria
         .body("cause", equalTo(getDeserializationErrorCause().getName()));
   }
 
-  protected abstract Class getDeserializationErrorCause();
+  protected abstract Class<?> getDeserializationErrorCause();
 }

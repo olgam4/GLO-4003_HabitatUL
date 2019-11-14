@@ -21,7 +21,7 @@ public class PremiumFormula<T> {
     Money basePremium = basePremiumCalculator.compute(premiumInput);
     Money premium = basePremium;
 
-    for (PremiumFormulaPart formulaPart : premiumFormulaParts) {
+    for (PremiumFormulaPart<T> formulaPart : premiumFormulaParts) {
       Money premiumAdjustment = formulaPart.compute(premiumInput, basePremium);
       premium = premium.add(premiumAdjustment);
     }

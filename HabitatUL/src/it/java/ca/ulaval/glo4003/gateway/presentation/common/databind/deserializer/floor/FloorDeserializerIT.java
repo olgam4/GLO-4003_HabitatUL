@@ -20,15 +20,13 @@ import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERI
 public class FloorDeserializerIT {
   @RunWith(Parameterized.class)
   public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
-    private Object value;
-
     public ValidTestCases(Object value) {
       super(value);
     }
 
     @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
-    public static Collection parameters() {
-      return Arrays.asList(new Object[][] {{VALID_FLOOR_VALUE}});
+    public static Collection<Object> parameters() {
+      return Arrays.asList(VALID_FLOOR_VALUE);
     }
 
     @Override
@@ -39,22 +37,18 @@ public class FloorDeserializerIT {
 
   @RunWith(Parameterized.class)
   public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
-    private Object value;
-
     public InvalidTestCases(Object value) {
       super(value);
     }
 
     @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
-    public static Collection parameters() {
+    public static Collection<Object> parameters() {
       return Arrays.asList(
-          new Object[][] {
-            {""},
-            {Faker.instance().number().randomDigit()},
-            {"INVALID"},
-            {new JSONObject().put("test", VALID_FLOOR_VALUE)},
-            {new JSONArray().put(VALID_FLOOR_VALUE)}
-          });
+          "",
+          Faker.instance().number().randomDigit(),
+          "INVALID",
+          new JSONObject().put("test", VALID_FLOOR_VALUE),
+          new JSONArray().put(VALID_FLOOR_VALUE));
     }
 
     @Override
@@ -63,7 +57,7 @@ public class FloorDeserializerIT {
     }
 
     @Override
-    protected Class getDeserializationErrorCause() {
+    protected Class<?> getDeserializationErrorCause() {
       return InvalidFloorError.class;
     }
   }

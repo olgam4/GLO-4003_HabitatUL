@@ -43,15 +43,13 @@ public class LossDeclarationsDeserializerIT {
 
   @RunWith(Parameterized.class)
   public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
-    private Object value;
-
     public ValidTestCases(Object value) {
       super(value);
     }
 
     @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
-    public static Collection parameters() {
-      return Arrays.asList(new Object[][] {{VALID_VALUE}});
+    public static Collection<Object> parameters() {
+      return Arrays.asList(VALID_VALUE);
     }
 
     @Override
@@ -62,37 +60,28 @@ public class LossDeclarationsDeserializerIT {
 
   @RunWith(Parameterized.class)
   public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
-    private Object value;
-
     public InvalidTestCases(Object value) {
       super(value);
     }
 
     @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
-    public static Collection parameters() {
+    public static Collection<Object> parameters() {
       return Arrays.asList(
-          new Object[][] {
-            {""},
-            {Faker.instance().number().randomDigit()},
-            {"INVALID"},
-            {VALID_LOSS_DECLARATION},
-            {new JSONArray().put(new JSONObject().put("category", VALID_LOSS_CATEGORY))},
-            {new JSONArray().put(new JSONObject().put("amount", VALID_LOSS_AMOUNT))},
-            {new JSONArray().put(toJson(null, VALID_LOSS_AMOUNT))},
-            {new JSONArray().put(toJson(VALID_LOSS_CATEGORY, null))},
-            {new JSONArray().put(toJson("", VALID_LOSS_AMOUNT))},
-            {
-              new JSONArray()
-                  .put(toJson(Faker.instance().number().randomDigit(), VALID_LOSS_AMOUNT))
-            },
-            {
-              new JSONArray()
-                  .put(
-                      toJson(
-                          VALID_LOSS_CATEGORY,
-                          createAmountSmallerThan(Amount.ZERO).getValue().floatValue()))
-            },
-          });
+          "",
+          Faker.instance().number().randomDigit(),
+          "INVALID",
+          VALID_LOSS_DECLARATION,
+          new JSONArray().put(new JSONObject().put("category", VALID_LOSS_CATEGORY)),
+          new JSONArray().put(new JSONObject().put("amount", VALID_LOSS_AMOUNT)),
+          new JSONArray().put(toJson(null, VALID_LOSS_AMOUNT)),
+          new JSONArray().put(toJson(VALID_LOSS_CATEGORY, null)),
+          new JSONArray().put(toJson("", VALID_LOSS_AMOUNT)),
+          new JSONArray().put(toJson(Faker.instance().number().randomDigit(), VALID_LOSS_AMOUNT)),
+          new JSONArray()
+              .put(
+                  toJson(
+                      VALID_LOSS_CATEGORY,
+                      createAmountSmallerThan(Amount.ZERO).getValue().floatValue())));
     }
 
     @Override
@@ -101,7 +90,7 @@ public class LossDeclarationsDeserializerIT {
     }
 
     @Override
-    protected Class getDeserializationErrorCause() {
+    protected Class<?> getDeserializationErrorCause() {
       return InvalidLossDeclarationsError.class;
     }
   }

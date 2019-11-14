@@ -37,15 +37,13 @@ public class AnimalsDeserializerIT {
 
   @RunWith(Parameterized.class)
   public static class ValidTestCases extends ValidTestCasesCustomDeserializerIT {
-    private Object value;
-
     public ValidTestCases(Object value) {
       super(value);
     }
 
     @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
-    public static Collection parameters() {
-      return Arrays.asList(new Object[][] {{VALID_VALUE}});
+    public static Collection<Object> parameters() {
+      return Arrays.asList(VALID_VALUE);
     }
 
     @Override
@@ -56,31 +54,25 @@ public class AnimalsDeserializerIT {
 
   @RunWith(Parameterized.class)
   public static class InvalidTestCases extends InvalidTestCasesCustomDeserializerIT {
-    private Object value;
-
     public InvalidTestCases(Object value) {
       super(value);
     }
 
     @Parameterized.Parameters(name = PARAMETERIZED_TEST_TITLE)
-    public static Collection parameters() {
+    public static Collection<Object> parameters() {
       return Arrays.asList(
-          new Object[][] {
-            {""},
-            {Faker.instance().number().randomDigit()},
-            {"INVALID"},
-            {VALID_ANIMAL},
-            {new JSONArray().put(new JSONObject().put("breed", VALID_BREED))},
-            {new JSONArray().put(new JSONObject().put("quantity", VALID_QUANTITY))},
-            {new JSONArray().put(toJson(null, VALID_QUANTITY))},
-            {new JSONArray().put(toJson(VALID_BREED, null))},
-            {new JSONArray().put(toJson("", VALID_QUANTITY))},
-            {new JSONArray().put(toJson(Faker.instance().number().randomDigit(), VALID_QUANTITY))},
-            {
-              new JSONArray()
-                  .put(toJson(VALID_BREED, -Faker.instance().number().randomDigitNotZero()))
-            },
-          });
+          "",
+          Faker.instance().number().randomDigit(),
+          "INVALID",
+          VALID_ANIMAL,
+          new JSONArray().put(new JSONObject().put("breed", VALID_BREED)),
+          new JSONArray().put(new JSONObject().put("quantity", VALID_QUANTITY)),
+          new JSONArray().put(toJson(null, VALID_QUANTITY)),
+          new JSONArray().put(toJson(VALID_BREED, null)),
+          new JSONArray().put(toJson("", VALID_QUANTITY)),
+          new JSONArray().put(toJson(Faker.instance().number().randomDigit(), VALID_QUANTITY)),
+          new JSONArray()
+              .put(toJson(VALID_BREED, -Faker.instance().number().randomDigitNotZero())));
     }
 
     @Override
@@ -89,7 +81,7 @@ public class AnimalsDeserializerIT {
     }
 
     @Override
-    protected Class getDeserializationErrorCause() {
+    protected Class<?> getDeserializationErrorCause() {
       return InvalidAnimalsError.class;
     }
   }
