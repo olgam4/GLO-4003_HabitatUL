@@ -16,7 +16,22 @@ public class LossDeclarations extends ValueObject {
     return collection;
   }
 
-  public Amount computeTotalLosses() {
-    return collection.values().stream().reduce(Amount.ZERO, Amount::add);
+  public boolean isEmpty() {
+    return collection.isEmpty();
+  }
+
+  public boolean includes(LossCategory lossCategory) {
+    return collection.keySet().contains(lossCategory);
+  }
+
+  public Amount getLossAmount(LossCategory lossCategory) {
+    return collection.getOrDefault(lossCategory, Amount.ZERO);
+  }
+
+  public Amount computePersonalPropertyLosses() {
+    return collection.entrySet().stream()
+        .filter(x -> !x.getKey().equals(LossCategory.BICYCLE))
+        .map(Map.Entry::getValue)
+        .reduce(Amount.ZERO, Amount::add);
   }
 }

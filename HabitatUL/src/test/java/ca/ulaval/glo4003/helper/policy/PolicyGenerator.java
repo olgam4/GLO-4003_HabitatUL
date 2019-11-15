@@ -8,8 +8,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import com.github.javafaker.Faker;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createLossDeclarations;
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
+import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.building.BuildingGenerator.createBuilding;
 import static ca.ulaval.glo4003.helper.coverage.form.civilliability.CivilLiabilityGenerator.createCivilLiability;

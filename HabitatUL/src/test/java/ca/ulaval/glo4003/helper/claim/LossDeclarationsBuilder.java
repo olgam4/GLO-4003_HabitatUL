@@ -7,6 +7,9 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.insuring.domain.claim.LossCategory.BICYCLE;
+
 public class LossDeclarationsBuilder {
   private Map<LossCategory, Amount> losses = new HashMap<>();
 
@@ -14,6 +17,16 @@ public class LossDeclarationsBuilder {
 
   public static LossDeclarationsBuilder aLossDeclaration() {
     return new LossDeclarationsBuilder();
+  }
+
+  public LossDeclarationsBuilder withBicycleLoss() {
+    withLoss(BICYCLE);
+    return this;
+  }
+
+  public LossDeclarationsBuilder withLoss(LossCategory lossCategory) {
+    withLoss(lossCategory, createAmountGreaterThanZero());
+    return this;
   }
 
   public LossDeclarationsBuilder withLoss(LossCategory lossCategory, Amount amount) {

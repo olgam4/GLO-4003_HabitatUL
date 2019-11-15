@@ -1,17 +1,11 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
-import ca.ulaval.glo4003.insuring.domain.claim.LossCategory;
-import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
-import ca.ulaval.glo4003.insuring.domain.policy.error.LossDeclarationsExceedCoverageAmountError;
-import ca.ulaval.glo4003.insuring.domain.policy.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -62,42 +56,31 @@ public class Policy extends AggregateRoot {
     return claims;
   }
 
+  public CoverageDetails getCoverageDetails() {
+    return coverageDetails;
+  }
+
+  public PremiumDetails getPremiumDetails() {
+    return premiumDetails;
+  }
+
   public void issue() {
     registerEvent(new PolicyIssuedEvent(policyId, quoteKey));
   }
 
   public void openClaim(Claim claim) {
-    validateClaim(claim);
+    checkIfClaimOutsideCoveragePeriod();
+    claim.validate(policyInformation, coverageDetails);
     claims.add(claim.getClaimId());
     registerEvent(
         new ClaimOpenedEvent(policyId, claim.getClaimId(), Date.now(clockProvider.getClock())));
   }
 
-  private void validateClaim(Claim claim) {
-    checkIfClaimOutsideCoveragePeriod();
-    checkIfLossDeclarationsContainsNotDeclaredBicycle(claim.getLossDeclarations());
-    checkIfLossDeclarationsExceedCoverageAmount(claim.getLossDeclarations());
-  }
-
   private void checkIfClaimOutsideCoveragePeriod() {
+    // TODO: should ask for date of occurrence
     Date now = Date.now(clockProvider.getClock());
     if (!coveragePeriod.isWithin(now)) {
       throw new ClaimOutsideCoveragePeriodError();
-    }
-  }
-
-  private void checkIfLossDeclarationsExceedCoverageAmount(LossDeclarations lossDeclarations) {
-    Amount totalLosses = lossDeclarations.computeTotalLosses();
-    if (totalLosses.isGreaterThan(
-        coverageDetails.getCoverageAmount(CoverageCategory.PERSONAL_PROPERTY))) {
-      throw new LossDeclarationsExceedCoverageAmountError();
-    }
-  }
-
-  private void checkIfLossDeclarationsContainsNotDeclaredBicycle(
-      LossDeclarations lossDeclarations) {
-    if (lossDeclarations.getCollection().containsKey(LossCategory.BICYCLE)) {
-      throw new NotDeclaredBicycleError();
     }
   }
 }

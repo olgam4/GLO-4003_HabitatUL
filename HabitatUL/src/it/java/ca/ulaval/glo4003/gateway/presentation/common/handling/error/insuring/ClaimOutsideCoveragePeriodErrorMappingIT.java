@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
+package ca.ulaval.glo4003.gateway.presentation.common.handling.error.insuring;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;

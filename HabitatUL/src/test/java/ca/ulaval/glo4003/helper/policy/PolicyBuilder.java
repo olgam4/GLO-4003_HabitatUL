@@ -2,11 +2,9 @@ package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import com.github.javafaker.Faker;
@@ -46,11 +44,13 @@ public class PolicyBuilder {
     return this;
   }
 
-  public PolicyBuilder withPersonalPropertyCoverageAmount(Amount amount) {
-    this.coverageDetails =
-        CoverageDetailsBuilder.aCoverageDetails()
-            .withPersonalPropertyCoverageDetail(amount)
-            .build();
+  public PolicyBuilder withPolicyInformation(PolicyInformation policyInformation) {
+    this.policyInformation = policyInformation;
+    return this;
+  }
+
+  public PolicyBuilder withCoverageDetails(CoverageDetails coverageDetails) {
+    this.coverageDetails = coverageDetails;
     return this;
   }
 

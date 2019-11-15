@@ -2,10 +2,12 @@ package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
-import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
+import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
+import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
@@ -35,7 +37,7 @@ public class PolicyAppServiceTest {
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final ModifyPolicyDto MODIFY_POLICY_DTO = createModifyPolicyDto();
-  private static final OpenClaimDto OPEN_CLAIM_DTO = PolicyGenerator.createOpenClaimDto();
+  private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
 
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
@@ -117,6 +119,15 @@ public class PolicyAppServiceTest {
     ClaimId claimId = subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     assertEquals(CLAIM_ID, claimId);
+  }
+
+  @Test(expected = EmptyLossDeclarationsError.class)
+  public void openingClaim_withEmptyLossDeclarations_shouldThrow() {
+    LossDeclarations emptyLossDeclarations = LossDeclarationsBuilder.aLossDeclaration().build();
+    OpenClaimDto openClaimDtoWithEmptyLossDeclarations =
+        OpenClaimDtoBuilder.anOpenClaimDto().withLossDeclarations(emptyLossDeclarations).build();
+
+    subject.openClaim(POLICY_ID, openClaimDtoWithEmptyLossDeclarations);
   }
 
   @Test(expected = PolicyNotFoundError.class)

@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
+import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle.UNFILLED_BICYCLE;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createAnimals;
@@ -31,6 +32,11 @@ public class PersonalPropertyBuilder {
 
   public PersonalPropertyBuilder withBicycle(Bicycle bicycle) {
     this.bicycle = bicycle;
+    return this;
+  }
+
+  public PersonalPropertyBuilder withoutBicycle() {
+    this.bicycle = UNFILLED_BICYCLE;
     return this;
   }
 

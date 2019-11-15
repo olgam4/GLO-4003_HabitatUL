@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createLossCategory;
+import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossCategory;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThan;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmallerThan;
 import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;

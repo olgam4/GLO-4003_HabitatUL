@@ -4,11 +4,9 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
-import ca.ulaval.glo4003.insuring.domain.claim.Claim;
-import ca.ulaval.glo4003.insuring.domain.claim.ClaimFactory;
-import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
-import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
+import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyFactory;
@@ -73,9 +71,10 @@ public class PolicyAppService {
 
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {
+      LossDeclarations lossDeclarations = openClaimDto.getLossDeclarations();
+      checkIfEmptyLossDeclarations(lossDeclarations);
       Policy policy = policyRepository.getById(policyId);
-      Claim claim =
-          claimFactory.create(openClaimDto.getSinisterType(), openClaimDto.getLossDeclarations());
+      Claim claim = claimFactory.create(openClaimDto.getSinisterType(), lossDeclarations);
       policy.openClaim(claim);
       claimRepository.create(claim);
       return claim.getClaimId();
@@ -83,6 +82,12 @@ public class PolicyAppService {
       throw new PolicyNotFoundError(policyId);
     } catch (ClaimAlreadyCreatedException e) {
       throw new CouldNotOpenClaimError();
+    }
+  }
+
+  private void checkIfEmptyLossDeclarations(LossDeclarations lossDeclarations) {
+    if (lossDeclarations.isEmpty()) {
+      throw new EmptyLossDeclarationsError();
     }
   }
 }

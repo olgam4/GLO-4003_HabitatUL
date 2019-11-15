@@ -1,18 +1,18 @@
-package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
+package ca.ulaval.glo4003.gateway.presentation.common.handling.error.insuring;
 
-import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidSinisterTypeError;
+import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.InvalidLossDeclarationsError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.MockedDeserializationError;
 import com.github.javafaker.Faker;
 
 import javax.ws.rs.core.Response;
 
-public class InvalidSinisterTypeErrorMappingIT extends ErrorMappingIT {
+public class InvalidLossDeclarationsErrorMappingIT extends ErrorMappingIT {
   private static final String INVALID_VALUE = Faker.instance().internet().uuid();
 
   @Override
   public Throwable getError() {
-    return new MockedDeserializationError(new InvalidSinisterTypeError(INVALID_VALUE));
+    return new MockedDeserializationError(new InvalidLossDeclarationsError(INVALID_VALUE));
   }
 
   @Override
@@ -22,11 +22,11 @@ public class InvalidSinisterTypeErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorCodeMatcher() {
-    return "INVALID_SINISTER_TYPE";
+    return "INVALID_LOSS_DECLARATIONS";
   }
 
   @Override
   public String getErrorMessageMatcher() {
-    return String.format("sorry, <%s> is not a valid sinister type value", INVALID_VALUE);
+    return String.format("sorry, <%s> is not a valid loss declarations value", INVALID_VALUE);
   }
 }
