@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.insuring.domain.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
+import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.mediator.Event;
@@ -15,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyInformation;
+import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFuturePeriod;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastPeriod;
 import static org.junit.Assert.assertEquals;
@@ -27,6 +28,12 @@ public class PolicyTest {
   private static final Period COVERAGE_PERIOD = createFuturePeriod();
   private static final PolicyInformation POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
+  private static final PolicyView POLICY_VIEW =
+      PolicyViewBuilder.aPolicyView()
+          .withCoveragePeriod(COVERAGE_PERIOD)
+          .withPolicyInformation(POLICY_INFORMATION)
+          .withCoverageDetails(COVERAGE_DETAILS)
+          .build();
 
   @Mock private Claim claim;
 
@@ -34,12 +41,7 @@ public class PolicyTest {
 
   @Before
   public void setUp() {
-    subject =
-        PolicyBuilder.aPolicy()
-            .withCoveragePeriod(COVERAGE_PERIOD)
-            .withPolicyInformation(POLICY_INFORMATION)
-            .withCoverageDetails(COVERAGE_DETAILS)
-            .build();
+    subject = PolicyBuilder.aPolicy().withPolicyView(POLICY_VIEW).build();
   }
 
   @Test
@@ -77,7 +79,8 @@ public class PolicyTest {
   @Test(expected = ClaimOutsideCoveragePeriodError.class)
   public void openingClaim_withExpiredPolicy_shouldThrow() {
     Period pastPeriod = createPastPeriod();
-    subject = PolicyBuilder.aPolicy().withCoveragePeriod(pastPeriod).build();
+    PolicyView policyView = PolicyViewBuilder.aPolicyView().withCoveragePeriod(pastPeriod).build();
+    subject = PolicyBuilder.aPolicy().withPolicyView(policyView).build();
 
     subject.openClaim(claim);
   }

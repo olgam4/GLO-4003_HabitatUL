@@ -13,7 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyInformation;
+import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 

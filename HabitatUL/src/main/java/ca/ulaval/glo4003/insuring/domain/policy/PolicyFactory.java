@@ -24,14 +24,9 @@ public class PolicyFactory {
       PremiumDetails premiumDetails) {
     PolicyId policyId = new PolicyId();
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
-    return new Policy(
-        policyId,
-        quoteKey,
-        adjustedCoveragePeriod,
-        policyInformation,
-        coverageDetails,
-        premiumDetails,
-        clockProvider);
+    PolicyView currentPolicyView =
+        new PolicyView(adjustedCoveragePeriod, policyInformation, coverageDetails, premiumDetails);
+    return new Policy(policyId, quoteKey, currentPolicyView, clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

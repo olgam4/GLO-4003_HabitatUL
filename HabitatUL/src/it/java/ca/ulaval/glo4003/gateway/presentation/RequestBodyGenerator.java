@@ -2,10 +2,10 @@ package ca.ulaval.glo4003.gateway.presentation;
 
 import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
+import ca.ulaval.glo4003.gateway.presentation.administration.user.request.CredentialsRequest;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.*;
-import ca.ulaval.glo4003.gateway.presentation.policy.request.ClaimRequest;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
-import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
+import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.quote;
 
-import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
+import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;

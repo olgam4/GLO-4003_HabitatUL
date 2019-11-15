@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
+import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
@@ -36,6 +37,7 @@ public class PolicyAppServiceTest {
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
+  private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsuringBicycleDto();
   private static final ModifyPolicyDto MODIFY_POLICY_DTO = createModifyPolicyDto();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
 
@@ -77,6 +79,20 @@ public class PolicyAppServiceTest {
     subject.issuePolicy(POLICY_PURCHASED_EVENT);
 
     verify(policyRepository).create(policy);
+  }
+
+  @Test
+  public void insuringBicycle_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test(expected = PolicyNotFoundError.class)
+  public void insuringBicycle_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
+    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
   }
 
   @Test

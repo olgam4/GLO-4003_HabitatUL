@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.user;
 
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
-import ca.ulaval.glo4003.gateway.presentation.user.request.CredentialsRequest;
+import ca.ulaval.glo4003.gateway.presentation.administration.user.request.CredentialsRequest;
 import com.github.javafaker.Faker;
 
 public class CredentialsGenerator {

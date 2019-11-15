@@ -15,7 +15,7 @@ import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.BICYCLE_ENDORSE
 import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.PERSONAL_PROPERTY;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyInformation;
+import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThan;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmallerThan;
 import static ca.ulaval.glo4003.insuring.domain.claim.LossCategory.BICYCLE;

@@ -10,7 +10,7 @@ import ca.ulaval.glo4003.coverage.domain.form.location.Location;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.*;
-import ca.ulaval.glo4003.gateway.presentation.quote.request.QuoteRequest;
+import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;

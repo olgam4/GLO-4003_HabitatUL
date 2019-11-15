@@ -17,26 +17,17 @@ public class Policy extends AggregateRoot {
   private final List<ClaimId> claims = new ArrayList<>();
   private PolicyId policyId;
   private String quoteKey;
-  private Period coveragePeriod;
-  private PolicyInformation policyInformation;
-  private CoverageDetails coverageDetails;
-  private PremiumDetails premiumDetails;
+  private PolicyView currentPolicyView;
   private ClockProvider clockProvider;
 
   public Policy(
       PolicyId policyId,
       String quoteKey,
-      Period coveragePeriod,
-      PolicyInformation policyInformation,
-      CoverageDetails coverageDetails,
-      PremiumDetails premiumDetails,
+      PolicyView currentPolicyView,
       ClockProvider clockProvider) {
     this.policyId = policyId;
     this.quoteKey = quoteKey;
-    this.coveragePeriod = coveragePeriod;
-    this.policyInformation = policyInformation;
-    this.coverageDetails = coverageDetails;
-    this.premiumDetails = premiumDetails;
+    this.currentPolicyView = currentPolicyView;
     this.clockProvider = clockProvider;
   }
 
@@ -48,20 +39,24 @@ public class Policy extends AggregateRoot {
     return quoteKey;
   }
 
-  public Period getCoveragePeriod() {
-    return coveragePeriod;
-  }
-
   public List<ClaimId> getClaims() {
     return claims;
   }
 
+  public Period getCoveragePeriod() {
+    return currentPolicyView.getCoveragePeriod();
+  }
+
+  public PolicyInformation getPolicyInformation() {
+    return currentPolicyView.getPolicyInformation();
+  }
+
   public CoverageDetails getCoverageDetails() {
-    return coverageDetails;
+    return currentPolicyView.getCoverageDetails();
   }
 
   public PremiumDetails getPremiumDetails() {
-    return premiumDetails;
+    return currentPolicyView.getPremiumDetails();
   }
 
   public void issue() {
@@ -70,7 +65,7 @@ public class Policy extends AggregateRoot {
 
   public void openClaim(Claim claim) {
     checkIfClaimOutsideCoveragePeriod();
-    claim.validate(policyInformation, coverageDetails);
+    claim.validate(getPolicyInformation(), getCoverageDetails());
     claims.add(claim.getClaimId());
     registerEvent(
         new ClaimOpenedEvent(policyId, claim.getClaimId(), Date.now(clockProvider.getClock())));
@@ -79,7 +74,7 @@ public class Policy extends AggregateRoot {
   private void checkIfClaimOutsideCoveragePeriod() {
     // TODO: should ask for date of occurrence
     Date now = Date.now(clockProvider.getClock());
-    if (!coveragePeriod.isWithin(now)) {
+    if (!getCoveragePeriod().isWithin(now)) {
       throw new ClaimOutsideCoveragePeriodError();
     }
   }

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
@@ -58,6 +59,14 @@ public class PolicyAppService {
       // TODO: log event
       // TODO: put in a queue for later reprocessing
       e.printStackTrace();
+    }
+  }
+
+  public void insureBicycle(PolicyId policyId, InsureBicycleDto insureBicycleDto) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
     }
   }
 
