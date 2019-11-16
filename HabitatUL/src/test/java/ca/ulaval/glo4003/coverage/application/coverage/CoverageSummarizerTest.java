@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.CIVIL_LIABILITY;
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.PERSONAL_PROPERTY;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.CIVIL_LIABILITY;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

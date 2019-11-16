@@ -55,9 +55,9 @@ public class CoverageSummarizer {
   public CoverageDetails summarizeBicycleEndorsementCoverage(
       BicycleEndorsementForm bicycleEndorsementForm) {
     Amount bicyclePrice = bicycleEndorsementForm.getBicycle().getPrice();
+    CoverageDetails currentCoverageDetails = bicycleEndorsementForm.getCurrentCoverageDetails();
     BicycleEndorsementCoverageDetail updatedBicycleEndorsementCoverageDetail =
         new BicycleEndorsementCoverageDetail(bicyclePrice);
-    CoverageDetails currentCoverageDetails = bicycleEndorsementForm.getCurrentCoverageDetails();
     return currentCoverageDetails.update(updatedBicycleEndorsementCoverageDetail);
   }
 }

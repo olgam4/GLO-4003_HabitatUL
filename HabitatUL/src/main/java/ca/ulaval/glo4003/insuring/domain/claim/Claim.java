@@ -6,8 +6,8 @@ import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.BICYCLE_ENDORSEMENT;
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.PERSONAL_PROPERTY;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.BICYCLE_ENDORSEMENT;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
 import static ca.ulaval.glo4003.insuring.domain.claim.LossCategory.BICYCLE;
 
 public class Claim {

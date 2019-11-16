@@ -1,10 +1,9 @@
-package ca.ulaval.glo4003.coverage.domain;
+package ca.ulaval.glo4003.coverage.domain.coverage;
 
 public enum CoverageCategory {
-  BASIC_BLOCK("basic block"),
-  BICYCLE_ENDORSEMENT("bicycle endorsement"),
+  PERSONAL_PROPERTY("personal property"),
   CIVIL_LIABILITY("civil liability"),
-  PERSONAL_PROPERTY("personal property");
+  BICYCLE_ENDORSEMENT("bicycle endorsement");
 
   private final String name;
 

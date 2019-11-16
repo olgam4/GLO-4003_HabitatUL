@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.coverage.domain.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
 import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
@@ -10,7 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
+import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.*;
 import static org.junit.Assert.*;
 

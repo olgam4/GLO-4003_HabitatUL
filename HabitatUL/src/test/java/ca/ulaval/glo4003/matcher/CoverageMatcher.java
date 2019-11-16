@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.matcher;
 
+import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumInput;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import org.hamcrest.Matcher;
 
@@ -22,5 +24,10 @@ public class CoverageMatcher {
             equalTo(quoteForm.getAdditionalInsured().getUniversityProfile().getProgram())),
         hasProperty("animals", equalTo(quoteForm.getPersonalProperty().getAnimals())),
         hasProperty("civilLiabilityLimit", equalTo(quoteForm.getCivilLiability().getLimit())));
+  }
+
+  public static Matcher<BicycleEndorsementPremiumInput> matchesBicycleEndorsementPremiumInput(
+      final BicycleEndorsementForm bicycleEndorsementForm) {
+    return hasProperty("bicyclePrice", equalTo(bicycleEndorsementForm.getBicycle().getPrice()));
   }
 }

@@ -6,9 +6,9 @@ import ca.ulaval.glo4003.coverage.application.premium.assembler.PremiumAssembler
 import ca.ulaval.glo4003.coverage.application.premium.assembler.QuoteBasicBlockPremiumFormulaAssembler;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BasicBlockCoveragePremiumDetail;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BicycleEndorsementPremiumDetail;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumInput;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
@@ -75,11 +75,12 @@ public class PremiumCalculator {
     BicycleEndorsementPremiumInput bicycleEndorsementPremiumInput =
         premiumAssembler.toBicycleEndorsementPremiumInput(bicycleEndorsementForm);
     Money bicycleEndorsementPremium =
-        bicycleEndorsementPremiumFormula.compute(bicycleEndorsementPremiumInput);
-    // PremiumDetails premiumDetails =
-    //    new PremiumDetails(new BasicBlockCoveragePremiumDetail(basicBlockPremium));
-    // return premiumDetails;
-    return null;
+        computeBicycleEndorsementPremium(bicycleEndorsementPremiumInput);
+    PremiumDetails currentPremiumDetails = bicycleEndorsementForm.getCurrentPremiumDetails();
+    BicycleEndorsementPremiumDetail updatedEndorsementPremiumDetail =
+        new BicycleEndorsementPremiumDetail(bicycleEndorsementPremium);
+    PremiumDetails premiumDetails = currentPremiumDetails.update(updatedEndorsementPremiumDetail);
+    return premiumDetails;
   }
 
   private Money computeBicycleEndorsementPremium(

@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;

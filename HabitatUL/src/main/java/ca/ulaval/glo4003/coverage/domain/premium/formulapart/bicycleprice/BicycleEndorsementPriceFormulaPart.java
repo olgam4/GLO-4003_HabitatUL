@@ -17,7 +17,7 @@ public class BicycleEndorsementPriceFormulaPart implements BicycleEndorsementPre
   @Override
   public Money compute(
       BicycleEndorsementPremiumInput bicycleEndorsementPremiumInput, Money basePremium) {
-    Amount bicyclePrice = bicycleEndorsementPremiumInput.getPrice();
+    Amount bicyclePrice = bicycleEndorsementPremiumInput.getBicyclePrice();
     PremiumAdjustment adjustment = bicyclePriceAdjustmentProvider.getAdjustment(bicyclePrice);
     return adjustment.apply(new Money(bicyclePrice));
   }

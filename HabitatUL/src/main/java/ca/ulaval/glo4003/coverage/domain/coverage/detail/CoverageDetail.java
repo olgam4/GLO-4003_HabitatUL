@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.coverage.detail;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 

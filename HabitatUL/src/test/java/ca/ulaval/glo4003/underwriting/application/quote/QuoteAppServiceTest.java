@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.coverage.CoverageGenerator;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;

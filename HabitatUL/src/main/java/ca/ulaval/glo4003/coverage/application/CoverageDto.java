@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.coverage.application;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.shared.application.DataTransferObject;
 
 public class CoverageDto extends DataTransferObject {

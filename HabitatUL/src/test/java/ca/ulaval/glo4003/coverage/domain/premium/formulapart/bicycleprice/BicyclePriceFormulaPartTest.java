@@ -23,7 +23,7 @@ public class BicyclePriceFormulaPartTest {
   private static final Money PREMIUM_ADJUSTMENT = createMoney();
   private static final BicycleEndorsementPremiumInput BICYCLE_PREMIUM_INPUT =
       createBicycleEndorsementPremiumInput();
-  private static final Amount BICYCLE_PRICE = BICYCLE_PREMIUM_INPUT.getPrice();
+  private static final Amount BICYCLE_PRICE = BICYCLE_PREMIUM_INPUT.getBicyclePrice();
 
   @Mock private BicyclePriceAdjustmentProvider bicyclePriceAdjustmentProvider;
   @Mock private PremiumAdjustment premiumAdjustment;

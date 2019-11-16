@@ -11,8 +11,8 @@ import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.BICYCLE_ENDORSEMENT;
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.PERSONAL_PROPERTY;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.BICYCLE_ENDORSEMENT;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;

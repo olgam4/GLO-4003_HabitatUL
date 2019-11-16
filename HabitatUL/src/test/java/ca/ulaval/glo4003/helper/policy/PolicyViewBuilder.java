@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyView;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;

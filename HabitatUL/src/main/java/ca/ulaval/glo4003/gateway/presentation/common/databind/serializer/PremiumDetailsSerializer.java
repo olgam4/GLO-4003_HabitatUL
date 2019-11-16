@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.databind.serializer;
 
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetail;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.gateway.presentation.coverage.response.PremiumDetailResponse;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import com.fasterxml.jackson.core.JsonGenerator;

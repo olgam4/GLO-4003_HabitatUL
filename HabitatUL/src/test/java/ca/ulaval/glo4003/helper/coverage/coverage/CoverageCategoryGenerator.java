@@ -1,13 +1,13 @@
-package ca.ulaval.glo4003.helper.coverage;
+package ca.ulaval.glo4003.helper.coverage.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.CIVIL_LIABILITY;
-import static ca.ulaval.glo4003.coverage.domain.CoverageCategory.PERSONAL_PROPERTY;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.CIVIL_LIABILITY;
+import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
 
 public class CoverageCategoryGenerator {
   private static final List<CoverageCategory> BASE_COVERAGE_CATEGORIES =

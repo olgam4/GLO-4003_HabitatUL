@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.helper.coverage.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
@@ -10,8 +10,8 @@ import com.github.javafaker.Faker;
 
 import java.util.stream.IntStream;
 
-import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
-import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
+import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
+import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
 
 public class CoverageDetailsGenerator {

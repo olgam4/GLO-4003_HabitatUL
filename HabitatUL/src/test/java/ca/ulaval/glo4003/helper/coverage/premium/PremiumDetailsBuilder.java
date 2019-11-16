@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.helper.coverage.premium;
 
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BasicBlockCoveragePremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.BicycleEndorsementPremiumDetail;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetail;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.util.ArrayList;
@@ -24,14 +25,21 @@ public class PremiumDetailsBuilder {
     return new PremiumDetailsBuilder();
   }
 
-  public PremiumDetailsBuilder withBasicBlockCoveragePremiumDetail(
+  public PremiumDetailsBuilder withBasicBlockPremiumDetail(
       BasicBlockCoveragePremiumDetail basicBlockCoveragePremiumDetail) {
     this.basicBlockCoveragePremiumDetail = basicBlockCoveragePremiumDetail;
     return this;
   }
 
-  public PremiumDetailsBuilder withBasicBlockCoveragePremiumDetail(Money basicBlockPremium) {
+  public PremiumDetailsBuilder withBasicBlockPremiumDetail(Money basicBlockPremium) {
     this.basicBlockCoveragePremiumDetail = new BasicBlockCoveragePremiumDetail(basicBlockPremium);
+    return this;
+  }
+
+  public PremiumDetailsBuilder withBicycleEndorsementPremiumDetail(
+      Money bicycleEndorsementPremium) {
+    this.withAdditionalPremiumDetail(
+        new BicycleEndorsementPremiumDetail(bicycleEndorsementPremium));
     return this;
   }
 

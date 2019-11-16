@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.serializer.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;

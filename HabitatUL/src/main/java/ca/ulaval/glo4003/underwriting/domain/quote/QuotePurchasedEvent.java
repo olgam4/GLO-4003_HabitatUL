@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.underwriting.domain.quote;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;

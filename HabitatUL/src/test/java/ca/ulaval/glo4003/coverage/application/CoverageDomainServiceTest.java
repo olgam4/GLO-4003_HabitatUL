@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +41,10 @@ public class CoverageDomainServiceTest {
     when(coverageSummarizer.summarizeQuoteCoverage(any(QuoteForm.class)))
         .thenReturn(COVERAGE_DETAILS);
     when(premiumCalculator.computeQuotePremium(any(QuoteForm.class))).thenReturn(PREMIUM_DETAILS);
+    when(coverageSummarizer.summarizeBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
+        .thenReturn(COVERAGE_DETAILS);
+    when(premiumCalculator.computeBicycleEndorsementPremium(any(BicycleEndorsementForm.class)))
+        .thenReturn(PREMIUM_DETAILS);
     subject = new CoverageDomainService(formValidator, coverageSummarizer, premiumCalculator);
   }
 
@@ -85,5 +89,20 @@ public class CoverageDomainServiceTest {
     subject.requestBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
 
     verify(coverageSummarizer).summarizeBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
+  }
+
+  @Test
+  public void requestingBicycleEndorsementCoverage_shouldComputePremium() {
+    subject.requestBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
+
+    verify(premiumCalculator).computeBicycleEndorsementPremium(BICYCLE_ENDORSEMENT_FORM);
+  }
+
+  @Test
+  public void requestingBicycleEndorsementCoverage_shouldProduceCorrespondingCoverageDto() {
+    CoverageDto coverageDto = subject.requestBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
+
+    CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
+    assertEquals(expectedCoverageDto, coverageDto);
   }
 }

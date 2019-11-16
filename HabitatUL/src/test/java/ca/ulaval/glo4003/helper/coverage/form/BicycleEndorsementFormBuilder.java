@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.helper.coverage.form;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
@@ -32,6 +32,12 @@ public class BicycleEndorsementFormBuilder {
   public BicycleEndorsementFormBuilder withCurrentCoverageDetails(
       CoverageDetails currentCoverageDetails) {
     this.currentCoverageDetails = currentCoverageDetails;
+    return this;
+  }
+
+  public BicycleEndorsementFormBuilder withCurrentPremiumDetails(
+      PremiumDetails currentPremiumDetails) {
+    this.currentPremiumDetails = currentPremiumDetails;
     return this;
   }
 

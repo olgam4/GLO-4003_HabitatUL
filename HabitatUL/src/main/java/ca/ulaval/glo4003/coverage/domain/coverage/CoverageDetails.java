@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.coverage.domain.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;

@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.form;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 public class BicycleEndorsementForm extends ValueObject {

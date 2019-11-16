@@ -1,5 +1,7 @@
-package ca.ulaval.glo4003.coverage.domain.premium.detail;
+package ca.ulaval.glo4003.coverage.domain.premium;
 
+import ca.ulaval.glo4003.coverage.domain.premium.detail.BasicBlockCoveragePremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
@@ -27,6 +29,23 @@ public class PremiumDetails extends ValueObject {
 
   public List<PremiumDetail> getCollection() {
     return new ArrayList<>(collection);
+  }
+
+  public Money getCoveragePremium(PremiumCategory coverageCategory) {
+    return collection.stream()
+        .filter(x -> x.getCoverage().equals(coverageCategory))
+        .findFirst()
+        .map(PremiumDetail::getPremium)
+        .orElse(Money.ZERO);
+  }
+
+  public PremiumDetails update(PremiumDetail updatedPremiumDetail) {
+    List<PremiumDetail> updatedCollection =
+        getCollection().stream()
+            .filter(x -> !x.getCoverage().equals(updatedPremiumDetail.getCoverage()))
+            .collect(Collectors.toList());
+    updatedCollection.add(updatedPremiumDetail);
+    return new PremiumDetails(updatedCollection);
   }
 
   public Money computeTotalPremium() {

@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 
 public class CoverageDomainService {
   private FormValidator formValidator;
@@ -38,7 +38,8 @@ public class CoverageDomainService {
     formValidator.validateBicycleEndorsementForm(bicycleEndorsementForm);
     CoverageDetails coverageDetails =
         coverageSummarizer.summarizeBicycleEndorsementCoverage(bicycleEndorsementForm);
-    // TODO: continue from here
-    return null;
+    PremiumDetails premiumDetails =
+        premiumCalculator.computeBicycleEndorsementPremium(bicycleEndorsementForm);
+    return new CoverageDto(coverageDetails, premiumDetails);
   }
 }
