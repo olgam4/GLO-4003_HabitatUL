@@ -25,9 +25,8 @@ public class QuoteFactory {
   public Quote create(
       QuoteForm quoteForm, CoverageDetails coverageDetails, PremiumDetails premiumDetails) {
     QuoteId quoteId = new QuoteId();
-    DateTime expirationDate = createExpirationDate();
-    Period effectivePeriod = createEffectivePeriod(quoteForm);
-
+    DateTime expirationDate = computeExpirationDate();
+    Period effectivePeriod = computeEffectivePeriod(quoteForm);
     return new Quote(
         quoteId,
         quoteForm,
@@ -39,12 +38,12 @@ public class QuoteFactory {
         clockProvider);
   }
 
-  private DateTime createExpirationDate() {
+  private DateTime computeExpirationDate() {
     return DateTime.now(clockProvider.getClock())
         .plus(quoteValidityPeriodProvider.getQuoteValidityPeriod());
   }
 
-  private Period createEffectivePeriod(QuoteForm quoteForm) {
+  private Period computeEffectivePeriod(QuoteForm quoteForm) {
     Date effectivePeriodStartDate = quoteForm.getEffectiveDate();
     Date effectivePeriodEndDate =
         quoteForm.getEffectiveDate().plus(quoteEffectivePeriodProvider.getQuoteEffectivePeriod());
