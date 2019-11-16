@@ -2,11 +2,11 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimi
 
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumFormulaPart;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
-public class CivilLiabilityLimitFormulaPart implements QuotePremiumFormulaPart {
+public class CivilLiabilityLimitFormulaPart implements QuoteBasicBlockPremiumFormulaPart {
   private CivilLiabilityLimitAdjustmentProvider civilLiabilityLimitAdjustmentProvider;
 
   public CivilLiabilityLimitFormulaPart(

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;

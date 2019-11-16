@@ -25,7 +25,7 @@ public class EnumSampler {
     return sampleValue(filteredValues);
   }
 
-  private static <T extends Enum<T>> T sampleValue(List<T> values) {
+  public static <T extends Enum<T>> T sampleValue(List<T> values) {
     Random random = new Random();
     return values.get(random.nextInt(values.size()));
   }

@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
@@ -21,6 +22,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 public class PolicyAppService {
   private PolicyFactory policyFactory;
   private PolicyRepository policyRepository;
+  private CoverageDomainService coverageDomainService;
   private ClaimFactory claimFactory;
   private ClaimRepository claimRepository;
 
@@ -28,6 +30,7 @@ public class PolicyAppService {
     this(
         new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
+        new CoverageDomainService(),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));
   }
@@ -35,10 +38,12 @@ public class PolicyAppService {
   public PolicyAppService(
       PolicyFactory policyFactory,
       PolicyRepository policyRepository,
+      CoverageDomainService coverageDomainService,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository) {
     this.policyFactory = policyFactory;
     this.policyRepository = policyRepository;
+    this.coverageDomainService = coverageDomainService;
     this.claimFactory = claimFactory;
     this.claimRepository = claimRepository;
   }
@@ -65,18 +70,22 @@ public class PolicyAppService {
   public void insureBicycle(PolicyId policyId, InsureBicycleDto insureBicycleDto) {
     try {
       Policy policy = policyRepository.getById(policyId);
+      //      coverageDomainService.requestBicycleEndorsementCoverage();
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }
   }
 
-  public void modifyPolicy(PolicyId policyId, ModifyPolicyDto modifyPolicyDto) {
+  public void modifyCoverage(PolicyId policyId, ModifyCoverageDto modifyCoverageDto) {
     try {
       Policy policy = policyRepository.getById(policyId);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }
   }
+
+  // public void confirmModification(PolicyId policyId, ModificationId
+  // policyModificationId) {}
 
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.context;
 
 import ca.ulaval.glo4003.context.service.*;
-import ca.ulaval.glo4003.coverage.domain.form.validationpart.UlRegistrarOffice;
+import ca.ulaval.glo4003.coverage.domain.form.validation.part.UlRegistrarOffice;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BasicBlockCoverageMaximumBicyclePriceProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementBasePremiumCalculator;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasePremiumCalculator;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bicycleprice.BicyclePriceAdjustmentProvider;
@@ -38,7 +38,9 @@ public class AcceptanceTestContext {
   }
 
   private void registerCalculationServices() {
-    register(QuoteBasePremiumCalculator.class, new DummyQuoteBasePremiumCalculator());
+    register(
+        QuoteBasicBlockBasePremiumCalculator.class,
+        new DummyQuoteBasicBlockBasePremiumCalculator());
     register(
         CivilLiabilityLimitAdjustmentProvider.class,
         new DummyCivilLiabilityLimitAdjustmentProvider());

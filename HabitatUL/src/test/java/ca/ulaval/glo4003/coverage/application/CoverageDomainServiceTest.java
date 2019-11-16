@@ -3,7 +3,8 @@ package ca.ulaval.glo4003.coverage.application;
 import ca.ulaval.glo4003.coverage.application.coverage.CoverageSummarizer;
 import ca.ulaval.glo4003.coverage.application.form.FormValidator;
 import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static org.junit.Assert.assertEquals;
@@ -23,6 +25,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CoverageDomainServiceTest {
   private static final QuoteForm QUOTE_FORM = createQuoteForm();
+  private static final BicycleEndorsementForm BICYCLE_ENDORSEMENT_FORM =
+      createBicycleEndorsementForm();
   private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
 
@@ -67,5 +71,19 @@ public class CoverageDomainServiceTest {
 
     CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
     assertEquals(expectedCoverageDto, coverageDto);
+  }
+
+  @Test
+  public void requestingBicycleEndorsementCoverage_shouldValidateForm() {
+    subject.requestBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
+
+    verify(formValidator).validateBicycleEndorsementForm(BICYCLE_ENDORSEMENT_FORM);
+  }
+
+  @Test
+  public void requestingBicycleEndorsementCoverage_shouldSummarizeCoverage() {
+    subject.requestBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
+
+    verify(coverageSummarizer).summarizeBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
   }
 }

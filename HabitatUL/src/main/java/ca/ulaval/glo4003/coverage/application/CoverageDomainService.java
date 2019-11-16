@@ -3,7 +3,8 @@ package ca.ulaval.glo4003.coverage.application;
 import ca.ulaval.glo4003.coverage.application.coverage.CoverageSummarizer;
 import ca.ulaval.glo4003.coverage.application.form.FormValidator;
 import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 
@@ -30,5 +31,14 @@ public class CoverageDomainService {
     CoverageDetails coverageDetails = coverageSummarizer.summarizeQuoteCoverage(quoteForm);
     PremiumDetails premiumDetails = premiumCalculator.computeQuotePremium(quoteForm);
     return new CoverageDto(coverageDetails, premiumDetails);
+  }
+
+  public CoverageDto requestBicycleEndorsementCoverage(
+      BicycleEndorsementForm bicycleEndorsementForm) {
+    formValidator.validateBicycleEndorsementForm(bicycleEndorsementForm);
+    CoverageDetails coverageDetails =
+        coverageSummarizer.summarizeBicycleEndorsementCoverage(bicycleEndorsementForm);
+    // TODO: continue from here
+    return null;
   }
 }

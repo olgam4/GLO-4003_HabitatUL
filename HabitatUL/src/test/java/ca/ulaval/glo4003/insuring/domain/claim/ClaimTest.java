@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
@@ -27,7 +27,20 @@ public class ClaimTest {
   private Claim subject;
 
   @Test
-  public void validatingClaim_withValidClaim_shouldNotThrow() {
+  public void validatingClaim_withValidClaimAndNoBicycleLoss_shouldNotThrow() {
+    LossDeclarations validLossDeclarations =
+        LossDeclarationsBuilder.aLossDeclaration()
+            .withLoss(
+                createPersonalPropertyLossCategory(),
+                createAmountSmallerThan(COVERAGE_DETAILS.getCoverageAmount(PERSONAL_PROPERTY)))
+            .build();
+    subject = ClaimBuilder.aClaim().withLossDeclarations(validLossDeclarations).build();
+
+    subject.validate(POLICY_INFORMATION, COVERAGE_DETAILS);
+  }
+
+  @Test
+  public void validatingClaim_withValidClaimAndBicycleLoss_shouldNotThrow() {
     LossDeclarations validLossDeclarations =
         LossDeclarationsBuilder.aLossDeclaration()
             .withLoss(

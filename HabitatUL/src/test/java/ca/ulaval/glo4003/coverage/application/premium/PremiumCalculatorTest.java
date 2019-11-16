@@ -1,15 +1,15 @@
 package ca.ulaval.glo4003.coverage.application.premium;
 
-import ca.ulaval.glo4003.coverage.application.AdditionalCoverageResolver;
+import ca.ulaval.glo4003.coverage.application.coverage.AdditionalCoverageResolver;
+import ca.ulaval.glo4003.coverage.application.premium.assembler.PremiumAssembler;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BicycleEndorsementPremiumDetail;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumInput;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumFormula;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator;
-import ca.ulaval.glo4003.helper.coverage.premium.BicycleEndorsementPremiumInputGenerator;
 import ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsBuilder;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -29,13 +29,11 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 @RunWith(MockitoJUnitRunner.class)
 public class PremiumCalculatorTest {
   private static final QuoteForm QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
-  private static final BicycleEndorsementPremiumInput BICYCLE_ENDORSEMENT_PREMIUM_INPUT =
-      BicycleEndorsementPremiumInputGenerator.createBicycleEndorsementPremiumInput();
   private static final Money BASIC_BLOCK_PREMIUM = MoneyGenerator.createMoney();
   private static final Money BICYCLE_ENDORSEMENT_PREMIUM = MoneyGenerator.createMoney();
 
   @Mock private AdditionalCoverageResolver additionalCoverageResolver;
-  @Mock private QuotePremiumFormula quotePremiumFormula;
+  @Mock private QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
   @Mock private BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula;
 
   private PremiumCalculator subject;
@@ -45,7 +43,8 @@ public class PremiumCalculatorTest {
   public void setUp() {
     when(additionalCoverageResolver.shouldIncludeBicycleEndorsement(any(QuoteForm.class)))
         .thenReturn(false);
-    when(quotePremiumFormula.compute(any(QuotePremiumInput.class))).thenReturn(BASIC_BLOCK_PREMIUM);
+    when(quoteBasicBlockPremiumFormula.compute(any(QuotePremiumInput.class)))
+        .thenReturn(BASIC_BLOCK_PREMIUM);
     when(bicycleEndorsementPremiumFormula.compute(any(BicycleEndorsementPremiumInput.class)))
         .thenReturn(BICYCLE_ENDORSEMENT_PREMIUM);
     premiumAssembler = new PremiumAssembler();
@@ -53,7 +52,7 @@ public class PremiumCalculatorTest {
         new PremiumCalculator(
             premiumAssembler,
             additionalCoverageResolver,
-            quotePremiumFormula,
+            quoteBasicBlockPremiumFormula,
             bicycleEndorsementPremiumFormula);
   }
 
@@ -61,7 +60,7 @@ public class PremiumCalculatorTest {
   public void computingQuotePremium_shouldComputeQuoteBasicBlockPremiumFormula() {
     subject.computeQuotePremium(QUOTE_FORM);
 
-    verify(quotePremiumFormula).compute(argThat(matchesQuotePremiumInput(QUOTE_FORM)));
+    verify(quoteBasicBlockPremiumFormula).compute(argThat(matchesQuotePremiumInput(QUOTE_FORM)));
   }
 
   @Test
@@ -93,18 +92,19 @@ public class PremiumCalculatorTest {
     assertEquals(expectedPremiumDetails, premiumDetails);
   }
 
-  @Test
-  public void computingBicycleEndorsementPremium_shouldComputeBicycleEndorsementPremiumFormula() {
-    subject.computeBicycleEndorsementPremium(BICYCLE_ENDORSEMENT_PREMIUM_INPUT);
-
-    verify(bicycleEndorsementPremiumFormula).compute(BICYCLE_ENDORSEMENT_PREMIUM_INPUT);
-  }
-
-  @Test
-  public void computingBicycleEndorsementPremium_shouldReturnComputedPremium() {
-    Money endorsementPremium =
-        subject.computeBicycleEndorsementPremium(BICYCLE_ENDORSEMENT_PREMIUM_INPUT);
-
-    assertEquals(BICYCLE_ENDORSEMENT_PREMIUM, endorsementPremium);
-  }
+  //  @Test
+  //  public void computingBicycleEndorsementPremium_shouldComputeBicycleEndorsementPremiumFormula()
+  // {
+  //    subject.computeBicycleEndorsementPremium(BICYCLE_ENDORSEMENT_PREMIUM_INPUT);
+  //
+  //    verify(bicycleEndorsementPremiumFormula).compute(BICYCLE_ENDORSEMENT_PREMIUM_INPUT);
+  //  }
+  //
+  //  @Test
+  //  public void computingBicycleEndorsementPremium_shouldReturnComputedPremium() {
+  //    Money endorsementPremium =
+  //        subject.computeBicycleEndorsementPremium(BICYCLE_ENDORSEMENT_PREMIUM_INPUT);
+  //
+  //    assertEquals(BICYCLE_ENDORSEMENT_PREMIUM, endorsementPremium);
+  //  }
 }

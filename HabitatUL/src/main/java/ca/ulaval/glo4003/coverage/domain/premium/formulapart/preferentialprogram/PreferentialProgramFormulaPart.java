@@ -2,13 +2,13 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.preferentialprogra
 
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumFormulaPart;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.util.Optional;
 
-public class PreferentialProgramFormulaPart implements QuotePremiumFormulaPart {
+public class PreferentialProgramFormulaPart implements QuoteBasicBlockPremiumFormulaPart {
   private PreferentialProgramAdjustmentProvider preferentialProgramAdjustmentProvider;
 
   public PreferentialProgramFormulaPart(

@@ -1,39 +1,34 @@
 package ca.ulaval.glo4003.coverage.application.form;
 
-import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.coverage.application.form.assembler.BicycleEndorsementFormValidationAssembler;
+import ca.ulaval.glo4003.coverage.application.form.assembler.QuoteFormValidationAssembler;
+import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.form.validation.bicycle.BicycleEndorsementFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidation;
-import ca.ulaval.glo4003.coverage.domain.form.validationpart.*;
-import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
-import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 
 public class FormValidator {
   private QuoteFormValidation quoteFormValidation;
+  private BicycleEndorsementFormValidation bicycleEndorsementFormValidation;
 
   public FormValidator() {
-    this(assembleQuoteFormValidation());
+    this(
+        QuoteFormValidationAssembler.assemble(),
+        BicycleEndorsementFormValidationAssembler.assemble());
   }
 
-  public FormValidator(QuoteFormValidation quoteFormValidation) {
+  public FormValidator(
+      QuoteFormValidation quoteFormValidation,
+      BicycleEndorsementFormValidation bicycleEndorsementFormValidation) {
     this.quoteFormValidation = quoteFormValidation;
-  }
-
-  private static QuoteFormValidation assembleQuoteFormValidation() {
-    QuoteFormValidation quoteFormValidation = new QuoteFormValidation();
-    quoteFormValidation.addValidationPart(new StudentNamedInsuredFormValidationPart());
-    quoteFormValidation.addValidationPart(
-        new EffectiveDateFormValidationPart(
-            ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
-            ServiceLocator.resolve(ClockProvider.class)));
-    quoteFormValidation.addValidationPart(new CivilLiabilityLimitFormValidationPart());
-    quoteFormValidation.addValidationPart(new DifferentAdditionalInsuredFormValidationPart());
-    quoteFormValidation.addValidationPart(
-        new UlRegistrationFormValidationPart(ServiceLocator.resolve(UlRegistrarOffice.class)));
-    quoteFormValidation.addValidationPart(new PositiveCoverageAmountFormValidationPart());
-    return quoteFormValidation;
+    this.bicycleEndorsementFormValidation = bicycleEndorsementFormValidation;
   }
 
   public void validateQuoteForm(QuoteForm quoteForm) {
     quoteFormValidation.validate(quoteForm);
+  }
+
+  public void validateBicycleEndorsementForm(BicycleEndorsementForm bicycleEndorsementForm) {
+    bicycleEndorsementFormValidation.validate(bicycleEndorsementForm);
   }
 }

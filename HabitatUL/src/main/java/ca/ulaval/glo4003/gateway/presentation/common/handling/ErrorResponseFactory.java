@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.administration.application.user.error.CouldNotAuthentic
 import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUserError;
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
-import ca.ulaval.glo4003.coverage.domain.form.validationpart.error.*;
+import ca.ulaval.glo4003.coverage.domain.form.validation.part.error.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.*;
 import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
@@ -51,6 +51,7 @@ public class ErrorResponseFactory {
   }
 
   private static void registerCoverageErrors() {
+    STATUS_MAP.put(BicycleAlreadyCoveredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(DifferentAdditionalInsuredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidAnimalsError.class, Status.BAD_REQUEST);

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.coverage.application.coverage;
 
-import ca.ulaval.glo4003.coverage.application.AdditionalCoverageResolver;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.BicycleEndorsementCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
@@ -33,7 +33,7 @@ public class CoverageSummarizer {
   }
 
   private CivilLiabilityCoverageDetail createCivilLiabilityCoverageDetail(QuoteForm quoteForm) {
-    return new CivilLiabilityCoverageDetail(quoteForm.getCivilLiability().getLimit());
+    return new CivilLiabilityCoverageDetail(quoteForm.getCivilLiability().getCoverageAmount());
   }
 
   private CoverageDetails addBicycleEndorsementOnDemand(
@@ -50,5 +50,14 @@ public class CoverageSummarizer {
     coverageDetails =
         coverageDetails.addCoverageDetail(new BicycleEndorsementCoverageDetail(bicyclePrice));
     return coverageDetails;
+  }
+
+  public CoverageDetails summarizeBicycleEndorsementCoverage(
+      BicycleEndorsementForm bicycleEndorsementForm) {
+    Amount bicyclePrice = bicycleEndorsementForm.getBicycle().getPrice();
+    BicycleEndorsementCoverageDetail updatedBicycleEndorsementCoverageDetail =
+        new BicycleEndorsementCoverageDetail(bicyclePrice);
+    CoverageDetails currentCoverageDetails = bicycleEndorsementForm.getCurrentCoverageDetails();
+    return currentCoverageDetails.update(updatedBicycleEndorsementCoverageDetail);
   }
 }

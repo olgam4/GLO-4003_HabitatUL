@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicy
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyPolicyRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
@@ -75,7 +75,7 @@ public class PolicyResource {
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @Valid ModifyPolicyRequest modifyPolicyRequest) {
-    ModifyPolicyDto modifyPolicyDto = policyViewAssembler.from(modifyPolicyRequest);
+    ModifyCoverageDto modifyCoverageDto = policyViewAssembler.from(modifyPolicyRequest);
     // TODO: return policy modification id
     return Response.ok().build();
   }

@@ -1,17 +1,17 @@
 package ca.ulaval.glo4003.helper.coverage.coverage;
 
 import ca.ulaval.glo4003.coverage.domain.CoverageCategory;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import com.github.javafaker.Faker;
 
 import java.util.stream.IntStream;
 
-import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createCoverageCategory;
-import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
+import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
 
 public class CoverageDetailsGenerator {
@@ -23,7 +23,7 @@ public class CoverageDetailsGenerator {
             createPersonalPropertyCoverageDetail(), createCivilLiabilityCoverageDetail());
     int numberAdditionalCoverages = Faker.instance().number().randomDigit();
     IntStream.range(0, numberAdditionalCoverages)
-        .mapToObj(i -> createCoverageDetail())
+        .mapToObj(i -> createAdditionalCoverageDetail())
         .forEach(premiumDetails::addCoverageDetail);
     return premiumDetails;
   }
@@ -33,11 +33,24 @@ public class CoverageDetailsGenerator {
   }
 
   public static CivilLiabilityCoverageDetail createCivilLiabilityCoverageDetail() {
-    return new CivilLiabilityCoverageDetail(createCivilLiabilityLimit());
+    return new CivilLiabilityCoverageDetail(createCoverageAmount());
   }
 
-  public static CoverageDetail createCoverageDetail() {
-    return new DummyCoverageDetail(createCoverageCategory(), createCoverageAmount());
+  public static CoverageDetail createBaseCoverageDetail() {
+    return createCoverageDetail(createBaseCoverageCategory());
+  }
+
+  public static CoverageDetail createAdditionalCoverageDetail() {
+    return createCoverageDetail(createAdditionalCoverageCategory());
+  }
+
+  public static CoverageDetail createCoverageDetail(CoverageCategory coverageCategory) {
+    return createCoverageDetail(coverageCategory, createCoverageAmount());
+  }
+
+  public static CoverageDetail createCoverageDetail(
+      CoverageCategory coverageCategory, Amount coverageAmount) {
+    return new DummyCoverageDetail(coverageCategory, coverageAmount);
   }
 
   private static Amount createCoverageAmount() {

@@ -1,11 +1,12 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
+import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
@@ -38,12 +39,13 @@ public class PolicyAppServiceTest {
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsuringBicycleDto();
-  private static final ModifyPolicyDto MODIFY_POLICY_DTO = createModifyPolicyDto();
+  private static final ModifyCoverageDto MODIFY_POLICY_DTO = createModifyPolicyDto();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
 
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
   @Mock private PolicyRepository policyRepository;
+  @Mock private CoverageDomainService coverageDomainService;
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
@@ -64,7 +66,9 @@ public class PolicyAppServiceTest {
     when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
         .thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
-    subject = new PolicyAppService(policyFactory, policyRepository, claimFactory, claimRepository);
+    subject =
+        new PolicyAppService(
+            policyFactory, policyRepository, coverageDomainService, claimFactory, claimRepository);
   }
 
   @Test
@@ -97,7 +101,7 @@ public class PolicyAppServiceTest {
 
   @Test
   public void modifyingPolicy_shouldGetPolicyById() throws PolicyNotFoundException {
-    subject.modifyPolicy(POLICY_ID, MODIFY_POLICY_DTO);
+    subject.modifyCoverage(POLICY_ID, MODIFY_POLICY_DTO);
 
     verify(policyRepository).getById(POLICY_ID);
   }
@@ -106,7 +110,7 @@ public class PolicyAppServiceTest {
   public void modifyingPolicy_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
-    subject.modifyPolicy(POLICY_ID, MODIFY_POLICY_DTO);
+    subject.modifyCoverage(POLICY_ID, MODIFY_POLICY_DTO);
   }
 
   @Test

@@ -2,13 +2,13 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals;
 
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumFormulaPart;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.util.Map;
 
-public class AnimalsFormulaPart implements QuotePremiumFormulaPart {
+public class AnimalsFormulaPart implements QuoteBasicBlockPremiumFormulaPart {
   private AnimalsAdjustmentProvider animalsAdjustmentProvider;
   private AnimalsAdjustmentLimitsProvider animalsAdjustmentLimitsProvider;
 

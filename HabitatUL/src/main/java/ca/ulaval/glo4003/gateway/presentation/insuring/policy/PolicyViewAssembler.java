@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicy
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyPolicyRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 
 import java.util.List;
@@ -27,8 +27,8 @@ public class PolicyViewAssembler {
         coverageViewAssembler.fromBicycleRequest(insureBicycleRequest.getBicycle()));
   }
 
-  public ModifyPolicyDto from(ModifyPolicyRequest modifyPolicyRequest) {
-    return new ModifyPolicyDto();
+  public ModifyCoverageDto from(ModifyPolicyRequest modifyPolicyRequest) {
+    return new ModifyCoverageDto();
   }
 
   public OpenClaimDto from(ClaimRequest claimRequest) {

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.helper.coverage.coverage;
 
+import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.BicycleEndorsementCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
-import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
-import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 import java.util.ArrayList;
@@ -36,19 +36,18 @@ public class CoverageDetailsBuilder {
     return this;
   }
 
-  public CoverageDetailsBuilder withCivilLiabilityCoverageDetail(
-      CivilLiabilityLimit civilLiabilityLimit) {
-    this.civilLiabilityCoverageDetail = new CivilLiabilityCoverageDetail(civilLiabilityLimit);
+  public CoverageDetailsBuilder withCivilLiabilityCoverageDetail(Amount coverageAmount) {
+    this.civilLiabilityCoverageDetail = new CivilLiabilityCoverageDetail(coverageAmount);
+    return this;
+  }
+
+  public CoverageDetailsBuilder withBicycleEndorsementCoverageDetail(Amount coverageAmount) {
+    this.additionalCoverageDetails.add(new BicycleEndorsementCoverageDetail(coverageAmount));
     return this;
   }
 
   public CoverageDetailsBuilder withAdditionalCoverageDetail(CoverageDetail coverageDetail) {
     this.additionalCoverageDetails.add(coverageDetail);
-    return this;
-  }
-
-  public CoverageDetailsBuilder withoutAdditionalCoverageDetail() {
-    this.additionalCoverageDetails = new ArrayList<>();
     return this;
   }
 

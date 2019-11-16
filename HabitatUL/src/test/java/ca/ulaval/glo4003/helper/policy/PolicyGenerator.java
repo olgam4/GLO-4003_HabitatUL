@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyPolicyDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
@@ -46,8 +46,8 @@ public class PolicyGenerator {
     return new InsureBicycleDto(createBicycle());
   }
 
-  public static ModifyPolicyDto createModifyPolicyDto() {
-    return new ModifyPolicyDto();
+  public static ModifyCoverageDto createModifyPolicyDto() {
+    return new ModifyCoverageDto();
   }
 
   public static OpenClaimDto createOpenClaimDto() {
