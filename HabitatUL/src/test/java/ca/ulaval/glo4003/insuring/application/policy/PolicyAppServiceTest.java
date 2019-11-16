@@ -27,21 +27,26 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
+import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesBicycleEndorsementForm;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyAppServiceTest {
+  public static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();
+  public static final PremiumDetails CURRENT_PREMIUM_DETAILS = createPremiumDetails();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsuringBicycleDto();
   private static final ModifyCoverageDto MODIFY_POLICY_DTO = createModifyPolicyDto();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
-
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
   @Mock private PolicyRepository policyRepository;
@@ -51,9 +56,13 @@ public class PolicyAppServiceTest {
   @Mock private ClaimRepository claimRepository;
 
   private PolicyAppService subject;
+  private PolicyAssembler policyAssembler;
 
   @Before
   public void setUp() throws PolicyNotFoundException {
+    policyAssembler = new PolicyAssembler();
+    when(policy.getCurrentCoverageDetails()).thenReturn(CURRENT_COVERAGE_DETAILS);
+    when(policy.getCurrentPremiumDetails()).thenReturn(CURRENT_PREMIUM_DETAILS);
     when(policyFactory.create(
             any(String.class),
             any(Period.class),
@@ -68,7 +77,12 @@ public class PolicyAppServiceTest {
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
     subject =
         new PolicyAppService(
-            policyFactory, policyRepository, coverageDomainService, claimFactory, claimRepository);
+            policyAssembler,
+            policyFactory,
+            policyRepository,
+            coverageDomainService,
+            claimFactory,
+            claimRepository);
   }
 
   @Test
@@ -90,6 +104,15 @@ public class PolicyAppServiceTest {
     subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
 
     verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void insuringBicycle_shouldRequestBicycleEndorsementCoverage() {
+    subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
+
+    verify(coverageDomainService)
+        .requestBicycleEndorsementCoverage(
+            argThat(matchesBicycleEndorsementForm(policy, INSURING_BICYCLE_DTO)));
   }
 
   @Test(expected = PolicyNotFoundError.class)

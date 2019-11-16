@@ -1,10 +1,8 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyInformationBuilder;
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
@@ -13,6 +11,7 @@ import org.junit.Test;
 
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.BICYCLE_ENDORSEMENT;
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
+import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle.UNFILLED_BICYCLE;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
@@ -57,12 +56,8 @@ public class ClaimTest {
 
   @Test(expected = NotDeclaredBicycleError.class)
   public void validatingClaim_withNotDeclaredBicycle_shouldThrow() {
-    PersonalProperty personalPropertyWithoutBicycle =
-        PersonalPropertyBuilder.aPersonalProperty().withoutBicycle().build();
     PolicyInformation policyInformationWithoutDeclaredBicycle =
-        PolicyInformationBuilder.aPolicyInformation()
-            .withPersonalProperty(personalPropertyWithoutBicycle)
-            .build();
+        PolicyInformationBuilder.aPolicyInformation().withBicycle(UNFILLED_BICYCLE).build();
     LossDeclarations lossDeclarationsWithBicycleLoss =
         LossDeclarationsBuilder.aLossDeclaration().withBicycleLoss().build();
 

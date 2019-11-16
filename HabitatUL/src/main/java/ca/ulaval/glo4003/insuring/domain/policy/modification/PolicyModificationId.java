@@ -1,21 +1,21 @@
-package ca.ulaval.glo4003.insuring.application.modification;
+package ca.ulaval.glo4003.insuring.domain.policy.modification;
 
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 
 import java.util.UUID;
 
-public class ModificationId extends ValueObject {
+public class PolicyModificationId extends ValueObject {
   private final UUID value;
 
-  public ModificationId() {
+  public PolicyModificationId() {
     this(UUID.randomUUID());
   }
 
-  public ModificationId(String value) {
+  public PolicyModificationId(String value) {
     this(UUID.fromString(value));
   }
 
-  private ModificationId(UUID value) {
+  private PolicyModificationId(UUID value) {
     this.value = value;
   }
 

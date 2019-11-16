@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Policy extends AggregateRoot {
+  private final List<PolicyModification> modifications = new ArrayList<>();
   private final List<ClaimId> claims = new ArrayList<>();
   private PolicyId policyId;
   private String quoteKey;
@@ -51,11 +53,11 @@ public class Policy extends AggregateRoot {
     return currentPolicyView.getPolicyInformation();
   }
 
-  public CoverageDetails getCoverageDetails() {
+  public CoverageDetails getCurrentCoverageDetails() {
     return currentPolicyView.getCoverageDetails();
   }
 
-  public PremiumDetails getPremiumDetails() {
+  public PremiumDetails getCurrentPremiumDetails() {
     return currentPolicyView.getPremiumDetails();
   }
 
@@ -65,7 +67,7 @@ public class Policy extends AggregateRoot {
 
   public void openClaim(Claim claim) {
     checkIfClaimOutsideCoveragePeriod();
-    claim.validate(getPolicyInformation(), getCoverageDetails());
+    claim.validate(getPolicyInformation(), getCurrentCoverageDetails());
     claims.add(claim.getClaimId());
     registerEvent(
         new ClaimOpenedEvent(policyId, claim.getClaimId(), Date.now(clockProvider.getClock())));

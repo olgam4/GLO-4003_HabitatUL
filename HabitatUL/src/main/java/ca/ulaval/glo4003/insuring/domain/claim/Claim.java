@@ -56,7 +56,7 @@ public class Claim {
   }
 
   private boolean hasNoDeclaredBicycle(PolicyInformation policyInformation) {
-    return !policyInformation.getPersonalProperty().getBicycle().isFilled();
+    return !policyInformation.getBicycle().isFilled();
   }
 
   private void checkIfLossDeclarationsExceedCoverage(CoverageDetails coverageDetails) {

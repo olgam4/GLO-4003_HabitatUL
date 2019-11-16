@@ -43,9 +43,8 @@ class MediatorChanneler {
         quoteForm.getPersonalInformation(),
         quoteForm.getAdditionalInsured(),
         quoteForm.getLocation(),
-        quoteForm.getEffectiveDate(),
         quoteForm.getBuilding(),
-        quoteForm.getPersonalProperty(),
-        quoteForm.getCivilLiability());
+        quoteForm.getPersonalProperty().getAnimals(),
+        quoteForm.getPersonalProperty().getBicycle());
   }
 }

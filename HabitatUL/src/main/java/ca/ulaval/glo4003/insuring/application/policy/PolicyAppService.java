@@ -2,6 +2,8 @@ package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.application.CoverageDto;
+import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
@@ -20,6 +22,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
+  private PolicyAssembler policyAssembler;
   private PolicyFactory policyFactory;
   private PolicyRepository policyRepository;
   private CoverageDomainService coverageDomainService;
@@ -28,6 +31,7 @@ public class PolicyAppService {
 
   public PolicyAppService() {
     this(
+        new PolicyAssembler(),
         new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
         new CoverageDomainService(),
@@ -36,11 +40,13 @@ public class PolicyAppService {
   }
 
   public PolicyAppService(
+      PolicyAssembler policyAssembler,
       PolicyFactory policyFactory,
       PolicyRepository policyRepository,
       CoverageDomainService coverageDomainService,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository) {
+    this.policyAssembler = policyAssembler;
     this.policyFactory = policyFactory;
     this.policyRepository = policyRepository;
     this.coverageDomainService = coverageDomainService;
@@ -70,7 +76,11 @@ public class PolicyAppService {
   public void insureBicycle(PolicyId policyId, InsureBicycleDto insureBicycleDto) {
     try {
       Policy policy = policyRepository.getById(policyId);
-      //      coverageDomainService.requestBicycleEndorsementCoverage();
+      BicycleEndorsementForm bicycleEndorsementForm =
+          policyAssembler.from(insureBicycleDto, policy);
+      CoverageDto coverageDto =
+          coverageDomainService.requestBicycleEndorsementCoverage(bicycleEndorsementForm);
+
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }
@@ -84,6 +94,7 @@ public class PolicyAppService {
     }
   }
 
+  // TODO: complete the modification with this use case
   // public void confirmModification(PolicyId policyId, ModificationId
   // policyModificationId) {}
 
