@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
-import ca.ulaval.glo4003.coverage.domain.form.validation.part.error.StudentNamedInsuredError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.StudentNamedInsuredError;
 import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.identity.IdentityBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator;

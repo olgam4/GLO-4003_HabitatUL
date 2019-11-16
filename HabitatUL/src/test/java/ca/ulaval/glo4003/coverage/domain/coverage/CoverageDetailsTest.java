@@ -12,7 +12,7 @@ import java.util.List;
 
 import static ca.ulaval.glo4003.helper.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class CoverageDetailsTest {
   private static final CoverageDetail ADDITIONAL_COVERAGE_DETAIL = createAdditionalCoverageDetail();
@@ -69,6 +69,23 @@ public class CoverageDetailsTest {
     Amount coverageAmount = subject.getCoverageAmount(createAdditionalCoverageCategory());
 
     assertEquals(Amount.ZERO, coverageAmount);
+  }
+
+  @Test
+  public void checkingIfCoverageCategoryIsIncluded_withIncludedCoverageCategory_shouldBeTrue() {
+    subject =
+        CoverageDetailsBuilder.aCoverageDetails()
+            .withAdditionalCoverageDetail(ADDITIONAL_COVERAGE_DETAIL)
+            .build();
+
+    assertTrue(subject.includes(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY));
+  }
+
+  @Test
+  public void checkingIfCoverageCategoryIsIncluded_withNotCoveredCoverageCategory_shouldBeFalse() {
+    subject = CoverageDetailsBuilder.aCoverageDetails().build();
+
+    assertFalse(subject.includes(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY));
   }
 
   @Test

@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
-import ca.ulaval.glo4003.coverage.domain.form.validation.part.error.UniversityProfileError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.UniversityProfileError;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidationPart;
 
 public class UlRegistrationFormValidationPart implements QuoteFormValidationPart {
@@ -14,20 +14,20 @@ public class UlRegistrationFormValidationPart implements QuoteFormValidationPart
   }
 
   @Override
-  public void validate(QuoteForm quoteForm) {
-    validateNamedInsuredUniversityProfile(quoteForm);
-    validateAdditionalInsuredUniversityProfile(quoteForm);
+  public void validate(QuoteForm form) {
+    validateNamedInsuredUniversityProfile(form);
+    validateAdditionalInsuredUniversityProfile(form);
   }
 
-  private void validateNamedInsuredUniversityProfile(QuoteForm quoteForm) {
+  private void validateNamedInsuredUniversityProfile(QuoteForm form) {
     UniversityProfile namedInsuredUniversityProfile =
-        quoteForm.getPersonalInformation().getUniversityProfile();
+        form.getPersonalInformation().getUniversityProfile();
     validateUniversityProfile(namedInsuredUniversityProfile);
   }
 
-  private void validateAdditionalInsuredUniversityProfile(QuoteForm quoteForm) {
+  private void validateAdditionalInsuredUniversityProfile(QuoteForm form) {
     UniversityProfile additionalInsuredUniversityProfile =
-        quoteForm.getAdditionalInsured().getUniversityProfile();
+        form.getAdditionalInsured().getUniversityProfile();
     validateUniversityProfile(additionalInsuredUniversityProfile);
   }
 

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.coverage.domain.form.validation.part.error;
+package ca.ulaval.glo4003.coverage.domain.form.validation.error;
 
 public class PositiveCoverageAmountError extends FormValidationError {
   private static final String ERROR = "POSITIVE_COVERAGE_AMOUNT";

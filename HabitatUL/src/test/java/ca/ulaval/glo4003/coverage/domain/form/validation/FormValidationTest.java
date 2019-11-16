@@ -19,19 +19,21 @@ public abstract class FormValidationTest<T> {
   @Before
   public void setUp() {
     form = createForm();
-    subject = new FormValidation();
+    subject = createSubject();
   }
 
   @Test
   public void validatingForm_shouldConsiderAllValidationParts() {
-    subject.addValidationPart(formValidationPart);
-    subject.addValidationPart(anotherFormValidationPart);
+    subject.addFormValidationPart(formValidationPart);
+    subject.addFormValidationPart(anotherFormValidationPart);
 
     subject.validate(form);
 
     verify(formValidationPart).validate(form);
     verify(anotherFormValidationPart).validate(form);
   }
+
+  public abstract FormValidation createSubject();
 
   public abstract T createForm();
 }

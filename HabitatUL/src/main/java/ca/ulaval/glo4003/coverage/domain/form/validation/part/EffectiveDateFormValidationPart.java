@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.form.validation.part.error.QuoteEffectiveDateError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.QuoteEffectiveDateError;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidationPart;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -18,8 +18,8 @@ public class EffectiveDateFormValidationPart implements QuoteFormValidationPart 
   }
 
   @Override
-  public void validate(QuoteForm quoteForm) {
-    if (isInvalidEffectiveDate(quoteForm.getEffectiveDate())) {
+  public void validate(QuoteForm form) {
+    if (isInvalidEffectiveDate(form.getEffectiveDate())) {
       throw new QuoteEffectiveDateError();
     }
   }

@@ -3,11 +3,11 @@ package ca.ulaval.glo4003.coverage.domain.form.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormValidation<T> {
+public abstract class FormValidation<T> {
   private List<FormValidationPart<T>> formValidationParts = new ArrayList<>();
 
-  public void addValidationPart(FormValidationPart<T> validationPart) {
-    formValidationParts.add(validationPart);
+  public void addFormValidationPart(FormValidationPart<T> formValidationPart) {
+    formValidationParts.add(formValidationPart);
   }
 
   public void validate(T form) {

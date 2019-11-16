@@ -7,11 +7,13 @@ import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bicycleprice.Bicycl
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.bicycleprice.BicyclePriceAdjustmentProvider;
 
 public class BicycleEndorsementPremiumFormulaAssembler {
+  private BicycleEndorsementPremiumFormulaAssembler() {}
+
   public static BicycleEndorsementPremiumFormula assemble() {
     BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula =
         new BicycleEndorsementPremiumFormula(
             ServiceLocator.resolve(BicycleEndorsementBasePremiumCalculator.class));
-    bicycleEndorsementPremiumFormula.addFormulaPart(
+    bicycleEndorsementPremiumFormula.addPremiumFormulaPart(
         new BicycleEndorsementPriceFormulaPart(
             ServiceLocator.resolve(BicyclePriceAdjustmentProvider.class)));
     return bicycleEndorsementPremiumFormula;

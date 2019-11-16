@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PremiumFormula<T> {
+public abstract class PremiumFormula<T> {
   private BasePremiumCalculator<T> basePremiumCalculator;
   private List<PremiumFormulaPart<T>> premiumFormulaParts = new ArrayList<>();
 
@@ -13,8 +13,8 @@ public class PremiumFormula<T> {
     this.basePremiumCalculator = basePremiumCalculator;
   }
 
-  public void addFormulaPart(PremiumFormulaPart<T> formulaPart) {
-    premiumFormulaParts.add(formulaPart);
+  public void addPremiumFormulaPart(PremiumFormulaPart<T> premiumFormulaPart) {
+    premiumFormulaParts.add(premiumFormulaPart);
   }
 
   public Money compute(T premiumInput) {

@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.application.form;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.form.validation.bicycle.BicycleEndorsementFormValidation;
+import ca.ulaval.glo4003.coverage.domain.form.validation.bicycleendorsement.BicycleEndorsementFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidation;
 import ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator;
 import org.junit.Before;

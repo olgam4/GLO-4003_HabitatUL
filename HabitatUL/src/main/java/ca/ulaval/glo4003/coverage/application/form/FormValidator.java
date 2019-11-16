@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.coverage.application.form.assembler.BicycleEndorsementF
 import ca.ulaval.glo4003.coverage.application.form.assembler.QuoteFormValidationAssembler;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
-import ca.ulaval.glo4003.coverage.domain.form.validation.bicycle.BicycleEndorsementFormValidation;
+import ca.ulaval.glo4003.coverage.domain.form.validation.bicycleendorsement.BicycleEndorsementFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidation;
 
 public class FormValidator {

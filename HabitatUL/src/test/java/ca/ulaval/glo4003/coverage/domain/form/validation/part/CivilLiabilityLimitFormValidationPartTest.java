@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.building.Building;
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability;
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
-import ca.ulaval.glo4003.coverage.domain.form.validation.part.error.CivilLiabilityLimitError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.CivilLiabilityLimitError;
 import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.building.BuildingBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.civilliability.CivilLiabilityBuilder;

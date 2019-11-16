@@ -24,6 +24,11 @@ public class BicycleEndorsementFormBuilder {
     return new BicycleEndorsementFormBuilder();
   }
 
+  public BicycleEndorsementFormBuilder withBicycle(Bicycle bicycle) {
+    this.bicycle = bicycle;
+    return this;
+  }
+
   public BicycleEndorsementFormBuilder withCurrentCoverageDetails(
       CoverageDetails currentCoverageDetails) {
     this.currentCoverageDetails = currentCoverageDetails;

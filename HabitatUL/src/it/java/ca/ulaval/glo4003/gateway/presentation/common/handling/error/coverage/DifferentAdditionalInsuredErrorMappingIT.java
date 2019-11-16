@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.form.validation.part.error.DifferentAdditionalInsuredError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.DifferentAdditionalInsuredError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 
 import javax.ws.rs.core.Response;

@@ -20,7 +20,7 @@ import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGen
 public class QuotePremiumInputGenerator {
   private QuotePremiumInputGenerator() {}
 
-  public static QuotePremiumInput create() {
+  public static QuotePremiumInput createQuotePremiumInput() {
     return new QuotePremiumInput(
         createGender(),
         UniversityProgramGenerator.createUniversityProgram(),

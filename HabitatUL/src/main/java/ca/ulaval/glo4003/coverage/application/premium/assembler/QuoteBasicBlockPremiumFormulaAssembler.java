@@ -16,23 +16,25 @@ import ca.ulaval.glo4003.coverage.domain.premium.formulapart.roommate.RoommateAd
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.roommate.RoommateFormulaPart;
 
 public class QuoteBasicBlockPremiumFormulaAssembler {
+  private QuoteBasicBlockPremiumFormulaAssembler() {}
+
   public static QuoteBasicBlockPremiumFormula assemble() {
     QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula =
         new QuoteBasicBlockPremiumFormula(
             ServiceLocator.resolve(QuoteBasicBlockBasePremiumCalculator.class));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
         new CivilLiabilityLimitFormulaPart(
             ServiceLocator.resolve(CivilLiabilityLimitAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
         new AnimalsFormulaPart(
             ServiceLocator.resolve(AnimalsAdjustmentProvider.class),
             ServiceLocator.resolve(AnimalsAdjustmentLimitsProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
         new PreferentialProgramFormulaPart(
             ServiceLocator.resolve(PreferentialProgramAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
         new RoommateFormulaPart(ServiceLocator.resolve(RoommateAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addFormulaPart(
+    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
         new GraduateStudentFormulaPart(
             ServiceLocator.resolve(GraduateStudentAdjustmentProvider.class)));
     return quoteBasicBlockPremiumFormula;

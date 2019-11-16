@@ -43,6 +43,10 @@ public class CoverageDetails extends ValueObject {
         .orElse(Amount.ZERO);
   }
 
+  public boolean includes(CoverageCategory coverageCategory) {
+    return collection.stream().anyMatch(x -> x.getCoverage().equals(coverageCategory));
+  }
+
   public CoverageDetails update(CoverageDetail updatedCoverageDetail) {
     List<CoverageDetail> updatedCollection =
         getCollection().stream()

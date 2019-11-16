@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.coverage;
 
-import ca.ulaval.glo4003.coverage.domain.form.validation.error.CivilLiabilityLimitError;
+import ca.ulaval.glo4003.coverage.domain.form.validation.error.PositiveBicyclePriceError;
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
 
 import javax.ws.rs.core.Response;
 
-public class CivilLiabilityLimitErrorMappingIT extends ErrorMappingIT {
+public class PositiveBicyclePriceErrorMappingIT extends ErrorMappingIT {
   @Override
   public Throwable getError() {
-    return new CivilLiabilityLimitError();
+    return new PositiveBicyclePriceError();
   }
 
   @Override
@@ -18,11 +18,11 @@ public class CivilLiabilityLimitErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorCodeMatcher() {
-    return "CIVIL_LIABILITY_LIMIT";
+    return "POSITIVE_BICYCLE_PRICE";
   }
 
   @Override
   public String getErrorMessageMatcher() {
-    return "sorry, the requested civil liability limit is not allowed based on your risk exposure";
+    return "sorry, bicycle price must be greater than 0";
   }
 }

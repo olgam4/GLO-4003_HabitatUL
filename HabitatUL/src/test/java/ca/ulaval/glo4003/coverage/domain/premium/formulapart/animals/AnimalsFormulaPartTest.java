@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.AnimalBreed;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.NoPremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
@@ -15,13 +14,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Map;
 
+import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createQuotePremiumInput;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnimalsFormulaPartTest {
-  private static final QuotePremiumInput QUOTE_PREMIUM_INPUT = QuotePremiumInputGenerator.create();
+  private static final QuotePremiumInput QUOTE_PREMIUM_INPUT = createQuotePremiumInput();
   private static final Map<AnimalBreed, Integer> ANIMAL_COLLECTION =
       QUOTE_PREMIUM_INPUT.getAnimals().getCollection();
   private static final Money BASE_PREMIUM = MoneyGenerator.createMoney();
