@@ -20,7 +20,7 @@ import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerato
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDuration;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
-import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationState.PENDING;
+import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.PENDING;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -76,7 +76,7 @@ public class PolicyModificationFactoryTest {
             UPDATED_PREMIUM_DETAILS,
             policyInformationModifier);
 
-    assertEquals(PENDING, policyModification.getState());
+    assertEquals(PENDING, policyModification.getStatus());
   }
 
   @Test

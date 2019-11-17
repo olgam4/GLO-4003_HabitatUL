@@ -6,16 +6,19 @@ import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Policy extends AggregateRoot {
-  private final List<PolicyModification> modifications = new ArrayList<>();
+  private final Map<PolicyModificationId, PolicyModification> modifications = new HashMap<>();
   private final List<ClaimId> claims = new ArrayList<>();
   private PolicyId policyId;
   private String quoteKey;
@@ -63,6 +66,10 @@ public class Policy extends AggregateRoot {
 
   public void issue() {
     registerEvent(new PolicyIssuedEvent(policyId, quoteKey));
+  }
+
+  public void submitModification(PolicyModification policyModification) {
+    modifications.put(policyModification.getPolicyModificationId(), policyModification);
   }
 
   public void openClaim(Claim claim) {

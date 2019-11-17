@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
@@ -19,6 +20,10 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationFactory;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
@@ -26,6 +31,7 @@ public class PolicyAppService {
   private PolicyFactory policyFactory;
   private PolicyRepository policyRepository;
   private CoverageDomainService coverageDomainService;
+  private PolicyModificationFactory policyModificationFactory;
   private ClaimFactory claimFactory;
   private ClaimRepository claimRepository;
 
@@ -35,6 +41,9 @@ public class PolicyAppService {
         new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
         new CoverageDomainService(),
+        new PolicyModificationFactory(
+            ServiceLocator.resolve(PolicyModificationValidityPeriodProvider.class),
+            ServiceLocator.resolve(ClockProvider.class)),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));
   }
@@ -44,12 +53,14 @@ public class PolicyAppService {
       PolicyFactory policyFactory,
       PolicyRepository policyRepository,
       CoverageDomainService coverageDomainService,
+      PolicyModificationFactory policyModificationFactory,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository) {
     this.policyAssembler = policyAssembler;
     this.policyFactory = policyFactory;
     this.policyRepository = policyRepository;
     this.coverageDomainService = coverageDomainService;
+    this.policyModificationFactory = policyModificationFactory;
     this.claimFactory = claimFactory;
     this.claimRepository = claimRepository;
   }
@@ -73,14 +84,23 @@ public class PolicyAppService {
     }
   }
 
-  public void insureBicycle(PolicyId policyId, InsureBicycleDto insureBicycleDto) {
+  public PolicyModificationDto insureBicycle(PolicyId policyId, InsureBicycleDto insureBicycleDto) {
     try {
       Policy policy = policyRepository.getById(policyId);
       BicycleEndorsementForm bicycleEndorsementForm =
           policyAssembler.from(insureBicycleDto, policy);
       CoverageDto coverageDto =
           coverageDomainService.requestBicycleEndorsementCoverage(bicycleEndorsementForm);
-
+      InsureBicyclePolicyInformationModifier insureBicyclePolicyInformationModifier =
+          new InsureBicyclePolicyInformationModifier(insureBicycleDto.getBicycle());
+      PolicyModification policyModification =
+          policyModificationFactory.create(
+              coverageDto.getCoverageDetails(),
+              policy.getCurrentPremiumDetails(),
+              coverageDto.getPremiumDetails(),
+              insureBicyclePolicyInformationModifier);
+      policy.submitModification(policyModification);
+      return policyAssembler.from(policyModification);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }

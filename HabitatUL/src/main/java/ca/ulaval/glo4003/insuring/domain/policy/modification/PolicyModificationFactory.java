@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
-import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationState.PENDING;
+import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.PENDING;
 
 public class PolicyModificationFactory {
   private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;

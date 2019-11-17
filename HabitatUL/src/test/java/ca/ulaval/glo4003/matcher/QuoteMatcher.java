@@ -26,18 +26,21 @@ public class QuoteMatcher {
   public static Matcher<Quote> matchesQuote(final Quote quote) {
     return allOf(
         hasProperty("quoteId", equalTo(quote.getQuoteId())),
-        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())),
-        hasProperty("purchased", equalTo(quote.isPurchased())),
+        hasProperty("quoteForm", equalTo(quote.getQuoteForm())),
+        hasProperty("expirationDate", equalTo(quote.getExpirationDate())),
         hasProperty("effectivePeriod", equalTo(quote.getEffectivePeriod())),
-        hasProperty("expirationDate", equalTo(quote.getExpirationDate())));
+        hasProperty("coverageDetails", equalTo(quote.getCoverageDetails())),
+        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())),
+        hasProperty("purchased", equalTo(quote.isPurchased())));
   }
 
   public static Matcher<QuoteDto> matchesQuoteDto(final Quote quote) {
     return allOf(
         hasProperty("quoteId", equalTo(quote.getQuoteId())),
-        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())),
+        hasProperty("expirationDate", equalTo(quote.getExpirationDate())),
         hasProperty("effectivePeriod", equalTo(quote.getEffectivePeriod())),
-        hasProperty("expirationDate", equalTo(quote.getExpirationDate())));
+        hasProperty("coverageDetails", equalTo(quote.getCoverageDetails())),
+        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())));
   }
 
   public static Matcher<QuoteForm> matchesQuoteForm(final RequestQuoteDto requestQuoteDto) {
