@@ -7,4 +7,6 @@ public interface PolicyRepository {
   Policy getById(PolicyId policyId) throws PolicyNotFoundException;
 
   void create(Policy policy) throws PolicyAlreadyCreatedException;
+
+  void update(Policy policy) throws PolicyNotFoundException;
 }

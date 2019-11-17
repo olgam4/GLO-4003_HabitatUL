@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EventPublisherPolicyRepositoryDecoratorTest {
   private static final PolicyId POLICY_ID = PolicyGenerator.createPolicyId();
+  private static final List<Event> EVENTS = EventGenerator.createList();
 
   @Mock private Policy policy;
   @Mock private PolicyRepository policyRepository;
@@ -36,6 +37,13 @@ public class EventPublisherPolicyRepositoryDecoratorTest {
   }
 
   @Test
+  public void gettingPolicyById_shouldDelegateToPolicyRepository() throws PolicyNotFoundException {
+    subject.getById(POLICY_ID);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
   public void creatingPolicy_shouldDelegateToPolicyRepository()
       throws PolicyAlreadyCreatedException {
     subject.create(policy);
@@ -45,18 +53,28 @@ public class EventPublisherPolicyRepositoryDecoratorTest {
 
   @Test
   public void creatingPolicy_shouldPublishDomainEvents() throws PolicyAlreadyCreatedException {
-    List<Event> events = EventGenerator.createList();
-    when(policy.getEvents()).thenReturn(events);
+    when(policy.getEvents()).thenReturn(EVENTS);
 
     subject.create(policy);
 
-    verify(mediator).publish(events);
+    verify(mediator).publish(EVENTS);
   }
 
   @Test
-  public void gettingPolicyById_shouldDelegateToPolicyRepository() throws PolicyNotFoundException {
-    subject.getById(POLICY_ID);
+  public void updatingPolicy_shouldDelegateToPolicyRepository() throws PolicyNotFoundException {
+    Policy policy = PolicyGenerator.createPolicy();
 
-    verify(policyRepository).getById(POLICY_ID);
+    subject.update(policy);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test
+  public void updatingPolicy_shouldPublishDomainEvents() throws PolicyNotFoundException {
+    when(policy.getEvents()).thenReturn(EVENTS);
+
+    subject.update(policy);
+
+    verify(mediator).publish(EVENTS);
   }
 }

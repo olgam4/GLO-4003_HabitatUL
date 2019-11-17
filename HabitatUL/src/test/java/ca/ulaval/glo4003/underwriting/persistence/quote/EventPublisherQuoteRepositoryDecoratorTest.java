@@ -9,7 +9,6 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
-import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EventPublisherQuoteRepositoryDecoratorTest {
   private static final QuoteId QUOTE_ID = QuoteGenerator.createQuoteId();
+  private static final List<Event> EVENTS = EventGenerator.createList();
 
   @Mock private Quote quote;
   @Mock private QuoteRepository quoteRepository;
@@ -52,12 +52,11 @@ public class EventPublisherQuoteRepositoryDecoratorTest {
 
   @Test
   public void creatingQuote_shouldPublishDomainEvents() throws QuoteAlreadyCreatedException {
-    List<Event> events = EventGenerator.createList();
-    when(quote.getEvents()).thenReturn(events);
+    when(quote.getEvents()).thenReturn(EVENTS);
 
     subject.create(quote);
 
-    verify(mediator).publish(events);
+    verify(mediator).publish(EVENTS);
   }
 
   @Test
@@ -71,12 +70,10 @@ public class EventPublisherQuoteRepositoryDecoratorTest {
 
   @Test
   public void updatingQuote_shouldPublishDomainEvents() throws QuoteNotFoundException {
-    int randomNumber = Faker.instance().number().randomDigitNotZero();
-    List<Event> events = EventGenerator.createList(randomNumber);
-    when(quote.getEvents()).thenReturn(events);
+    when(quote.getEvents()).thenReturn(EVENTS);
 
     subject.update(quote);
 
-    verify(mediator).publish(events);
+    verify(mediator).publish(EVENTS);
   }
 }

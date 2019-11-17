@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
+import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
@@ -42,6 +43,23 @@ public abstract class PolicyRepositoryIT {
     subject.create(policy);
 
     subject.create(policy);
+  }
+
+  @Test
+  public void updatingPolicy_shouldChangeAssociatedPolicy()
+      throws PolicyNotFoundException, PolicyAlreadyCreatedException {
+    subject.create(policy);
+
+    Policy updatedPolicy = PolicyBuilder.aPolicy().withId(policyId).build();
+    subject.update(updatedPolicy);
+
+    assertThat(subject.getById(policyId), matchesPolicy(updatedPolicy));
+  }
+
+  @Test(expected = PolicyNotFoundException.class)
+  public void updatingPolicy_withNotYetPersistedPolicy_shouldThrow()
+      throws PolicyNotFoundException {
+    subject.update(policy);
   }
 
   protected abstract PolicyRepository createSubject();

@@ -28,6 +28,12 @@ public class EventPublisherPolicyRepositoryDecorator implements PolicyRepository
     publishEvents(policy);
   }
 
+  @Override
+  public void update(Policy policy) throws PolicyNotFoundException {
+    policyRepository.update(policy);
+    publishEvents(policy);
+  }
+
   private void publishEvents(Policy policy) {
     mediator.publish(policy.getEvents());
   }

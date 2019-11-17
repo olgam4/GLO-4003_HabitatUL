@@ -27,6 +27,11 @@ public class PolicyBuilder {
     return new PolicyBuilder();
   }
 
+  public PolicyBuilder withId(PolicyId policyId) {
+    this.policyId = policyId;
+    return this;
+  }
+
   public PolicyBuilder withPolicyView(PolicyView policyView) {
     this.policyView = policyView;
     return this;

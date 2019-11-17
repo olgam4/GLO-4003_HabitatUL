@@ -28,6 +28,15 @@ public class InMemoryPolicyRepository implements PolicyRepository {
     policies.put(policy.getPolicyId(), policy);
   }
 
+  @Override
+  public void update(Policy policy) throws PolicyNotFoundException {
+    PolicyId policyId = policy.getPolicyId();
+
+    if (!isExistingPolicy(policyId)) throw new PolicyNotFoundException();
+
+    policies.put(policyId, policy);
+  }
+
   private boolean isExistingPolicy(PolicyId policyId) {
     return policies.containsKey(policyId);
   }

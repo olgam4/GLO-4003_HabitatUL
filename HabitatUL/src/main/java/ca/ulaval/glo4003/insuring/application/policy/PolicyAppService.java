@@ -22,6 +22,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedEx
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationFactory;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
@@ -100,6 +101,7 @@ public class PolicyAppService {
               coverageDto.getPremiumDetails(),
               insureBicyclePolicyInformationModifier);
       policy.submitModification(policyModification);
+      policyRepository.update(policy);
       return policyAssembler.from(policyModification);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
@@ -114,9 +116,16 @@ public class PolicyAppService {
     }
   }
 
-  // TODO: complete the modification with this use case
-  // public void confirmModification(PolicyId policyId, ModificationId
-  // policyModificationId) {}
+  public void confirmModification(PolicyId policyId, PolicyModificationId policyModificationId) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      policy.confirmModification(policyModificationId);
+      // TODO: process to payment here
+      policyRepository.update(policy);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
+  }
 
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {

@@ -162,6 +162,13 @@ public class PolicyAppServiceTest {
   }
 
   @Test
+  public void insuringBicycle_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test
   public void insuringBicycle_shouldProduceCorrespondingPolicyModificationDto() {
     PolicyModificationDto policyModificationDto =
         subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
@@ -177,17 +184,46 @@ public class PolicyAppServiceTest {
   }
 
   @Test
-  public void modifyingPolicy_shouldGetPolicyById() throws PolicyNotFoundException {
+  public void modifyingCoverage_shouldGetPolicyById() throws PolicyNotFoundException {
     subject.modifyCoverage(POLICY_ID, MODIFY_POLICY_DTO);
 
     verify(policyRepository).getById(POLICY_ID);
   }
 
   @Test(expected = PolicyNotFoundError.class)
-  public void modifyingPolicy_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
+  public void modifyingCoverage_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
     subject.modifyCoverage(POLICY_ID, MODIFY_POLICY_DTO);
+  }
+
+  @Test
+  public void confirmingModification_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void confirmingModification_shouldConfirmModification() {
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    verify(policy).confirmModification(POLICY_MODIFICATION_ID);
+  }
+
+  @Test
+  public void confirmingModification_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test(expected = PolicyNotFoundError.class)
+  public void confirmingModification_withNotExistingPolicy_shouldThrow()
+      throws PolicyNotFoundException {
+    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
   }
 
   @Test

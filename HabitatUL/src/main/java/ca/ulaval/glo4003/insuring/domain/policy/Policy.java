@@ -72,6 +72,8 @@ public class Policy extends AggregateRoot {
     modifications.put(policyModification.getPolicyModificationId(), policyModification);
   }
 
+  public void confirmModification(PolicyModificationId policyModificationId) {}
+
   public void openClaim(Claim claim) {
     checkIfClaimOutsideCoveragePeriod();
     claim.validate(getPolicyInformation(), getCurrentCoverageDetails());
