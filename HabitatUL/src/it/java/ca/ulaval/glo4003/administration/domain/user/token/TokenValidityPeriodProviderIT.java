@@ -14,7 +14,7 @@ public abstract class TokenValidityPeriodProviderIT {
   }
 
   @Test
-  public void gettingTokenValidityPeriod_shouldProvideTokenValidityPeriod() {
+  public void gettingTokenValidityPeriod_shouldProvideValidityPeriod() {
     assertNotNull(subject.getTokenValidityPeriod());
   }
 
