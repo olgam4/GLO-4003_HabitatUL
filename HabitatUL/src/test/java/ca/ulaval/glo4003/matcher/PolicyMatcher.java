@@ -1,6 +1,9 @@
 package ca.ulaval.glo4003.matcher;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
+import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
@@ -23,12 +26,17 @@ public class PolicyMatcher {
     return hasProperty("quoteKey", equalTo(event.getQuoteKey()));
   }
 
-  public static Matcher<BicycleEndorsementForm> matchesBicycleEndorsementForm(
-      final Policy policy, final InsureBicycleDto insureBicycleDto) {
+  public static Matcher<InsureBicycleDto> matchesInsureBicycleDto(
+      final InsureBicycleRequest insureBicycleRequest) {
+    return allOf(hasProperty("bicycle", matchesBicycle(insureBicycleRequest.getBicycle())));
+  }
+
+  private static Matcher<Bicycle> matchesBicycle(final BicycleRequest bicycleRequest) {
     return allOf(
-        hasProperty("bicycle", equalTo(insureBicycleDto.getBicycle())),
-        hasProperty("currentCoverageDetails", equalTo(policy.getCurrentCoverageDetails())),
-        hasProperty("currentPremiumDetails", equalTo(policy.getCurrentPremiumDetails())));
+        hasProperty("price", equalTo(bicycleRequest.getPrice())),
+        hasProperty("brand", equalTo(bicycleRequest.getBrand())),
+        hasProperty("model", equalTo(bicycleRequest.getModel())),
+        hasProperty("year", equalTo(bicycleRequest.getYear())));
   }
 
   public static Matcher<PolicyModificationDto> matchesPolicyModificationDto(
@@ -42,5 +50,13 @@ public class PolicyMatcher {
             "proposedCoverageDetails", equalTo(policyModification.getProposedCoverageDetails())),
         hasProperty(
             "proposedPremiumDetails", equalTo(policyModification.getProposedPremiumDetails())));
+  }
+
+  public static Matcher<BicycleEndorsementForm> matchesBicycleEndorsementForm(
+      final Policy policy, final InsureBicycleDto insureBicycleDto) {
+    return allOf(
+        hasProperty("bicycle", equalTo(insureBicycleDto.getBicycle())),
+        hasProperty("currentCoverageDetails", equalTo(policy.getCurrentCoverageDetails())),
+        hasProperty("currentPremiumDetails", equalTo(policy.getCurrentPremiumDetails())));
   }
 }

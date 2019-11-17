@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "policy modification response",
+  "required": [
+    "policyModificationId",
+    "expirationDate",
+    "status",
+    "premiumAdjustment",
+    "proposedCoverageDetails",
+    "proposedPremiumDetails"
+  ],
+  "properties": {
+    "policyModificationId": {
+      "description": "policy modification id",
+      "$ref": "../Shared.json#/definitions/uuid"
+    },
+    "expirationDate": {
+      "description": "policy modification expiration",
+      "$ref": "../Shared.json#/definitions/dateTime"
+    },
+    "status": {
+      "description": "policy modification status",
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "CONFIRMED",
+        "EXPIRED"
+      ]
+    },
+    "premiumAdjustment": {
+      "description": "policy modification premium adjustment",
+      "$ref": "../Shared.json#/definitions/money"
+    },
+    "proposedCoverageDetails": {
+      "description": "policy modification proposed coverage details",
+      "$ref": "../Coverage.json#/definitions/coverageDetails"
+    },
+    "proposedPremiumDetails": {
+      "description": "policy modification proposed premium details",
+      "$ref": "../Coverage.json#/definitions/premiumDetails"
+    }
+  }
+}

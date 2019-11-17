@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
-import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
@@ -21,12 +20,13 @@ import javax.ws.rs.core.Response;
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
 import static ca.ulaval.glo4003.gateway.presentation.underwriting.quote.QuoteResource.PURCHASE_ROUTE;
 import static ca.ulaval.glo4003.gateway.presentation.underwriting.quote.QuoteResource.QUOTE_ROUTE;
+import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuoteResourceIT {
-  private static final QuoteDto QUOTE_DTO = QuoteGenerator.createQuoteDto();
+  private static final QuoteDto QUOTE_DTO = createQuoteDto();
   private static final String QUOTE_ID_REPRESENTATION = QUOTE_DTO.getQuoteId().toRepresentation();
 
   @Mock private QuoteAppService quoteAppService;

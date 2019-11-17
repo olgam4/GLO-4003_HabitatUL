@@ -32,17 +32,17 @@
         }
       }
     },
-    "coverageDetails": {
-      "description": "quote coverage details",
-      "$ref": "../Calculator.json#/definitions/coverageDetails"
-    },
     "totalPremium": {
       "description": "quote total premium",
       "$ref": "../Shared.json#/definitions/money"
     },
+    "coverageDetails": {
+      "description": "quote coverage details",
+      "$ref": "../Coverage.json#/definitions/coverageDetails"
+    },
     "premiumDetails": {
       "description": "quote premium details",
-      "$ref": "../Calculator.json#/definitions/premiumDetails"
+      "$ref": "../Coverage.json#/definitions/premiumDetails"
     }
   }
 }

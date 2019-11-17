@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.helper.policy;
 
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
@@ -12,6 +13,7 @@ import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycleRequest;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPolicyView;
@@ -42,7 +44,11 @@ public class PolicyGenerator {
     return Faker.instance().internet().uuid();
   }
 
-  public static InsureBicycleDto createInsuringBicycleDto() {
+  public static InsureBicycleRequest createInsureBicycleRequest() {
+    return new InsureBicycleRequest(createBicycleRequest());
+  }
+
+  public static InsureBicycleDto createInsureBicycleDto() {
     return new InsureBicycleDto(createBicycle());
   }
 

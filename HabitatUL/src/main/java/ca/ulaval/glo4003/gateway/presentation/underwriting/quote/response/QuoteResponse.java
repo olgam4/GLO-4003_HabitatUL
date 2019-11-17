@@ -13,16 +13,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
   "quoteId",
   "expirationDate",
   "effectivePeriod",
-  "coverageDetails",
   "totalPremium",
+  "coverageDetails",
   "premiumDetails"
 })
 public class QuoteResponse {
   private QuoteId quoteId;
   private DateTime expirationDate;
   private Period effectivePeriod;
-  private CoverageDetails coverageDetails;
   private Money totalPremium;
+  private CoverageDetails coverageDetails;
   private PremiumDetails premiumDetails;
 
   public QuoteResponse(
@@ -34,8 +34,8 @@ public class QuoteResponse {
     this.quoteId = quoteId;
     this.expirationDate = expirationDate;
     this.effectivePeriod = effectivePeriod;
-    this.coverageDetails = coverageDetails;
     this.totalPremium = premiumDetails.computeTotalPremium();
+    this.coverageDetails = coverageDetails;
     this.premiumDetails = premiumDetails;
   }
 
@@ -51,12 +51,12 @@ public class QuoteResponse {
     return effectivePeriod;
   }
 
-  public CoverageDetails getCoverageDetails() {
-    return coverageDetails;
-  }
-
   public Money getTotalPremium() {
     return totalPremium;
+  }
+
+  public CoverageDetails getCoverageDetails() {
+    return coverageDetails;
   }
 
   public PremiumDetails getPremiumDetails() {

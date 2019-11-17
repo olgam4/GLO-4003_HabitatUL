@@ -5,9 +5,11 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimReque
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyPolicyRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyModificationResponse;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 
 import java.util.List;
 
@@ -29,6 +31,16 @@ public class PolicyViewAssembler {
 
   public ModifyCoverageDto from(ModifyPolicyRequest modifyPolicyRequest) {
     return new ModifyCoverageDto();
+  }
+
+  public PolicyModificationResponse from(PolicyModificationDto policyModificationDto) {
+    return new PolicyModificationResponse(
+        policyModificationDto.getPolicyModificationId(),
+        policyModificationDto.getExpirationDate(),
+        policyModificationDto.getStatus(),
+        policyModificationDto.getPremiumAdjustment(),
+        policyModificationDto.getProposedCoverageDetails(),
+        policyModificationDto.getProposedPremiumDetails());
   }
 
   public OpenClaimDto from(ClaimRequest claimRequest) {

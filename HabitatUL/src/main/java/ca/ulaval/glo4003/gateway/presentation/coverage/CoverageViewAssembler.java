@@ -83,7 +83,7 @@ public class CoverageViewAssembler {
     return bicycleRequest.map(this::fromBicycleRequest).orElse(UNFILLED_BICYCLE);
   }
 
-  private Bicycle fromBicycleRequest(BicycleRequest bicycleRequest) {
+  public Bicycle fromBicycleRequest(BicycleRequest bicycleRequest) {
     return new Bicycle(
         bicycleRequest.getPrice(),
         bicycleRequest.getBrand(),

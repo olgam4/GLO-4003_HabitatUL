@@ -5,10 +5,8 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Animals;
 import ca.ulaval.glo4003.gateway.presentation.administration.user.request.CredentialsRequest;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.*;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
-import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
-import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import org.json.JSONArray;
@@ -16,11 +14,15 @@ import org.json.JSONObject;
 
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_FLOOR_VALUE;
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_ZIP_CODE_VALUE;
+import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimRequest;
+import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createInsureBicycleRequest;
+import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteRequest;
+import static ca.ulaval.glo4003.helper.user.CredentialsGenerator.createCredentialsRequest;
 
 public class RequestBodyGenerator {
 
   public static JSONObject createQuoteRequestBody() {
-    QuoteRequest quoteRequest = QuoteGenerator.createQuoteRequest();
+    QuoteRequest quoteRequest = createQuoteRequest();
     JSONObject json = new JSONObject();
     json.put("personalInformation", toRequestBody(quoteRequest.getPersonalInformation()));
     quoteRequest.getAdditionalInsured().map(x -> json.put("additionalInsured", toRequestBody(x)));
@@ -89,6 +91,7 @@ public class RequestBodyGenerator {
     JSONObject json = new JSONObject();
     json.put("coverageAmount", personalPropertyRequest.getCoverageAmount().getValue());
     personalPropertyRequest.getAnimals().map(x -> json.put("animals", toRequestBody(x)));
+    personalPropertyRequest.getBicycle().map(x -> json.put("bicycle", toRequestBody(x)));
     return json;
   }
 
@@ -102,6 +105,15 @@ public class RequestBodyGenerator {
     return json;
   }
 
+  private static JSONObject toRequestBody(BicycleRequest bicycleRequest) {
+    JSONObject json = new JSONObject();
+    json.put("price", bicycleRequest.getPrice().getValue());
+    json.put("brand", bicycleRequest.getBrand());
+    json.put("model", bicycleRequest.getModel());
+    json.put("year", bicycleRequest.getYear().getValue());
+    return json;
+  }
+
   private static JSONObject toRequestBody(CivilLiabilityRequest civilLiabilityRequest) {
     JSONObject json = new JSONObject();
     json.put("limit", civilLiabilityRequest.getLimit().getRepresentation());
@@ -109,15 +121,22 @@ public class RequestBodyGenerator {
   }
 
   public static JSONObject createCredentialRequestBody() {
-    CredentialsRequest credentialsRequest = CredentialsGenerator.createCredentialsRequest();
+    CredentialsRequest credentialsRequest = createCredentialsRequest();
     JSONObject json = new JSONObject();
     json.put("username", credentialsRequest.getUsername());
     json.put("password", credentialsRequest.getPassword());
     return json;
   }
 
+  public static JSONObject createInsureBicycleRequestBody() {
+    InsureBicycleRequest insureBicycleRequest = createInsureBicycleRequest();
+    JSONObject json = new JSONObject();
+    json.put("bicycle", toRequestBody(insureBicycleRequest.getBicycle()));
+    return json;
+  }
+
   public static JSONObject createClaimRequestBody() {
-    ClaimRequest claimRequest = ClaimGenerator.createClaimRequest();
+    ClaimRequest claimRequest = createClaimRequest();
     JSONObject json = new JSONObject();
     json.put("sinisterType", claimRequest.getSinisterType().toString());
     json.put("lossDeclarations", toRequestBody(claimRequest.getLossDeclarations()));

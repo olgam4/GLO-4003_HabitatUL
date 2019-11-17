@@ -4,7 +4,6 @@ import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Optional;
 
 public class InsureBicycleRequest {
   @NotNull @Valid private BicycleRequest bicycle;
@@ -15,7 +14,7 @@ public class InsureBicycleRequest {
     this.bicycle = bicycle;
   }
 
-  public Optional<BicycleRequest> getBicycle() {
-    return Optional.ofNullable(bicycle);
+  public BicycleRequest getBicycle() {
+    return bicycle;
   }
 }
