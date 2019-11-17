@@ -23,6 +23,6 @@ public class BicycleAlreadyCoveredErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return "sorry, you cannot insure more than one bicycle on your policy";
+    return "sorry, you can't insure more than one bicycle on your policy";
   }
 }

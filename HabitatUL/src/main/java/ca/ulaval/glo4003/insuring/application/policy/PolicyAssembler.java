@@ -9,9 +9,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 public class PolicyAssembler {
   public BicycleEndorsementForm from(InsureBicycleDto insureBicycleDto, Policy policy) {
     return new BicycleEndorsementForm(
-        insureBicycleDto.getBicycle(),
-        policy.getCurrentCoverageDetails(),
-        policy.getCurrentPremiumDetails());
+        insureBicycleDto.getBicycle(), policy.getCoverageDetails(), policy.getPremiumDetails());
   }
 
   public PolicyModificationDto from(PolicyModification policyModification) {

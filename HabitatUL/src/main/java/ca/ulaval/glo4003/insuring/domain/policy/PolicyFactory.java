@@ -2,11 +2,15 @@ package ca.ulaval.glo4003.insuring.domain.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
+import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
+import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class PolicyFactory {
   private ClockProvider clockProvider;
@@ -26,7 +30,11 @@ public class PolicyFactory {
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
     PolicyView currentPolicyView =
         new PolicyView(adjustedCoveragePeriod, policyInformation, coverageDetails, premiumDetails);
-    return new Policy(policyId, quoteKey, currentPolicyView, clockProvider);
+    PolicyHistoric policyHistoric = new PolicyHistoric(Arrays.asList(currentPolicyView));
+    PolicyModificationsCoordinator policyModificationsCoordinator =
+        new PolicyModificationsCoordinator();
+    return new Policy(
+        policyId, quoteKey, policyHistoric, policyModificationsCoordinator, clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

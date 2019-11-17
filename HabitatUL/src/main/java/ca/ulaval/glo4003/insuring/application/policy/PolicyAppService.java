@@ -21,10 +21,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
-import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationFactory;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
-import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
@@ -32,7 +30,7 @@ public class PolicyAppService {
   private PolicyFactory policyFactory;
   private PolicyRepository policyRepository;
   private CoverageDomainService coverageDomainService;
-  private PolicyModificationFactory policyModificationFactory;
+  private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   private ClaimFactory claimFactory;
   private ClaimRepository claimRepository;
 
@@ -42,9 +40,7 @@ public class PolicyAppService {
         new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
         new CoverageDomainService(),
-        new PolicyModificationFactory(
-            ServiceLocator.resolve(PolicyModificationValidityPeriodProvider.class),
-            ServiceLocator.resolve(ClockProvider.class)),
+        ServiceLocator.resolve(PolicyModificationValidityPeriodProvider.class),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));
   }
@@ -54,14 +50,14 @@ public class PolicyAppService {
       PolicyFactory policyFactory,
       PolicyRepository policyRepository,
       CoverageDomainService coverageDomainService,
-      PolicyModificationFactory policyModificationFactory,
+      PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository) {
     this.policyAssembler = policyAssembler;
     this.policyFactory = policyFactory;
     this.policyRepository = policyRepository;
     this.coverageDomainService = coverageDomainService;
-    this.policyModificationFactory = policyModificationFactory;
+    this.policyModificationValidityPeriodProvider = policyModificationValidityPeriodProvider;
     this.claimFactory = claimFactory;
     this.claimRepository = claimRepository;
   }
@@ -92,15 +88,12 @@ public class PolicyAppService {
           policyAssembler.from(insureBicycleDto, policy);
       CoverageDto coverageDto =
           coverageDomainService.requestBicycleEndorsementCoverage(bicycleEndorsementForm);
-      InsureBicyclePolicyInformationModifier insureBicyclePolicyInformationModifier =
-          new InsureBicyclePolicyInformationModifier(insureBicycleDto.getBicycle());
       PolicyModification policyModification =
-          policyModificationFactory.create(
+          policy.submitInsureBicycleModification(
+              insureBicycleDto.getBicycle(),
               coverageDto.getCoverageDetails(),
-              policy.getCurrentPremiumDetails(),
               coverageDto.getPremiumDetails(),
-              insureBicyclePolicyInformationModifier);
-      policy.submitModification(policyModification);
+              policyModificationValidityPeriodProvider);
       policyRepository.update(policy);
       return policyAssembler.from(policyModification);
     } catch (PolicyNotFoundException e) {

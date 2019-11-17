@@ -23,6 +23,6 @@ public class EmptyLossDeclarationsErrorMappingIT extends ErrorMappingIT {
 
   @Override
   public String getErrorMessageMatcher() {
-    return "sorry, you cannot open a claim with empty loss declarations";
+    return "sorry, you can't open a claim with empty loss declarations";
   }
 }

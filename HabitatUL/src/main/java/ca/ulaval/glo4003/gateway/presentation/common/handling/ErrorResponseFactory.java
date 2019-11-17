@@ -12,6 +12,7 @@ import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarations
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyModificationNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.shared.domain.handling.Error;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
@@ -86,6 +87,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(LossDeclarationsExceedCoverageAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(PolicyModificationNotFoundError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyNotFoundError.class, Status.NOT_FOUND);
   }
 

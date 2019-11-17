@@ -56,7 +56,7 @@ public class PolicyMatcher {
       final Policy policy, final InsureBicycleDto insureBicycleDto) {
     return allOf(
         hasProperty("bicycle", equalTo(insureBicycleDto.getBicycle())),
-        hasProperty("currentCoverageDetails", equalTo(policy.getCurrentCoverageDetails())),
-        hasProperty("currentPremiumDetails", equalTo(policy.getCurrentPremiumDetails())));
+        hasProperty("currentCoverageDetails", equalTo(policy.getCoverageDetails())),
+        hasProperty("currentPremiumDetails", equalTo(policy.getPremiumDetails())));
   }
 }

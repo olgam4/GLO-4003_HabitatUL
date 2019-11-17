@@ -48,6 +48,10 @@ public class PolicyModification {
     return premiumAdjustment;
   }
 
+  public PolicyInformationModifier getPolicyInformationModifier() {
+    return policyInformationModifier;
+  }
+
   public CoverageDetails getProposedCoverageDetails() {
     return proposedCoverageDetails;
   }

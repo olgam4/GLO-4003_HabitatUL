@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
@@ -21,10 +22,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
-import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationFactory;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
-import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
-import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
@@ -67,7 +66,7 @@ public class PolicyAppServiceTest {
   @Mock private PolicyRepository policyRepository;
   @Mock private CoverageDomainService coverageDomainService;
   @Mock private PolicyModification policyModification;
-  @Mock private PolicyModificationFactory policyModificationFactory;
+  @Mock private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
@@ -78,8 +77,6 @@ public class PolicyAppServiceTest {
   @Before
   public void setUp() throws PolicyNotFoundException {
     policyAssembler = new PolicyAssembler();
-    when(policy.getCurrentCoverageDetails()).thenReturn(CURRENT_COVERAGE_DETAILS);
-    when(policy.getCurrentPremiumDetails()).thenReturn(CURRENT_PREMIUM_DETAILS);
     when(policyFactory.create(
             any(String.class),
             any(Period.class),
@@ -88,16 +85,18 @@ public class PolicyAppServiceTest {
             any(CoverageDetails.class),
             any(PremiumDetails.class)))
         .thenReturn(policy);
+    when(policy.getCoverageDetails()).thenReturn(CURRENT_COVERAGE_DETAILS);
+    when(policy.getPremiumDetails()).thenReturn(CURRENT_PREMIUM_DETAILS);
+    when(policy.submitInsureBicycleModification(
+            any(Bicycle.class),
+            any(CoverageDetails.class),
+            any(PremiumDetails.class),
+            any(PolicyModificationValidityPeriodProvider.class)))
+        .thenReturn(policyModification);
+    when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
     when(coverageDomainService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
         .thenReturn(COVERAGE_DTO);
-    when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
-    when(policyModificationFactory.create(
-            any(CoverageDetails.class),
-            any(PremiumDetails.class),
-            any(PremiumDetails.class),
-            any(PolicyInformationModifier.class)))
-        .thenReturn(policyModification);
     when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
         .thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
@@ -107,7 +106,7 @@ public class PolicyAppServiceTest {
             policyFactory,
             policyRepository,
             coverageDomainService,
-            policyModificationFactory,
+            policyModificationValidityPeriodProvider,
             claimFactory,
             claimRepository);
   }
@@ -143,22 +142,15 @@ public class PolicyAppServiceTest {
   }
 
   @Test
-  public void insuringBicycle_shouldCreateAssociatedPolicyModification() {
-    subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
-
-    verify(policyModificationFactory)
-        .create(
-            COVERAGE_DTO.getCoverageDetails(),
-            CURRENT_PREMIUM_DETAILS,
-            COVERAGE_DTO.getPremiumDetails(),
-            new InsureBicyclePolicyInformationModifier(INSURING_BICYCLE_DTO.getBicycle()));
-  }
-
-  @Test
   public void insuringBicycle_shouldSubmitModification() {
     subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
 
-    verify(policy).submitModification(policyModification);
+    verify(policy)
+        .submitInsureBicycleModification(
+            INSURING_BICYCLE_DTO.getBicycle(),
+            COVERAGE_DTO.getCoverageDetails(),
+            COVERAGE_DTO.getPremiumDetails(),
+            policyModificationValidityPeriodProvider);
   }
 
   @Test

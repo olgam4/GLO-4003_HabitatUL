@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EventPublisherPolicyRepositoryDecoratorTest {
   private static final PolicyId POLICY_ID = PolicyGenerator.createPolicyId();
-  private static final List<Event> EVENTS = EventGenerator.createList();
+  private static final List<Event> EVENTS = EventGenerator.createEvents();
 
   @Mock private Policy policy;
   @Mock private PolicyRepository policyRepository;

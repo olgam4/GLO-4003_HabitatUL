@@ -10,11 +10,11 @@ import java.util.stream.IntStream;
 public class EventGenerator {
   private EventGenerator() {}
 
-  public static List<Event> createList() {
-    return createList(Faker.instance().number().randomDigitNotZero());
+  public static List<Event> createEvents() {
+    return createEvents(Faker.instance().number().randomDigitNotZero());
   }
 
-  public static List<Event> createList(int length) {
+  public static List<Event> createEvents(int length) {
     return IntStream.range(0, length).mapToObj(i -> createEvent()).collect(Collectors.toList());
   }
 
