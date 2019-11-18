@@ -49,7 +49,8 @@ public class ConfirmModificationTest {
   private static final Date CONFIRMATION_EFFECTIVE_DATE =
       Date.from(LocalDate.now(CLOCK_PROVIDER.getClock()));
   private static final Date CURRENT_COVERAGE_PERIOD_START_DATE = createPastDate();
-  private static final Date CURRENT_COVERAGE_PERIOD_END_DATE = createFutureDate();
+  private static final Date CURRENT_COVERAGE_PERIOD_END_DATE =
+      createDateAfter(CURRENT_COVERAGE_PERIOD_START_DATE);
   private static final Period CURRENT_COVERAGE_PERIOD =
       new Period(CURRENT_COVERAGE_PERIOD_START_DATE, CURRENT_COVERAGE_PERIOD_END_DATE);
   private static final PolicyView CURRENT_POLICY_VIEW =
@@ -205,6 +206,30 @@ public class ConfirmModificationTest {
             CONFIRMATION_EFFECTIVE_DATE.minus(java.time.Period.ofDays(1)));
     Period coveragePeriod =
         policyHistoric.getViewOn(CURRENT_COVERAGE_PERIOD_START_DATE).getCoveragePeriod();
+    assertEquals(expectedCoveragePeriod, coveragePeriod);
+  }
+
+  @Test
+  public void
+      confirmingModification_withNewlyIssuedPolicy_shouldNotProduceCoveragePeriodOfLessThanOneDay() {
+    Date currentDate = getNowDate(CLOCK_PROVIDER);
+    Period newlyIssuedCoveragePeriod = new Period(currentDate, createFutureDate());
+    PolicyView newlyIssuedPolicyView =
+        PolicyViewBuilder.aPolicyView().withCoveragePeriod(newlyIssuedCoveragePeriod).build();
+    PolicyHistoric policyHistoric =
+        PolicyHistoricBuilder.aPolicyHistoric().withPolicyView(newlyIssuedPolicyView).build();
+    subject =
+        PolicyBuilder.aPolicy()
+            .withStatus(ACTIVE)
+            .withPolicyHistoric(policyHistoric)
+            .withPolicyModificationsCoordinator(policyModificationsCoordinator)
+            .withClockProvider(CLOCK_PROVIDER)
+            .build();
+
+    subject.confirmModification(POLICY_MODIFICATION_ID);
+
+    Period expectedCoveragePeriod = new Period(currentDate, currentDate);
+    Period coveragePeriod = policyHistoric.getViewOn(currentDate).getCoveragePeriod();
     assertEquals(expectedCoveragePeriod, coveragePeriod);
   }
 

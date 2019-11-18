@@ -8,10 +8,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
@@ -39,8 +36,7 @@ import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerato
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
-import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesBicycleEndorsementForm;
-import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesPolicyModificationDto;
+import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -208,6 +204,13 @@ public class PolicyAppServiceTest {
     subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
 
     verify(policyRepository).update(policy);
+  }
+
+  @Test
+  public void confirmingModification_shouldProduceCorrespondingPolicyDto() {
+    PolicyDto policyDto = subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    assertThat(policyDto, matchesPolicyDto(policy));
   }
 
   @Test(expected = PolicyNotFoundError.class)

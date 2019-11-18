@@ -167,9 +167,11 @@ public class UserAppServiceTest {
   }
 
   @Test(expected = InvalidCredentialsError.class)
-  public void authenticatingUser_withInvalidCredentials_shouldThrow() throws InvalidCredentialsException {
+  public void authenticatingUser_withInvalidCredentials_shouldThrow()
+      throws InvalidCredentialsException {
     Mockito.doThrow(InvalidCredentialsException.class)
-        .when(passwordManager).validatePassword(any(), any());
+        .when(passwordManager)
+        .validatePassword(any(), any());
 
     subject.authenticateUser(CREDENTIALS);
   }

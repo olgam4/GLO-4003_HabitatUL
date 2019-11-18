@@ -6,10 +6,8 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicy
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyModificationResponse;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyResponse;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 
 import java.util.List;
 
@@ -30,6 +28,7 @@ public class PolicyViewAssembler {
   }
 
   public ModifyCoverageDto from(ModifyCoverageRequest modifyCoverageRequest) {
+    // TODO:
     return new ModifyCoverageDto();
   }
 
@@ -41,6 +40,15 @@ public class PolicyViewAssembler {
         policyModificationDto.getPremiumAdjustment(),
         policyModificationDto.getProposedCoverageDetails(),
         policyModificationDto.getProposedPremiumDetails());
+  }
+
+  public PolicyResponse from(PolicyDto policyDto) {
+    return new PolicyResponse(
+        policyDto.getPolicyId(),
+        policyDto.getCoveragePeriod(),
+        policyDto.getPremiumDetails().computeTotalPremium(),
+        policyDto.getCoverageDetails(),
+        policyDto.getPremiumDetails());
   }
 
   public OpenClaimDto from(ClaimRequest claimRequest) {

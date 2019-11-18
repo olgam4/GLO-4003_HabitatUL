@@ -47,9 +47,7 @@ public class DemoAdministrationContext {
   }
 
   private void registerAdminUser(
-      Properties properties,
-      UsernameRegistry usernameRegistry,
-      PasswordManager passwordManager) {
+      Properties properties, UsernameRegistry usernameRegistry, PasswordManager passwordManager) {
     String adminKey = String.valueOf(properties.getProperty("admin.key"));
     String adminName = String.valueOf(properties.getProperty("admin.username"));
     String adminPassword = String.valueOf(properties.getProperty("admin.password"));

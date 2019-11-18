@@ -4,10 +4,7 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
@@ -109,12 +106,14 @@ public class PolicyAppService {
     }
   }
 
-  public void confirmModification(PolicyId policyId, PolicyModificationId policyModificationId) {
+  public PolicyDto confirmModification(
+      PolicyId policyId, PolicyModificationId policyModificationId) {
     try {
       Policy policy = policyRepository.getById(policyId);
       policy.confirmModification(policyModificationId);
       // TODO: process to payment here
       policyRepository.update(policy);
+      return policyAssembler.from(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }

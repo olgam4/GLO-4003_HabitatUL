@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
@@ -28,6 +29,7 @@ import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.claim.ClaimResource.CLAIM_ROUTE;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.policy.PolicyResource.*;
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyDto;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,6 +48,7 @@ public class PolicyResourceIT {
       POLICY_MODIFICATION_DTO.getPolicyModificationId();
   private static final String POLICY_MODIFICATION_ID_REPRESENTATION =
       POLICY_MODIFICATION_ID.toRepresentation();
+  private static final PolicyDto POLICY_DTO = createPolicyDto();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final String CLAIM_ID_REPRESENTATION = CLAIM_ID.toRepresentation();
 
@@ -67,6 +70,8 @@ public class PolicyResourceIT {
     when(userAppService.getPolicies(any(String.class))).thenReturn(POLICIES_ID);
     when(policyAppService.insureBicycle(any(PolicyId.class), any(InsureBicycleDto.class)))
         .thenReturn(POLICY_MODIFICATION_DTO);
+    when(policyAppService.confirmModification(any(PolicyId.class), any(PolicyModificationId.class)))
+        .thenReturn(POLICY_DTO);
     when(policyAppService.openClaim(any(PolicyId.class), any(OpenClaimDto.class)))
         .thenReturn(CLAIM_ID);
     PolicyResource policyResource =
@@ -147,6 +152,33 @@ public class PolicyResourceIT {
         .post(route)
         .then()
         .body(matchesJsonSchema("policy/PolicyModificationResponse"));
+  }
+
+  @Test
+  public void confirmingModification_shouldHaveExpectedStatusCode() {
+    String route =
+        toPath(
+            POLICY_ROUTE,
+            POLICY_ID_REPRESENTATION,
+            POLICY_MODIFICATION_ROUTE,
+            POLICY_MODIFICATION_ID_REPRESENTATION,
+            CONFIRM_MODIFICATION_ROUTE);
+
+    int expectedStatusCode = Response.Status.OK.getStatusCode();
+    getBaseScenario().when().post(route).then().statusCode(expectedStatusCode);
+  }
+
+  @Test
+  public void confirmingModification_shouldProvideProperlyFormattedResponse() {
+    String route =
+        toPath(
+            POLICY_ROUTE,
+            POLICY_ID_REPRESENTATION,
+            POLICY_MODIFICATION_ROUTE,
+            POLICY_MODIFICATION_ID_REPRESENTATION,
+            CONFIRM_MODIFICATION_ROUTE);
+
+    getBaseScenario().when().post(route).then().body(matchesJsonSchema("policy/PolicyResponse"));
   }
 
   @Test

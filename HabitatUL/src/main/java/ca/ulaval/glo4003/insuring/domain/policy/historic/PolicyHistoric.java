@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ public class PolicyHistoric extends ValueObject {
   private final List<PolicyView> historic;
 
   public PolicyHistoric(List<PolicyView> historic) {
-    this.historic = historic;
+    this.historic = new ArrayList<>(historic);
   }
 
   public List<PolicyView> getHistoric() {
@@ -70,21 +71,31 @@ public class PolicyHistoric extends ValueObject {
   }
 
   private void modifyCurrentPolicyView(PolicyView modifiedView) {
-    Date currentViewUpdatedCoveragePeriodEndDate =
-        modifiedView.getCoveragePeriod().getStartDate().minus(java.time.Period.ofDays(1));
     PolicyView currentView = getCurrentView();
-    Period currentViewUpdatedCoveragePeriod =
-        new Period(
-            currentView.getCoveragePeriod().getStartDate(),
-            currentViewUpdatedCoveragePeriodEndDate);
-    PolicyView updatedCurrentView =
-        new PolicyView(
-            currentViewUpdatedCoveragePeriod,
-            currentView.getPolicyInformation(),
-            currentView.getCoverageDetails(),
-            currentView.getPremiumDetails());
+    PolicyView updatedCurrentView = createUpdatedCurrentView(currentView, modifiedView);
     historic.remove(currentView);
     historic.add(updatedCurrentView);
     historic.add(modifiedView);
+  }
+
+  private PolicyView createUpdatedCurrentView(PolicyView currentView, PolicyView modifiedView) {
+    Period currentViewUpdatedCoveragePeriod =
+        computeCurrentViewUpdateCoveragePeriod(currentView, modifiedView);
+    return new PolicyView(
+        currentViewUpdatedCoveragePeriod,
+        currentView.getPolicyInformation(),
+        currentView.getCoverageDetails(),
+        currentView.getPremiumDetails());
+  }
+
+  private Period computeCurrentViewUpdateCoveragePeriod(
+      PolicyView currentView, PolicyView modifiedView) {
+    Date currentViewCoveragePeriodStartDate = currentView.getCoveragePeriod().getStartDate();
+    Date modifiedViewCoveragePeriodStartDate = modifiedView.getCoveragePeriod().getStartDate();
+    Date currentViewUpdatedCoveragePeriodEndDate =
+        Date.latest(
+            currentViewCoveragePeriodStartDate,
+            modifiedViewCoveragePeriodStartDate.minus(java.time.Period.ofDays(1)));
+    return new Period(currentViewCoveragePeriodStartDate, currentViewUpdatedCoveragePeriodEndDate);
   }
 }

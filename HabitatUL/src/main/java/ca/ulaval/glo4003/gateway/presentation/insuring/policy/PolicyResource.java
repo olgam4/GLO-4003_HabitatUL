@@ -6,10 +6,7 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimReque
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
@@ -118,8 +115,8 @@ public class PolicyResource {
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @PathParam(POLICY_MODIFICATION_ID_PARAM_NAME) PolicyModificationId policyModificationId) {
-    // TODO: continue from here
-    return Response.ok().build();
+    PolicyDto policyDto = policyAppService.confirmModification(policyId, policyModificationId);
+    return Response.ok(policyViewAssembler.from(policyDto)).build();
   }
 
   @POST

@@ -13,7 +13,11 @@ public class TemporalGenerator {
   private TemporalGenerator() {}
 
   public static Date getNowDate() {
-    return Date.now(getClockProvider().getClock());
+    return getNowDate(getClockProvider());
+  }
+
+  public static Date getNowDate(ClockProvider clockProvider) {
+    return Date.now(clockProvider.getClock());
   }
 
   public static Date createDate() {

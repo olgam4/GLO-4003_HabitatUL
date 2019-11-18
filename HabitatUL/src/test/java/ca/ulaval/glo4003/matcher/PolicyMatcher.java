@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
@@ -15,6 +16,14 @@ import static org.hamcrest.Matchers.*;
 
 public class PolicyMatcher {
   private PolicyMatcher() {}
+
+  public static Matcher<PolicyDto> matchesPolicyDto(final Policy policy) {
+    return allOf(
+        hasProperty("policyId", equalTo(policy.getPolicyId())),
+        hasProperty("coveragePeriod", equalTo(policy.getCoveragePeriod())),
+        hasProperty("coverageDetails", equalTo(policy.getCoverageDetails())),
+        hasProperty("premiumDetails", equalTo(policy.getPremiumDetails())));
+  }
 
   public static Matcher<Policy> matchesPolicy(final Policy policy) {
     return allOf(

@@ -3,13 +3,9 @@ package ca.ulaval.glo4003.administration.domain.user;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidCredentialsException;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
-
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public abstract class PasswordManagerIT {
   private static final String USER_KEY = Faker.instance().name().username();
