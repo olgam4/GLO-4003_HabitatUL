@@ -5,8 +5,9 @@ import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUse
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.administration.domain.user.credential.InvalidCredentialsException;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
-import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
@@ -52,7 +53,7 @@ public class UserAppServiceTest {
 
   @Mock UsernameRegistry usernameRegistry;
   @Mock UserKeyGenerator userKeyGenerator;
-  @Mock PasswordValidator passwordValidator;
+  @Mock PasswordManager passwordManager;
   @Mock TokenTranslator tokenTranslator;
   @Mock TokenValidityPeriodProvider tokenValidityPeriodProvider;
   @Mock TokenRegistry tokenRegistry;
@@ -67,7 +68,6 @@ public class UserAppServiceTest {
     when(userKeyGenerator.generateUserKey()).thenReturn(USER_KEY);
     when(usernameRegistry.getUserKey(any())).thenReturn(USER_KEY);
     when(quoteRegistry.getUserKey(any())).thenReturn(USER_KEY);
-    when(passwordValidator.validatePassword(any(), any())).thenReturn(true);
     when(tokenTranslator.encodeToken(any())).thenReturn(TOKEN);
     when(tokenRegistry.getToken(any())).thenReturn(TOKEN.getValue());
     when(tokenValidityPeriodProvider.getTokenValidityPeriod()).thenReturn(VALIDITY_PERIOD);
@@ -76,7 +76,7 @@ public class UserAppServiceTest {
             usernameRegistry,
             quoteRegistry,
             policyRegistry,
-            passwordValidator,
+            passwordManager,
             tokenTranslator,
             CLOCK_PROVIDER,
             tokenValidityPeriodProvider,
@@ -103,7 +103,7 @@ public class UserAppServiceTest {
   public void creatingUser_shouldRegisterPassword() throws InvalidPasswordException {
     subject.createUser(CREDENTIALS);
 
-    verify(passwordValidator).registerPassword(USER_KEY, CREDENTIALS.getPassword());
+    verify(passwordManager).registerPassword(USER_KEY, CREDENTIALS.getPassword());
   }
 
   @Test
@@ -126,7 +126,7 @@ public class UserAppServiceTest {
   @Test(expected = CouldNotCreateUserError.class)
   public void creatingUser_withInvalidPassword_shouldThrow() throws InvalidPasswordException {
     doThrow(InvalidPasswordException.class)
-        .when(passwordValidator)
+        .when(passwordManager)
         .registerPassword(USER_KEY, CREDENTIALS.getPassword());
 
     subject.createUser(CREDENTIALS);
@@ -141,10 +141,10 @@ public class UserAppServiceTest {
   }
 
   @Test
-  public void authenticatingUser_shouldValidatePassword() {
+  public void authenticatingUser_shouldValidatePassword() throws InvalidCredentialsException {
     subject.authenticateUser(CREDENTIALS);
 
-    verify(passwordValidator).validatePassword(USER_KEY, CREDENTIALS.getPassword());
+    verify(passwordManager).validatePassword(USER_KEY, CREDENTIALS.getPassword());
   }
 
   @Test
@@ -167,8 +167,9 @@ public class UserAppServiceTest {
   }
 
   @Test(expected = InvalidCredentialsError.class)
-  public void authenticatingUser_withInvalidCredentials_shouldThrow() {
-    when(passwordValidator.validatePassword(any(), any())).thenReturn(false);
+  public void authenticatingUser_withInvalidCredentials_shouldThrow() throws InvalidCredentialsException {
+    Mockito.doThrow(InvalidCredentialsException.class)
+        .when(passwordManager).validatePassword(any(), any());
 
     subject.authenticateUser(CREDENTIALS);
   }

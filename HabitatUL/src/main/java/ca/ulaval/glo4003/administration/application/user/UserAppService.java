@@ -5,8 +5,9 @@ import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUse
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.administration.domain.user.credential.InvalidCredentialsException;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
-import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;
@@ -26,7 +27,7 @@ public class UserAppService implements AccessController {
   private UsernameRegistry usernameRegistry;
   private QuoteRegistry quoteRegistry;
   private PolicyRegistry policyRegistry;
-  private PasswordValidator passwordValidator;
+  private PasswordManager passwordManager;
   private TokenTranslator tokenTranslator;
   private ClockProvider clockProvider;
   private TokenValidityPeriodProvider tokenValidityPeriodProvider;
@@ -39,7 +40,7 @@ public class UserAppService implements AccessController {
         ServiceLocator.resolve(UsernameRegistry.class),
         ServiceLocator.resolve(QuoteRegistry.class),
         ServiceLocator.resolve(PolicyRegistry.class),
-        ServiceLocator.resolve(PasswordValidator.class),
+        ServiceLocator.resolve(PasswordManager.class),
         ServiceLocator.resolve(TokenTranslator.class),
         ServiceLocator.resolve(ClockProvider.class),
         ServiceLocator.resolve(TokenValidityPeriodProvider.class),
@@ -52,7 +53,7 @@ public class UserAppService implements AccessController {
       UsernameRegistry usernameRegistry,
       QuoteRegistry quoteRegistry,
       PolicyRegistry policyRegistry,
-      PasswordValidator passwordValidator,
+      PasswordManager passwordManager,
       TokenTranslator tokenTranslator,
       ClockProvider clockProvider,
       TokenValidityPeriodProvider tokenValidityPeriodProvider,
@@ -62,7 +63,7 @@ public class UserAppService implements AccessController {
     this.usernameRegistry = usernameRegistry;
     this.quoteRegistry = quoteRegistry;
     this.policyRegistry = policyRegistry;
-    this.passwordValidator = passwordValidator;
+    this.passwordManager = passwordManager;
     this.tokenTranslator = tokenTranslator;
     this.clockProvider = clockProvider;
     this.tokenValidityPeriodProvider = tokenValidityPeriodProvider;
@@ -75,7 +76,7 @@ public class UserAppService implements AccessController {
     try {
       String userKey = userKeyGenerator.generateUserKey();
       usernameRegistry.register(userKey, credentials.getUsername());
-      passwordValidator.registerPassword(userKey, credentials.getPassword());
+      passwordManager.registerPassword(userKey, credentials.getPassword());
       return userKey;
     } catch (KeyAlreadyExistException | InvalidPasswordException e) {
       throw new CouldNotCreateUserError();
@@ -96,11 +97,11 @@ public class UserAppService implements AccessController {
   }
 
   private void validateCredentials(String userKey, String password) {
-    if (isInvalidCredentials(userKey, password)) throw new InvalidCredentialsError();
-  }
-
-  private boolean isInvalidCredentials(String userKey, String password) {
-    return !passwordValidator.validatePassword(userKey, password);
+    try {
+      passwordManager.validatePassword(userKey, password);
+    } catch (InvalidCredentialsException e) {
+      throw new InvalidCredentialsError();
+    }
   }
 
   private Token createToken(String username, String userKey) {

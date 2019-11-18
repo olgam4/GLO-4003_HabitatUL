@@ -1,12 +1,13 @@
 package ca.ulaval.glo4003.administration.infrastructure.user;
 
+import ca.ulaval.glo4003.administration.domain.user.credential.InvalidCredentialsException;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
-import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DummyPasswordValidator implements PasswordValidator {
+public class DummyPasswordManager implements PasswordManager {
   private final Map<String, String> passwords = new HashMap<>();
 
   @Override
@@ -17,8 +18,11 @@ public class DummyPasswordValidator implements PasswordValidator {
   }
 
   @Override
-  public boolean validatePassword(String userKey, String password) {
+  public void validatePassword(String userKey, String password) throws InvalidCredentialsException {
     String storedPassword = passwords.get(userKey);
-    return password != null && password.equals(storedPassword);
+
+    if (password == null || !password.equals(storedPassword)) {
+      throw new InvalidCredentialsException();
+    }
   }
 }

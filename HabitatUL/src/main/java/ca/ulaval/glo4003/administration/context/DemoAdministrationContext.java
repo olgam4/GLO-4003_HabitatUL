@@ -5,12 +5,12 @@ import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.communication.user.UserBoundedContextEventHandler;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
-import ca.ulaval.glo4003.administration.domain.user.credential.PasswordValidator;
+import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
 import ca.ulaval.glo4003.administration.infrastructure.user.ConfigBasedTokenValidityPeriodProvider;
-import ca.ulaval.glo4003.administration.infrastructure.user.DummyPasswordValidator;
+import ca.ulaval.glo4003.administration.infrastructure.user.DummyPasswordManager;
 import ca.ulaval.glo4003.administration.infrastructure.user.DummyPaymentProcessor;
 import ca.ulaval.glo4003.administration.infrastructure.user.JwtTokenTranslator;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryPolicyRegistry;
@@ -26,10 +26,10 @@ import static ca.ulaval.glo4003.context.ServiceLocator.register;
 public class DemoAdministrationContext {
   public void execute(Properties properties, Mediator mediator) {
     InMemoryUsernameRegistry usernameRegistry = new InMemoryUsernameRegistry();
-    PasswordValidator passwordValidator = new DummyPasswordValidator();
-    registerAdminUser(properties, usernameRegistry, passwordValidator);
+    PasswordManager passwordManager = new DummyPasswordManager();
+    registerAdminUser(properties, usernameRegistry, passwordManager);
 
-    register(PasswordValidator.class, passwordValidator);
+    register(PasswordManager.class, passwordManager);
     register(PaymentProcessor.class, new DummyPaymentProcessor());
     register(PolicyRegistry.class, new InMemoryPolicyRegistry());
     register(QuoteRegistry.class, new InMemoryQuoteRegistry());
@@ -49,13 +49,13 @@ public class DemoAdministrationContext {
   private void registerAdminUser(
       Properties properties,
       UsernameRegistry usernameRegistry,
-      PasswordValidator passwordValidator) {
+      PasswordManager passwordManager) {
     String adminKey = String.valueOf(properties.getProperty("admin.key"));
     String adminName = String.valueOf(properties.getProperty("admin.username"));
     String adminPassword = String.valueOf(properties.getProperty("admin.password"));
     try {
       usernameRegistry.register(adminKey, adminName);
-      passwordValidator.registerPassword(adminName, adminPassword);
+      passwordManager.registerPassword(adminName, adminPassword);
     } catch (KeyAlreadyExistException | InvalidPasswordException e) {
       e.printStackTrace();
     }
