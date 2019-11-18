@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyPolicyRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
@@ -105,8 +105,8 @@ public class PolicyResource {
   public Response modifyCoverage(
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
-      @Valid ModifyPolicyRequest modifyPolicyRequest) {
-    ModifyCoverageDto modifyCoverageDto = policyViewAssembler.from(modifyPolicyRequest);
+      @Valid ModifyCoverageRequest modifyCoverageRequest) {
+    ModifyCoverageDto modifyCoverageDto = policyViewAssembler.from(modifyCoverageRequest);
     // TODO: return policy modification id
     return Response.ok().build();
   }
@@ -118,6 +118,7 @@ public class PolicyResource {
       @Context SecurityContext securityContext,
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @PathParam(POLICY_MODIFICATION_ID_PARAM_NAME) PolicyModificationId policyModificationId) {
+    // TODO: continue from here
     return Response.ok().build();
   }
 

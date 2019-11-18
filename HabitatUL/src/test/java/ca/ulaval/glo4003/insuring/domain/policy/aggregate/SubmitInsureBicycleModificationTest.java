@@ -8,10 +8,12 @@ import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
+import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -28,9 +30,12 @@ import java.time.LocalDateTime;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
+import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyModificationsCoordinator;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDuration;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
 import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.PENDING;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -59,14 +64,18 @@ public class SubmitInsureBicycleModificationTest {
   @Mock private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
 
   private Policy subject;
+  private PolicyModificationsCoordinator policyModificationsCoordinator;
 
   @Before
   public void setUp() {
     when(policyModificationValidityPeriodProvider.getPolicyModificationValidityPeriod())
         .thenReturn(VALIDITY_PERIOD);
+    policyModificationsCoordinator = createPolicyModificationsCoordinator();
     subject =
         PolicyBuilder.aPolicy()
+            .withStatus(ACTIVE)
             .withPolicyHistoric(POLICY_HISTORIC)
+            .withPolicyModificationsCoordinator(policyModificationsCoordinator)
             .withClockProvider(CLOCK_PROVIDER)
             .build();
   }
@@ -136,6 +145,19 @@ public class SubmitInsureBicycleModificationTest {
             policyModificationValidityPeriodProvider);
 
     assertEquals(
-        policyModification, subject.getModification(policyModification.getPolicyModificationId()));
+        policyModification,
+        policyModificationsCoordinator.getModification(
+            policyModification.getPolicyModificationId()));
+  }
+
+  @Test(expected = InactivePolicyError.class)
+  public void submittingInsureBicycleModification_withInactivePolicy_shouldThrow() {
+    subject = PolicyBuilder.aPolicy().withStatus(INACTIVE).build();
+
+    subject.submitInsureBicycleModification(
+        BICYCLE,
+        PROPOSED_COVERAGE_DETAILS,
+        PROPOSED_PREMIUM_DETAILS,
+        policyModificationValidityPeriodProvider);
   }
 }

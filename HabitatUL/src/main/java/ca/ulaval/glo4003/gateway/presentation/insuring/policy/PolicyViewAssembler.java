@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.insuring.policy;
 import ca.ulaval.glo4003.gateway.presentation.coverage.CoverageViewAssembler;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyPolicyRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyModificationResponse;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
@@ -29,7 +29,7 @@ public class PolicyViewAssembler {
         coverageViewAssembler.fromBicycleRequest(insureBicycleRequest.getBicycle()));
   }
 
-  public ModifyCoverageDto from(ModifyPolicyRequest modifyPolicyRequest) {
+  public ModifyCoverageDto from(ModifyCoverageRequest modifyCoverageRequest) {
     return new ModifyCoverageDto();
   }
 

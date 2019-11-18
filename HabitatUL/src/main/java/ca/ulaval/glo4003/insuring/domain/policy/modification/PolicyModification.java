@@ -110,7 +110,6 @@ public class PolicyModification {
   }
 
   public void confirm() {
-    // TODO: check if valid status or throw error
     status = CONFIRMED;
   }
 }

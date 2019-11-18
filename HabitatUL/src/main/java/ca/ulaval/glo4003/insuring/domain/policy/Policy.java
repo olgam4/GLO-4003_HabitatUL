@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
@@ -19,6 +20,8 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
 
 public class Policy extends AggregateRoot {
   private final List<ClaimId> claims = new ArrayList<>();
@@ -80,11 +83,6 @@ public class Policy extends AggregateRoot {
     registerEvent(new PolicyIssuedEvent(policyId, quoteKey));
   }
 
-  // TODO: remove
-  public PolicyModification getModification(PolicyModificationId policyModificationId) {
-    return policyModificationsCoordinator.getModification(policyModificationId);
-  }
-
   public PolicyModification submitInsureBicycleModification(
       Bicycle bicycle,
       CoverageDetails proposedCoverageDetails,
@@ -92,8 +90,7 @@ public class Policy extends AggregateRoot {
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
     InsureBicyclePolicyInformationModifier insureBicyclePolicyInformationModifier =
         new InsureBicyclePolicyInformationModifier(bicycle);
-    // TODO: check if policy is active
-    // TODO: create policy status
+    checkIfInactivePolicy();
     return policyModificationsCoordinator.registerPolicyModification(
         insureBicyclePolicyInformationModifier,
         proposedCoverageDetails,
@@ -104,11 +101,16 @@ public class Policy extends AggregateRoot {
   }
 
   public void confirmModification(PolicyModificationId policyModificationId) {
-    // TODO: check if policy is active
-    // TODO: create policy status
+    checkIfInactivePolicy();
     PolicyModification policyModification =
         policyModificationsCoordinator.retrieveConfirmedModification(policyModificationId);
     policyHistoric.updatePolicyHistory(policyModification);
+  }
+
+  private void checkIfInactivePolicy() {
+    if (status.equals(INACTIVE)) {
+      throw new InactivePolicyError(policyId);
+    }
   }
 
   public void openClaim(Claim claim) {

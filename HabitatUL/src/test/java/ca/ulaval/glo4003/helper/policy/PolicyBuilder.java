@@ -40,6 +40,11 @@ public class PolicyBuilder {
     return this;
   }
 
+  public PolicyBuilder withStatus(PolicyStatus status) {
+    this.status = status;
+    return this;
+  }
+
   public PolicyBuilder withPolicyHistoric(PolicyHistoric policyHistoric) {
     this.policyHistoric = policyHistoric;
     return this;

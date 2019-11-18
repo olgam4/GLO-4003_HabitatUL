@@ -21,13 +21,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
-import static ca.ulaval.glo4003.context.ServiceLocator.reset;
 
 public class AcceptanceTestContext {
-  public AcceptanceTestContext() {
-    reset();
-  }
-
   public void execute() {
     register(ClockProvider.class, TemporalGenerator.getClockProvider());
     register(QuoteEffectivePeriodProvider.class, new DummyQuoteEffectivePeriodProvider());

@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.helper.policy.PolicyModificationBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
+import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationAlreadyConfirmedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationExpiredError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyModificationNotFoundError;
@@ -35,6 +36,8 @@ import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createP
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPreviousPolicyViews;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
 import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -125,6 +128,7 @@ public class ConfirmModificationTest {
     policyModificationsCoordinator = createPolicyModificationsCoordinator(policyModifications);
     subject =
         PolicyBuilder.aPolicy()
+            .withStatus(ACTIVE)
             .withPolicyHistoric(policyHistoric)
             .withPolicyModificationsCoordinator(policyModificationsCoordinator)
             .withClockProvider(CLOCK_PROVIDER)
@@ -259,6 +263,13 @@ public class ConfirmModificationTest {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     assertEquals(policyModification.getProposedPremiumDetails(), subject.getPremiumDetails());
+  }
+
+  @Test(expected = InactivePolicyError.class)
+  public void confirmingModification_withInactivePolicy_shouldThrow() {
+    subject = PolicyBuilder.aPolicy().withStatus(INACTIVE).build();
+
+    subject.confirmModification(POLICY_MODIFICATION_ID);
   }
 
   @Test(expected = PolicyModificationNotFoundError.class)

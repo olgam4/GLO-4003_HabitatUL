@@ -15,7 +15,6 @@ public class DemoContext {
   private Mediator mediator;
 
   public DemoContext() {
-    ServiceLocator.reset();
     properties = new ConfigFileReader().read("config.properties");
     mediator = new Mediator();
   }
