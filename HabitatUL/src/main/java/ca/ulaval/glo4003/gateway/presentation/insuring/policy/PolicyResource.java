@@ -104,7 +104,8 @@ public class PolicyResource {
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @Valid ModifyCoverageRequest modifyCoverageRequest) {
     ModifyCoverageDto modifyCoverageDto = policyViewAssembler.from(modifyCoverageRequest);
-    // TODO: return policy modification id
+    policyAppService.modifyCoverage(policyId, modifyCoverageDto);
+    // TODO:
     return Response.ok().build();
   }
 

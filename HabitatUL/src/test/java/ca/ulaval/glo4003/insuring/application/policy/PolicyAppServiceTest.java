@@ -53,7 +53,7 @@ public class PolicyAppServiceTest {
   private static final CoverageDto COVERAGE_DTO = createCoverageDto();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsureBicycleDto();
-  private static final ModifyCoverageDto MODIFY_POLICY_DTO = createModifyPolicyDto();
+  private static final ModifyCoverageDto MODIFY_POLICY_DTO = createModifyCoverageDto();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
 

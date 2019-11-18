@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
@@ -22,7 +23,9 @@ import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLos
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycleRequest;
+import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 import static ca.ulaval.glo4003.helper.policy.PolicyHistoricGenerator.createPolicyHistoric;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModifications;
@@ -91,8 +94,12 @@ public class PolicyGenerator {
     return new InsureBicycleDto(createBicycle());
   }
 
-  public static ModifyCoverageDto createModifyPolicyDto() {
-    return new ModifyCoverageDto();
+  public static ModifyCoverageRequest createModifyCoverageRequest() {
+    return new ModifyCoverageRequest(createCoverageAmount(), createCivilLiabilityLimit());
+  }
+
+  public static ModifyCoverageDto createModifyCoverageDto() {
+    return new ModifyCoverageDto(createCoverageAmount(), createCivilLiabilityLimit());
   }
 
   public static OpenClaimDto createOpenClaimDto() {

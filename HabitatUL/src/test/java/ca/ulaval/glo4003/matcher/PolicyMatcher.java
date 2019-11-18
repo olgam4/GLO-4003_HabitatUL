@@ -4,7 +4,9 @@ import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
@@ -38,6 +40,13 @@ public class PolicyMatcher {
   public static Matcher<InsureBicycleDto> matchesInsureBicycleDto(
       final InsureBicycleRequest insureBicycleRequest) {
     return allOf(hasProperty("bicycle", matchesBicycle(insureBicycleRequest.getBicycle())));
+  }
+
+  public static Matcher<ModifyCoverageDto> matchesModifyCoverageDto(
+      final ModifyCoverageRequest modifyCoverageRequest) {
+    return allOf(
+        hasProperty("personalProperty", equalTo(modifyCoverageRequest.getPersonalProperty())),
+        hasProperty("civilLiability", equalTo(modifyCoverageRequest.getCivilLiability())));
   }
 
   private static Matcher<Bicycle> matchesBicycle(final BicycleRequest bicycleRequest) {

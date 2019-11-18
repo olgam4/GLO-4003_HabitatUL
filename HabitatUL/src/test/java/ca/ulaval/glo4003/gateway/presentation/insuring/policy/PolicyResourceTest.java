@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.insuring.policy;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
@@ -27,6 +28,7 @@ import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.create
 import static ca.ulaval.glo4003.helper.shared.SecurityContextGenerator.createSecurityContext;
 import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesOpenClaimDto;
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesInsureBicycleDto;
+import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesModifyCoverageDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -38,6 +40,8 @@ public class PolicyResourceTest {
   private static final SecurityContext SECURITY_CONTEXT = createSecurityContext();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final InsureBicycleRequest INSURE_BICYCLE_REQUEST = createInsureBicycleRequest();
+  private static final ModifyCoverageRequest MODIFY_COVERAGE_REQUEST =
+          createModifyCoverageRequest();
   private static final PolicyModificationDto POLICY_MODIFICATION_DTO =
       createPolicyModificationDto();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
@@ -78,6 +82,14 @@ public class PolicyResourceTest {
 
     verify(policyAppService)
         .insureBicycle(eq(POLICY_ID), argThat(matchesInsureBicycleDto(INSURE_BICYCLE_REQUEST)));
+  }
+
+  @Test
+  public void modifyingCoverage_shouldDelegateToPolicyAppService() {
+    subject.modifyCoverage(SECURITY_CONTEXT, POLICY_ID, MODIFY_COVERAGE_REQUEST);
+
+    verify(policyAppService)
+        .modifyCoverage(eq(POLICY_ID), argThat(matchesModifyCoverageDto(MODIFY_COVERAGE_REQUEST)));
   }
 
   @Test

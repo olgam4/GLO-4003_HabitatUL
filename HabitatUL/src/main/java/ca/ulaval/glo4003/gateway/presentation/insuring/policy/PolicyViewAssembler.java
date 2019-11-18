@@ -28,8 +28,8 @@ public class PolicyViewAssembler {
   }
 
   public ModifyCoverageDto from(ModifyCoverageRequest modifyCoverageRequest) {
-    // TODO:
-    return new ModifyCoverageDto();
+    return new ModifyCoverageDto(
+        modifyCoverageRequest.getPersonalProperty(), modifyCoverageRequest.getCivilLiability());
   }
 
   public PolicyModificationResponse from(PolicyModificationDto policyModificationDto) {
