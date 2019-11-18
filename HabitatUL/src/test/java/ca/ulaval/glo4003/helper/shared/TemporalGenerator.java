@@ -40,6 +40,13 @@ public class TemporalGenerator {
     return Date.from(futureDate.toLocalDate());
   }
 
+  public static Date createDateBetween(Date date1, Date date2) {
+    int numberOfDaysBetween =
+        java.time.Period.between(date1.getValue(), date2.getValue()).getDays();
+    int numberOfDays = Faker.instance().number().numberBetween(1, numberOfDaysBetween);
+    return date1.plus(java.time.Period.ofDays(numberOfDays));
+  }
+
   public static Date createDateBefore(Date date) {
     return Date.from(
         date.getValue().minus(Faker.instance().number().randomDigitNotZero(), ChronoUnit.DAYS));

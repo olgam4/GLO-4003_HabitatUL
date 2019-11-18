@@ -14,16 +14,15 @@ import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerat
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 
 public class QuotePremiumInputBuilder {
-  private static final Gender DEFAULT_NAMED_INSURED_GENDER = createGender();
-  private static final UniversityProgram DEFAULT_NAMED_INSURED_UNIVERSITY_PROGRAM =
+  private final Gender DEFAULT_NAMED_INSURED_GENDER = createGender();
+  private final UniversityProgram DEFAULT_NAMED_INSURED_UNIVERSITY_PROGRAM =
       createUniversityProgram();
-  private static final Gender DEFAULT_ADDITIONAL_INSURED_GENDER = createGender();
-  private static final UniversityProgram DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM =
+  private final Gender DEFAULT_ADDITIONAL_INSURED_GENDER = createGender();
+  private final UniversityProgram DEFAULT_ADDITIONAL_INSURED_UNIVERSITY_PROGRAM =
       createUniversityProgram();
-  private static final Animals DEFAULT_ANIMALS = createAnimals();
-  private static final Amount DEFAULT_BICYCLE_PRICE = createBicyclePrice();
-  private static final CivilLiabilityLimit DEFAULT_CIVIL_LIABILITY_LIMIT =
-      createCivilLiabilityLimit();
+  private final Animals DEFAULT_ANIMALS = createAnimals();
+  private final Amount DEFAULT_BICYCLE_PRICE = createBicyclePrice();
+  private final CivilLiabilityLimit DEFAULT_CIVIL_LIABILITY_LIMIT = createCivilLiabilityLimit();
 
   private Gender namedInsuredGender = DEFAULT_NAMED_INSURED_GENDER;
   private UniversityProgram namedInsuredUniversityProgram =

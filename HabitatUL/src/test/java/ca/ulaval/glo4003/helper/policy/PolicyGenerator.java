@@ -1,16 +1,19 @@
 package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
+import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import com.github.javafaker.Faker;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
@@ -41,6 +44,7 @@ public class PolicyGenerator {
     return new Policy(
         createPolicyId(),
         createQuoteKey(),
+        createPolicyStatus(),
         createPolicyHistoric(),
         createPolicyModificationsCoordinator(),
         getClockProvider());
@@ -54,9 +58,18 @@ public class PolicyGenerator {
     return Faker.instance().internet().uuid();
   }
 
+  public static PolicyStatus createPolicyStatus() {
+    return EnumSampler.sample(PolicyStatus.class);
+  }
+
   public static PolicyModificationsCoordinator createPolicyModificationsCoordinator() {
+    return createPolicyModificationsCoordinator(createPolicyModifications());
+  }
+
+  public static PolicyModificationsCoordinator createPolicyModificationsCoordinator(
+      List<PolicyModification> policyModifications) {
     return new PolicyModificationsCoordinator(
-        createPolicyModifications().stream()
+        policyModifications.stream()
             .collect(
                 Collectors.toMap(
                     PolicyModification::getPolicyModificationId,

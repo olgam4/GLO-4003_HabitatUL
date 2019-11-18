@@ -18,6 +18,20 @@ import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPeriod;
 public class PolicyViewGenerator {
   private PolicyViewGenerator() {}
 
+  public static List<PolicyView> createPreviousPolicyViews(Period period) {
+    return IntStream.range(0, Faker.instance().number().randomDigitNotZero())
+        .mapToObj(i -> createPreviousPolicyView(period))
+        .collect(Collectors.toList());
+  }
+
+  public static PolicyView createPreviousPolicyView(Period period) {
+    return new PolicyView(
+        createPreviousCoveragePeriod(period),
+        createPolicyInformation(),
+        createCoverageDetails(),
+        createPremiumDetails());
+  }
+
   public static List<PolicyView> createPolicyViews() {
     return IntStream.range(0, Faker.instance().number().randomDigitNotZero())
         .mapToObj(i -> createPolicyView())

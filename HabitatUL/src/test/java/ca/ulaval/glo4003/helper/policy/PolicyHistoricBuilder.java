@@ -15,6 +15,11 @@ public class PolicyHistoricBuilder {
     return new PolicyHistoricBuilder();
   }
 
+  public PolicyHistoricBuilder withPolicyViews(List<PolicyView> policyViews) {
+    policyViews.forEach(this::withPolicyView);
+    return this;
+  }
+
   public PolicyHistoricBuilder withPolicyView(PolicyView policyView) {
     this.historic.add(policyView);
     return this;

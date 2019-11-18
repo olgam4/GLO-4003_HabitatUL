@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PolicyClaimTest {
+public class OpenClaimTest {
   private static final Period CURRENT_COVERAGE_PERIOD = createFuturePeriod();
   private static final PolicyInformation CURRENT_POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();

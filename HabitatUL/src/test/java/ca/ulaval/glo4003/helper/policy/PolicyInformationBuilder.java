@@ -14,12 +14,12 @@ import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGen
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createAnimals;
 
 public class PolicyInformationBuilder {
-  private static final Identity DEFAULT_NAMED_INSURED = createIdentity();
-  private static final Identity DEFAULT_ADDITIONAL_INSURED = createIdentity();
-  private static final Location DEFAULT_LOCATION = createLocation();
-  private static final Building DEFAULT_BUILDING = createBuilding();
-  private static final Animals DEFAULT_ANIMALS = createAnimals();
-  private static final Bicycle DEFAULT_BICYCLE = createBicycle();
+  private final Identity DEFAULT_NAMED_INSURED = createIdentity();
+  private final Identity DEFAULT_ADDITIONAL_INSURED = createIdentity();
+  private final Location DEFAULT_LOCATION = createLocation();
+  private final Building DEFAULT_BUILDING = createBuilding();
+  private final Animals DEFAULT_ANIMALS = createAnimals();
+  private final Bicycle DEFAULT_BICYCLE = createBicycle();
 
   private Identity namedInsured = DEFAULT_NAMED_INSURED;
   private Identity additionalInsured = DEFAULT_ADDITIONAL_INSURED;

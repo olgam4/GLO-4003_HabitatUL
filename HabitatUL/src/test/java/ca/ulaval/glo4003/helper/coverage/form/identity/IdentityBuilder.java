@@ -9,11 +9,11 @@ import static ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator.
 import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createUniversityProfile;
 
 public class IdentityBuilder {
-  private static final String DEFAULT_FIRST_NAME = createFirstName();
-  private static final String DEFAULT_LAST_NAME = createLastName();
-  private static final Date DEFAULT_BIRTH_DATE = createBirthDate();
-  private static final Gender DEFAULT_GENDER = createGender();
-  private static final UniversityProfile DEFAULT_UNIVERSITY_PROFILE = createUniversityProfile();
+  private final String DEFAULT_FIRST_NAME = createFirstName();
+  private final String DEFAULT_LAST_NAME = createLastName();
+  private final Date DEFAULT_BIRTH_DATE = createBirthDate();
+  private final Gender DEFAULT_GENDER = createGender();
+  private final UniversityProfile DEFAULT_UNIVERSITY_PROFILE = createUniversityProfile();
 
   private String firstName = DEFAULT_FIRST_NAME;
   private String lastName = DEFAULT_LAST_NAME;

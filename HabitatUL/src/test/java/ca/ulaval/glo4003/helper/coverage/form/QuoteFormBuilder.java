@@ -16,13 +16,13 @@ import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPr
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFutureDate;
 
 public class QuoteFormBuilder {
-  private static final Identity DEFAULT_PERSONAL_INFORMATION = createIdentity();
-  private static final Identity DEFAULT_ADDITIONAL_INSURED = createIdentity();
-  private static final Location DEFAULT_LOCATION = createLocation();
-  private static final Date DEFAULT_EFFECTIVE_DATE = createFutureDate();
-  private static final Building DEFAULT_BUILDING = createBuilding();
-  private static final PersonalProperty DEFAULT_PERSONAL_PROPERTY = createPersonalProperty();
-  private static final CivilLiability DEFAULT_CIVIL_LIABILITY = createCivilLiability();
+  private final Identity DEFAULT_PERSONAL_INFORMATION = createIdentity();
+  private final Identity DEFAULT_ADDITIONAL_INSURED = createIdentity();
+  private final Location DEFAULT_LOCATION = createLocation();
+  private final Date DEFAULT_EFFECTIVE_DATE = createFutureDate();
+  private final Building DEFAULT_BUILDING = createBuilding();
+  private final PersonalProperty DEFAULT_PERSONAL_PROPERTY = createPersonalProperty();
+  private final CivilLiability DEFAULT_CIVIL_LIABILITY = createCivilLiability();
 
   private Identity personalInformation = DEFAULT_PERSONAL_INFORMATION;
   private Identity additionalInsured = DEFAULT_ADDITIONAL_INSURED;

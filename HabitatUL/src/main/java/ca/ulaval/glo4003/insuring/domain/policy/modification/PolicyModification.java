@@ -2,9 +2,16 @@ package ca.ulaval.glo4003.insuring.domain.policy.modification;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
+import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
+import ca.ulaval.glo4003.shared.domain.temporal.Period;
+
+import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.*;
 
 public class PolicyModification {
   private PolicyModificationId policyModificationId;
@@ -14,6 +21,7 @@ public class PolicyModification {
   private PolicyInformationModifier policyInformationModifier;
   private CoverageDetails proposedCoverageDetails;
   private PremiumDetails proposedPremiumDetails;
+  private ClockProvider clockProvider;
 
   public PolicyModification(
       PolicyModificationId policyModificationId,
@@ -22,7 +30,8 @@ public class PolicyModification {
       Money premiumAdjustment,
       PolicyInformationModifier policyInformationModifier,
       CoverageDetails proposedCoverageDetails,
-      PremiumDetails proposedPremiumDetails) {
+      PremiumDetails proposedPremiumDetails,
+      ClockProvider clockProvider) {
     this.policyModificationId = policyModificationId;
     this.expirationDate = expirationDate;
     this.status = status;
@@ -30,6 +39,7 @@ public class PolicyModification {
     this.policyInformationModifier = policyInformationModifier;
     this.proposedCoverageDetails = proposedCoverageDetails;
     this.proposedPremiumDetails = proposedPremiumDetails;
+    this.clockProvider = clockProvider;
   }
 
   public PolicyModificationId getPolicyModificationId() {
@@ -58,5 +68,49 @@ public class PolicyModification {
 
   public PremiumDetails getProposedPremiumDetails() {
     return proposedPremiumDetails;
+  }
+
+  public PolicyView updatePolicyView(PolicyView currentPolicyView) {
+    Date effectiveDate = Date.now(clockProvider.getClock());
+    return new PolicyView(
+        computeUpdatedCoveragePeriod(currentPolicyView, effectiveDate),
+        computeUpdatedPolicyInformation(currentPolicyView),
+        proposedCoverageDetails,
+        proposedPremiumDetails);
+  }
+
+  private Period computeUpdatedCoveragePeriod(PolicyView currentPolicyView, Date effectiveDate) {
+    Period currentCoveragePeriod = currentPolicyView.getCoveragePeriod();
+    return new Period(effectiveDate, currentCoveragePeriod.getEndDate());
+  }
+
+  private PolicyInformation computeUpdatedPolicyInformation(PolicyView currentPolicyView) {
+    PolicyInformation currentPolicyInformation = currentPolicyView.getPolicyInformation();
+    return policyInformationModifier.modify(currentPolicyInformation);
+  }
+
+  public boolean isConfirmed() {
+    return status.equals(CONFIRMED);
+  }
+
+  public boolean isPending() {
+    return status.equals(PENDING);
+  }
+
+  public boolean isOutdated() {
+    return DateTime.now(clockProvider.getClock()).isAfter(expirationDate);
+  }
+
+  public boolean isExpired() {
+    return status.equals(EXPIRED);
+  }
+
+  public void expire() {
+    status = EXPIRED;
+  }
+
+  public void confirm() {
+    // TODO: check if valid status or throw error
+    status = CONFIRMED;
   }
 }

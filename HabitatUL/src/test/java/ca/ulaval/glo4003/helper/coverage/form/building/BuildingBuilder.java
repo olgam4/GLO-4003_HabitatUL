@@ -6,9 +6,9 @@ import ca.ulaval.glo4003.coverage.domain.form.building.PreventionSystems;
 import static ca.ulaval.glo4003.helper.coverage.form.building.BuildingGenerator.*;
 
 public class BuildingBuilder {
-  private static final int DEFAULT_NUMBER_OF_UNITS = createNumberOfUnits();
-  private static final PreventionSystems DEFAULT_PREVENTION_SYSTEMS = createPreventionSystems();
-  private static final String DEFAULT_COMMERCIAL_USE = createCommercialUse();
+  private final int DEFAULT_NUMBER_OF_UNITS = createNumberOfUnits();
+  private final PreventionSystems DEFAULT_PREVENTION_SYSTEMS = createPreventionSystems();
+  private final String DEFAULT_COMMERCIAL_USE = createCommercialUse();
 
   private int numberOfUnits = DEFAULT_NUMBER_OF_UNITS;
   private PreventionSystems preventionSystems = DEFAULT_PREVENTION_SYSTEMS;

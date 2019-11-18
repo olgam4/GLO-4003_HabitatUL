@@ -24,6 +24,7 @@ public class Policy extends AggregateRoot {
   private final List<ClaimId> claims = new ArrayList<>();
   private PolicyId policyId;
   private String quoteKey;
+  private PolicyStatus status;
   private PolicyHistoric policyHistoric;
   private PolicyModificationsCoordinator policyModificationsCoordinator;
   private ClockProvider clockProvider;
@@ -31,11 +32,13 @@ public class Policy extends AggregateRoot {
   public Policy(
       PolicyId policyId,
       String quoteKey,
+      PolicyStatus status,
       PolicyHistoric policyHistoric,
       PolicyModificationsCoordinator policyModificationsCoordinator,
       ClockProvider clockProvider) {
     this.policyId = policyId;
     this.quoteKey = quoteKey;
+    this.status = status;
     this.policyHistoric = policyHistoric;
     this.policyModificationsCoordinator = policyModificationsCoordinator;
     this.clockProvider = clockProvider;
@@ -47,6 +50,10 @@ public class Policy extends AggregateRoot {
 
   public String getQuoteKey() {
     return quoteKey;
+  }
+
+  public PolicyStatus getStatus() {
+    return status;
   }
 
   public List<ClaimId> getClaims() {
@@ -73,6 +80,7 @@ public class Policy extends AggregateRoot {
     registerEvent(new PolicyIssuedEvent(policyId, quoteKey));
   }
 
+  // TODO: remove
   public PolicyModification getModification(PolicyModificationId policyModificationId) {
     return policyModificationsCoordinator.getModification(policyModificationId);
   }
@@ -84,6 +92,8 @@ public class Policy extends AggregateRoot {
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
     InsureBicyclePolicyInformationModifier insureBicyclePolicyInformationModifier =
         new InsureBicyclePolicyInformationModifier(bicycle);
+    // TODO: check if policy is active
+    // TODO: create policy status
     return policyModificationsCoordinator.registerPolicyModification(
         insureBicyclePolicyInformationModifier,
         proposedCoverageDetails,
@@ -94,7 +104,11 @@ public class Policy extends AggregateRoot {
   }
 
   public void confirmModification(PolicyModificationId policyModificationId) {
-    // TODO:
+    // TODO: check if policy is active
+    // TODO: create policy status
+    PolicyModification policyModification =
+        policyModificationsCoordinator.retrieveConfirmedModification(policyModificationId);
+    policyHistoric.updatePolicyHistory(policyModification);
   }
 
   public void openClaim(Claim claim) {

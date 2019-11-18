@@ -10,9 +10,9 @@ import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGen
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 
 public class BicycleEndorsementFormBuilder {
-  private static final Bicycle DEFAULT_BICYCLE = createBicycle();
-  private static final CoverageDetails DEFAULT_CURRENT_COVERAGE_DETAILS = createCoverageDetails();
-  private static final PremiumDetails DEFAULT_CURRENT_PREMIUM_DETAILS = createPremiumDetails();
+  private final Bicycle DEFAULT_BICYCLE = createBicycle();
+  private final CoverageDetails DEFAULT_CURRENT_COVERAGE_DETAILS = createCoverageDetails();
+  private final PremiumDetails DEFAULT_CURRENT_PREMIUM_DETAILS = createPremiumDetails();
 
   private Bicycle bicycle = DEFAULT_BICYCLE;
   private CoverageDetails currentCoverageDetails = DEFAULT_CURRENT_COVERAGE_DETAILS;

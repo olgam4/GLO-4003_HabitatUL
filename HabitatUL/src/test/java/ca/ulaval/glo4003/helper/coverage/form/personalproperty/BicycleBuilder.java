@@ -8,10 +8,10 @@ import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGen
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createYear;
 
 public class BicycleBuilder {
-  private static final Amount DEFAULT_PRICE = createBicyclePrice();
-  private static final String DEFAULT_BRAND = createBrand();
-  private static final String DEFAULT_MODEL = createModel();
-  private static final Year DEFAULT_YEAR = createYear();
+  private final Amount DEFAULT_PRICE = createBicyclePrice();
+  private final String DEFAULT_BRAND = createBrand();
+  private final String DEFAULT_MODEL = createModel();
+  private final Year DEFAULT_YEAR = createYear();
 
   private Amount price = DEFAULT_PRICE;
   private String brand = DEFAULT_BRAND;

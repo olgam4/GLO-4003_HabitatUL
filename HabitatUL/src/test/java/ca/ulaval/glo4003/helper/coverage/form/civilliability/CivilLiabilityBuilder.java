@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 
 public class CivilLiabilityBuilder {
-  private static final CivilLiabilityLimit DEFAULT_AMOUNT = createCivilLiabilityLimit();
+  private final CivilLiabilityLimit DEFAULT_AMOUNT = createCivilLiabilityLimit();
 
   private CivilLiabilityLimit amount = DEFAULT_AMOUNT;
 

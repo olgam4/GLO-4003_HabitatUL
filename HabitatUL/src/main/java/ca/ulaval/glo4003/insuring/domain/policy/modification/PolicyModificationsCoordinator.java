@@ -2,15 +2,15 @@ package ca.ulaval.glo4003.insuring.domain.policy.modification;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
+import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationAlreadyConfirmedError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationExpiredError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyModificationNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.PENDING;
 
@@ -24,6 +24,10 @@ public class PolicyModificationsCoordinator {
   public PolicyModificationsCoordinator(
       Map<PolicyModificationId, PolicyModification> modifications) {
     this.modifications = modifications;
+  }
+
+  public List<PolicyModification> getModifications() {
+    return new ArrayList<>(modifications.values());
   }
 
   public PolicyModification getModification(PolicyModificationId policyModificationId) {
@@ -51,7 +55,8 @@ public class PolicyModificationsCoordinator {
             premiumAdjustment,
             policyInformationModifier,
             proposedCoverageDetails,
-            proposedPremiumDetails);
+            proposedPremiumDetails,
+            clockProvider);
     modifications.put(policyModificationId, policyModification);
     return policyModification;
   }
@@ -68,5 +73,45 @@ public class PolicyModificationsCoordinator {
     Money currentTotalPremium = currentPremiumDetails.computeTotalPremium();
     Money updatedTotalPremium = updatedPremiumDetails.computeTotalPremium();
     return updatedTotalPremium.subtract(currentTotalPremium);
+  }
+
+  public PolicyModification retrieveConfirmedModification(
+      PolicyModificationId policyModificationId) {
+    expireOutdatedModifications();
+    PolicyModification policyModification = getModification(policyModificationId);
+    confirmModification(policyModification);
+    expirePendingModifications();
+    return policyModification;
+  }
+
+  private void expireOutdatedModifications() {
+    modifications.values().stream()
+        .filter(PolicyModification::isOutdated)
+        .forEach(PolicyModification::expire);
+  }
+
+  private void confirmModification(PolicyModification policyModification) {
+    checkIfModificationIsConfirmed(policyModification);
+    checkIfModificationIsExpired(policyModification);
+    policyModification.confirm();
+    modifications.put(policyModification.getPolicyModificationId(), policyModification);
+  }
+
+  private void checkIfModificationIsConfirmed(PolicyModification policyModification) {
+    if (policyModification.isConfirmed()) {
+      throw new ModificationAlreadyConfirmedError(policyModification.getPolicyModificationId());
+    }
+  }
+
+  private void checkIfModificationIsExpired(PolicyModification policyModification) {
+    if (policyModification.isExpired()) {
+      throw new ModificationExpiredError(policyModification.getPolicyModificationId());
+    }
+  }
+
+  private void expirePendingModifications() {
+    modifications.values().stream()
+        .filter(PolicyModification::isPending)
+        .forEach(PolicyModification::expire);
   }
 }

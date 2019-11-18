@@ -15,6 +15,7 @@ import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerato
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,6 +27,7 @@ public class PolicyFactoryTest {
       createDateBefore(COVERAGE_PERIOD.getStartDate());
   private static final Date AFTER_COVERAGE_PERIOD_START_DATE =
       createDateAfter(COVERAGE_PERIOD.getStartDate());
+  private static final Date PURCHASE_DATE = createDate();
   private static final PolicyInformation POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
@@ -35,6 +37,20 @@ public class PolicyFactoryTest {
   @Before
   public void setUp() {
     subject = new PolicyFactory(CLOCK_PROVIDER);
+  }
+
+  @Test
+  public void creatingPolicy_shouldCreateActivePolicy() {
+    Policy policy =
+        subject.create(
+            QUOTE_KEY,
+            COVERAGE_PERIOD,
+            PURCHASE_DATE,
+            POLICY_INFORMATION,
+            COVERAGE_DETAILS,
+            PREMIUM_DETAILS);
+
+    assertEquals(ACTIVE, policy.getStatus());
   }
 
   @Test

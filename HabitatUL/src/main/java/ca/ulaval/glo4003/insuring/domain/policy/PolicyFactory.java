@@ -12,6 +12,8 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
+
 public class PolicyFactory {
   private ClockProvider clockProvider;
 
@@ -34,7 +36,7 @@ public class PolicyFactory {
     PolicyModificationsCoordinator policyModificationsCoordinator =
         new PolicyModificationsCoordinator();
     return new Policy(
-        policyId, quoteKey, policyHistoric, policyModificationsCoordinator, clockProvider);
+        policyId, quoteKey, ACTIVE, policyHistoric, policyModificationsCoordinator, clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

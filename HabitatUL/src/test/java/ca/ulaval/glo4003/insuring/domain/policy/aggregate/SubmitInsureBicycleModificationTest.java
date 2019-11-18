@@ -36,7 +36,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PolicyModificationTest {
+public class SubmitInsureBicycleModificationTest {
+  private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final Money CURRENT_TOTAL_PREMIUM = createMoney();
   private static final PremiumDetails CURRENT_PREMIUM_DETAILS =
       PremiumDetailsBuilder.aPremiumDetails()
@@ -46,7 +47,6 @@ public class PolicyModificationTest {
       PolicyViewBuilder.aPolicyView().withPremiumDetails(CURRENT_PREMIUM_DETAILS).build();
   private static final PolicyHistoric POLICY_HISTORIC =
       PolicyHistoricBuilder.aPolicyHistoric().withPolicyView(CURRENT_POLICY_VIEW).build();
-  private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final Duration VALIDITY_PERIOD = createDuration();
   private static final CoverageDetails PROPOSED_COVERAGE_DETAILS = createCoverageDetails();
   private static final Money UPDATED_TOTAL_PREMIUM = createMoney();

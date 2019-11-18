@@ -12,7 +12,7 @@ import java.util.List;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createBasicBlockCoveragePremiumDetail;
 
 public class PremiumDetailsBuilder {
-  private static final BasicBlockCoveragePremiumDetail DEFAULT_BASE_COVERAGE_PREMIUM_DETAIL =
+  private final BasicBlockCoveragePremiumDetail DEFAULT_BASE_COVERAGE_PREMIUM_DETAIL =
       createBasicBlockCoveragePremiumDetail();
 
   private BasicBlockCoveragePremiumDetail basicBlockCoveragePremiumDetail =

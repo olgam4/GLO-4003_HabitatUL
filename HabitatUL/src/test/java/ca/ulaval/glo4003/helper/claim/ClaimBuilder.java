@@ -6,10 +6,10 @@ import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.*;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 
 public class ClaimBuilder {
-  private static final ClaimId DEFAULT_CLAIM_ID = createClaimId();
-  private static final ClaimStatus DEFAULT_CLAIM_STATUS = createClaimStatus();
-  private static final SinisterType DEFAULT_SINISTER_TYPE = createSinisterType();
-  private static final LossDeclarations DEFAULT_LOSS_DECLARATIONS = createLossDeclarations();
+  private final ClaimId DEFAULT_CLAIM_ID = createClaimId();
+  private final ClaimStatus DEFAULT_CLAIM_STATUS = createClaimStatus();
+  private final SinisterType DEFAULT_SINISTER_TYPE = createSinisterType();
+  private final LossDeclarations DEFAULT_LOSS_DECLARATIONS = createLossDeclarations();
 
   private ClaimId claimId = DEFAULT_CLAIM_ID;
   private ClaimStatus claimStatus = DEFAULT_CLAIM_STATUS;

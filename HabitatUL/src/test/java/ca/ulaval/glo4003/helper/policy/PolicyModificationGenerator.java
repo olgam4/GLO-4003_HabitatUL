@@ -16,6 +16,7 @@ import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationModifierGenerator.createPolicyInformationModifier;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFutureDateTime;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 
 public class PolicyModificationGenerator {
   private PolicyModificationGenerator() {}
@@ -44,14 +45,15 @@ public class PolicyModificationGenerator {
         createMoney(),
         createPolicyInformationModifier(),
         createCoverageDetails(),
-        createPremiumDetails());
+        createPremiumDetails(),
+        getClockProvider());
   }
 
   public static PolicyModificationId createPolicyModificationId() {
     return new PolicyModificationId();
   }
 
-  private static PolicyModificationStatus createPolicyModificationStatus() {
+  public static PolicyModificationStatus createPolicyModificationStatus() {
     return EnumSampler.sample(PolicyModificationStatus.class);
   }
 }

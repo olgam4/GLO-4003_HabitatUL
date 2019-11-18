@@ -11,9 +11,9 @@ import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPr
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createAnimals;
 
 public class PersonalPropertyBuilder {
-  private static final Amount DEFAULT_COVERAGE_AMOUNT = createCoverageAmount();
-  private static final Animals DEFAULT_ANIMALS = createAnimals();
-  private static final Bicycle DEFAULT_BICYCLE = createBicycle();
+  private final Amount DEFAULT_COVERAGE_AMOUNT = createCoverageAmount();
+  private final Animals DEFAULT_ANIMALS = createAnimals();
+  private final Bicycle DEFAULT_BICYCLE = createBicycle();
 
   private Amount coverageAmount = DEFAULT_COVERAGE_AMOUNT;
   private Animals animals = DEFAULT_ANIMALS;

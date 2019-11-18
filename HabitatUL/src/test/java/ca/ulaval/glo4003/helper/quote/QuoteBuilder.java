@@ -17,14 +17,14 @@ import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.
 import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteId;
 
 public class QuoteBuilder {
-  private static final QuoteId DEFAULT_QUOTE_ID = createQuoteId();
-  private static final QuoteForm DEFAULT_QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
-  private static final DateTime DEFAULT_EXPIRATION_DATE = TemporalGenerator.createFutureDateTime();
-  private static final Period DEFAULT_EFFECTIVE_PERIOD = TemporalGenerator.createPeriod();
-  private static final CoverageDetails DEFAULT_COVERAGE_DETAILS = createCoverageDetails();
-  private static final PremiumDetails DEFAULT_PREMIUM_DETAILS = createPremiumDetails();
-  private static final Boolean DEFAULT_PURCHASED = Faker.instance().bool().bool();
-  private static final ClockProvider DEFAULT_CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
+  private final QuoteId DEFAULT_QUOTE_ID = createQuoteId();
+  private final QuoteForm DEFAULT_QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
+  private final DateTime DEFAULT_EXPIRATION_DATE = TemporalGenerator.createFutureDateTime();
+  private final Period DEFAULT_EFFECTIVE_PERIOD = TemporalGenerator.createPeriod();
+  private final CoverageDetails DEFAULT_COVERAGE_DETAILS = createCoverageDetails();
+  private final PremiumDetails DEFAULT_PREMIUM_DETAILS = createPremiumDetails();
+  private final Boolean DEFAULT_PURCHASED = Faker.instance().bool().bool();
+  private final ClockProvider DEFAULT_CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
 
   private QuoteId quoteId = DEFAULT_QUOTE_ID;
   private QuoteForm quoteForm = DEFAULT_QUOTE_FORM;

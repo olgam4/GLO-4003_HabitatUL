@@ -14,9 +14,9 @@ import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerato
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createPersonalPropertyCoverageDetail;
 
 public class CoverageDetailsBuilder {
-  private static final PersonalPropertyCoverageDetail DEFAULT_PERSONAL_PROPERTY_COVERAGE_DETAIL =
+  private final PersonalPropertyCoverageDetail DEFAULT_PERSONAL_PROPERTY_COVERAGE_DETAIL =
       createPersonalPropertyCoverageDetail();
-  private static final CivilLiabilityCoverageDetail DEFAULT_CIVIL_LIABILITY_COVERAGE_DETAIL =
+  private final CivilLiabilityCoverageDetail DEFAULT_CIVIL_LIABILITY_COVERAGE_DETAIL =
       createCivilLiabilityCoverageDetail();
 
   private PersonalPropertyCoverageDetail personalPropertyCoverageDetail =

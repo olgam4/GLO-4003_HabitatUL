@@ -8,8 +8,8 @@ import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 
 public class OpenClaimDtoBuilder {
-  private static final SinisterType DEFAULT_SINISTER_TYPE = createSinisterType();
-  private static final LossDeclarations DEFAULT_LOSS_DECLARATIONS = createLossDeclarations();
+  private final SinisterType DEFAULT_SINISTER_TYPE = createSinisterType();
+  private final LossDeclarations DEFAULT_LOSS_DECLARATIONS = createLossDeclarations();
 
   private SinisterType sinisterType = DEFAULT_SINISTER_TYPE;
   private LossDeclarations lossDeclarations = DEFAULT_LOSS_DECLARATIONS;

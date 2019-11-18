@@ -12,10 +12,10 @@ import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createP
 import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createCoveragePeriod;
 
 public class PolicyViewBuilder {
-  private static final Period DEFAULT_COVERAGE_PERIOD = createCoveragePeriod();
-  private static final PolicyInformation DEFAULT_POLICY_INFORMATION = createPolicyInformation();
-  private static final CoverageDetails DEFAULT_COVERAGE_DETAILS = createCoverageDetails();
-  private static final PremiumDetails DEFAULT_PREMIUM_DETAILS = createPremiumDetails();
+  private final Period DEFAULT_COVERAGE_PERIOD = createCoveragePeriod();
+  private final PolicyInformation DEFAULT_POLICY_INFORMATION = createPolicyInformation();
+  private final CoverageDetails DEFAULT_COVERAGE_DETAILS = createCoverageDetails();
+  private final PremiumDetails DEFAULT_PREMIUM_DETAILS = createPremiumDetails();
 
   private Period coveragePeriod = DEFAULT_COVERAGE_PERIOD;
   private PolicyInformation policyInformation = DEFAULT_POLICY_INFORMATION;
