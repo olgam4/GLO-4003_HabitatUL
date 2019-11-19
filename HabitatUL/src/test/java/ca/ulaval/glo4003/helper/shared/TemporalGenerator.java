@@ -45,10 +45,13 @@ public class TemporalGenerator {
   }
 
   public static Date createDateBetween(Date date1, Date date2) {
-    int numberOfDaysBetween =
-        java.time.Period.between(date1.getValue(), date2.getValue()).getDays();
-    int numberOfDays = Faker.instance().number().numberBetween(1, numberOfDaysBetween);
-    return date1.plus(java.time.Period.ofDays(numberOfDays));
+    long numberOfDays =
+        Faker.instance().number().numberBetween(0, numberDaysBetween(date1, date2) - 1);
+    return Date.from(date1.getValue().plusDays(numberOfDays));
+  }
+
+  private static long numberDaysBetween(Date date1, Date date2) {
+    return Math.abs(date1.getValue().toEpochDay() - date2.getValue().toEpochDay());
   }
 
   public static Date createDateBefore(Date date) {
@@ -123,11 +126,11 @@ public class TemporalGenerator {
     private Instant instant;
     private ZoneId zoneId;
 
-    public FixedClockProvider() {
+    FixedClockProvider() {
       this(Instant.now(), ZoneOffset.UTC);
     }
 
-    public FixedClockProvider(Instant instant, ZoneId zoneId) {
+    FixedClockProvider(Instant instant, ZoneId zoneId) {
       this.instant = instant;
       this.zoneId = zoneId;
     }
