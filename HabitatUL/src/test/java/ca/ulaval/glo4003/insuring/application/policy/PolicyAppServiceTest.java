@@ -39,6 +39,7 @@ import static ca.ulaval.glo4003.helper.coverage.CoverageGenerator.createCoverage
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
+import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,6 +53,7 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 public class PolicyAppServiceTest {
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
+  private static final PolicyInformation POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails CURRENT_PREMIUM_DETAILS = createPremiumDetails();
   private static final CoverageDto COVERAGE_DTO = createCoverageDto();
@@ -85,6 +87,7 @@ public class PolicyAppServiceTest {
             any(CoverageDetails.class),
             any(PremiumDetails.class)))
         .thenReturn(policy);
+    when(policy.getPolicyInformation()).thenReturn(POLICY_INFORMATION);
     when(policy.getCoverageDetails()).thenReturn(CURRENT_COVERAGE_DETAILS);
     when(policy.getPremiumDetails()).thenReturn(CURRENT_PREMIUM_DETAILS);
     when(policy.submitInsureBicycleModification(

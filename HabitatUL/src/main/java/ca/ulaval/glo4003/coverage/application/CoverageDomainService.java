@@ -46,7 +46,7 @@ public class CoverageDomainService {
 
   public CoverageDto requestCoverageModification(
       CoverageModificationForm coverageModificationForm) {
-    // TODO:
+    formValidator.validateCoverageModificationForm(coverageModificationForm);
     return null;
   }
 }

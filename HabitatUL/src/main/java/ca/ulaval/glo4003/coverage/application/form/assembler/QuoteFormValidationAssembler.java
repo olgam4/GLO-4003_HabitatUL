@@ -10,18 +10,18 @@ public class QuoteFormValidationAssembler {
   private QuoteFormValidationAssembler() {}
 
   public static QuoteFormValidation assemble() {
-    QuoteFormValidation quoteFormValidation = new QuoteFormValidation();
-    quoteFormValidation.addFormValidationPart(new StudentNamedInsuredFormValidationPart());
-    quoteFormValidation.addFormValidationPart(
+    QuoteFormValidation formValidation = new QuoteFormValidation();
+    formValidation.addFormValidationPart(new StudentNamedInsuredFormValidationPart());
+    formValidation.addFormValidationPart(
         new EffectiveDateFormValidationPart(
             ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
             ServiceLocator.resolve(ClockProvider.class)));
-    quoteFormValidation.addFormValidationPart(new CivilLiabilityLimitFormValidationPart());
-    quoteFormValidation.addFormValidationPart(new DifferentAdditionalInsuredFormValidationPart());
-    quoteFormValidation.addFormValidationPart(
+    formValidation.addFormValidationPart(new CivilLiabilityLimitQuoteFormValidationPart());
+    formValidation.addFormValidationPart(new DifferentAdditionalInsuredFormValidationPart());
+    formValidation.addFormValidationPart(
         new UlRegistrationFormValidationPart(ServiceLocator.resolve(UlRegistrarOffice.class)));
-    quoteFormValidation.addFormValidationPart(new PositiveCoverageAmountFormValidationPart());
-    quoteFormValidation.addFormValidationPart(new PositiveBicyclePriceQuoteFormValidationPart());
-    return quoteFormValidation;
+    formValidation.addFormValidationPart(new PositiveCoverageAmountQuoteFormValidationPart());
+    formValidation.addFormValidationPart(new PositiveBicyclePriceQuoteFormValidationPart());
+    return formValidation;
   }
 }

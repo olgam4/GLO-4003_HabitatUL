@@ -8,12 +8,10 @@ public class BicycleEndorsementFormValidationAssembler {
   private BicycleEndorsementFormValidationAssembler() {}
 
   public static BicycleEndorsementFormValidation assemble() {
-    BicycleEndorsementFormValidation bicycleEndorsementFormValidation =
-        new BicycleEndorsementFormValidation();
-    bicycleEndorsementFormValidation.addFormValidationPart(
-        new BicycleAlreadyCoveredFormValidationPart());
-    bicycleEndorsementFormValidation.addFormValidationPart(
+    BicycleEndorsementFormValidation formValidation = new BicycleEndorsementFormValidation();
+    formValidation.addFormValidationPart(new BicycleAlreadyCoveredFormValidationPart());
+    formValidation.addFormValidationPart(
         new PositiveBicyclePriceBicycleEndorsementFormValidationPart());
-    return bicycleEndorsementFormValidation;
+    return formValidation;
   }
 }

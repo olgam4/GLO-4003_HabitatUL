@@ -12,13 +12,13 @@ import org.junit.Test;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmallerThanZero;
 
-public class PositiveCoverageAmountFormValidationPartTest {
-  private PositiveCoverageAmountFormValidationPart subject;
+public class PositiveCoverageAmountQuoteFormValidationPartTest {
+  private PositiveCoverageAmountQuoteFormValidationPart subject;
   private QuoteForm quoteForm;
 
   @Before
   public void setUp() {
-    subject = new PositiveCoverageAmountFormValidationPart();
+    subject = new PositiveCoverageAmountQuoteFormValidationPart();
   }
 
   @Test

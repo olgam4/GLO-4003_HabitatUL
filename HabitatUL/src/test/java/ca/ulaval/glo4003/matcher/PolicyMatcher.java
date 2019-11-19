@@ -84,8 +84,7 @@ public class PolicyMatcher {
       final Policy policy, final ModifyCoverageDto modifyCoverageDto) {
     return allOf(
         hasProperty(
-            "personalPropertyCoverageAmount",
-            equalTo(modifyCoverageDto.getPersonalPropertyCoverageAmount())),
+            "coverageAmount", equalTo(modifyCoverageDto.getPersonalPropertyCoverageAmount())),
         hasProperty("civilLiabilityLimit", equalTo(modifyCoverageDto.getCivilLiabilityLimit())),
         hasProperty("currentCoverageDetails", equalTo(policy.getCoverageDetails())),
         hasProperty("currentPremiumDetails", equalTo(policy.getPremiumDetails())));

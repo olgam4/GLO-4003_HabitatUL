@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.application.form.FormValidator;
 import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
+import static ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormGenerator.createCoverageModificationForm;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static org.junit.Assert.assertEquals;
@@ -27,6 +29,8 @@ public class CoverageDomainServiceTest {
   private static final QuoteForm QUOTE_FORM = createQuoteForm();
   private static final BicycleEndorsementForm BICYCLE_ENDORSEMENT_FORM =
       createBicycleEndorsementForm();
+  private static final CoverageModificationForm COVERAGE_MODIFICATION_FORM =
+      createCoverageModificationForm();
   private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
 
@@ -104,5 +108,12 @@ public class CoverageDomainServiceTest {
 
     CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
     assertEquals(expectedCoverageDto, coverageDto);
+  }
+
+  @Test
+  public void requestingCoverageModification_shouldValidateForm() {
+    subject.requestCoverageModification(COVERAGE_MODIFICATION_FORM);
+
+    verify(formValidator).validateCoverageModificationForm(COVERAGE_MODIFICATION_FORM);
   }
 }

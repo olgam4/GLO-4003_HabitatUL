@@ -18,12 +18,14 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.ONE_MILLION;
+import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.TWO_MILLION;
 import static ca.ulaval.glo4003.coverage.domain.form.validation.part.CivilLiabilityLimitFormValidationPart.MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT;
 import static ca.ulaval.glo4003.coverage.domain.form.validation.part.CivilLiabilityLimitFormValidationPart.MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT;
 import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 
 @RunWith(Enclosed.class)
-public class CivilLiabilityLimitFormValidationPartTest {
+public class CivilLiabilityLimitQuoteFormValidationPartTest {
   private static final int MIN_NUMBER_OF_UNITS = 1;
 
   @RunWith(Parameterized.class)
@@ -42,25 +44,25 @@ public class CivilLiabilityLimitFormValidationPartTest {
           new Object[][] {
             {
               "with 1M limit and 1-3 units should not throw",
-              CivilLiabilityLimit.ONE_MILLION,
+              ONE_MILLION,
               MIN_NUMBER_OF_UNITS,
               MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT
             },
             {
               "with 1M limit and 4-49 units should not throw",
-              CivilLiabilityLimit.ONE_MILLION,
+              ONE_MILLION,
               MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT,
               MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT
             },
             {
               "with 2M limit and 4-49 units should not throw",
-              CivilLiabilityLimit.TWO_MILLION,
+              TWO_MILLION,
               MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT,
               MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT
             },
             {
               "with 2M limit and 50+ units should not throw",
-              CivilLiabilityLimit.TWO_MILLION,
+              TWO_MILLION,
               MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT,
               Integer.MAX_VALUE
             },
@@ -89,13 +91,13 @@ public class CivilLiabilityLimitFormValidationPartTest {
           new Object[][] {
             {
               "with 2M limit and 1-3 units should throw",
-              CivilLiabilityLimit.TWO_MILLION,
+              TWO_MILLION,
               MIN_NUMBER_OF_UNITS,
               MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT
             },
             {
               "with 1M limit and 50+ units should throw",
-              CivilLiabilityLimit.ONE_MILLION,
+              ONE_MILLION,
               MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT,
               Integer.MAX_VALUE
             },
@@ -109,7 +111,7 @@ public class CivilLiabilityLimitFormValidationPartTest {
   }
 
   public abstract static class TestCase {
-    private CivilLiabilityLimitFormValidationPart subject;
+    private CivilLiabilityLimitQuoteFormValidationPart subject;
     private CivilLiabilityLimit civilLiabilityLimit;
     private int minNumberOfUnits;
     private int maxNumberOfUnits;
@@ -123,7 +125,7 @@ public class CivilLiabilityLimitFormValidationPartTest {
 
     @Before
     public void setUp() {
-      subject = new CivilLiabilityLimitFormValidationPart();
+      subject = new CivilLiabilityLimitQuoteFormValidationPart();
     }
 
     public void validatingQuoteForm() {

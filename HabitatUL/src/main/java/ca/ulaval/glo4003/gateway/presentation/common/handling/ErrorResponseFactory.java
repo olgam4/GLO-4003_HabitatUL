@@ -54,6 +54,8 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(BicycleAlreadyCoveredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(DifferentAdditionalInsuredError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(IncreasedCivilLiabilityLimitError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(IncreasedCoverageAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidAnimalsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidCivilLiabilityLimitError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidPreventionSystemsError.class, Status.BAD_REQUEST);

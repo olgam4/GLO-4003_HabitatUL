@@ -7,28 +7,35 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 public class CoverageModificationForm extends ValueObject {
-  private final Amount personalPropertyCoverageAmount;
+  private final Amount coverageAmount;
   private final CivilLiabilityLimit civilLiabilityLimit;
+  private final Integer numberOfUnits;
   private final CoverageDetails currentCoverageDetails;
   private final PremiumDetails currentPremiumDetails;
 
   public CoverageModificationForm(
-      Amount personalPropertyCoverageAmount,
+      Amount coverageAmount,
       CivilLiabilityLimit civilLiabilityLimit,
+      Integer numberOfUnits,
       CoverageDetails currentCoverageDetails,
       PremiumDetails currentPremiumDetails) {
-    this.personalPropertyCoverageAmount = personalPropertyCoverageAmount;
+    this.coverageAmount = coverageAmount;
     this.civilLiabilityLimit = civilLiabilityLimit;
+    this.numberOfUnits = numberOfUnits;
     this.currentCoverageDetails = currentCoverageDetails;
     this.currentPremiumDetails = currentPremiumDetails;
   }
 
-  public Amount getPersonalPropertyCoverageAmount() {
-    return personalPropertyCoverageAmount;
+  public Amount getCoverageAmount() {
+    return coverageAmount;
   }
 
   public CivilLiabilityLimit getCivilLiabilityLimit() {
     return civilLiabilityLimit;
+  }
+
+  public int getNumberOfUnits() {
+    return numberOfUnits;
   }
 
   public CoverageDetails getCurrentCoverageDetails() {
@@ -40,6 +47,6 @@ public class CoverageModificationForm extends ValueObject {
   }
 
   public boolean isFilled() {
-    return personalPropertyCoverageAmount != null || civilLiabilityLimit != null;
+    return coverageAmount != null || civilLiabilityLimit != null;
   }
 }

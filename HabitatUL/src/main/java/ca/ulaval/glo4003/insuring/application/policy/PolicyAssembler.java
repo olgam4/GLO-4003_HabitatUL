@@ -19,6 +19,7 @@ public class PolicyAssembler {
     return new CoverageModificationForm(
         modifyCoverageDto.getPersonalPropertyCoverageAmount(),
         modifyCoverageDto.getCivilLiabilityLimit(),
+        policy.getPolicyInformation().getBuilding().getNumberOfUnits(),
         policy.getCoverageDetails(),
         policy.getPremiumDetails());
   }
