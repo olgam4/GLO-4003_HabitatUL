@@ -41,7 +41,7 @@ public class PolicyResourceTest {
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final InsureBicycleRequest INSURE_BICYCLE_REQUEST = createInsureBicycleRequest();
   private static final ModifyCoverageRequest MODIFY_COVERAGE_REQUEST =
-          createModifyCoverageRequest();
+      createModifyCoverageRequest();
   private static final PolicyModificationDto POLICY_MODIFICATION_DTO =
       createPolicyModificationDto();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();

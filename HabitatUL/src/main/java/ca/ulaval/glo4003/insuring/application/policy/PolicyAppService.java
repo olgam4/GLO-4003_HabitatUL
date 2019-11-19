@@ -4,8 +4,10 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
@@ -98,11 +100,33 @@ public class PolicyAppService {
     }
   }
 
-  public void modifyCoverage(PolicyId policyId, ModifyCoverageDto modifyCoverageDto) {
+  public PolicyModificationDto modifyCoverage(
+      PolicyId policyId, ModifyCoverageDto modifyCoverageDto) {
     try {
       Policy policy = policyRepository.getById(policyId);
+      CoverageModificationForm coverageModificationForm =
+          policyAssembler.from(modifyCoverageDto, policy);
+      checkIfEmptyCoverageModificationRequest(coverageModificationForm);
+      CoverageDto coverageDto =
+          coverageDomainService.requestCoverageModification(coverageModificationForm);
+      PolicyModification policyModification =
+          policy.submitCoverageModification(
+              modifyCoverageDto.getPersonalPropertyCoverageAmount(),
+              modifyCoverageDto.getCivilLiabilityLimit(),
+              coverageDto.getCoverageDetails(),
+              coverageDto.getPremiumDetails(),
+              policyModificationValidityPeriodProvider);
+      policyRepository.update(policy);
+      return policyAssembler.from(policyModification);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
+    }
+  }
+
+  private void checkIfEmptyCoverageModificationRequest(
+      CoverageModificationForm coverageModificationForm) {
+    if (!coverageModificationForm.isFilled()) {
+      throw new EmptyCoverageModificationRequestError();
     }
   }
 

@@ -5,19 +5,20 @@ import ca.ulaval.glo4003.shared.application.DataTransferObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
 public class ModifyCoverageDto extends DataTransferObject {
-  private final Amount personalProperty;
-  private final CivilLiabilityLimit civilLiability;
+  private final Amount personalPropertyCoverageAmount;
+  private final CivilLiabilityLimit civilLiabilityLimit;
 
-  public ModifyCoverageDto(Amount personalProperty, CivilLiabilityLimit civilLiability) {
-    this.personalProperty = personalProperty;
-    this.civilLiability = civilLiability;
+  public ModifyCoverageDto(
+      Amount personalPropertyCoverageAmount, CivilLiabilityLimit civilLiabilityLimit) {
+    this.personalPropertyCoverageAmount = personalPropertyCoverageAmount;
+    this.civilLiabilityLimit = civilLiabilityLimit;
   }
 
-  public Amount getPersonalProperty() {
-    return personalProperty;
+  public Amount getPersonalPropertyCoverageAmount() {
+    return personalPropertyCoverageAmount;
   }
 
-  public CivilLiabilityLimit getCivilLiability() {
-    return civilLiability;
+  public CivilLiabilityLimit getCivilLiabilityLimit() {
+    return civilLiabilityLimit;
   }
 }

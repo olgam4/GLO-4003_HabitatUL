@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import com.github.javafaker.Faker;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,9 +20,14 @@ public class PolicyViewGenerator {
   private PolicyViewGenerator() {}
 
   public static List<PolicyView> createPreviousPolicyViews(Period period) {
-    return IntStream.range(0, Faker.instance().number().randomDigitNotZero())
-        .mapToObj(i -> createPreviousPolicyView(period))
-        .collect(Collectors.toList());
+    List<PolicyView> list = new ArrayList<>();
+    Period nextPeriod = new Period(period.getStartDate(), period.getEndDate());
+    for (int i = 0; i < Faker.instance().number().randomDigitNotZero(); i++) {
+      PolicyView previousPolicyView = createPreviousPolicyView(nextPeriod);
+      nextPeriod = previousPolicyView.getCoveragePeriod();
+      list.add(previousPolicyView);
+    }
+    return list;
   }
 
   public static PolicyView createPreviousPolicyView(Period period) {
@@ -51,7 +57,7 @@ public class PolicyViewGenerator {
   }
 
   public static Period createPreviousCoveragePeriod(Period period) {
-    Date endDate = Date.from(period.getStartDate().getValue().minusDays(1));
+    Date endDate = period.getStartDate();
     Date startDate = createDateBefore(endDate);
     return new Period(startDate, endDate);
   }

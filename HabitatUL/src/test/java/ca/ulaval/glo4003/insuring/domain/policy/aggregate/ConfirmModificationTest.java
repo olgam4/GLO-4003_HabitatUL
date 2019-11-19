@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,11 +45,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ConfirmModificationTest {
   private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
-  private static final Date CONFIRMATION_EFFECTIVE_DATE =
-      Date.from(LocalDate.now(CLOCK_PROVIDER.getClock()));
-  private static final Date CURRENT_COVERAGE_PERIOD_START_DATE = createPastDate();
+  private static final Date CONFIRMATION_EFFECTIVE_DATE = getNowDate(CLOCK_PROVIDER);;
+  private static final Date CURRENT_COVERAGE_PERIOD_START_DATE =
+      createDateBefore(CONFIRMATION_EFFECTIVE_DATE);
   private static final Date CURRENT_COVERAGE_PERIOD_END_DATE =
-      createDateAfter(CURRENT_COVERAGE_PERIOD_START_DATE);
+      createDateAfter(CONFIRMATION_EFFECTIVE_DATE);
   private static final Period CURRENT_COVERAGE_PERIOD =
       new Period(CURRENT_COVERAGE_PERIOD_START_DATE, CURRENT_COVERAGE_PERIOD_END_DATE);
   private static final PolicyView CURRENT_POLICY_VIEW =
@@ -201,35 +200,9 @@ public class ConfirmModificationTest {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     Period expectedCoveragePeriod =
-        new Period(
-            CURRENT_COVERAGE_PERIOD_START_DATE,
-            CONFIRMATION_EFFECTIVE_DATE.minus(java.time.Period.ofDays(1)));
+        new Period(CONFIRMATION_EFFECTIVE_DATE, CURRENT_COVERAGE_PERIOD.getEndDate());
     Period coveragePeriod =
-        policyHistoric.getViewOn(CURRENT_COVERAGE_PERIOD_START_DATE).getCoveragePeriod();
-    assertEquals(expectedCoveragePeriod, coveragePeriod);
-  }
-
-  @Test
-  public void
-      confirmingModification_withNewlyIssuedPolicy_shouldNotProduceCoveragePeriodOfLessThanOneDay() {
-    Date currentDate = getNowDate(CLOCK_PROVIDER);
-    Period newlyIssuedCoveragePeriod = new Period(currentDate, createFutureDate());
-    PolicyView newlyIssuedPolicyView =
-        PolicyViewBuilder.aPolicyView().withCoveragePeriod(newlyIssuedCoveragePeriod).build();
-    PolicyHistoric policyHistoric =
-        PolicyHistoricBuilder.aPolicyHistoric().withPolicyView(newlyIssuedPolicyView).build();
-    subject =
-        PolicyBuilder.aPolicy()
-            .withStatus(ACTIVE)
-            .withPolicyHistoric(policyHistoric)
-            .withPolicyModificationsCoordinator(policyModificationsCoordinator)
-            .withClockProvider(CLOCK_PROVIDER)
-            .build();
-
-    subject.confirmModification(POLICY_MODIFICATION_ID);
-
-    Period expectedCoveragePeriod = new Period(currentDate, currentDate);
-    Period coveragePeriod = policyHistoric.getViewOn(currentDate).getCoveragePeriod();
+        policyHistoric.getViewOn(CONFIRMATION_EFFECTIVE_DATE).getCoveragePeriod();
     assertEquals(expectedCoveragePeriod, coveragePeriod);
   }
 

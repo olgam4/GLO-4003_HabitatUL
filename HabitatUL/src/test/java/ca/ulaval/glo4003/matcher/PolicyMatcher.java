@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.matcher;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
@@ -45,8 +46,9 @@ public class PolicyMatcher {
   public static Matcher<ModifyCoverageDto> matchesModifyCoverageDto(
       final ModifyCoverageRequest modifyCoverageRequest) {
     return allOf(
-        hasProperty("personalProperty", equalTo(modifyCoverageRequest.getPersonalProperty())),
-        hasProperty("civilLiability", equalTo(modifyCoverageRequest.getCivilLiability())));
+        hasProperty(
+            "personalPropertyCoverageAmount", equalTo(modifyCoverageRequest.getPersonalProperty())),
+        hasProperty("civilLiabilityLimit", equalTo(modifyCoverageRequest.getCivilLiability())));
   }
 
   private static Matcher<Bicycle> matchesBicycle(final BicycleRequest bicycleRequest) {
@@ -74,6 +76,17 @@ public class PolicyMatcher {
       final Policy policy, final InsureBicycleDto insureBicycleDto) {
     return allOf(
         hasProperty("bicycle", equalTo(insureBicycleDto.getBicycle())),
+        hasProperty("currentCoverageDetails", equalTo(policy.getCoverageDetails())),
+        hasProperty("currentPremiumDetails", equalTo(policy.getPremiumDetails())));
+  }
+
+  public static Matcher<CoverageModificationForm> matchesCoverageModificationForm(
+      final Policy policy, final ModifyCoverageDto modifyCoverageDto) {
+    return allOf(
+        hasProperty(
+            "personalPropertyCoverageAmount",
+            equalTo(modifyCoverageDto.getPersonalPropertyCoverageAmount())),
+        hasProperty("civilLiabilityLimit", equalTo(modifyCoverageDto.getCivilLiabilityLimit())),
         hasProperty("currentCoverageDetails", equalTo(policy.getCoverageDetails())),
         hasProperty("currentPremiumDetails", equalTo(policy.getPremiumDetails())));
   }

@@ -4,12 +4,15 @@ import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
@@ -21,6 +24,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
@@ -53,7 +57,7 @@ public class PolicyAppServiceTest {
   private static final CoverageDto COVERAGE_DTO = createCoverageDto();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsureBicycleDto();
-  private static final ModifyCoverageDto MODIFY_POLICY_DTO = createModifyCoverageDto();
+  private static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
 
@@ -89,9 +93,18 @@ public class PolicyAppServiceTest {
             any(PremiumDetails.class),
             any(PolicyModificationValidityPeriodProvider.class)))
         .thenReturn(policyModification);
+    when(policy.submitCoverageModification(
+            any(Amount.class),
+            any(CivilLiabilityLimit.class),
+            any(CoverageDetails.class),
+            any(PremiumDetails.class),
+            any(PolicyModificationValidityPeriodProvider.class)))
+        .thenReturn(policyModification);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
     when(coverageDomainService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
+        .thenReturn(COVERAGE_DTO);
+    when(coverageDomainService.requestCoverageModification(any(CoverageModificationForm.class)))
         .thenReturn(COVERAGE_DTO);
     when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
         .thenReturn(claim);
@@ -173,16 +186,58 @@ public class PolicyAppServiceTest {
 
   @Test
   public void modifyingCoverage_shouldGetPolicyById() throws PolicyNotFoundException {
-    subject.modifyCoverage(POLICY_ID, MODIFY_POLICY_DTO);
+    subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
 
     verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void modifyingCoverage_shouldRequestCoverageModification() {
+    subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
+
+    verify(coverageDomainService)
+        .requestCoverageModification(
+            argThat(matchesCoverageModificationForm(policy, MODIFY_COVERAGE_DTO)));
+  }
+
+  @Test
+  public void modifyingCoverage_shouldSubmitModification() {
+    subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
+
+    verify(policy)
+        .submitCoverageModification(
+            MODIFY_COVERAGE_DTO.getPersonalPropertyCoverageAmount(),
+            MODIFY_COVERAGE_DTO.getCivilLiabilityLimit(),
+            COVERAGE_DTO.getCoverageDetails(),
+            COVERAGE_DTO.getPremiumDetails(),
+            policyModificationValidityPeriodProvider);
+  }
+
+  @Test
+  public void modifyingCoverage_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test
+  public void modifyingCoverage_shouldProduceCorrespondingPolicyModificationDto() {
+    PolicyModificationDto policyModificationDto =
+        subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
+
+    assertThat(policyModificationDto, matchesPolicyModificationDto(policyModification));
   }
 
   @Test(expected = PolicyNotFoundError.class)
   public void modifyingCoverage_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
-    subject.modifyCoverage(POLICY_ID, MODIFY_POLICY_DTO);
+    subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
+  }
+
+  @Test(expected = EmptyCoverageModificationRequestError.class)
+  public void modifyingCoverage_withEmptyCoverageModificationRequest_shouldThrow() {
+    subject.modifyCoverage(POLICY_ID, createEmptyModifyCoverageDto());
   }
 
   @Test

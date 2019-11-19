@@ -98,6 +98,10 @@ public class PolicyGenerator {
     return new ModifyCoverageRequest(createCoverageAmount(), createCivilLiabilityLimit());
   }
 
+  public static ModifyCoverageDto createEmptyModifyCoverageDto() {
+    return new ModifyCoverageDto(null, null);
+  }
+
   public static ModifyCoverageDto createModifyCoverageDto() {
     return new ModifyCoverageDto(createCoverageAmount(), createCivilLiabilityLimit());
   }

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
@@ -14,6 +15,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationV
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
+import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -98,6 +100,16 @@ public class Policy extends AggregateRoot {
         proposedPremiumDetails,
         policyModificationValidityPeriodProvider,
         clockProvider);
+  }
+
+  public PolicyModification submitCoverageModification(
+      Amount personalPropertyCovageAmount,
+      CivilLiabilityLimit civilLiabilityLimit,
+      CoverageDetails coverageDetails,
+      PremiumDetails premiumDetails,
+      PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
+    // TODO:
+    return null;
   }
 
   public void confirmModification(PolicyModificationId policyModificationId) {

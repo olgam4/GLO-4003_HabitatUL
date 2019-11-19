@@ -71,17 +71,17 @@ public class PolicyModification {
   }
 
   public PolicyView updatePolicyView(PolicyView currentPolicyView) {
-    Date effectiveDate = Date.now(clockProvider.getClock());
     return new PolicyView(
-        computeUpdatedCoveragePeriod(currentPolicyView, effectiveDate),
+        computeUpdatedCoveragePeriod(currentPolicyView),
         computeUpdatedPolicyInformation(currentPolicyView),
         proposedCoverageDetails,
         proposedPremiumDetails);
   }
 
-  private Period computeUpdatedCoveragePeriod(PolicyView currentPolicyView, Date effectiveDate) {
-    Period currentCoveragePeriod = currentPolicyView.getCoveragePeriod();
-    return new Period(effectiveDate, currentCoveragePeriod.getEndDate());
+  private Period computeUpdatedCoveragePeriod(PolicyView currentPolicyView) {
+    Date updatedCoveragePeriodStartDate = Date.now(clockProvider.getClock());
+    Date updatedCoveragePeriodEndDate = currentPolicyView.getCoveragePeriod().getEndDate();
+    return new Period(updatedCoveragePeriodStartDate, updatedCoveragePeriodEndDate);
   }
 
   private PolicyInformation computeUpdatedPolicyInformation(PolicyView currentPolicyView) {

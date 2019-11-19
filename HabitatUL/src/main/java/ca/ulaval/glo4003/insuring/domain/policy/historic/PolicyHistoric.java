@@ -11,7 +11,6 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PolicyHistoric extends ValueObject {
   private final List<PolicyView> historic;
@@ -41,11 +40,11 @@ public class PolicyHistoric extends ValueObject {
   }
 
   public PolicyView getViewOn(Date date) {
-    List<PolicyView> sortedHistoric = getSortedHistoric();
-    PolicyView originalView = sortedHistoric.get(0);
+    List<PolicyView> reversedHistoric = getReversedHistoric();
+    PolicyView originalView = reversedHistoric.get(historic.size() - 1);
     if (isBeforePolicyCreation(date, originalView)) return originalView;
 
-    return sortedHistoric.stream()
+    return reversedHistoric.stream()
         .filter(x -> x.getCoveragePeriod().isWithin(date))
         .findFirst()
         .orElse(getCurrentView());
@@ -56,13 +55,13 @@ public class PolicyHistoric extends ValueObject {
   }
 
   public PolicyView getCurrentView() {
-    return getSortedHistoric().get(historic.size() - 1);
+    return getReversedHistoric().get(0);
   }
 
-  private List<PolicyView> getSortedHistoric() {
-    return historic.stream()
-        .sorted(Comparator.comparing(PolicyView::getCoveragePeriod))
-        .collect(Collectors.toList());
+  private List<PolicyView> getReversedHistoric() {
+    ArrayList<PolicyView> reversedHistoric = new ArrayList<>(historic);
+    reversedHistoric.sort(Comparator.reverseOrder());
+    return reversedHistoric;
   }
 
   public void updatePolicyHistory(PolicyModification policyModification) {
@@ -92,10 +91,6 @@ public class PolicyHistoric extends ValueObject {
       PolicyView currentView, PolicyView modifiedView) {
     Date currentViewCoveragePeriodStartDate = currentView.getCoveragePeriod().getStartDate();
     Date modifiedViewCoveragePeriodStartDate = modifiedView.getCoveragePeriod().getStartDate();
-    Date currentViewUpdatedCoveragePeriodEndDate =
-        Date.latest(
-            currentViewCoveragePeriodStartDate,
-            modifiedViewCoveragePeriodStartDate.minus(java.time.Period.ofDays(1)));
-    return new Period(currentViewCoveragePeriodStartDate, currentViewUpdatedCoveragePeriodEndDate);
+    return new Period(currentViewCoveragePeriodStartDate, modifiedViewCoveragePeriodStartDate);
   }
 }

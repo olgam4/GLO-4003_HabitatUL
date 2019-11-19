@@ -33,6 +33,14 @@ public class PolicyHistoricTest {
 
   @Test
   public void
+      gettingPolicyViewOnSpecificDate_withCurrentCoveragePeriodStartDate_shouldReturnCurrentView() {
+    PolicyView policyView = subject.getViewOn(CURRENT_COVERAGE_PERIOD.getStartDate());
+
+    assertEquals(CURRENT_POLICY_VIEW, policyView);
+  }
+
+  @Test
+  public void
       gettingPolicyViewOnSpecificDate_withDateWithinCurrentCoveragePeriod_shouldReturnCurrentView() {
     PolicyView policyView =
         subject.getViewOn(

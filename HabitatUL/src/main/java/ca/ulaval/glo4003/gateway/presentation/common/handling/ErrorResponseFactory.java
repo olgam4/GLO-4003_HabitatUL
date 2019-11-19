@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.coverage.domain.form.validation.error.*;
 import ca.ulaval.glo4003.gateway.presentation.common.databind.deserializer.error.*;
 import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
+import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
@@ -80,6 +81,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(ClaimNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CouldNotOpenClaimError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(EmptyCoverageModificationRequestError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(EmptyLossDeclarationsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InactivePolicyError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidLossDeclarationsError.class, Status.BAD_REQUEST);

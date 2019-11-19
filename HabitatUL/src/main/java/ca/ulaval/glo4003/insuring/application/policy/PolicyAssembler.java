@@ -1,7 +1,9 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
@@ -11,6 +13,14 @@ public class PolicyAssembler {
   public BicycleEndorsementForm from(InsureBicycleDto insureBicycleDto, Policy policy) {
     return new BicycleEndorsementForm(
         insureBicycleDto.getBicycle(), policy.getCoverageDetails(), policy.getPremiumDetails());
+  }
+
+  public CoverageModificationForm from(ModifyCoverageDto modifyCoverageDto, Policy policy) {
+    return new CoverageModificationForm(
+        modifyCoverageDto.getPersonalPropertyCoverageAmount(),
+        modifyCoverageDto.getCivilLiabilityLimit(),
+        policy.getCoverageDetails(),
+        policy.getPremiumDetails());
   }
 
   public PolicyModificationDto from(PolicyModification policyModification) {
