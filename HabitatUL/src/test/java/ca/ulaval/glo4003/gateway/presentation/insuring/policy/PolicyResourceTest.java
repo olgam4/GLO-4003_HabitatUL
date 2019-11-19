@@ -5,10 +5,7 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimReque
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
@@ -59,6 +56,8 @@ public class PolicyResourceTest {
   public void setUp() {
     policyViewAssembler = new PolicyViewAssembler();
     when(policyAppService.insureBicycle(any(PolicyId.class), any(InsureBicycleDto.class)))
+        .thenReturn(POLICY_MODIFICATION_DTO);
+    when(policyAppService.modifyCoverage(any(PolicyId.class), any(ModifyCoverageDto.class)))
         .thenReturn(POLICY_MODIFICATION_DTO);
     when(policyAppService.confirmModification(any(PolicyId.class), any(PolicyModificationId.class)))
         .thenReturn(POLICY_DTO);

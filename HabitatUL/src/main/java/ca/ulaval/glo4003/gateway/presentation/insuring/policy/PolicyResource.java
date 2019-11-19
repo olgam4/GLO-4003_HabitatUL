@@ -81,16 +81,7 @@ public class PolicyResource {
     InsureBicycleDto insureBicycleDto = policyViewAssembler.from(insureBicycleRequest);
     PolicyModificationDto policyModificationDto =
         policyAppService.insureBicycle(policyId, insureBicycleDto);
-    String policyIdRepresentation = policyId.toRepresentation();
-    String policyModificationIdRepresentation =
-        policyModificationDto.getPolicyModificationId().toRepresentation();
-    URI location =
-        UriBuilder.fromPath(CONTEXT_PATH)
-            .path(POLICY_ROUTE)
-            .path(policyIdRepresentation)
-            .path(POLICY_MODIFICATION_ROUTE)
-            .path(policyModificationIdRepresentation)
-            .build();
+    URI location = buildPolicyModificationLocation(policyId, policyModificationDto);
     return Response.created(location)
         .entity(policyViewAssembler.from(policyModificationDto))
         .build();
@@ -104,9 +95,25 @@ public class PolicyResource {
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @Valid ModifyCoverageRequest modifyCoverageRequest) {
     ModifyCoverageDto modifyCoverageDto = policyViewAssembler.from(modifyCoverageRequest);
-    policyAppService.modifyCoverage(policyId, modifyCoverageDto);
-    // TODO:
-    return Response.ok().build();
+    PolicyModificationDto policyModificationDto =
+        policyAppService.modifyCoverage(policyId, modifyCoverageDto);
+    URI location = buildPolicyModificationLocation(policyId, policyModificationDto);
+    return Response.created(location)
+        .entity(policyViewAssembler.from(policyModificationDto))
+        .build();
+  }
+
+  private URI buildPolicyModificationLocation(
+      PolicyId policyId, PolicyModificationDto policyModificationDto) {
+    String policyIdRepresentation = policyId.toRepresentation();
+    String policyModificationIdRepresentation =
+        policyModificationDto.getPolicyModificationId().toRepresentation();
+    return UriBuilder.fromPath(CONTEXT_PATH)
+        .path(POLICY_ROUTE)
+        .path(policyIdRepresentation)
+        .path(POLICY_MODIFICATION_ROUTE)
+        .path(policyModificationIdRepresentation)
+        .build();
   }
 
   @POST

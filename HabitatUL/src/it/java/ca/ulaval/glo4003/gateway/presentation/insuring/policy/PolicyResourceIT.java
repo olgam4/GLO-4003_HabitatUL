@@ -4,10 +4,7 @@ import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
@@ -23,8 +20,7 @@ import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
 
-import static ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator.createClaimRequestBody;
-import static ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator.createInsureBicycleRequestBody;
+import static ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator.*;
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.claim.ClaimResource.CLAIM_ROUTE;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.policy.PolicyResource.*;
@@ -69,6 +65,8 @@ public class PolicyResourceIT {
   public void setUp() {
     when(userAppService.getPolicies(any(String.class))).thenReturn(POLICIES_ID);
     when(policyAppService.insureBicycle(any(PolicyId.class), any(InsureBicycleDto.class)))
+        .thenReturn(POLICY_MODIFICATION_DTO);
+    when(policyAppService.modifyCoverage(any(PolicyId.class), any(ModifyCoverageDto.class)))
         .thenReturn(POLICY_MODIFICATION_DTO);
     when(policyAppService.confirmModification(any(PolicyId.class), any(PolicyModificationId.class)))
         .thenReturn(POLICY_DTO);
@@ -144,6 +142,55 @@ public class PolicyResourceIT {
   public void insuringBicycle_shouldProvideProperlyFormattedResponse() {
     JSONObject request = createInsureBicycleRequestBody();
     String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, INSURE_BICYCLE_ROUTE);
+
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(route)
+        .then()
+        .body(matchesJsonSchema("policy/PolicyModificationResponse"));
+  }
+
+  @Test
+  public void modifyingCoverage_shouldHaveExpectedStatusCode() {
+    JSONObject request = createModifyCoverageRequestBody();
+    String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, MODIFY_COVERAGE_ROUTE);
+
+    int expectedStatusCode = Response.Status.CREATED.getStatusCode();
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(route)
+        .then()
+        .statusCode(expectedStatusCode);
+  }
+
+  @Test
+  public void modifyingCoverage_shouldProvideLocationCreatedPolicyModification() {
+    JSONObject request = createModifyCoverageRequestBody();
+    String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, MODIFY_COVERAGE_ROUTE);
+
+    String expectedLocation =
+        toUri(
+            POLICY_ROUTE,
+            POLICY_ID_REPRESENTATION,
+            POLICY_MODIFICATION_ROUTE,
+            POLICY_MODIFICATION_ID_REPRESENTATION);
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(route)
+        .then()
+        .header(HttpHeaders.LOCATION, expectedLocation);
+  }
+
+  @Test
+  public void modifyingCoverage_shouldProvideProperlyFormattedResponse() {
+    JSONObject request = createModifyCoverageRequestBody();
+    String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, MODIFY_COVERAGE_ROUTE);
 
     getBaseScenario()
         .given()
