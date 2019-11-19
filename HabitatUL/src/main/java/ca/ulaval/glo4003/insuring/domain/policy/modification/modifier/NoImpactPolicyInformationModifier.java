@@ -1,15 +1,8 @@
 package ca.ulaval.glo4003.insuring.domain.policy.modification.modifier;
 
-import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 
-public class InsureBicyclePolicyInformationModifier extends PolicyInformationModifier {
-  private final Bicycle bicycle;
-
-  public InsureBicyclePolicyInformationModifier(Bicycle bicycle) {
-    this.bicycle = bicycle;
-  }
-
+public class NoImpactPolicyInformationModifier extends PolicyInformationModifier {
   @Override
   public PolicyInformation modify(PolicyInformation policyInformation) {
     return new PolicyInformation(
@@ -18,6 +11,6 @@ public class InsureBicyclePolicyInformationModifier extends PolicyInformationMod
         policyInformation.getLocation(),
         policyInformation.getBuilding(),
         policyInformation.getAnimals(),
-        bicycle);
+        policyInformation.getBicycle());
   }
 }

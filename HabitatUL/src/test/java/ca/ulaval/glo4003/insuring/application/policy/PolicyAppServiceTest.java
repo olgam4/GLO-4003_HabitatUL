@@ -5,7 +5,6 @@ import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
-import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
@@ -24,7 +23,6 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
@@ -97,8 +95,6 @@ public class PolicyAppServiceTest {
             any(PolicyModificationValidityPeriodProvider.class)))
         .thenReturn(policyModification);
     when(policy.submitCoverageModification(
-            any(Amount.class),
-            any(CivilLiabilityLimit.class),
             any(CoverageDetails.class),
             any(PremiumDetails.class),
             any(PolicyModificationValidityPeriodProvider.class)))
@@ -209,8 +205,6 @@ public class PolicyAppServiceTest {
 
     verify(policy)
         .submitCoverageModification(
-            MODIFY_COVERAGE_DTO.getPersonalPropertyCoverageAmount(),
-            MODIFY_COVERAGE_DTO.getCivilLiabilityLimit(),
             COVERAGE_DTO.getCoverageDetails(),
             COVERAGE_DTO.getPremiumDetails(),
             policyModificationValidityPeriodProvider);

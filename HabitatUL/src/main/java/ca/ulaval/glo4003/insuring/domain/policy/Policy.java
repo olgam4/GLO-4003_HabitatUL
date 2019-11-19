@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
@@ -14,8 +13,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPolicyInformationModifier;
+import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
-import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -90,11 +90,11 @@ public class Policy extends AggregateRoot {
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
-    InsureBicyclePolicyInformationModifier insureBicyclePolicyInformationModifier =
-        new InsureBicyclePolicyInformationModifier(bicycle);
     checkIfInactivePolicy();
+    PolicyInformationModifier policyInformationModifier =
+        new InsureBicyclePolicyInformationModifier(bicycle);
     return policyModificationsCoordinator.registerPolicyModification(
-        insureBicyclePolicyInformationModifier,
+        policyInformationModifier,
         proposedCoverageDetails,
         policyHistoric.getCurrentPremiumDetails(),
         proposedPremiumDetails,
@@ -103,13 +103,18 @@ public class Policy extends AggregateRoot {
   }
 
   public PolicyModification submitCoverageModification(
-      Amount personalPropertyCovageAmount,
-      CivilLiabilityLimit civilLiabilityLimit,
-      CoverageDetails coverageDetails,
-      PremiumDetails premiumDetails,
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
-    // TODO:
-    return null;
+    checkIfInactivePolicy();
+    PolicyInformationModifier policyInformationModifier = new NoImpactPolicyInformationModifier();
+    return policyModificationsCoordinator.registerPolicyModification(
+        policyInformationModifier,
+        proposedCoverageDetails,
+        policyHistoric.getCurrentPremiumDetails(),
+        proposedPremiumDetails,
+        policyModificationValidityPeriodProvider,
+        clockProvider);
   }
 
   public void confirmModification(PolicyModificationId policyModificationId) {

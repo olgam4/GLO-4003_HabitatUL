@@ -111,8 +111,6 @@ public class PolicyAppService {
           coverageDomainService.requestCoverageModification(coverageModificationForm);
       PolicyModification policyModification =
           policy.submitCoverageModification(
-              modifyCoverageDto.getPersonalPropertyCoverageAmount(),
-              modifyCoverageDto.getCivilLiabilityLimit(),
               coverageDto.getCoverageDetails(),
               coverageDto.getPremiumDetails(),
               policyModificationValidityPeriodProvider);
