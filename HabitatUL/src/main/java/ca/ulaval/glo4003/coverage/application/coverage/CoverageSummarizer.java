@@ -3,10 +3,17 @@ package ca.ulaval.glo4003.coverage.application.coverage;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.BicycleEndorsementCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CivilLiabilityCoverageDetail;
+import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CoverageSummarizer {
   private AdditionalCoverageResolver additionalCoverageResolver;
@@ -55,9 +62,35 @@ public class CoverageSummarizer {
   public CoverageDetails summarizeBicycleEndorsementCoverage(
       BicycleEndorsementForm bicycleEndorsementForm) {
     Amount bicyclePrice = bicycleEndorsementForm.getBicycle().getPrice();
-    CoverageDetails currentCoverageDetails = bicycleEndorsementForm.getCurrentCoverageDetails();
     BicycleEndorsementCoverageDetail updatedBicycleEndorsementCoverageDetail =
         new BicycleEndorsementCoverageDetail(bicyclePrice);
+    CoverageDetails currentCoverageDetails = bicycleEndorsementForm.getCurrentCoverageDetails();
     return currentCoverageDetails.update(updatedBicycleEndorsementCoverageDetail);
+  }
+
+  public CoverageDetails summarizeCoverageModification(
+      CoverageModificationForm coverageModificationForm) {
+    List<CoverageDetail> updatedCoverageDetails = new ArrayList<>();
+    Amount coverageAmount = coverageModificationForm.getCoverageAmount();
+    updatePersonalPropertyCoverageDetailOnDemand(updatedCoverageDetails, coverageAmount);
+    updateCivilLiabilityLimitCoverageDetailOnDemand(
+        coverageModificationForm, updatedCoverageDetails);
+    CoverageDetails currentCoverageDetails = coverageModificationForm.getCurrentCoverageDetails();
+    return currentCoverageDetails.update(updatedCoverageDetails);
+  }
+
+  private void updatePersonalPropertyCoverageDetailOnDemand(
+      List<CoverageDetail> updatedCoverageDetails, Amount coverageAmount) {
+    Optional.ofNullable(coverageAmount)
+        .ifPresent(x -> updatedCoverageDetails.add(new PersonalPropertyCoverageDetail(x)));
+  }
+
+  private void updateCivilLiabilityLimitCoverageDetailOnDemand(
+      CoverageModificationForm coverageModificationForm,
+      List<CoverageDetail> updatedCoverageDetails) {
+    CivilLiabilityLimit civilLiabilityLimit = coverageModificationForm.getCivilLiabilityLimit();
+    Optional.ofNullable(civilLiabilityLimit)
+        .ifPresent(
+            x -> updatedCoverageDetails.add(new CivilLiabilityCoverageDetail(x.getAmount())));
   }
 }

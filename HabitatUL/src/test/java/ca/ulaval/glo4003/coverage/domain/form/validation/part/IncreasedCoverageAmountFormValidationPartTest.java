@@ -103,7 +103,7 @@ public class IncreasedCoverageAmountFormValidationPartTest {
       CoverageModificationForm coverageModificationForm =
           CoverageModificationFormBuilder.aCoverageModificationForm()
               .withPersonalProperty(requestedCoverageAmount)
-              .withCoverageDetails(currentCoverageDetails)
+              .withCurrentCoverageDetails(currentCoverageDetails)
               .build();
 
       subject.validate(coverageModificationForm);

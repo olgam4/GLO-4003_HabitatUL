@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 public class PremiumAdjustmentGenerator {
   private PremiumAdjustmentGenerator() {}
 
-  public static PremiumAdjustment create() {
+  public static PremiumAdjustment createPremiumAdjustment() {
     return new PremiumAdjustment() {
       @Override
       public Money apply(Money premium) {

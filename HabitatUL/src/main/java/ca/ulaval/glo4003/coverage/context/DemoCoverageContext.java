@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.coverage.context;
 import ca.ulaval.glo4003.coverage.domain.form.validation.part.UlRegistrarOffice;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BasicBlockCoverageMaximumBicyclePriceProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementBasePremiumCalculator;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.coveragemodification.CoverageModificationBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
@@ -14,6 +15,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.formulapart.roommate.RoommateAd
 import ca.ulaval.glo4003.coverage.infrastructure.form.validation.DummyUlRegistrarOffice;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formula.bicycleendorsement.HardCodedBasicBlockCoverageMaximumBicyclePriceProvider;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formula.bicycleendorsement.HardCodedBicycleEndorsementBasePremiumCalculator;
+import ca.ulaval.glo4003.coverage.infrastructure.premium.formula.coveragemodification.HardCodedCoverageModificationBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formula.quote.HardCodedQuoteBasicBlockBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.animals.HardCodedAnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.animals.HardCodedAnimalsAdjustmentProvider;
@@ -49,5 +51,8 @@ public class DemoCoverageContext {
     register(
         BasicBlockCoverageMaximumBicyclePriceProvider.class,
         new HardCodedBasicBlockCoverageMaximumBicyclePriceProvider());
+    register(
+        CoverageModificationBasePremiumCalculator.class,
+        new HardCodedCoverageModificationBasePremiumCalculator());
   }
 }

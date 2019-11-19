@@ -7,13 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
+import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.*;
 import static org.junit.Assert.*;
 
 public class CoverageDetailsTest {
+  private static final CoverageCategory BASE_COVERAGE_CATEGORY = createBaseCoverageCategory();
   private static final CoverageDetail ADDITIONAL_COVERAGE_DETAIL = createAdditionalCoverageDetail();
   private static final CoverageCategory ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY =
       ADDITIONAL_COVERAGE_DETAIL.getCoverage();
@@ -96,11 +99,31 @@ public class CoverageDetailsTest {
     CoverageDetail updatedCoverageDetail =
         createCoverageDetail(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY);
 
-    CoverageDetails updatedCoverageDetails = subject.update(updatedCoverageDetail);
+    CoverageDetails updated = subject.update(updatedCoverageDetail);
 
-    Amount coverageAmount =
-        updatedCoverageDetails.getCoverageAmount(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY);
+    Amount coverageAmount = updated.getCoverageAmount(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY);
     assertEquals(updatedCoverageDetail.getAmount(), coverageAmount);
+  }
+
+  @Test
+  public void updatingCoverageDetails_withMultipleCoveragesUpdated_shouldUpdateCoverageDetails() {
+    subject =
+        CoverageDetailsBuilder.aCoverageDetails()
+            .withAdditionalCoverageDetail(ADDITIONAL_COVERAGE_DETAIL)
+            .build();
+    CoverageDetail firstUpdatedCoverageDetail = createCoverageDetail(BASE_COVERAGE_CATEGORY);
+    CoverageDetail secondUpdatedCoverageDetail =
+        createCoverageDetail(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY);
+    List<CoverageDetail> updatedCoverageDetails =
+        Arrays.asList(firstUpdatedCoverageDetail, secondUpdatedCoverageDetail);
+
+    CoverageDetails updated = subject.update(updatedCoverageDetails);
+
+    Amount firstCoverageAmount = updated.getCoverageAmount(BASE_COVERAGE_CATEGORY);
+    Amount secondCoverageAmount =
+        updated.getCoverageAmount(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY);
+    assertEquals(firstUpdatedCoverageDetail.getAmount(), firstCoverageAmount);
+    assertEquals(secondUpdatedCoverageDetail.getAmount(), secondCoverageAmount);
   }
 
   @Test

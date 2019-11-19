@@ -111,7 +111,7 @@ public class IncreasedCivilLiabilityLimitFormValidationPartTest {
       CoverageModificationForm coverageModificationForm =
           CoverageModificationFormBuilder.aCoverageModificationForm()
               .withCivilLiabilityLimit(requestedCivilLiabilityLimit)
-              .withCoverageDetails(currentCoverageDetails)
+              .withCurrentCoverageDetails(currentCoverageDetails)
               .build();
 
       subject.validate(coverageModificationForm);

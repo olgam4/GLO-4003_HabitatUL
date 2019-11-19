@@ -47,6 +47,10 @@ public class CoverageDomainService {
   public CoverageDto requestCoverageModification(
       CoverageModificationForm coverageModificationForm) {
     formValidator.validateCoverageModificationForm(coverageModificationForm);
-    return null;
+    CoverageDetails coverageDetails =
+        coverageSummarizer.summarizeCoverageModification(coverageModificationForm);
+    PremiumDetails premiumDetails =
+        premiumCalculator.computeCoverageModificationPremium(coverageModificationForm);
+    return new CoverageDto(coverageDetails, premiumDetails);
   }
 }

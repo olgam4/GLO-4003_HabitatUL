@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.context.service.*;
 import ca.ulaval.glo4003.coverage.domain.form.validation.part.UlRegistrarOffice;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BasicBlockCoverageMaximumBicyclePriceProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementBasePremiumCalculator;
+import ca.ulaval.glo4003.coverage.domain.premium.formula.coveragemodification.CoverageModificationBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockBasePremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentLimitsProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
@@ -53,5 +54,8 @@ public class AcceptanceTestContext {
     register(
         BasicBlockCoverageMaximumBicyclePriceProvider.class,
         new DummyBasicBlockCoverageMaximumBicyclePriceProvider());
+    register(
+        CoverageModificationBasePremiumCalculator.class,
+        new DummyCoverageModificationBasePremiumCalculator());
   }
 }

@@ -16,13 +16,13 @@ public class CoverageModificationFormBuilder {
   private final Amount DEFAULT_PERSONAL_PROPERTY = createCoverageAmount();
   private final CivilLiabilityLimit DEFAULT_CIVIL_LIABILITY_LIMIT = createCivilLiabilityLimit();
   private final int DEFAULT_NUMBER_OF_UNITS = createNumberOfUnits();
-  private final CoverageDetails DEFAULT_COVERAGE_DETAILS = createCoverageDetails();
-  private final PremiumDetails DEFAULT_PREMIUM_DETAILS = createPremiumDetails();
+  private final CoverageDetails DEFAULT_CURRENT_COVERAGE_DETAILS = createCoverageDetails();
+  private final PremiumDetails DEFAULT_CURRENT_PREMIUM_DETAILS = createPremiumDetails();
 
   private Amount personalProperty = DEFAULT_PERSONAL_PROPERTY;
   private CivilLiabilityLimit civilLiabilityLimit = DEFAULT_CIVIL_LIABILITY_LIMIT;
-  private CoverageDetails coverageDetails = DEFAULT_COVERAGE_DETAILS;
-  private PremiumDetails premiumDetails = DEFAULT_PREMIUM_DETAILS;
+  private CoverageDetails currentCoverageDetails = DEFAULT_CURRENT_COVERAGE_DETAILS;
+  private PremiumDetails currentPremiumDetails = DEFAULT_CURRENT_PREMIUM_DETAILS;
   private int numberOfUnits = DEFAULT_NUMBER_OF_UNITS;
 
   private CoverageModificationFormBuilder() {}
@@ -47,13 +47,24 @@ public class CoverageModificationFormBuilder {
     return this;
   }
 
-  public CoverageModificationFormBuilder withCoverageDetails(CoverageDetails coverageDetails) {
-    this.coverageDetails = coverageDetails;
+  public CoverageModificationFormBuilder withCurrentCoverageDetails(
+      CoverageDetails currentCoverageDetails) {
+    this.currentCoverageDetails = currentCoverageDetails;
+    return this;
+  }
+
+  public CoverageModificationFormBuilder withCurrentPremiumDetails(
+      PremiumDetails currentPremiumDetails) {
+    this.currentPremiumDetails = currentPremiumDetails;
     return this;
   }
 
   public CoverageModificationForm build() {
     return new CoverageModificationForm(
-        personalProperty, civilLiabilityLimit, numberOfUnits, coverageDetails, premiumDetails);
+        personalProperty,
+        civilLiabilityLimit,
+        numberOfUnits,
+        currentCoverageDetails,
+        currentPremiumDetails);
   }
 }

@@ -19,7 +19,7 @@ public abstract class BicycleEndorsementBasePremiumCalculatorIT {
   }
 
   @Test
-  public void computingQuoteBasePremium_shouldReturnBasePremium() {
+  public void computingBicycleEndorsementBasePremium_shouldReturnBasePremium() {
     Money premium = subject.compute(BICYCLE_PREMIUM_INPUT);
 
     assertNotNull(premium);

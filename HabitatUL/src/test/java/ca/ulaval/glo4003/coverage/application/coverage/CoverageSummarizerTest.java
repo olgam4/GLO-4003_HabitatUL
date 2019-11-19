@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.coverage.application.coverage;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.BicycleEndorsementCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormBuilder;
@@ -14,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.CIVIL_LIABILITY;
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
+import static ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormGenerator.createCoverageModificationForm;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,6 +30,8 @@ public class CoverageSummarizerTest {
       BicycleEndorsementFormBuilder.aBicycleEndorsementForm()
           .withCurrentCoverageDetails(COVERAGE_DETAILS)
           .build();
+  private static final CoverageModificationForm COVERAGE_MODIFICATION_FORM =
+      createCoverageModificationForm();
 
   @Mock private AdditionalCoverageResolver additionalCoverageResolver;
 
@@ -86,6 +90,20 @@ public class CoverageSummarizerTest {
                 COVERAGE_DETAILS.getCoverageAmount(PERSONAL_PROPERTY))
             .withCivilLiabilityCoverageDetail(COVERAGE_DETAILS.getCoverageAmount(CIVIL_LIABILITY))
             .withBicycleEndorsementCoverageDetail(BICYCLE_ENDORSEMENT_FORM.getBicycle().getPrice())
+            .build();
+    assertEquals(expectedCoverageDetails, coverageDetails);
+  }
+
+  @Test
+  public void summarizingCoverageModification_shouldReturnCorrespondingCoverageDetails() {
+    CoverageDetails coverageDetails =
+        subject.summarizeCoverageModification(COVERAGE_MODIFICATION_FORM);
+
+    CoverageDetails expectedCoverageDetails =
+        CoverageDetailsBuilder.aCoverageDetails()
+            .withPersonalPropertyCoverageDetail(COVERAGE_MODIFICATION_FORM.getCoverageAmount())
+            .withCivilLiabilityCoverageDetail(
+                COVERAGE_MODIFICATION_FORM.getCivilLiabilityLimit().getAmount())
             .build();
     assertEquals(expectedCoverageDetails, coverageDetails);
   }

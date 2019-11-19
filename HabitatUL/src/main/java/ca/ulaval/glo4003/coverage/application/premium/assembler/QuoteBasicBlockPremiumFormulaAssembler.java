@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdju
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.animals.AnimalsFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitAdjustmentProvider;
-import ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitFormulaPart;
+import ca.ulaval.glo4003.coverage.domain.premium.formulapart.civilliabilitylimit.CivilLiabilityLimitQuoteBasicBlockPremiumFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent.GraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent.GraduateStudentFormulaPart;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
@@ -19,24 +19,24 @@ public class QuoteBasicBlockPremiumFormulaAssembler {
   private QuoteBasicBlockPremiumFormulaAssembler() {}
 
   public static QuoteBasicBlockPremiumFormula assemble() {
-    QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula =
+    QuoteBasicBlockPremiumFormula premiumFormula =
         new QuoteBasicBlockPremiumFormula(
             ServiceLocator.resolve(QuoteBasicBlockBasePremiumCalculator.class));
-    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
-        new CivilLiabilityLimitFormulaPart(
+    premiumFormula.addPremiumFormulaPart(
+        new CivilLiabilityLimitQuoteBasicBlockPremiumFormulaPart(
             ServiceLocator.resolve(CivilLiabilityLimitAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
+    premiumFormula.addPremiumFormulaPart(
         new AnimalsFormulaPart(
             ServiceLocator.resolve(AnimalsAdjustmentProvider.class),
             ServiceLocator.resolve(AnimalsAdjustmentLimitsProvider.class)));
-    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
+    premiumFormula.addPremiumFormulaPart(
         new PreferentialProgramFormulaPart(
             ServiceLocator.resolve(PreferentialProgramAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
+    premiumFormula.addPremiumFormulaPart(
         new RoommateFormulaPart(ServiceLocator.resolve(RoommateAdjustmentProvider.class)));
-    quoteBasicBlockPremiumFormula.addPremiumFormulaPart(
+    premiumFormula.addPremiumFormulaPart(
         new GraduateStudentFormulaPart(
             ServiceLocator.resolve(GraduateStudentAdjustmentProvider.class)));
-    return quoteBasicBlockPremiumFormula;
+    return premiumFormula;
   }
 }

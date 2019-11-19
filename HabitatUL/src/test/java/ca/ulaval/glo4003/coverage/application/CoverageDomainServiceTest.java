@@ -49,6 +49,10 @@ public class CoverageDomainServiceTest {
         .thenReturn(COVERAGE_DETAILS);
     when(premiumCalculator.computeBicycleEndorsementPremium(any(BicycleEndorsementForm.class)))
         .thenReturn(PREMIUM_DETAILS);
+    when(coverageSummarizer.summarizeCoverageModification(any(CoverageModificationForm.class)))
+        .thenReturn(COVERAGE_DETAILS);
+    when(premiumCalculator.computeCoverageModificationPremium(any(CoverageModificationForm.class)))
+        .thenReturn(PREMIUM_DETAILS);
     subject = new CoverageDomainService(formValidator, coverageSummarizer, premiumCalculator);
   }
 
@@ -115,5 +119,27 @@ public class CoverageDomainServiceTest {
     subject.requestCoverageModification(COVERAGE_MODIFICATION_FORM);
 
     verify(formValidator).validateCoverageModificationForm(COVERAGE_MODIFICATION_FORM);
+  }
+
+  @Test
+  public void requestingCoverageModification_shouldSummarizeCoverage() {
+    subject.requestCoverageModification(COVERAGE_MODIFICATION_FORM);
+
+    verify(coverageSummarizer).summarizeCoverageModification(COVERAGE_MODIFICATION_FORM);
+  }
+
+  @Test
+  public void requestingCoverageModification_shouldComputePremium() {
+    subject.requestCoverageModification(COVERAGE_MODIFICATION_FORM);
+
+    verify(premiumCalculator).computeCoverageModificationPremium(COVERAGE_MODIFICATION_FORM);
+  }
+
+  @Test
+  public void requestingCoverageModification_shouldProduceCorrespondingCoverageDto() {
+    CoverageDto coverageDto = subject.requestCoverageModification(COVERAGE_MODIFICATION_FORM);
+
+    CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
+    assertEquals(expectedCoverageDto, coverageDto);
   }
 }

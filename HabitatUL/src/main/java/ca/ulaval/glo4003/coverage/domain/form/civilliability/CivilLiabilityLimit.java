@@ -33,6 +33,14 @@ public enum CivilLiabilityLimit {
         .orElseThrow(InvalidArgumentException::new);
   }
 
+  public static CivilLiabilityLimit fromAmount(Amount civilLiabilityLimitAmount)
+      throws InvalidArgumentException {
+    return LOOKUP_MAP.values().stream()
+        .filter(x -> x.getAmount().equals(civilLiabilityLimitAmount))
+        .findFirst()
+        .orElseThrow(InvalidArgumentException::new);
+  }
+
   public String getRepresentation() {
     return representation;
   }

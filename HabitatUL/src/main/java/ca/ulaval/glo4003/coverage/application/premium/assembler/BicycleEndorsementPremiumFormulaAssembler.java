@@ -10,12 +10,12 @@ public class BicycleEndorsementPremiumFormulaAssembler {
   private BicycleEndorsementPremiumFormulaAssembler() {}
 
   public static BicycleEndorsementPremiumFormula assemble() {
-    BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula =
+    BicycleEndorsementPremiumFormula premiumFormula =
         new BicycleEndorsementPremiumFormula(
             ServiceLocator.resolve(BicycleEndorsementBasePremiumCalculator.class));
-    bicycleEndorsementPremiumFormula.addPremiumFormulaPart(
+    premiumFormula.addPremiumFormulaPart(
         new BicycleEndorsementPriceFormulaPart(
             ServiceLocator.resolve(BicyclePriceAdjustmentProvider.class)));
-    return bicycleEndorsementPremiumFormula;
+    return premiumFormula;
   }
 }

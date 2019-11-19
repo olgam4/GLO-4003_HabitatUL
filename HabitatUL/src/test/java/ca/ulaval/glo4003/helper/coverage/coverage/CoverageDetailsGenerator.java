@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
+import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
 
 public class CoverageDetailsGenerator {
@@ -33,7 +34,7 @@ public class CoverageDetailsGenerator {
   }
 
   public static CivilLiabilityCoverageDetail createCivilLiabilityCoverageDetail() {
-    return new CivilLiabilityCoverageDetail(createCoverageAmount());
+    return new CivilLiabilityCoverageDetail(createCivilLiabilityLimit().getAmount());
   }
 
   public static CoverageDetail createBaseCoverageDetail() {

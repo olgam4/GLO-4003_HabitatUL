@@ -47,11 +47,19 @@ public class CoverageDetails extends ValueObject {
   }
 
   public CoverageDetails update(CoverageDetail updatedCoverageDetail) {
+    return update(Arrays.asList(updatedCoverageDetail));
+  }
+
+  public CoverageDetails update(List<CoverageDetail> updatedCoverageDetails) {
+    List<CoverageCategory> updatedCoverageCategories =
+        updatedCoverageDetails.stream()
+            .map(CoverageDetail::getCoverage)
+            .collect(Collectors.toList());
     List<CoverageDetail> updatedCollection =
         getCollection().stream()
-            .filter(x -> !x.getCoverage().equals(updatedCoverageDetail.getCoverage()))
+            .filter(x -> !updatedCoverageCategories.contains(x.getCoverage()))
             .collect(Collectors.toList());
-    updatedCollection.add(updatedCoverageDetail);
+    updatedCollection.addAll(updatedCoverageDetails);
     return new CoverageDetails(updatedCollection);
   }
 }
