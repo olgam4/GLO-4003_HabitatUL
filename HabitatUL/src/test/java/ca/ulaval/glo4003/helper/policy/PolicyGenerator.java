@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.helper.policy;
 
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
@@ -104,6 +105,10 @@ public class PolicyGenerator {
 
   public static ModifyCoverageDto createModifyCoverageDto() {
     return new ModifyCoverageDto(createCoverageAmount(), createCivilLiabilityLimit());
+  }
+
+  public static TriggerRenewalRequest createTriggerRenewalRequest() {
+    return new TriggerRenewalRequest(createCoverageAmount());
   }
 
   public static OpenClaimDto createOpenClaimDto() {

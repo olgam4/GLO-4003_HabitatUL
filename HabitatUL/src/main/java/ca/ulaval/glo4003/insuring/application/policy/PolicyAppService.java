@@ -128,6 +128,11 @@ public class PolicyAppService {
     }
   }
 
+  public PolicyModification triggerRenewal(PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
+    // TODO: CONTINUE FROM HERE
+    return null;
+  }
+
   public PolicyDto confirmModification(
       PolicyId policyId, PolicyModificationId policyModificationId) {
     try {

@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.gateway.presentation.coverage.CoverageViewAssembler;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyModificationResponse;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyResponse;
@@ -30,6 +31,10 @@ public class PolicyViewAssembler {
   public ModifyCoverageDto from(ModifyCoverageRequest modifyCoverageRequest) {
     return new ModifyCoverageDto(
         modifyCoverageRequest.getPersonalProperty(), modifyCoverageRequest.getCivilLiability());
+  }
+
+  public TriggerRenewalDto from(TriggerRenewalRequest triggerRenewalRequest) {
+    return new TriggerRenewalDto(triggerRenewalRequest.getPersonalProperty());
   }
 
   public PolicyModificationResponse from(PolicyModificationDto policyModificationDto) {

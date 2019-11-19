@@ -6,10 +6,8 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
@@ -49,6 +47,12 @@ public class PolicyMatcher {
         hasProperty(
             "personalPropertyCoverageAmount", equalTo(modifyCoverageRequest.getPersonalProperty())),
         hasProperty("civilLiabilityLimit", equalTo(modifyCoverageRequest.getCivilLiability())));
+  }
+
+  public static Matcher<TriggerRenewalDto> matchesTriggerRenewalDto(
+      final TriggerRenewalRequest triggerRenewalRequest) {
+    return hasProperty(
+        "personalPropertyCoverageAmount", equalTo(triggerRenewalRequest.getPersonalProperty()));
   }
 
   private static Matcher<Bicycle> matchesBicycle(final BicycleRequest bicycleRequest) {

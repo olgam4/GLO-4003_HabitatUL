@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
@@ -24,8 +25,7 @@ import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.create
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 import static ca.ulaval.glo4003.helper.shared.SecurityContextGenerator.createSecurityContext;
 import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesOpenClaimDto;
-import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesInsureBicycleDto;
-import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesModifyCoverageDto;
+import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -39,6 +39,8 @@ public class PolicyResourceTest {
   private static final InsureBicycleRequest INSURE_BICYCLE_REQUEST = createInsureBicycleRequest();
   private static final ModifyCoverageRequest MODIFY_COVERAGE_REQUEST =
       createModifyCoverageRequest();
+  private static final TriggerRenewalRequest TRIGGER_RENEWAL_REQUEST =
+      createTriggerRenewalRequest();
   private static final PolicyModificationDto POLICY_MODIFICATION_DTO =
       createPolicyModificationDto();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
@@ -89,6 +91,14 @@ public class PolicyResourceTest {
 
     verify(policyAppService)
         .modifyCoverage(eq(POLICY_ID), argThat(matchesModifyCoverageDto(MODIFY_COVERAGE_REQUEST)));
+  }
+
+  @Test
+  public void triggeringRenewal_shouldDelegateToPolicyAppService() {
+    subject.triggerRenewal(SECURITY_CONTEXT, POLICY_ID, TRIGGER_RENEWAL_REQUEST);
+
+    verify(policyAppService)
+        .triggerRenewal(eq(POLICY_ID), argThat(matchesTriggerRenewalDto(TRIGGER_RENEWAL_REQUEST)));
   }
 
   @Test
