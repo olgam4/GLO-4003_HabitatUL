@@ -43,8 +43,11 @@ public class PremiumAssembler {
   }
 
   public CoverageModificationPremiumInput toUpdatedCoverageModificationPremiumInput(
-      CoverageModificationForm coverageModificationForm) {
-    // TODO: CHECK IF NULL VALUE OTHERWISE SET SAME VALUE AS CURRENT
-    return new CoverageModificationPremiumInput(coverageModificationForm.getCivilLiabilityLimit());
+      CoverageModificationForm coverageModificationForm) throws InvalidArgumentException {
+    CivilLiabilityLimit civilLiabilityLimit = coverageModificationForm.getCivilLiabilityLimit();
+    if (civilLiabilityLimit == null) {
+      return toCurrentCoverageModificationPremiumInput(coverageModificationForm);
+    }
+    return new CoverageModificationPremiumInput(civilLiabilityLimit);
   }
 }
