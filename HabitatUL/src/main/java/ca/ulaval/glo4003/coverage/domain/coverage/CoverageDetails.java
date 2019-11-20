@@ -6,32 +6,34 @@ import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverag
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CoverageDetails extends ValueObject {
-  private final List<CoverageDetail> collection;
+  private final Set<CoverageDetail> collection;
 
   public CoverageDetails(
       PersonalPropertyCoverageDetail personalPropertyCoverageDetail,
       CivilLiabilityCoverageDetail civilLiabilityCoverageDetail) {
-    this.collection = Arrays.asList(personalPropertyCoverageDetail, civilLiabilityCoverageDetail);
+    this.collection =
+        new HashSet<>(Arrays.asList(personalPropertyCoverageDetail, civilLiabilityCoverageDetail));
   }
 
-  private CoverageDetails(List<CoverageDetail> collection) {
+  private CoverageDetails(Set<CoverageDetail> collection) {
     this.collection = collection;
   }
 
   public CoverageDetails addCoverageDetail(CoverageDetail coverageDetail) {
-    List<CoverageDetail> coverageDetailsCopy = getCollection();
+    Set<CoverageDetail> coverageDetailsCopy = getCollection();
     coverageDetailsCopy.add(coverageDetail);
     return new CoverageDetails(coverageDetailsCopy);
   }
 
-  public List<CoverageDetail> getCollection() {
-    return new ArrayList<>(collection);
+  public Set<CoverageDetail> getCollection() {
+    return new HashSet<>(collection);
   }
 
   public Amount getCoverageAmount(CoverageCategory coverageCategory) {
@@ -47,18 +49,18 @@ public class CoverageDetails extends ValueObject {
   }
 
   public CoverageDetails update(CoverageDetail updatedCoverageDetail) {
-    return update(Arrays.asList(updatedCoverageDetail));
+    return update(new HashSet<>(Arrays.asList(updatedCoverageDetail)));
   }
 
-  public CoverageDetails update(List<CoverageDetail> updatedCoverageDetails) {
+  public CoverageDetails update(Set<CoverageDetail> updatedCoverageDetails) {
     List<CoverageCategory> updatedCoverageCategories =
         updatedCoverageDetails.stream()
             .map(CoverageDetail::getCoverage)
             .collect(Collectors.toList());
-    List<CoverageDetail> updatedCollection =
+    Set<CoverageDetail> updatedCollection =
         getCollection().stream()
             .filter(x -> !updatedCoverageCategories.contains(x.getCoverage()))
-            .collect(Collectors.toList());
+            .collect(Collectors.toSet());
     updatedCollection.addAll(updatedCoverageDetails);
     return new CoverageDetails(updatedCollection);
   }

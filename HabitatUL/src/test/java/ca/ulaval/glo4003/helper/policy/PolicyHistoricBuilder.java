@@ -3,11 +3,12 @@ package ca.ulaval.glo4003.helper.policy;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PolicyHistoricBuilder {
-  private List<PolicyView> historic = new ArrayList<>();
+  private Set<PolicyView> historic = new HashSet<>();
 
   private PolicyHistoricBuilder() {}
 

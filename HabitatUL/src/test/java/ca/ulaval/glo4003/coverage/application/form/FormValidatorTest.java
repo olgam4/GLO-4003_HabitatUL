@@ -2,9 +2,11 @@ package ca.ulaval.glo4003.coverage.application.form;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.bicycleendorsement.BicycleEndorsementFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.coveragemodification.CoverageModificationFormValidation;
+import ca.ulaval.glo4003.coverage.domain.form.validation.coveragerenewal.CoverageRenewalFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidation;
 import ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
 import static ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormGenerator.createCoverageModificationForm;
+import static ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormGenerator.createCoverageRenewalForm;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,10 +26,12 @@ public class FormValidatorTest {
   private static final BicycleEndorsementForm BICYCLE_FORM = createBicycleEndorsementForm();
   private static final CoverageModificationForm COVERAGE_MODIFICATION_FORM =
       createCoverageModificationForm();
+  private static final CoverageRenewalForm COVERAGE_RENEWAL_FORM = createCoverageRenewalForm();
 
   @Mock QuoteFormValidation quoteFormValidation;
   @Mock BicycleEndorsementFormValidation bicycleEndorsementFormValidation;
   @Mock CoverageModificationFormValidation coverageModificationFormValidation;
+  @Mock CoverageRenewalFormValidation coverageRenewalFormValidation;
 
   private FormValidator subject;
 
@@ -36,7 +41,8 @@ public class FormValidatorTest {
         new FormValidator(
             quoteFormValidation,
             bicycleEndorsementFormValidation,
-            coverageModificationFormValidation);
+            coverageModificationFormValidation,
+            coverageRenewalFormValidation);
   }
 
   @Test
@@ -58,5 +64,12 @@ public class FormValidatorTest {
     subject.validateCoverageModificationForm(COVERAGE_MODIFICATION_FORM);
 
     verify(coverageModificationFormValidation).validate(COVERAGE_MODIFICATION_FORM);
+  }
+
+  @Test
+  public void validatingCoverageRenewalForm_shouldExecuteCoverageRenewalFormValidation() {
+    subject.validateCoverageRenewal(COVERAGE_RENEWAL_FORM);
+
+    verify(coverageRenewalFormValidation).validate(COVERAGE_RENEWAL_FORM);
   }
 }

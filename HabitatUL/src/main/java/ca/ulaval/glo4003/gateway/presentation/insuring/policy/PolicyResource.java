@@ -156,6 +156,7 @@ public class PolicyResource {
     TriggerRenewalDto triggerRenewalDto = policyViewAssembler.from(triggerRenewalRequest);
     policyAppService.triggerRenewal(policyId, triggerRenewalDto);
     // TODO: COME BACK TO IT ONCE THE USE CASE COMPLETED
+    // TODO: might want to produce different response even than for a simple modification!
     return Response.ok().build();
   }
 }

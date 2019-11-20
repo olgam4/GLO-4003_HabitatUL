@@ -56,7 +56,11 @@ public class CoverageDomainService {
   }
 
   public CoverageDto requestCoverageRenewal(CoverageRenewalForm coverageRenewalForm) {
-    // TODO: continue from here
-    return null;
+    formValidator.validateCoverageRenewal(coverageRenewalForm);
+    CoverageDetails coverageDetails =
+        coverageSummarizer.summarizeCoverageRenewal(coverageRenewalForm);
+    PremiumDetails premiumDetails =
+        premiumCalculator.computeCoverageRenewalPremium(coverageRenewalForm);
+    return new CoverageDto(coverageDetails, premiumDetails);
   }
 }

@@ -5,30 +5,31 @@ import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PremiumDetails extends ValueObject {
-  private final List<PremiumDetail> collection;
+  private final Set<PremiumDetail> collection;
 
   public PremiumDetails(BasicBlockCoveragePremiumDetail basicBlockCoveragePremiumDetail) {
-    collection = Arrays.asList(basicBlockCoveragePremiumDetail);
+    collection = new HashSet<>(Arrays.asList(basicBlockCoveragePremiumDetail));
   }
 
-  private PremiumDetails(List<PremiumDetail> collection) {
+  private PremiumDetails(Set<PremiumDetail> collection) {
     this.collection = collection;
   }
 
   public PremiumDetails addPremiumDetail(PremiumDetail premiumDetail) {
-    List<PremiumDetail> premiumDetailsCopy = getCollection();
+    Set<PremiumDetail> premiumDetailsCopy = getCollection();
     premiumDetailsCopy.add(premiumDetail);
     return new PremiumDetails(premiumDetailsCopy);
   }
 
-  public List<PremiumDetail> getCollection() {
-    return new ArrayList<>(collection);
+  public Set<PremiumDetail> getCollection() {
+    return new HashSet<>(collection);
   }
 
   public Money getCoveragePremium(PremiumCategory coverageCategory) {
@@ -39,12 +40,22 @@ public class PremiumDetails extends ValueObject {
         .orElse(Money.ZERO);
   }
 
+  public boolean includes(PremiumCategory premiumCategory) {
+    return collection.stream().anyMatch(x -> x.getCoverage().equals(premiumCategory));
+  }
+
   public PremiumDetails update(PremiumDetail updatedPremiumDetail) {
-    List<PremiumDetail> updatedCollection =
+    return update(new HashSet<>(Arrays.asList(updatedPremiumDetail)));
+  }
+
+  public PremiumDetails update(Set<PremiumDetail> updatedPremiumDetails) {
+    List<PremiumCategory> updatedPremiumCategories =
+        updatedPremiumDetails.stream().map(PremiumDetail::getCoverage).collect(Collectors.toList());
+    Set<PremiumDetail> updatedCollection =
         getCollection().stream()
-            .filter(x -> !x.getCoverage().equals(updatedPremiumDetail.getCoverage()))
-            .collect(Collectors.toList());
-    updatedCollection.add(updatedPremiumDetail);
+            .filter(x -> !updatedPremiumCategories.contains(x.getCoverage()))
+            .collect(Collectors.toSet());
+    updatedCollection.addAll(updatedPremiumDetails);
     return new PremiumDetails(updatedCollection);
   }
 

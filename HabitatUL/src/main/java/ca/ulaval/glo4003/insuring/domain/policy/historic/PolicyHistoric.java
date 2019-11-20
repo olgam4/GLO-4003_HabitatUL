@@ -8,18 +8,16 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class PolicyHistoric extends ValueObject {
-  private final List<PolicyView> historic;
+  private final Set<PolicyView> historic;
 
-  public PolicyHistoric(List<PolicyView> historic) {
-    this.historic = new ArrayList<>(historic);
+  public PolicyHistoric(Set<PolicyView> historic) {
+    this.historic = new HashSet<>(historic);
   }
 
-  public List<PolicyView> getHistoric() {
+  public Set<PolicyView> getHistoric() {
     return historic;
   }
 

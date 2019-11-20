@@ -6,9 +6,9 @@ import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
@@ -34,8 +34,8 @@ public class CoverageDetailsTest {
 
   @Test
   public void shouldBeImmutable() {
-    List<CoverageDetail> collection = subject.getCollection();
-    List<CoverageDetail> initialCollection = new ArrayList<>(collection);
+    Set<CoverageDetail> collection = subject.getCollection();
+    Set<CoverageDetail> initialCollection = new HashSet<>(collection);
 
     collection.add(ADDITIONAL_COVERAGE_DETAIL);
 
@@ -44,7 +44,7 @@ public class CoverageDetailsTest {
 
   @Test
   public void addingCoverageDetail_shouldAppendCoverageDetailToExistingDetails() {
-    List<CoverageDetail> collection = subject.getCollection();
+    Set<CoverageDetail> collection = subject.getCollection();
 
     CoverageDetails coverageDetails = subject.addCoverageDetail(ADDITIONAL_COVERAGE_DETAIL);
 
@@ -106,7 +106,7 @@ public class CoverageDetailsTest {
   }
 
   @Test
-  public void updatingCoverageDetails_withMultipleCoveragesUpdated_shouldUpdateCoverageDetails() {
+  public void updatingCoverageDetails_withMultipleCoveragesUpdated_shouldUpdateAllCoverageDetails() {
     subject =
         CoverageDetailsBuilder.aCoverageDetails()
             .withAdditionalCoverageDetail(ADDITIONAL_COVERAGE_DETAIL)
@@ -114,8 +114,8 @@ public class CoverageDetailsTest {
     CoverageDetail firstUpdatedCoverageDetail = createCoverageDetail(BASE_COVERAGE_CATEGORY);
     CoverageDetail secondUpdatedCoverageDetail =
         createCoverageDetail(ADDITIONAL_COVERAGE_DETAIL_COVERAGE_CATEGORY);
-    List<CoverageDetail> updatedCoverageDetails =
-        Arrays.asList(firstUpdatedCoverageDetail, secondUpdatedCoverageDetail);
+    Set<CoverageDetail> updatedCoverageDetails =
+        new HashSet<>(Arrays.asList(firstUpdatedCoverageDetail, secondUpdatedCoverageDetail));
 
     CoverageDetails updated = subject.update(updatedCoverageDetails);
 
@@ -128,7 +128,7 @@ public class CoverageDetailsTest {
 
   @Test
   public void updatingCoverageDetails_shouldBeImmutable() {
-    List<CoverageDetail> initialCollection = new ArrayList<>(subject.getCollection());
+    Set<CoverageDetail> initialCollection = new HashSet<>(subject.getCollection());
 
     subject.update(ANOTHER_ADDITIONAL_COVERAGE_DETAIL);
 

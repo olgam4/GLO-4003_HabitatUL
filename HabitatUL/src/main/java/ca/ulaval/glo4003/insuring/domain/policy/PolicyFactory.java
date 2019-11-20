@@ -11,6 +11,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
 
@@ -32,7 +33,8 @@ public class PolicyFactory {
     Period adjustedCoveragePeriod = adjustCoveragePeriod(coveragePeriod, purchaseDate);
     PolicyView currentPolicyView =
         new PolicyView(adjustedCoveragePeriod, policyInformation, coverageDetails, premiumDetails);
-    PolicyHistoric policyHistoric = new PolicyHistoric(Arrays.asList(currentPolicyView));
+    PolicyHistoric policyHistoric =
+        new PolicyHistoric(new HashSet<>(Arrays.asList(currentPolicyView)));
     PolicyModificationsCoordinator policyModificationsCoordinator =
         new PolicyModificationsCoordinator();
     return new Policy(

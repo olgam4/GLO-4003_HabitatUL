@@ -5,9 +5,9 @@ import ca.ulaval.glo4003.shared.domain.ValueObject;
 public class Building extends ValueObject {
   public static final String NO_COMMERCIAL_USE = "NO_COMMERCIAL_USE";
 
-  private int numberOfUnits;
-  private PreventionSystems preventionSystems;
-  private String commercialUse;
+  private final int numberOfUnits;
+  private final PreventionSystems preventionSystems;
+  private final String commercialUse;
 
   public Building(int numberOfUnits, PreventionSystems preventionSystems, String commercialUse) {
     this.numberOfUnits = numberOfUnits;

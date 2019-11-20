@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-public abstract class CoverageDetail extends ValueObject {
+public class CoverageDetail extends ValueObject {
   private final CoverageCategory coverage;
   private final Amount amount;
 

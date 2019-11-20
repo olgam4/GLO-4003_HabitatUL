@@ -7,14 +7,17 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumCategoryGenerator.createAdditionalPremiumCategory;
+import static ca.ulaval.glo4003.helper.coverage.premium.PremiumCategoryGenerator.createBasePremiumCategory;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PremiumDetailsTest {
+  private static final PremiumCategory BASE_PREMIUM_CATEGORY = createBasePremiumCategory();
   private static final PremiumDetail ADDITIONAL_PREMIUM_DETAIL = createAdditionalPremiumDetail();
   private static final PremiumCategory ADDITIONAL_PREMIUM_DETAIL_PREMIUM_CATEGORY =
       ADDITIONAL_PREMIUM_DETAIL.getCoverage();
@@ -32,8 +35,8 @@ public class PremiumDetailsTest {
 
   @Test
   public void shouldBeImmutable() {
-    List<PremiumDetail> collection = subject.getCollection();
-    List<PremiumDetail> initialCollection = new ArrayList<>(collection);
+    Set<PremiumDetail> collection = subject.getCollection();
+    Set<PremiumDetail> initialCollection = new HashSet<>(collection);
 
     collection.add(ADDITIONAL_PREMIUM_DETAIL);
 
@@ -42,7 +45,7 @@ public class PremiumDetailsTest {
 
   @Test
   public void addingPremiumDetail_shouldAppendPremiumDetailToExistingDetails() {
-    List<PremiumDetail> collection = subject.getCollection();
+    Set<PremiumDetail> collection = subject.getCollection();
 
     PremiumDetails premiumDetails = subject.addPremiumDetail(ADDITIONAL_PREMIUM_DETAIL);
 
@@ -72,6 +75,23 @@ public class PremiumDetailsTest {
   }
 
   @Test
+  public void checkingIfPremiumCategoryIsIncluded_withIncludedPremiumCategory_shouldBeTrue() {
+    subject =
+        PremiumDetailsBuilder.aPremiumDetails()
+            .withAdditionalPremiumDetail(ADDITIONAL_PREMIUM_DETAIL)
+            .build();
+
+    assertTrue(subject.includes(ADDITIONAL_PREMIUM_DETAIL_PREMIUM_CATEGORY));
+  }
+
+  @Test
+  public void checkingIfPremiumCategoryIsIncluded_withNotCoveredPremiumCategory_shouldBeFalse() {
+    subject = PremiumDetailsBuilder.aPremiumDetails().build();
+
+    assertFalse(subject.includes(ADDITIONAL_PREMIUM_DETAIL_PREMIUM_CATEGORY));
+  }
+
+  @Test
   public void updatingPremiumDetails_shouldUpdatePremiumDetails() {
     subject =
         PremiumDetailsBuilder.aPremiumDetails()
@@ -88,8 +108,29 @@ public class PremiumDetailsTest {
   }
 
   @Test
+  public void updatingPremiumDetails_withMultipleCoveragesUpdated_shouldUpdateAllPremiumDetails() {
+    subject =
+        PremiumDetailsBuilder.aPremiumDetails()
+            .withAdditionalPremiumDetail(ADDITIONAL_PREMIUM_DETAIL)
+            .build();
+    PremiumDetail firstUpdatedPremiumDetail = createPremiumDetail(BASE_PREMIUM_CATEGORY);
+    PremiumDetail secondUpdatedPremiumDetail =
+        createPremiumDetail(ADDITIONAL_PREMIUM_DETAIL_PREMIUM_CATEGORY);
+    Set<PremiumDetail> updatedPremiumDetails =
+        new HashSet<>(Arrays.asList(firstUpdatedPremiumDetail, secondUpdatedPremiumDetail));
+
+    PremiumDetails updated = subject.update(updatedPremiumDetails);
+
+    Money firstCoveragePremium = updated.getCoveragePremium(BASE_PREMIUM_CATEGORY);
+    Money secondCoveragePremium =
+        updated.getCoveragePremium(ADDITIONAL_PREMIUM_DETAIL_PREMIUM_CATEGORY);
+    assertEquals(firstUpdatedPremiumDetail.getPremium(), firstCoveragePremium);
+    assertEquals(secondUpdatedPremiumDetail.getPremium(), secondCoveragePremium);
+  }
+
+  @Test
   public void updatingPremiumDetails_shouldBeImmutable() {
-    List<PremiumDetail> initialCollection = new ArrayList<>(subject.getCollection());
+    Set<PremiumDetail> initialCollection = new HashSet<>(subject.getCollection());
 
     subject.update(ANOTHER_ADDITIONAL_PREMIUM_DETAIL);
 

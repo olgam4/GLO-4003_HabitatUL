@@ -7,10 +7,13 @@ import ca.ulaval.glo4003.coverage.application.premium.assembler.PremiumAssembler
 import ca.ulaval.glo4003.coverage.application.premium.assembler.QuoteBasicBlockPremiumFormulaAssembler;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
+import ca.ulaval.glo4003.coverage.domain.premium.PremiumCategory;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BasicBlockCoveragePremiumDetail;
 import ca.ulaval.glo4003.coverage.domain.premium.detail.BicycleEndorsementPremiumDetail;
+import ca.ulaval.glo4003.coverage.domain.premium.detail.PremiumDetail;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumInput;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.coveragemodification.CoverageModificationPremiumFormula;
@@ -23,6 +26,8 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import static ca.ulaval.glo4003.coverage.domain.premium.PremiumCategory.BASIC_BLOCK;
 
 public class PremiumCalculator {
+  static final float RENEWAL_PREMIUM_ADJUSTMENT_FACTOR = 1.05f;
+
   private PremiumAssembler premiumAssembler;
   private AdditionalCoverageResolver additionalCoverageResolver;
   private QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
@@ -138,5 +143,49 @@ public class PremiumCalculator {
     Money currentBasicBlockPremium = currentPremiumDetails.getCoveragePremium(BASIC_BLOCK);
     Money proposedPremium = currentBasicBlockPremium.add(premiumAdjustment);
     return new BasicBlockCoveragePremiumDetail(proposedPremium);
+  }
+
+  public PremiumDetails computeCoverageRenewalPremium(CoverageRenewalForm coverageRenewalForm) {
+    PremiumDetails currentPremiumDetails = coverageRenewalForm.getCurrentPremiumDetails();
+    PremiumDetails updatedPremiumDetails = computeBaseCoverageRenewalPremium(currentPremiumDetails);
+    return computeAdditionalCoveragesRenewalPremium(currentPremiumDetails, updatedPremiumDetails);
+  }
+
+  private PremiumDetails computeBaseCoverageRenewalPremium(PremiumDetails currentPremiumDetails) {
+    Money renewalPremium = computeRenewalPremium(BASIC_BLOCK, currentPremiumDetails);
+    return new PremiumDetails(new BasicBlockCoveragePremiumDetail(renewalPremium));
+  }
+
+  private PremiumDetails computeAdditionalCoveragesRenewalPremium(
+      PremiumDetails currentPremiumDetails, PremiumDetails updatedPremiumDetails) {
+    for (PremiumCategory premiumCategory : PremiumCategory.values()) {
+      if (isIncludedAdditionalCoverage(premiumCategory, currentPremiumDetails)) {
+        updatedPremiumDetails =
+            computeIncludedAdditionalCoverageRenewalPremium(
+                currentPremiumDetails, updatedPremiumDetails, premiumCategory);
+      }
+    }
+    return updatedPremiumDetails;
+  }
+
+  private boolean isIncludedAdditionalCoverage(
+      PremiumCategory premiumCategory, PremiumDetails currentPremiumDetails) {
+    return currentPremiumDetails.includes(premiumCategory) && premiumCategory != BASIC_BLOCK;
+  }
+
+  private PremiumDetails computeIncludedAdditionalCoverageRenewalPremium(
+      PremiumDetails currentPremiumDetails,
+      PremiumDetails updatedPremiumDetails,
+      PremiumCategory premiumCategory) {
+    Money renewalPremium = computeRenewalPremium(premiumCategory, currentPremiumDetails);
+    updatedPremiumDetails =
+        updatedPremiumDetails.addPremiumDetail(new PremiumDetail(premiumCategory, renewalPremium));
+    return updatedPremiumDetails;
+  }
+
+  private Money computeRenewalPremium(
+      PremiumCategory premiumCategory, PremiumDetails currentPremiumDetails) {
+    Money currentPremium = currentPremiumDetails.getCoveragePremium(premiumCategory);
+    return currentPremium.multiply(RENEWAL_PREMIUM_ADJUSTMENT_FACTOR);
   }
 }

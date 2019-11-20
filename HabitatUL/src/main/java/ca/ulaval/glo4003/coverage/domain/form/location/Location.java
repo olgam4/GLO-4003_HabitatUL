@@ -5,10 +5,10 @@ import ca.ulaval.glo4003.shared.domain.address.Floor;
 import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 
 public class Location extends ValueObject {
-  private ZipCode zipCode;
-  private String streetNumber;
-  private String apartmentNumber;
-  private Floor floor;
+  private final ZipCode zipCode;
+  private final String streetNumber;
+  private final String apartmentNumber;
+  private final Floor floor;
 
   public Location(ZipCode zipCode, String streetNumber, String apartmentNumber, Floor floor) {
     this.zipCode = zipCode;

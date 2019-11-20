@@ -7,6 +7,7 @@ import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,10 +39,10 @@ public class PolicyViewGenerator {
         createPremiumDetails());
   }
 
-  public static List<PolicyView> createPolicyViews() {
+  public static Set<PolicyView> createPolicyViews() {
     return IntStream.range(0, Faker.instance().number().randomDigitNotZero())
         .mapToObj(i -> createPolicyView())
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
   public static PolicyView createPolicyView() {

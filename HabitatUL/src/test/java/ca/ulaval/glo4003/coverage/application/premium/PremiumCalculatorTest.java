@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.application.premium.assembler.PremiumAssembler
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement.BicycleEndorsementPremiumFormula;
@@ -16,6 +17,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput
 import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormBuilder;
+import ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
@@ -24,6 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator.RENEWAL_PREMIUM_ADJUSTMENT_FACTOR;
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.ONE_MILLION;
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.TWO_MILLION;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
@@ -68,6 +71,19 @@ public class PremiumCalculatorTest {
               COVERAGE_MODIFICATION_UPDATED_VIEW_PREMIUM_INPUT.getCivilLiabilityLimit())
           .withCurrentCoverageDetails(CURRENT_COVERAGE_DETAILS)
           .withCurrentPremiumDetails(CURRENT_PREMIUM_DETAILS)
+          .build();
+  private static final CoverageRenewalForm COVERAGE_RENEWAL_FORM =
+      CoverageRenewalFormBuilder.aCoverageRenewalForm()
+          .withCurrentPremiumDetails(CURRENT_PREMIUM_DETAILS)
+          .build();
+  private static final PremiumDetails CURRENT_PREMIUM_DETAILS_WITH_ADDITIONAL_COVERAGE =
+      PremiumDetailsBuilder.aPremiumDetails()
+          .withBasicBlockPremiumDetail(BASIC_BLOCK_PREMIUM)
+          .withBicycleEndorsementPremiumDetail(BICYCLE_ENDORSEMENT_PREMIUM)
+          .build();
+  private static final CoverageRenewalForm COVERAGE_RENEWAL_FORM_WITH_ADDITIONAL_COVERAGE =
+      CoverageRenewalFormBuilder.aCoverageRenewalForm()
+          .withCurrentPremiumDetails(CURRENT_PREMIUM_DETAILS_WITH_ADDITIONAL_COVERAGE)
           .build();
 
   @Mock private AdditionalCoverageResolver additionalCoverageResolver;
@@ -189,6 +205,35 @@ public class PremiumCalculatorTest {
                 BASIC_BLOCK_PREMIUM.add(
                     COVERAGE_MODIFICATION_UPDATED_VIEW_PREMIUM.subtract(
                         COVERAGE_MODIFICATION_CURRENT_VIEW_PREMIUM)))
+            .build();
+    assertEquals(expectedPremiumDetails, premiumDetails);
+  }
+
+  @Test
+  public void
+      computingCoverageRenewalPremium_withoutAdditionalCoverage_shouldReturnUpdatedPremiumDetails() {
+    PremiumDetails premiumDetails = subject.computeCoverageRenewalPremium(COVERAGE_RENEWAL_FORM);
+
+    PremiumDetails expectedPremiumDetails =
+        PremiumDetailsBuilder.aPremiumDetails()
+            .withBasicBlockPremiumDetail(
+                BASIC_BLOCK_PREMIUM.multiply(RENEWAL_PREMIUM_ADJUSTMENT_FACTOR))
+            .build();
+    assertEquals(expectedPremiumDetails, premiumDetails);
+  }
+
+  @Test
+  public void
+      computingCoverageRenewalPremium_withAdditionalCoverage_shouldReturnUpdatedPremiumDetails() {
+    PremiumDetails premiumDetails =
+        subject.computeCoverageRenewalPremium(COVERAGE_RENEWAL_FORM_WITH_ADDITIONAL_COVERAGE);
+
+    PremiumDetails expectedPremiumDetails =
+        PremiumDetailsBuilder.aPremiumDetails()
+            .withBasicBlockPremiumDetail(
+                BASIC_BLOCK_PREMIUM.multiply(RENEWAL_PREMIUM_ADJUSTMENT_FACTOR))
+            .withBicycleEndorsementPremiumDetail(
+                BICYCLE_ENDORSEMENT_PREMIUM.multiply(RENEWAL_PREMIUM_ADJUSTMENT_FACTOR))
             .build();
     assertEquals(expectedPremiumDetails, premiumDetails);
   }

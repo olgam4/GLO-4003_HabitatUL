@@ -7,13 +7,14 @@ import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.PersonalPropertyCoverageDetail;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class CoverageSummarizer {
   private AdditionalCoverageResolver additionalCoverageResolver;
@@ -70,7 +71,7 @@ public class CoverageSummarizer {
 
   public CoverageDetails summarizeCoverageModification(
       CoverageModificationForm coverageModificationForm) {
-    List<CoverageDetail> updatedCoverageDetails = new ArrayList<>();
+    Set<CoverageDetail> updatedCoverageDetails = new HashSet<>();
     Amount coverageAmount = coverageModificationForm.getCoverageAmount();
     updatePersonalPropertyCoverageDetailOnDemand(updatedCoverageDetails, coverageAmount);
     updateCivilLiabilityLimitCoverageDetailOnDemand(
@@ -79,15 +80,23 @@ public class CoverageSummarizer {
     return currentCoverageDetails.update(updatedCoverageDetails);
   }
 
+  public CoverageDetails summarizeCoverageRenewal(CoverageRenewalForm coverageRenewalForm) {
+    Set<CoverageDetail> updatedCoverageDetails = new HashSet<>();
+    Amount coverageAmount = coverageRenewalForm.getCoverageAmount();
+    updatePersonalPropertyCoverageDetailOnDemand(updatedCoverageDetails, coverageAmount);
+    CoverageDetails currentCoverageDetails = coverageRenewalForm.getCurrentCoverageDetails();
+    return currentCoverageDetails.update(updatedCoverageDetails);
+  }
+
   private void updatePersonalPropertyCoverageDetailOnDemand(
-      List<CoverageDetail> updatedCoverageDetails, Amount coverageAmount) {
+      Set<CoverageDetail> updatedCoverageDetails, Amount coverageAmount) {
     Optional.ofNullable(coverageAmount)
         .ifPresent(x -> updatedCoverageDetails.add(new PersonalPropertyCoverageDetail(x)));
   }
 
   private void updateCivilLiabilityLimitCoverageDetailOnDemand(
       CoverageModificationForm coverageModificationForm,
-      List<CoverageDetail> updatedCoverageDetails) {
+      Set<CoverageDetail> updatedCoverageDetails) {
     CivilLiabilityLimit civilLiabilityLimit = coverageModificationForm.getCivilLiabilityLimit();
     Optional.ofNullable(civilLiabilityLimit)
         .ifPresent(

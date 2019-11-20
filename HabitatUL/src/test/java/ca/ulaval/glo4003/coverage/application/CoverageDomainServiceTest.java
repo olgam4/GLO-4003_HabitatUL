@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import org.junit.Before;
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
 import static ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormGenerator.createCoverageModificationForm;
+import static ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormGenerator.createCoverageRenewalForm;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static org.junit.Assert.assertEquals;
@@ -31,8 +33,11 @@ public class CoverageDomainServiceTest {
       createBicycleEndorsementForm();
   private static final CoverageModificationForm COVERAGE_MODIFICATION_FORM =
       createCoverageModificationForm();
+  private static final CoverageRenewalForm COVERAGE_RENEWAL_FORM = createCoverageRenewalForm();
   private static final CoverageDetails COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails PREMIUM_DETAILS = createPremiumDetails();
+  private static final CoverageDto COVERAGE_DTO =
+      new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
 
   @Mock private FormValidator formValidator;
   @Mock private CoverageSummarizer coverageSummarizer;
@@ -52,6 +57,10 @@ public class CoverageDomainServiceTest {
     when(coverageSummarizer.summarizeCoverageModification(any(CoverageModificationForm.class)))
         .thenReturn(COVERAGE_DETAILS);
     when(premiumCalculator.computeCoverageModificationPremium(any(CoverageModificationForm.class)))
+        .thenReturn(PREMIUM_DETAILS);
+    when(coverageSummarizer.summarizeCoverageRenewal(any(CoverageRenewalForm.class)))
+        .thenReturn(COVERAGE_DETAILS);
+    when(premiumCalculator.computeCoverageRenewalPremium(any(CoverageRenewalForm.class)))
         .thenReturn(PREMIUM_DETAILS);
     subject = new CoverageDomainService(formValidator, coverageSummarizer, premiumCalculator);
   }
@@ -81,8 +90,7 @@ public class CoverageDomainServiceTest {
   public void requestingQuoteCoverage_shouldProduceCorrespondingCoverageDto() {
     CoverageDto coverageDto = subject.requestQuoteCoverage(QUOTE_FORM);
 
-    CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
-    assertEquals(expectedCoverageDto, coverageDto);
+    assertEquals(COVERAGE_DTO, coverageDto);
   }
 
   @Test
@@ -110,8 +118,7 @@ public class CoverageDomainServiceTest {
   public void requestingBicycleEndorsementCoverage_shouldProduceCorrespondingCoverageDto() {
     CoverageDto coverageDto = subject.requestBicycleEndorsementCoverage(BICYCLE_ENDORSEMENT_FORM);
 
-    CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
-    assertEquals(expectedCoverageDto, coverageDto);
+    assertEquals(COVERAGE_DTO, coverageDto);
   }
 
   @Test
@@ -139,7 +146,34 @@ public class CoverageDomainServiceTest {
   public void requestingCoverageModification_shouldProduceCorrespondingCoverageDto() {
     CoverageDto coverageDto = subject.requestCoverageModification(COVERAGE_MODIFICATION_FORM);
 
-    CoverageDto expectedCoverageDto = new CoverageDto(COVERAGE_DETAILS, PREMIUM_DETAILS);
-    assertEquals(expectedCoverageDto, coverageDto);
+    assertEquals(COVERAGE_DTO, coverageDto);
+  }
+
+  @Test
+  public void requestingCoverageRenewal_shouldValidateForm() {
+    subject.requestCoverageRenewal(COVERAGE_RENEWAL_FORM);
+
+    verify(formValidator).validateCoverageRenewal(COVERAGE_RENEWAL_FORM);
+  }
+
+  @Test
+  public void requestingCoverageRenewal_shouldSummarizeCoverage() {
+    subject.requestCoverageRenewal(COVERAGE_RENEWAL_FORM);
+
+    verify(coverageSummarizer).summarizeCoverageRenewal(COVERAGE_RENEWAL_FORM);
+  }
+
+  @Test
+  public void requestingCoverageRenewal_shouldComputePremium() {
+    subject.requestCoverageRenewal(COVERAGE_RENEWAL_FORM);
+
+    verify(premiumCalculator).computeCoverageRenewalPremium(COVERAGE_RENEWAL_FORM);
+  }
+
+  @Test
+  public void requestingCoverageRenewal_shouldProduceCorrespondingCoverageDto() {
+    CoverageDto coverageDto = subject.requestCoverageRenewal(COVERAGE_RENEWAL_FORM);
+
+    assertEquals(COVERAGE_DTO, coverageDto);
   }
 }
