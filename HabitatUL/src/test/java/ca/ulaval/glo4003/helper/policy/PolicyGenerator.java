@@ -4,10 +4,7 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicy
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
 import ca.ulaval.glo4003.helper.shared.EnumSampler;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
@@ -109,6 +106,10 @@ public class PolicyGenerator {
 
   public static TriggerRenewalRequest createTriggerRenewalRequest() {
     return new TriggerRenewalRequest(createCoverageAmount());
+  }
+
+  public static TriggerRenewalDto createTriggerRenewalDto() {
+    return new TriggerRenewalDto(createCoverageAmount());
   }
 
   public static OpenClaimDto createOpenClaimDto() {

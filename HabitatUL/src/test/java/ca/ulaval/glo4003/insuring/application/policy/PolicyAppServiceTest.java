@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
@@ -58,6 +59,7 @@ public class PolicyAppServiceTest {
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsureBicycleDto();
   private static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
+  private static final TriggerRenewalDto TRIGGER_RENEWAL_DTO = createTriggerRenewalDto();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
 
@@ -99,11 +101,18 @@ public class PolicyAppServiceTest {
             any(PremiumDetails.class),
             any(PolicyModificationValidityPeriodProvider.class)))
         .thenReturn(policyModification);
+    when(policy.submitCoverageRenewal(
+            any(CoverageDetails.class),
+            any(PremiumDetails.class),
+            any(PolicyModificationValidityPeriodProvider.class)))
+        .thenReturn(policyModification);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
     when(coverageDomainService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
         .thenReturn(COVERAGE_DTO);
     when(coverageDomainService.requestCoverageModification(any(CoverageModificationForm.class)))
+        .thenReturn(COVERAGE_DTO);
+    when(coverageDomainService.requestCoverageRenewal(any(CoverageRenewalForm.class)))
         .thenReturn(COVERAGE_DTO);
     when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
         .thenReturn(claim);
@@ -235,6 +244,54 @@ public class PolicyAppServiceTest {
   @Test(expected = EmptyCoverageModificationRequestError.class)
   public void modifyingCoverage_withEmptyCoverageModificationRequest_shouldThrow() {
     subject.modifyCoverage(POLICY_ID, createEmptyModifyCoverageDto());
+  }
+
+  @Test
+  public void triggeringRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void triggeringRenewal_shouldRequestCoverageRenewal() {
+    subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
+
+    verify(coverageDomainService)
+        .requestCoverageRenewal(argThat(matchesCoverageRenewalForm(policy, TRIGGER_RENEWAL_DTO)));
+  }
+
+  @Test
+  public void triggeringRenewal_shouldSubmitRenewal() {
+    subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
+
+    verify(policy)
+        .submitCoverageRenewal(
+            COVERAGE_DTO.getCoverageDetails(),
+            COVERAGE_DTO.getPremiumDetails(),
+            policyModificationValidityPeriodProvider);
+  }
+
+  @Test
+  public void triggeringRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test
+  public void triggeringRenewal_shouldProduceCorrespondingPolicyModificationDto() {
+    PolicyModificationDto policyModificationDto =
+        subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
+
+    assertThat(policyModificationDto, matchesPolicyModificationDto(policyModification));
+  }
+
+  @Test(expected = PolicyNotFoundError.class)
+  public void triggeringRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
+    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
   }
 
   @Test

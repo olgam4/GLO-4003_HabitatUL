@@ -2,10 +2,8 @@ package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 
@@ -20,6 +18,13 @@ public class PolicyAssembler {
         modifyCoverageDto.getPersonalPropertyCoverageAmount(),
         modifyCoverageDto.getCivilLiabilityLimit(),
         policy.getPolicyInformation().getBuilding().getNumberOfUnits(),
+        policy.getCoverageDetails(),
+        policy.getPremiumDetails());
+  }
+
+  public CoverageRenewalForm from(TriggerRenewalDto triggerRenewalDto, Policy policy) {
+    return new CoverageRenewalForm(
+        triggerRenewalDto.getPersonalPropertyCoverageAmount(),
         policy.getCoverageDetails(),
         policy.getPremiumDetails());
   }

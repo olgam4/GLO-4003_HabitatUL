@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
@@ -128,9 +129,22 @@ public class PolicyAppService {
     }
   }
 
-  public PolicyModification triggerRenewal(PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
-    // TODO: CONTINUE FROM HERE
-    return null;
+  public PolicyModificationDto triggerRenewal(
+      PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      CoverageRenewalForm coverageRenewalForm = policyAssembler.from(triggerRenewalDto, policy);
+      CoverageDto coverageDto = coverageDomainService.requestCoverageRenewal(coverageRenewalForm);
+      PolicyModification policyModification =
+          policy.submitCoverageRenewal(
+              coverageDto.getCoverageDetails(),
+              coverageDto.getPremiumDetails(),
+              policyModificationValidityPeriodProvider);
+      policyRepository.update(policy);
+      return policyAssembler.from(policyModification);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
   }
 
   public PolicyDto confirmModification(

@@ -44,6 +44,7 @@ public class PremiumAssembler {
 
   public CoverageModificationPremiumInput toUpdatedCoverageModificationPremiumInput(
       CoverageModificationForm coverageModificationForm) {
+    // TODO: CHECK IF NULL VALUE OTHERWISE SET SAME VALUE AS CURRENT
     return new CoverageModificationPremiumInput(coverageModificationForm.getCivilLiabilityLimit());
   }
 }

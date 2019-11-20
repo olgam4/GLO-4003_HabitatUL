@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.coverage.application.premium.PremiumCalculator;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 
@@ -52,5 +53,10 @@ public class CoverageDomainService {
     PremiumDetails premiumDetails =
         premiumCalculator.computeCoverageModificationPremium(coverageModificationForm);
     return new CoverageDto(coverageDetails, premiumDetails);
+  }
+
+  public CoverageDto requestCoverageRenewal(CoverageRenewalForm coverageRenewalForm) {
+    // TODO: continue from here
+    return null;
   }
 }

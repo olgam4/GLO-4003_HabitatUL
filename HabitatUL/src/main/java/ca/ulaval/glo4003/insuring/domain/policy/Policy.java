@@ -117,6 +117,14 @@ public class Policy extends AggregateRoot {
         clockProvider);
   }
 
+  public PolicyModification submitCoverageRenewal(
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
+      PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
+    // TODO: continue from here
+    return null;
+  }
+
   public void confirmModification(PolicyModificationId policyModificationId) {
     checkIfInactivePolicy();
     PolicyModification policyModification =

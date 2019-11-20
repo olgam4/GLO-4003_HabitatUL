@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.matcher;
 
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.gateway.presentation.coverage.request.BicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
@@ -90,6 +91,15 @@ public class PolicyMatcher {
         hasProperty(
             "coverageAmount", equalTo(modifyCoverageDto.getPersonalPropertyCoverageAmount())),
         hasProperty("civilLiabilityLimit", equalTo(modifyCoverageDto.getCivilLiabilityLimit())),
+        hasProperty("currentCoverageDetails", equalTo(policy.getCoverageDetails())),
+        hasProperty("currentPremiumDetails", equalTo(policy.getPremiumDetails())));
+  }
+
+  public static Matcher<CoverageRenewalForm> matchesCoverageRenewalForm(
+      final Policy policy, final TriggerRenewalDto triggerRenewalDto) {
+    return allOf(
+        hasProperty(
+            "coverageAmount", equalTo(triggerRenewalDto.getPersonalPropertyCoverageAmount())),
         hasProperty("currentCoverageDetails", equalTo(policy.getCoverageDetails())),
         hasProperty("currentPremiumDetails", equalTo(policy.getPremiumDetails())));
   }
