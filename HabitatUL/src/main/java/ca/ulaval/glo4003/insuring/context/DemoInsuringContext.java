@@ -5,7 +5,11 @@ import ca.ulaval.glo4003.insuring.communication.policy.PolicyBoundedContextEvent
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.insuring.infrastructure.policy.modification.ConfigBasedPolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.insuring.infrastructure.policy.renewal.ConfigBasedPolicyCoveragePeriodProvider;
+import ca.ulaval.glo4003.insuring.infrastructure.policy.renewal.ConfigBasedPolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.insuring.persistence.claim.InMemoryClaimRepository;
 import ca.ulaval.glo4003.insuring.persistence.policy.EventPublisherPolicyRepositoryDecorator;
 import ca.ulaval.glo4003.insuring.persistence.policy.InMemoryPolicyRepository;
@@ -18,6 +22,8 @@ public class DemoInsuringContext {
     register(
         PolicyModificationValidityPeriodProvider.class,
         new ConfigBasedPolicyModificationValidityPeriodProvider());
+    register(PolicyRenewalPeriodProvider.class, new ConfigBasedPolicyRenewalPeriodProvider());
+    register(PolicyCoveragePeriodProvider.class, new ConfigBasedPolicyCoveragePeriodProvider());
     register(
         PolicyRepository.class,
         new EventPublisherPolicyRepositoryDecorator(new InMemoryPolicyRepository(), mediator));

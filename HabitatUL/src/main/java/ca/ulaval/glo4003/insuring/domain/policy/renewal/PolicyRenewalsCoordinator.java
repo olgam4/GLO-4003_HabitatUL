@@ -46,7 +46,7 @@ public class PolicyRenewalsCoordinator {
       Date currentCoveragePeriodEndDate,
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
-      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider,
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider,
       ClockProvider clockProvider) {
     return updateRenewalsStatus(
         () ->
@@ -54,7 +54,7 @@ public class PolicyRenewalsCoordinator {
                 currentCoveragePeriodEndDate,
                 proposedCoverageDetails,
                 proposedPremiumDetails,
-                policyCoveragePeriodLengthProvider,
+                policyCoveragePeriodProvider,
                 clockProvider));
   }
 
@@ -62,13 +62,12 @@ public class PolicyRenewalsCoordinator {
       Date currentCoveragePeriodEndDate,
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
-      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider,
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider,
       ClockProvider clockProvider) {
     checkIfAcceptedRenewalAlreadyExist();
     PolicyRenewalId policyRenewalId = new PolicyRenewalId();
     Period renewalCoveragePeriod =
-        computeRenewalCoveragePeriod(
-            currentCoveragePeriodEndDate, policyCoveragePeriodLengthProvider);
+        computeRenewalCoveragePeriod(currentCoveragePeriodEndDate, policyCoveragePeriodProvider);
     PolicyRenewal policyRenewal =
         new PolicyRenewal(
             policyRenewalId,
@@ -83,12 +82,11 @@ public class PolicyRenewalsCoordinator {
 
   private Period computeRenewalCoveragePeriod(
       Date currentCoveragePeriodEndDate,
-      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider) {
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider) {
     Date renewalCoveragePeriodStartDate =
         currentCoveragePeriodEndDate.plus(java.time.Period.ofDays(1));
     Date renewalCoveragePeriodEndDate =
-        renewalCoveragePeriodStartDate.plus(
-            policyCoveragePeriodLengthProvider.getPolicyCoveragePeriod());
+        renewalCoveragePeriodStartDate.plus(policyCoveragePeriodProvider.getPolicyCoveragePeriod());
     return new Period(renewalCoveragePeriodStartDate, renewalCoveragePeriodEndDate);
   }
 

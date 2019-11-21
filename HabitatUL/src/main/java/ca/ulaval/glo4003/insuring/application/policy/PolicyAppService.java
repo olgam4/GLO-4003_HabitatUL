@@ -23,9 +23,10 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
@@ -34,7 +35,8 @@ public class PolicyAppService {
   private PolicyRepository policyRepository;
   private CoverageDomainService coverageDomainService;
   private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
-  private PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider;
+  private PolicyRenewalPeriodProvider policyRenewalPeriodProvider;
+  private PolicyCoveragePeriodProvider policyCoveragePeriodProvider;
   private ClaimFactory claimFactory;
   private ClaimRepository claimRepository;
 
@@ -45,7 +47,8 @@ public class PolicyAppService {
         ServiceLocator.resolve(PolicyRepository.class),
         new CoverageDomainService(),
         ServiceLocator.resolve(PolicyModificationValidityPeriodProvider.class),
-        ServiceLocator.resolve(PolicyCoveragePeriodLengthProvider.class),
+        ServiceLocator.resolve(PolicyRenewalPeriodProvider.class),
+        ServiceLocator.resolve(PolicyCoveragePeriodProvider.class),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));
   }
@@ -56,7 +59,8 @@ public class PolicyAppService {
       PolicyRepository policyRepository,
       CoverageDomainService coverageDomainService,
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider,
-      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider,
+      PolicyRenewalPeriodProvider policyRenewalPeriodProvider,
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository) {
     this.policyAssembler = policyAssembler;
@@ -64,7 +68,8 @@ public class PolicyAppService {
     this.policyRepository = policyRepository;
     this.coverageDomainService = coverageDomainService;
     this.policyModificationValidityPeriodProvider = policyModificationValidityPeriodProvider;
-    this.policyCoveragePeriodLengthProvider = policyCoveragePeriodLengthProvider;
+    this.policyRenewalPeriodProvider = policyRenewalPeriodProvider;
+    this.policyCoveragePeriodProvider = policyCoveragePeriodProvider;
     this.claimFactory = claimFactory;
     this.claimRepository = claimRepository;
   }
@@ -158,7 +163,8 @@ public class PolicyAppService {
           policy.submitCoverageRenewal(
               coverageDto.getCoverageDetails(),
               coverageDto.getPremiumDetails(),
-              policyCoveragePeriodLengthProvider);
+              policyRenewalPeriodProvider,
+              policyCoveragePeriodProvider);
       policyRepository.update(policy);
       return policyAssembler.from(policyRenewal);
     } catch (PolicyNotFoundException e) {

@@ -81,6 +81,7 @@ public class ErrorResponseFactory {
 
   private static void registerInsuringErrors() {
     STATUS_MAP.put(AnotherRenewalAlreadyAcceptedError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(CannotTriggerRenewalBeforeRenewalPeriodError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(ClaimNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CouldNotOpenClaimError.class, Status.BAD_REQUEST);

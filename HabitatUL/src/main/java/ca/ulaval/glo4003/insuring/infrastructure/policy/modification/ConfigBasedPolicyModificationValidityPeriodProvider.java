@@ -12,9 +12,9 @@ public class ConfigBasedPolicyModificationValidityPeriodProvider
     implements PolicyModificationValidityPeriodProvider {
   static final String FILE_PATH = "config.properties";
   static final String PERIOD_TEMPORAL_AMOUNT_KEY =
-      "policyModification.validityPeriod.temporalAmount";
+      "policy.modificationValidityPeriod.temporalAmount";
   static final String PERIOD_TEMPORAL_AMOUNT_DEFAULT_VALUE = "5";
-  static final String PERIOD_TEMPORAL_UNIT_KEY = "policyModification.validityPeriod.temporalUnit";
+  static final String PERIOD_TEMPORAL_UNIT_KEY = "policy.modificationValidityPeriod.temporalUnit";
   static final String PERIOD_TEMPORAL_UNIT_DEFAULT_VALUE = "DAYS";
   private Duration policyModificationValidityPeriod;
 

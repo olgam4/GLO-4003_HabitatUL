@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.domain.policy.error.CannotTriggerRenewalBeforeRenewalPeriodError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
@@ -15,10 +16,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModifications
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.*;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -168,28 +166,43 @@ public class Policy extends AggregateRoot {
   public PolicyRenewal submitCoverageRenewal(
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
-      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider) {
+      PolicyRenewalPeriodProvider policyRenewalPeriodProvider,
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider) {
     return updateStatus(
         () ->
             submitCoverageRenewalWithoutUpdate(
                 proposedCoverageDetails,
                 proposedPremiumDetails,
-                policyCoveragePeriodLengthProvider));
+                policyRenewalPeriodProvider,
+                policyCoveragePeriodProvider));
   }
 
   private PolicyRenewal submitCoverageRenewalWithoutUpdate(
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
-      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider) {
+      PolicyRenewalPeriodProvider policyRenewalPeriodProvider,
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider) {
     checkIfInactivePolicy();
+    checkIfRenewalPeriodStarted(policyRenewalPeriodProvider);
     status = RENEWING;
     Date renewalEffectiveDate = policyHistoric.getCurrentCoveragePeriod().getEndDate();
     return policyRenewalsCoordinator.registerPolicyRenewal(
         renewalEffectiveDate,
         proposedCoverageDetails,
         proposedPremiumDetails,
-        policyCoveragePeriodLengthProvider,
+        policyCoveragePeriodProvider,
         clockProvider);
+  }
+
+  private void checkIfRenewalPeriodStarted(
+      PolicyRenewalPeriodProvider policyRenewalPeriodProvider) {
+    java.time.Period policyRenewalPeriod = policyRenewalPeriodProvider.getPolicyRenewalPeriod();
+    Period currentCoveragePeriod = policyHistoric.getCurrentCoveragePeriod();
+    Date earliestDateToTriggerRenewal =
+        currentCoveragePeriod.getEndDate().minus(policyRenewalPeriod);
+    if (Date.now(clockProvider.getClock()).isBefore(earliestDateToTriggerRenewal)) {
+      throw new CannotTriggerRenewalBeforeRenewalPeriodError();
+    }
   }
 
   public void acceptRenewal(PolicyRenewalId policyRenewalId) {

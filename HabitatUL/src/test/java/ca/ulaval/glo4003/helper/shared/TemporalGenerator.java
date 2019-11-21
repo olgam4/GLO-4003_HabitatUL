@@ -54,7 +54,7 @@ public class TemporalGenerator {
     return Date.from(date1.getValue().plusDays(numberOfDays));
   }
 
-  private static long numberDaysBetween(Date date1, Date date2) {
+  public static long numberDaysBetween(Date date1, Date date2) {
     return Math.abs(date1.getValue().toEpochDay() - date2.getValue().toEpochDay());
   }
 

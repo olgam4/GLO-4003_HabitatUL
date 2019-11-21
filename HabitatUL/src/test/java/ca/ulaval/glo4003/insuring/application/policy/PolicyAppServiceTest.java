@@ -24,9 +24,10 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
@@ -75,7 +76,8 @@ public class PolicyAppServiceTest {
   @Mock private PolicyModification policyModification;
   @Mock private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   @Mock private PolicyRenewal policyRenewal;
-  @Mock private PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider;
+  @Mock private PolicyRenewalPeriodProvider policyRenewalPeriodProvider;
+  @Mock private PolicyCoveragePeriodProvider policyCoveragePeriodProvider;
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
@@ -111,7 +113,8 @@ public class PolicyAppServiceTest {
     when(policy.submitCoverageRenewal(
             any(CoverageDetails.class),
             any(PremiumDetails.class),
-            any(PolicyCoveragePeriodLengthProvider.class)))
+            any(PolicyRenewalPeriodProvider.class),
+            any(PolicyCoveragePeriodProvider.class)))
         .thenReturn(policyRenewal);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
@@ -131,7 +134,8 @@ public class PolicyAppServiceTest {
             policyRepository,
             coverageDomainService,
             policyModificationValidityPeriodProvider,
-            policyCoveragePeriodLengthProvider,
+            policyRenewalPeriodProvider,
+            policyCoveragePeriodProvider,
             claimFactory,
             claimRepository);
   }
@@ -313,7 +317,8 @@ public class PolicyAppServiceTest {
         .submitCoverageRenewal(
             COVERAGE_DTO.getCoverageDetails(),
             COVERAGE_DTO.getPremiumDetails(),
-            policyCoveragePeriodLengthProvider);
+            policyRenewalPeriodProvider,
+            policyCoveragePeriodProvider);
   }
 
   @Test

@@ -38,11 +38,11 @@ public class ConfigBasedPolicyModificationValidityPeriodProviderTest {
     when(configFileReader.read(FILE_PATH)).thenReturn(properties);
     subject = new ConfigBasedPolicyModificationValidityPeriodProvider(configFileReader);
 
-    Duration quoteValidityPeriod = subject.getPolicyModificationValidityPeriod();
+    Duration policyModificationValidityPeriod = subject.getPolicyModificationValidityPeriod();
 
     Duration expected =
         Duration.of(PERIOD_TEMPORAL_AMOUNT_OVERRIDDEN, PERIOD_TEMPORAL_UNIT_OVERRIDDEN);
-    assertEquals(expected, quoteValidityPeriod);
+    assertEquals(expected, policyModificationValidityPeriod);
   }
 
   @Test
@@ -51,11 +51,11 @@ public class ConfigBasedPolicyModificationValidityPeriodProviderTest {
     when(configFileReader.read(FILE_PATH)).thenReturn(new Properties());
     subject = new ConfigBasedPolicyModificationValidityPeriodProvider(configFileReader);
 
-    Duration quoteValidityPeriod = subject.getPolicyModificationValidityPeriod();
+    Duration policyModificationValidityPeriod = subject.getPolicyModificationValidityPeriod();
 
     int expectedPeriodTemporalAmount = Integer.parseInt(PERIOD_TEMPORAL_AMOUNT_DEFAULT_VALUE);
     ChronoUnit expectedPeriodTemporalUnit = ChronoUnit.valueOf(PERIOD_TEMPORAL_UNIT_DEFAULT_VALUE);
     Duration expected = Duration.of(expectedPeriodTemporalAmount, expectedPeriodTemporalUnit);
-    assertEquals(expected, quoteValidityPeriod);
+    assertEquals(expected, policyModificationValidityPeriod);
   }
 }

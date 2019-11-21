@@ -14,7 +14,7 @@ public abstract class PolicyModificationValidityPeriodProviderIT {
   }
 
   @Test
-  public void gettingPolicyModificationValidityPeriod_shouldProvideValidityPeriod() {
+  public void gettingPolicyModificationValidityPeriod_shouldProvidePeriod() {
     assertNotNull(subject.getPolicyModificationValidityPeriod());
   }
 
