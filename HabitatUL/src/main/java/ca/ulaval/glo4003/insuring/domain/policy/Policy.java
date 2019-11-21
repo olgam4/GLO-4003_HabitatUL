@@ -22,13 +22,14 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinato
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
+import org.glassfish.jersey.internal.util.Producer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
-import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.RENEWING;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
 
 public class Policy extends AggregateRoot {
   private final List<ClaimId> claims = new ArrayList<>();
@@ -98,6 +99,20 @@ public class Policy extends AggregateRoot {
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
+    return updateStatus(
+        () ->
+            submitInsureBicycleModificationWithoutUpdate(
+                bicycle,
+                proposedCoverageDetails,
+                proposedPremiumDetails,
+                policyModificationValidityPeriodProvider));
+  }
+
+  private PolicyModification submitInsureBicycleModificationWithoutUpdate(
+      Bicycle bicycle,
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
+      PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
     checkIfInactivePolicy();
     PolicyInformationModifier policyInformationModifier =
         new InsureBicyclePolicyInformationModifier(bicycle);
@@ -114,6 +129,18 @@ public class Policy extends AggregateRoot {
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
+    return updateStatus(
+        () ->
+            submitCoverageModificationWithoutUpdate(
+                proposedCoverageDetails,
+                proposedPremiumDetails,
+                policyModificationValidityPeriodProvider));
+  }
+
+  private PolicyModification submitCoverageModificationWithoutUpdate(
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
+      PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
     checkIfInactivePolicy();
     PolicyInformationModifier policyInformationModifier = new NoImpactPolicyInformationModifier();
     return policyModificationsCoordinator.registerPolicyModification(
@@ -126,13 +153,31 @@ public class Policy extends AggregateRoot {
   }
 
   public void confirmModification(PolicyModificationId policyModificationId) {
+    updateStatus(() -> confirmModificationWithoutUpdate(policyModificationId));
+  }
+
+  private PolicyModification confirmModificationWithoutUpdate(
+      PolicyModificationId policyModificationId) {
     checkIfInactivePolicy();
     PolicyModification policyModification =
         policyModificationsCoordinator.retrieveConfirmedModification(policyModificationId);
     policyHistoric.updatePolicyHistory(policyModification);
+    return policyModification;
   }
 
   public PolicyRenewal submitCoverageRenewal(
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
+      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider) {
+    return updateStatus(
+        () ->
+            submitCoverageRenewalWithoutUpdate(
+                proposedCoverageDetails,
+                proposedPremiumDetails,
+                policyCoveragePeriodLengthProvider));
+  }
+
+  private PolicyRenewal submitCoverageRenewalWithoutUpdate(
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
       PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider) {
@@ -148,12 +193,25 @@ public class Policy extends AggregateRoot {
   }
 
   public void acceptRenewal(PolicyRenewalId policyRenewalId) {
+    updateStatus(() -> acceptRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal acceptRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
     checkIfInactivePolicy();
-    policyRenewalsCoordinator.retrieveAcceptedRenewal(policyRenewalId);
+    return policyRenewalsCoordinator.retrieveAcceptedRenewal(policyRenewalId);
+  }
+
+  public void cancelRenewal(PolicyRenewalId policyRenewalId) {
+    updateStatus(() -> cancelRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal cancelRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
+    checkIfInactivePolicy();
+    status = ACTIVE;
+    return policyRenewalsCoordinator.cancelRenewal(policyRenewalId);
   }
 
   private void checkIfInactivePolicy() {
-    // TODO: update status here
     if (status.equals(INACTIVE)) {
       throw new InactivePolicyError(policyId);
     }
@@ -173,5 +231,19 @@ public class Policy extends AggregateRoot {
     if (!getCoveragePeriod().isWithin(now)) {
       throw new ClaimOutsideCoveragePeriodError();
     }
+  }
+
+  private <T> T updateStatus(Producer<T> call) {
+    updateStatus();
+    return call.call();
+  }
+
+  private void updateStatus() {
+    if (isOutdated()) status = INACTIVE;
+  }
+
+  private boolean isOutdated() {
+    return DateTime.now(clockProvider.getClock())
+        .isAfter(policyHistoric.getCurrentCoveragePeriod().getEndDate().atStartOfDay());
   }
 }

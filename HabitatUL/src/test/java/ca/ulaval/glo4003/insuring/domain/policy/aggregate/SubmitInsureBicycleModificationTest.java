@@ -32,8 +32,7 @@ import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerato
 import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyModificationsCoordinator;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDuration;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
 import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.PENDING;
@@ -49,7 +48,10 @@ public class SubmitInsureBicycleModificationTest {
           .withBasicBlockPremiumDetail(CURRENT_TOTAL_PREMIUM)
           .build();
   private static final PolicyView CURRENT_POLICY_VIEW =
-      PolicyViewBuilder.aPolicyView().withPremiumDetails(CURRENT_PREMIUM_DETAILS).build();
+      PolicyViewBuilder.aPolicyView()
+          .withCoveragePeriod(createCurrentPeriod())
+          .withPremiumDetails(CURRENT_PREMIUM_DETAILS)
+          .build();
   private static final PolicyHistoric POLICY_HISTORIC =
       PolicyHistoricBuilder.aPolicyHistoric().withPolicyView(CURRENT_POLICY_VIEW).build();
   private static final Duration VALIDITY_PERIOD = createDuration();

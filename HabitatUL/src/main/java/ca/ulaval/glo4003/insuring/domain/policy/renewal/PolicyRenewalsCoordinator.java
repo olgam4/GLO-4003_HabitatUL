@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyRenewalNotFoundError
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
+import org.glassfish.jersey.internal.util.Producer;
 
 import java.util.*;
 
@@ -25,12 +26,18 @@ public class PolicyRenewalsCoordinator {
   }
 
   public List<PolicyRenewal> getRenewals() {
-    updateRenewalsStatus();
+    return updateRenewalsStatus(this::getRenewalsWithoutUpdate);
+  }
+
+  private List<PolicyRenewal> getRenewalsWithoutUpdate() {
     return new ArrayList<>(renewals.values());
   }
 
   public PolicyRenewal getRenewal(PolicyRenewalId policyRenewalId) {
-    updateRenewalsStatus();
+    return updateRenewalsStatus(() -> getRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal getRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
     return Optional.ofNullable(renewals.get(policyRenewalId))
         .orElseThrow(() -> new PolicyRenewalNotFoundError(policyRenewalId));
   }
@@ -41,7 +48,22 @@ public class PolicyRenewalsCoordinator {
       PremiumDetails proposedPremiumDetails,
       PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider,
       ClockProvider clockProvider) {
-    updateRenewalsStatus();
+    return updateRenewalsStatus(
+        () ->
+            registerPolicyRenewalWithoutUpdate(
+                currentCoveragePeriodEndDate,
+                proposedCoverageDetails,
+                proposedPremiumDetails,
+                policyCoveragePeriodLengthProvider,
+                clockProvider));
+  }
+
+  private PolicyRenewal registerPolicyRenewalWithoutUpdate(
+      Date currentCoveragePeriodEndDate,
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
+      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider,
+      ClockProvider clockProvider) {
     checkIfAcceptedRenewalAlreadyExist();
     PolicyRenewalId policyRenewalId = new PolicyRenewalId();
     Period renewalCoveragePeriod =
@@ -71,16 +93,15 @@ public class PolicyRenewalsCoordinator {
   }
 
   public PolicyRenewal retrieveAcceptedRenewal(PolicyRenewalId policyRenewalId) {
-    updateRenewalsStatus();
+    return updateRenewalsStatus(() -> retrieveAcceptedRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal retrieveAcceptedRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
     checkIfAcceptedRenewalAlreadyExist();
-    PolicyRenewal policyRenewal = getRenewal(policyRenewalId);
+    PolicyRenewal policyRenewal = getRenewalWithoutUpdate(policyRenewalId);
     acceptRenewal(policyRenewal);
     expirePendingRenewals();
     return policyRenewal;
-  }
-
-  private void updateRenewalsStatus() {
-    renewals.values().stream().forEach(PolicyRenewal::updateStatus);
   }
 
   private void checkIfAcceptedRenewalAlreadyExist() {
@@ -100,5 +121,24 @@ public class PolicyRenewalsCoordinator {
 
   private void expirePendingRenewals() {
     renewals.values().stream().forEach(PolicyRenewal::expire);
+  }
+
+  public PolicyRenewal cancelRenewal(PolicyRenewalId policyRenewalId) {
+    return updateRenewalsStatus(() -> cancelRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal cancelRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
+    PolicyRenewal policyRenewal = getRenewal(policyRenewalId);
+    policyRenewal.cancel();
+    return policyRenewal;
+  }
+
+  private <T> T updateRenewalsStatus(Producer<T> call) {
+    updateRenewalsStatus();
+    return call.call();
+  }
+
+  private void updateRenewalsStatus() {
+    renewals.values().stream().forEach(PolicyRenewal::updateStatus);
   }
 }

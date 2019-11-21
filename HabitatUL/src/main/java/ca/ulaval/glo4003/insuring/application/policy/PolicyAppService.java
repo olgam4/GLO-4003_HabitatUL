@@ -170,7 +170,18 @@ public class PolicyAppService {
     try {
       Policy policy = policyRepository.getById(policyId);
       policy.acceptRenewal(policyRenewalId);
-      // TODO: set up background task for renewal processing on end of current term
+      // TODO: schedule background task
+      policyRepository.update(policy);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
+  }
+
+  public void cancelRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      policy.cancelRenewal(policyRenewalId);
+      // TODO: cancel background task
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);

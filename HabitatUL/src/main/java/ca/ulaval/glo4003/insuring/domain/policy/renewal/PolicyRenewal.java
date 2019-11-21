@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalAlreadyCanceledError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalAlreadyConfirmedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalExpiredError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalNotYetAcceptedError;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -90,5 +91,16 @@ public class PolicyRenewal {
 
   public void expire() {
     if (status.equals(PENDING)) status = EXPIRED;
+  }
+
+  public void cancel() {
+    checkIfRenewalIsNotAccepted();
+    status = CANCELED;
+  }
+
+  private void checkIfRenewalIsNotAccepted() {
+    if (!status.equals(ACCEPTED)) {
+      throw new RenewalNotYetAcceptedError(policyRenewalId);
+    }
   }
 }

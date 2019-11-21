@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyRenewalBuilder;
+import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.error.AnotherRenewalAlreadyAcceptedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
@@ -28,9 +29,7 @@ import java.util.Arrays;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
-import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPolicyView;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createJavaTimePeriod;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.ACCEPTED;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.PENDING;
@@ -43,7 +42,8 @@ public class SubmitCoverageRenewalTest {
   private static final CoverageDetails PROPOSED_COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails PROPOSED_PREMIUM_DETAILS = createPremiumDetails();
   private static final java.time.Period POLICY_COVERAGE_PERIOD_LENGTH = createJavaTimePeriod();
-  private static final PolicyView CURRENT_POLICY_VIEW = createPolicyView();
+  private static final PolicyView CURRENT_POLICY_VIEW =
+      PolicyViewBuilder.aPolicyView().withCoveragePeriod(createCurrentPeriod()).build();
   private static final PolicyHistoric POLICY_HISTORIC =
       PolicyHistoricBuilder.aPolicyHistoric().withPolicyView(CURRENT_POLICY_VIEW).build();
 

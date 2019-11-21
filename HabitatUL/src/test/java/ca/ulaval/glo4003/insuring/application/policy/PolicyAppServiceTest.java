@@ -330,6 +330,34 @@ public class PolicyAppServiceTest {
   }
 
   @Test
+  public void cancellingRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void cancellingRenewal_shouldCancelRenewal() {
+    subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policy).cancelRenewal(POLICY_RENEWAL_ID);
+  }
+
+  @Test
+  public void cancellingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test(expected = PolicyNotFoundError.class)
+  public void cancellingRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
+    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+  }
+
+  @Test
   public void confirmingModification_shouldGetPolicyById() throws PolicyNotFoundException {
     subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
 

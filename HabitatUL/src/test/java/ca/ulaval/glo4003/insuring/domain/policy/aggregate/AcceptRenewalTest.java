@@ -12,7 +12,6 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
-import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,11 +30,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AcceptRenewalTest {
   private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
-  private static final Date ACCEPTATION_DATE = getNowDate(CLOCK_PROVIDER);
-  private static final Date CURRENT_COVERAGE_PERIOD_START_DATE = createDateBefore(ACCEPTATION_DATE);
-  private static final Date CURRENT_COVERAGE_PERIOD_END_DATE = createDateAfter(ACCEPTATION_DATE);
-  private static final Period CURRENT_COVERAGE_PERIOD =
-      new Period(CURRENT_COVERAGE_PERIOD_START_DATE, CURRENT_COVERAGE_PERIOD_END_DATE);
+  private static final Period CURRENT_COVERAGE_PERIOD = createCurrentPeriod();
   private static final PolicyView CURRENT_POLICY_VIEW =
       PolicyViewBuilder.aPolicyView().withCoveragePeriod(CURRENT_COVERAGE_PERIOD).build();
   private static final List<PolicyView> PREVIOUS_POLICY_VIEWS =
