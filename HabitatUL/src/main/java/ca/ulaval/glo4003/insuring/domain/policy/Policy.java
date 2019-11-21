@@ -15,7 +15,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModifications
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.RENEWING;
 
 public class Policy extends AggregateRoot {
   private final List<ClaimId> claims = new ArrayList<>();
@@ -33,6 +36,7 @@ public class Policy extends AggregateRoot {
   private PolicyStatus status;
   private PolicyHistoric policyHistoric;
   private PolicyModificationsCoordinator policyModificationsCoordinator;
+  private PolicyRenewalsCoordinator policyRenewalsCoordinator;
   private ClockProvider clockProvider;
 
   public Policy(
@@ -41,12 +45,14 @@ public class Policy extends AggregateRoot {
       PolicyStatus status,
       PolicyHistoric policyHistoric,
       PolicyModificationsCoordinator policyModificationsCoordinator,
+      PolicyRenewalsCoordinator policyRenewalsCoordinator,
       ClockProvider clockProvider) {
     this.policyId = policyId;
     this.quoteKey = quoteKey;
     this.status = status;
     this.policyHistoric = policyHistoric;
     this.policyModificationsCoordinator = policyModificationsCoordinator;
+    this.policyRenewalsCoordinator = policyRenewalsCoordinator;
     this.clockProvider = clockProvider;
   }
 
@@ -126,15 +132,18 @@ public class Policy extends AggregateRoot {
   }
 
   public PolicyRenewal submitCoverageRenewal(
-      CoverageDetails proposedCoverageDetails, PremiumDetails proposedPremiumDetails) {
-    // TODO: do we really need policy ModificationValidityPeriodProvider? dont think so, renewal
-    // TODO: check if inactive only then
-    // is valid until end of coverage period
-    // TODO: Set policy state in renewing mode
-    // TODO: block other modification while in renewing state
-    // TODO: create separate class for renewal
-    // TODO: only one renewal offer at the time
-    return null;
+      CoverageDetails proposedCoverageDetails,
+      PremiumDetails proposedPremiumDetails,
+      PolicyCoveragePeriodProvider policyCoveragePeriodProvider) {
+    checkIfInactivePolicy();
+    status = RENEWING;
+    Date renewalEffectiveDate = policyHistoric.getCurrentCoveragePeriod().getEndDate();
+    return policyRenewalsCoordinator.registerPolicyRenewal(
+        renewalEffectiveDate,
+        proposedCoverageDetails,
+        proposedPremiumDetails,
+        policyCoveragePeriodProvider,
+        clockProvider);
   }
 
   private void checkIfInactivePolicy() {

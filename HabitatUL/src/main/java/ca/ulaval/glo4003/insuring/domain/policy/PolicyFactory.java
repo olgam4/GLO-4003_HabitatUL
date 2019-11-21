@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -37,8 +38,15 @@ public class PolicyFactory {
         new PolicyHistoric(new HashSet<>(Arrays.asList(currentPolicyView)));
     PolicyModificationsCoordinator policyModificationsCoordinator =
         new PolicyModificationsCoordinator();
+    PolicyRenewalsCoordinator policyRenewalsCoordinator = new PolicyRenewalsCoordinator();
     return new Policy(
-        policyId, quoteKey, ACTIVE, policyHistoric, policyModificationsCoordinator, clockProvider);
+        policyId,
+        quoteKey,
+        ACTIVE,
+        policyHistoric,
+        policyModificationsCoordinator,
+        policyRenewalsCoordinator,
+        clockProvider);
   }
 
   private Period adjustCoveragePeriod(Period coveragePeriod, Date purchaseDate) {

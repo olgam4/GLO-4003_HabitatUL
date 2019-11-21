@@ -11,6 +11,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import com.github.javafaker.Faker;
 
 import java.util.List;
@@ -27,6 +29,7 @@ import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerat
 import static ca.ulaval.glo4003.helper.policy.PolicyHistoricGenerator.createPolicyHistoric;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModifications;
+import static ca.ulaval.glo4003.helper.policy.PolicyRenewalsGenerator.createPolicyRenewals;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 
 public class PolicyGenerator {
@@ -54,6 +57,7 @@ public class PolicyGenerator {
         createPolicyStatus(),
         createPolicyHistoric(),
         createPolicyModificationsCoordinator(),
+        createPolicyRenewalsCoordinator(),
         getClockProvider());
   }
 
@@ -81,6 +85,21 @@ public class PolicyGenerator {
                 Collectors.toMap(
                     PolicyModification::getPolicyModificationId,
                     policyModification -> policyModification,
+                    (a, b) -> b)));
+  }
+
+  public static PolicyRenewalsCoordinator createPolicyRenewalsCoordinator() {
+    return createPolicyRenewalsCoordinator(createPolicyRenewals());
+  }
+
+  private static PolicyRenewalsCoordinator createPolicyRenewalsCoordinator(
+      List<PolicyRenewal> policyRenewals) {
+    return new PolicyRenewalsCoordinator(
+        policyRenewals.stream()
+            .collect(
+                Collectors.toMap(
+                    PolicyRenewal::getPolicyRenewalId,
+                    policyRenewal -> policyRenewal,
                     (a, b) -> b)));
   }
 

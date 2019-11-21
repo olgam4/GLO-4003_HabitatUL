@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import com.github.javafaker.Faker;
 
@@ -19,6 +20,8 @@ public class PolicyBuilder {
   private final PolicyHistoric DEFAULT_POLICY_HISTORIC = createPolicyHistoric();
   private final PolicyModificationsCoordinator DEFAULT_POLICY_MODIFICATIONS_COORDINATOR =
       createPolicyModificationsCoordinator();
+  private final PolicyRenewalsCoordinator DEFAULT_POLICY_RENEWALS_COORDINATOR =
+      createPolicyRenewalsCoordinator();
   private final ClockProvider DEFAULT_CLOCK_PROVIDER = getClockProvider();
 
   private PolicyId policyId = DEFAULT_POLICY_ID;
@@ -27,6 +30,7 @@ public class PolicyBuilder {
   private PolicyHistoric policyHistoric = DEFAULT_POLICY_HISTORIC;
   private PolicyModificationsCoordinator policyModificationsCoordinator =
       DEFAULT_POLICY_MODIFICATIONS_COORDINATOR;
+  private PolicyRenewalsCoordinator policyRenewalsCoordinator = DEFAULT_POLICY_RENEWALS_COORDINATOR;
   private ClockProvider clockProvider = DEFAULT_CLOCK_PROVIDER;
 
   private PolicyBuilder() {}
@@ -63,6 +67,12 @@ public class PolicyBuilder {
 
   public Policy build() {
     return new Policy(
-        policyId, quoteKey, status, policyHistoric, policyModificationsCoordinator, clockProvider);
+        policyId,
+        quoteKey,
+        status,
+        policyHistoric,
+        policyModificationsCoordinator,
+        policyRenewalsCoordinator,
+        clockProvider);
   }
 }

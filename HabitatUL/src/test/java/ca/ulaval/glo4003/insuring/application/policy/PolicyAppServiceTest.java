@@ -24,6 +24,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -71,6 +72,7 @@ public class PolicyAppServiceTest {
   @Mock private PolicyModification policyModification;
   @Mock private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   @Mock private PolicyRenewal policyRenewal;
+  @Mock private PolicyCoveragePeriodProvider policyCoveragePeriodProvider;
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
@@ -103,7 +105,10 @@ public class PolicyAppServiceTest {
             any(PremiumDetails.class),
             any(PolicyModificationValidityPeriodProvider.class)))
         .thenReturn(policyModification);
-    when(policy.submitCoverageRenewal(any(CoverageDetails.class), any(PremiumDetails.class)))
+    when(policy.submitCoverageRenewal(
+            any(CoverageDetails.class),
+            any(PremiumDetails.class),
+            any(PolicyCoveragePeriodProvider.class)))
         .thenReturn(policyRenewal);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
@@ -123,6 +128,7 @@ public class PolicyAppServiceTest {
             policyRepository,
             coverageDomainService,
             policyModificationValidityPeriodProvider,
+            policyCoveragePeriodProvider,
             claimFactory,
             claimRepository);
   }
@@ -265,7 +271,10 @@ public class PolicyAppServiceTest {
     subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
 
     verify(policy)
-        .submitCoverageRenewal(COVERAGE_DTO.getCoverageDetails(), COVERAGE_DTO.getPremiumDetails());
+        .submitCoverageRenewal(
+            COVERAGE_DTO.getCoverageDetails(),
+            COVERAGE_DTO.getPremiumDetails(),
+            policyCoveragePeriodProvider);
   }
 
   @Test
