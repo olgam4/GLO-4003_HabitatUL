@@ -45,7 +45,6 @@ public class PolicyAssembler {
         policyRenewal.getPolicyRenewalId(),
         policyRenewal.getStatus(),
         policyRenewal.getCoveragePeriod(),
-        policyRenewal.getProposedTotalPremium(),
         policyRenewal.getProposedCoverageDetails(),
         policyRenewal.getProposedPremiumDetails());
   }

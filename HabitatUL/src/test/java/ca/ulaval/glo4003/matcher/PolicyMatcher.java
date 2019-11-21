@@ -86,7 +86,6 @@ public class PolicyMatcher {
         hasProperty("policyRenewalId", equalTo(policyRenewal.getPolicyRenewalId())),
         hasProperty("status", equalTo(policyRenewal.getStatus())),
         hasProperty("coveragePeriod", equalTo(policyRenewal.getCoveragePeriod())),
-        hasProperty("proposedTotalPremium", equalTo(policyRenewal.getProposedTotalPremium())),
         hasProperty("proposedCoverageDetails", equalTo(policyRenewal.getProposedCoverageDetails())),
         hasProperty("proposedPremiumDetails", equalTo(policyRenewal.getProposedPremiumDetails())));
   }

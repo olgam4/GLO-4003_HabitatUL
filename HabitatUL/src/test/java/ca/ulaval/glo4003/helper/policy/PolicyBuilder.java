@@ -60,6 +60,12 @@ public class PolicyBuilder {
     return this;
   }
 
+  public PolicyBuilder withPolicyRenewalsCoordinator(
+      PolicyRenewalsCoordinator policyRenewalsCoordinator) {
+    this.policyRenewalsCoordinator = policyRenewalsCoordinator;
+    return this;
+  }
+
   public PolicyBuilder withClockProvider(ClockProvider clockProvider) {
     this.clockProvider = clockProvider;
     return this;

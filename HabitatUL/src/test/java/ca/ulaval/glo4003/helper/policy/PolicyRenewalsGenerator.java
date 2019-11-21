@@ -13,7 +13,6 @@ import java.util.stream.IntStream;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPeriod;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 
@@ -25,7 +24,6 @@ public class PolicyRenewalsGenerator {
         createPolicyRenewalId(),
         createPolicyRenewalStatus(),
         createPeriod(),
-        createMoney(),
         createCoverageDetails(),
         createPremiumDetails());
   }
@@ -41,7 +39,6 @@ public class PolicyRenewalsGenerator {
         createPolicyRenewalId(),
         createPolicyRenewalStatus(),
         createPeriod(),
-        createMoney(),
         createCoverageDetails(),
         createPremiumDetails(),
         getClockProvider());

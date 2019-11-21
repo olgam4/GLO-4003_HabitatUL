@@ -94,6 +94,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyModificationNotFoundError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyNotFoundError.class, Status.NOT_FOUND);
+    STATUS_MAP.put(PolicyRenewalNotFoundError.class, Status.BAD_REQUEST);
   }
 
   public ErrorResponse createErrorResponse(Error error) {

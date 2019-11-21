@@ -15,7 +15,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModifications
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
-import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
@@ -134,7 +134,7 @@ public class Policy extends AggregateRoot {
   public PolicyRenewal submitCoverageRenewal(
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails,
-      PolicyCoveragePeriodProvider policyCoveragePeriodProvider) {
+      PolicyCoveragePeriodLengthProvider policyCoveragePeriodLengthProvider) {
     checkIfInactivePolicy();
     status = RENEWING;
     Date renewalEffectiveDate = policyHistoric.getCurrentCoveragePeriod().getEndDate();
@@ -142,7 +142,7 @@ public class Policy extends AggregateRoot {
         renewalEffectiveDate,
         proposedCoverageDetails,
         proposedPremiumDetails,
-        policyCoveragePeriodProvider,
+            policyCoveragePeriodLengthProvider,
         clockProvider);
   }
 
