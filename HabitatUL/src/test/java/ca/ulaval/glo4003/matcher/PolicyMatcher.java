@@ -12,6 +12,7 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.Matchers.*;
@@ -68,13 +69,26 @@ public class PolicyMatcher {
       final PolicyModification policyModification) {
     return allOf(
         hasProperty("policyModificationId", equalTo(policyModification.getPolicyModificationId())),
-        hasProperty("expirationDate", equalTo(policyModification.getExpirationDate())),
         hasProperty("status", equalTo(policyModification.getStatus())),
-        hasProperty("premiumAdjustment", equalTo(policyModification.getPremiumAdjustment())),
+        hasProperty("expirationDate", equalTo(policyModification.getExpirationDate())),
+        hasProperty(
+            "proposedPremiumAdjustment",
+            equalTo(policyModification.getProposedPremiumAdjustment())),
         hasProperty(
             "proposedCoverageDetails", equalTo(policyModification.getProposedCoverageDetails())),
         hasProperty(
             "proposedPremiumDetails", equalTo(policyModification.getProposedPremiumDetails())));
+  }
+
+  public static Matcher<PolicyRenewalDto> matchesPolicyRenewalDto(
+      final PolicyRenewal policyRenewal) {
+    return allOf(
+        hasProperty("policyRenewalId", equalTo(policyRenewal.getPolicyRenewalId())),
+        hasProperty("status", equalTo(policyRenewal.getStatus())),
+        hasProperty("coveragePeriod", equalTo(policyRenewal.getCoveragePeriod())),
+        hasProperty("proposedTotalPremium", equalTo(policyRenewal.getProposedTotalPremium())),
+        hasProperty("proposedCoverageDetails", equalTo(policyRenewal.getProposedCoverageDetails())),
+        hasProperty("proposedPremiumDetails", equalTo(policyRenewal.getProposedPremiumDetails())));
   }
 
   public static Matcher<BicycleEndorsementForm> matchesBicycleEndorsementForm(

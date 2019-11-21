@@ -139,39 +139,39 @@ public class ConfirmModificationTest {
   public void confirmingModification_shouldExpireOutdatedModifications() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
-    assertTrue(FIRST_OUTDATED_MODIFICATION.isExpired());
-    assertTrue(SECOND_OUTDATED_MODIFICATION.isExpired());
+    assertEquals(EXPIRED, FIRST_OUTDATED_MODIFICATION.getStatus());
+    assertEquals(EXPIRED, SECOND_OUTDATED_MODIFICATION.getStatus());
   }
 
   @Test
   public void confirmingModification_shouldConfirmModification() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
-    assertTrue(policyModification.isConfirmed());
+    assertEquals(CONFIRMED, policyModification.getStatus());
   }
 
   @Test
   public void confirmingModification_shouldExpirePendingModifications() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
-    assertTrue(FIRST_PENDING_MODIFICATION.isExpired());
-    assertTrue(SECOND_PENDING_MODIFICATION.isExpired());
+    assertEquals(EXPIRED, FIRST_PENDING_MODIFICATION.getStatus());
+    assertEquals(EXPIRED, SECOND_PENDING_MODIFICATION.getStatus());
   }
 
   @Test
   public void confirmingModification_shouldNotAffectAlreadyConfirmedModifications() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
-    assertTrue(FIRST_CONFIRMED_MODIFICATION.isConfirmed());
-    assertTrue(SECOND_CONFIRMED_MODIFICATION.isConfirmed());
+    assertEquals(CONFIRMED, FIRST_CONFIRMED_MODIFICATION.getStatus());
+    assertEquals(CONFIRMED, SECOND_CONFIRMED_MODIFICATION.getStatus());
   }
 
   @Test
   public void confirmingModification_shouldNotAffectAlreadyExpiredModifications() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
-    assertTrue(FIRST_EXPIRED_MODIFICATION.isExpired());
-    assertTrue(SECOND_EXPIRED_MODIFICATION.isExpired());
+    assertEquals(EXPIRED, FIRST_EXPIRED_MODIFICATION.getStatus());
+    assertEquals(EXPIRED, SECOND_EXPIRED_MODIFICATION.getStatus());
   }
 
   @Test

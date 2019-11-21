@@ -2,8 +2,6 @@ package ca.ulaval.glo4003.insuring.domain.policy.modification;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
-import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationAlreadyConfirmedError;
-import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationExpiredError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyModificationNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -50,8 +48,8 @@ public class PolicyModificationsCoordinator {
     PolicyModification policyModification =
         new PolicyModification(
             policyModificationId,
-            expirationDate,
             PENDING,
+            expirationDate,
             premiumAdjustment,
             policyInformationModifier,
             proposedCoverageDetails,
@@ -77,41 +75,23 @@ public class PolicyModificationsCoordinator {
 
   public PolicyModification retrieveConfirmedModification(
       PolicyModificationId policyModificationId) {
-    expireOutdatedModifications();
+    updateModificationsStatus();
     PolicyModification policyModification = getModification(policyModificationId);
     confirmModification(policyModification);
     expirePendingModifications();
     return policyModification;
   }
 
-  private void expireOutdatedModifications() {
-    modifications.values().stream()
-        .filter(PolicyModification::isOutdated)
-        .forEach(PolicyModification::expire);
+  private void updateModificationsStatus() {
+    modifications.values().stream().forEach(PolicyModification::updateStatus);
   }
 
   private void confirmModification(PolicyModification policyModification) {
-    checkIfModificationIsConfirmed(policyModification);
-    checkIfModificationIsExpired(policyModification);
     policyModification.confirm();
     modifications.put(policyModification.getPolicyModificationId(), policyModification);
   }
 
-  private void checkIfModificationIsConfirmed(PolicyModification policyModification) {
-    if (policyModification.isConfirmed()) {
-      throw new ModificationAlreadyConfirmedError(policyModification.getPolicyModificationId());
-    }
-  }
-
-  private void checkIfModificationIsExpired(PolicyModification policyModification) {
-    if (policyModification.isExpired()) {
-      throw new ModificationExpiredError(policyModification.getPolicyModificationId());
-    }
-  }
-
   private void expirePendingModifications() {
-    modifications.values().stream()
-        .filter(PolicyModification::isPending)
-        .forEach(PolicyModification::expire);
+    modifications.values().stream().forEach(PolicyModification::expire);
   }
 }

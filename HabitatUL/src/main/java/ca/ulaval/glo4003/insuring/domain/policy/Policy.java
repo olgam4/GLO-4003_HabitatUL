@@ -15,6 +15,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModifications
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.InsureBicyclePolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -117,14 +118,6 @@ public class Policy extends AggregateRoot {
         clockProvider);
   }
 
-  public PolicyModification submitCoverageRenewal(
-      CoverageDetails proposedCoverageDetails,
-      PremiumDetails proposedPremiumDetails,
-      PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider) {
-    // TODO: continue from here
-    return null;
-  }
-
   public void confirmModification(PolicyModificationId policyModificationId) {
     checkIfInactivePolicy();
     PolicyModification policyModification =
@@ -132,7 +125,20 @@ public class Policy extends AggregateRoot {
     policyHistoric.updatePolicyHistory(policyModification);
   }
 
+  public PolicyRenewal submitCoverageRenewal(
+      CoverageDetails proposedCoverageDetails, PremiumDetails proposedPremiumDetails) {
+    // TODO: do we really need policy ModificationValidityPeriodProvider? dont think so, renewal
+    // TODO: check if inactive only then
+    // is valid until end of coverage period
+    // TODO: Set policy state in renewing mode
+    // TODO: block other modification while in renewing state
+    // TODO: create separate class for renewal
+    // TODO: only one renewal offer at the time
+    return null;
+  }
+
   private void checkIfInactivePolicy() {
+    // TODO: update status here
     if (status.equals(INACTIVE)) {
       throw new InactivePolicyError(policyId);
     }

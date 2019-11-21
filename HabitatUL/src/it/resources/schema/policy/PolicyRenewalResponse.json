@@ -1,43 +1,45 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "title": "policy modification response",
+  "title": "policy renewal response",
   "required": [
-    "policyModificationId",
+    "policyRenewalId",
     "status",
-    "expirationDate",
-    "proposedPremiumAdjustment",
+    "coveragePeriod",
+    "proposedTotalPremium",
     "proposedCoverageDetails",
     "proposedPremiumDetails"
   ],
   "properties": {
-    "policyModificationId": {
-      "description": "policy modification id",
+    "policyRenewalId": {
+      "description": "policy renewal id",
       "$ref": "../Shared.json#/definitions/uuid"
     },
     "status": {
-      "description": "policy modification status",
+      "description": "policy renewal status",
       "type": "string",
       "enum": [
         "PENDING",
+        "ACCEPTED",
         "CONFIRMED",
+        "CANCELED",
         "EXPIRED"
       ]
     },
-    "expirationDate": {
-      "description": "policy modification expiration",
-      "$ref": "../Shared.json#/definitions/dateTime"
+    "coveragePeriod": {
+      "description": "policy renewal coverage period",
+      "$ref": "../Shared.json#/definitions/period"
     },
-    "proposedPremiumAdjustment": {
-      "description": "policy modification proposed premium adjustment",
+    "proposedTotalPremium": {
+      "description": "policy renewal proposed total premium",
       "$ref": "../Shared.json#/definitions/money"
     },
     "proposedCoverageDetails": {
-      "description": "policy modification proposed coverage details",
+      "description": "policy renewal proposed coverage details",
       "$ref": "../Coverage.json#/definitions/coverageDetails"
     },
     "proposedPremiumDetails": {
-      "description": "policy modification proposed premium details",
+      "description": "policy renewal proposed premium details",
       "$ref": "../Coverage.json#/definitions/premiumDetails"
     }
   }

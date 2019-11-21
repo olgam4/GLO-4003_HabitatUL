@@ -70,8 +70,8 @@ public class PolicyModificationBuilder {
   public PolicyModification build() {
     return new PolicyModification(
         policyModificationId,
-        expirationDate,
         status,
+        expirationDate,
         premiumAdjustment,
         policyInformationModifier,
         coverageDetails,

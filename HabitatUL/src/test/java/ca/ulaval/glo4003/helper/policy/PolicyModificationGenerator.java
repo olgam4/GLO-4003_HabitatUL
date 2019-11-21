@@ -24,8 +24,8 @@ public class PolicyModificationGenerator {
   public static PolicyModificationDto createPolicyModificationDto() {
     return new PolicyModificationDto(
         createPolicyModificationId(),
-        createFutureDateTime(),
         createPolicyModificationStatus(),
+        createFutureDateTime(),
         createMoney(),
         createCoverageDetails(),
         createPremiumDetails());
@@ -40,8 +40,8 @@ public class PolicyModificationGenerator {
   public static PolicyModification createPolicyModification() {
     return new PolicyModification(
         createPolicyModificationId(),
-        createFutureDateTime(),
         createPolicyModificationStatus(),
+        createFutureDateTime(),
         createMoney(),
         createPolicyInformationModifier(),
         createCoverageDetails(),

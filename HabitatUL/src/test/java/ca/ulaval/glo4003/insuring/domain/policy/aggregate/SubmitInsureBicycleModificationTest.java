@@ -116,7 +116,7 @@ public class SubmitInsureBicycleModificationTest {
             policyModificationValidityPeriodProvider);
 
     Money expectedPremiumAdjustment = UPDATED_TOTAL_PREMIUM.subtract(CURRENT_TOTAL_PREMIUM);
-    assertEquals(expectedPremiumAdjustment, policyModification.getPremiumAdjustment());
+    assertEquals(expectedPremiumAdjustment, policyModification.getProposedPremiumAdjustment());
   }
 
   @Test

@@ -133,6 +133,20 @@ public class PolicyResource {
 
   @POST
   @Secured
+  @Path(TRIGGER_RENEWAL_FULL_ROUTE)
+  public Response triggerRenewal(
+      @Context SecurityContext securityContext,
+      @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
+      @Valid TriggerRenewalRequest triggerRenewalRequest) {
+    TriggerRenewalDto triggerRenewalDto = policyViewAssembler.from(triggerRenewalRequest);
+    policyAppService.triggerRenewal(policyId, triggerRenewalDto);
+    // TODO: COME BACK TO IT ONCE THE USE CASE COMPLETED
+    // TODO: might want to produce different response even than for a simple modification!
+    return Response.ok().build();
+  }
+
+  @POST
+  @Secured
   @Path(OPEN_CLAIM_FULL_ROUTE)
   public Response openClaim(
       @Context SecurityContext securityContext,
@@ -144,19 +158,5 @@ public class PolicyResource {
     URI location =
         UriBuilder.fromPath(CONTEXT_PATH).path(CLAIM_ROUTE).path(claimIdRepresentation).build();
     return Response.created(location).build();
-  }
-
-  @POST
-  @Secured
-  @Path(TRIGGER_RENEWAL_FULL_ROUTE)
-  public Response triggerRenewal(
-      @Context SecurityContext securityContext,
-      @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
-      @Valid TriggerRenewalRequest triggerRenewalRequest) {
-    TriggerRenewalDto triggerRenewalDto = policyViewAssembler.from(triggerRenewalRequest);
-    policyAppService.triggerRenewal(policyId, triggerRenewalDto);
-    // TODO: COME BACK TO IT ONCE THE USE CASE COMPLETED
-    // TODO: might want to produce different response even than for a simple modification!
-    return Response.ok().build();
   }
 }

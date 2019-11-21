@@ -10,23 +10,23 @@ import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 public class PolicyModificationDto extends DataTransferObject {
   private final PolicyModificationId policyModificationId;
-  private final DateTime expirationDate;
   private final PolicyModificationStatus status;
-  private final Money premiumAdjustment;
+  private final DateTime expirationDate;
+  private final Money proposedPremiumAdjustment;
   private final CoverageDetails proposedCoverageDetails;
   private final PremiumDetails proposedPremiumDetails;
 
   public PolicyModificationDto(
       PolicyModificationId policyModificationId,
-      DateTime expirationDate,
       PolicyModificationStatus status,
-      Money premiumAdjustment,
+      DateTime expirationDate,
+      Money proposedPremiumAdjustment,
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails) {
     this.policyModificationId = policyModificationId;
-    this.expirationDate = expirationDate;
     this.status = status;
-    this.premiumAdjustment = premiumAdjustment;
+    this.expirationDate = expirationDate;
+    this.proposedPremiumAdjustment = proposedPremiumAdjustment;
     this.proposedCoverageDetails = proposedCoverageDetails;
     this.proposedPremiumDetails = proposedPremiumDetails;
   }
@@ -35,16 +35,16 @@ public class PolicyModificationDto extends DataTransferObject {
     return policyModificationId;
   }
 
-  public DateTime getExpirationDate() {
-    return expirationDate;
-  }
-
   public PolicyModificationStatus getStatus() {
     return status;
   }
 
-  public Money getPremiumAdjustment() {
-    return premiumAdjustment;
+  public DateTime getExpirationDate() {
+    return expirationDate;
+  }
+
+  public Money getProposedPremiumAdjustment() {
+    return proposedPremiumAdjustment;
   }
 
   public CoverageDetails getProposedCoverageDetails() {

@@ -106,7 +106,8 @@ public class CoverageDetailsTest {
   }
 
   @Test
-  public void updatingCoverageDetails_withMultipleCoveragesUpdated_shouldUpdateAllCoverageDetails() {
+  public void
+      updatingCoverageDetails_withMultipleCoveragesUpdated_shouldUpdateAllCoverageDetails() {
     subject =
         CoverageDetailsBuilder.aCoverageDetails()
             .withAdditionalCoverageDetail(ADDITIONAL_COVERAGE_DETAIL)

@@ -23,6 +23,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundExceptio
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
@@ -129,24 +130,6 @@ public class PolicyAppService {
     }
   }
 
-  public PolicyModificationDto triggerRenewal(
-      PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
-    try {
-      Policy policy = policyRepository.getById(policyId);
-      CoverageRenewalForm coverageRenewalForm = policyAssembler.from(triggerRenewalDto, policy);
-      CoverageDto coverageDto = coverageDomainService.requestCoverageRenewal(coverageRenewalForm);
-      PolicyModification policyModification =
-          policy.submitCoverageRenewal(
-              coverageDto.getCoverageDetails(),
-              coverageDto.getPremiumDetails(),
-              policyModificationValidityPeriodProvider);
-      policyRepository.update(policy);
-      return policyAssembler.from(policyModification);
-    } catch (PolicyNotFoundException e) {
-      throw new PolicyNotFoundError(policyId);
-    }
-  }
-
   public PolicyDto confirmModification(
       PolicyId policyId, PolicyModificationId policyModificationId) {
     try {
@@ -155,6 +138,21 @@ public class PolicyAppService {
       // TODO: process to payment here
       policyRepository.update(policy);
       return policyAssembler.from(policy);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
+  }
+
+  public PolicyRenewalDto triggerRenewal(PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      CoverageRenewalForm coverageRenewalForm = policyAssembler.from(triggerRenewalDto, policy);
+      CoverageDto coverageDto = coverageDomainService.requestCoverageRenewal(coverageRenewalForm);
+      PolicyRenewal policyRenewal =
+          policy.submitCoverageRenewal(
+              coverageDto.getCoverageDetails(), coverageDto.getPremiumDetails());
+      policyRepository.update(policy);
+      return policyAssembler.from(policyRenewal);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }

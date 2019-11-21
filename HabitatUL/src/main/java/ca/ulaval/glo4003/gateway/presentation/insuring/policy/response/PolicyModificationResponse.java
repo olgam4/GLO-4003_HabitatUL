@@ -11,31 +11,31 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @SuppressWarnings("checkstyle:Indentation")
 @JsonPropertyOrder({
   "policyModificationId",
-  "expirationDate",
   "status",
-  "premiumAdjustment",
+  "expirationDate",
+  "proposedPremiumAdjustment",
   "proposedCoverageDetails",
   "proposedPremiumDetails"
 })
 public class PolicyModificationResponse {
   private PolicyModificationId policyModificationId;
-  private DateTime expirationDate;
   private PolicyModificationStatus status;
-  private Money premiumAdjustment;
+  private DateTime expirationDate;
+  private Money proposedPremiumAdjustment;
   private CoverageDetails proposedCoverageDetails;
   private PremiumDetails proposedPremiumDetails;
 
   public PolicyModificationResponse(
       PolicyModificationId policyModificationId,
-      DateTime expirationDate,
       PolicyModificationStatus status,
-      Money premiumAdjustment,
+      DateTime expirationDate,
+      Money proposedPremiumAdjustment,
       CoverageDetails proposedCoverageDetails,
       PremiumDetails proposedPremiumDetails) {
     this.policyModificationId = policyModificationId;
-    this.expirationDate = expirationDate;
     this.status = status;
-    this.premiumAdjustment = premiumAdjustment;
+    this.expirationDate = expirationDate;
+    this.proposedPremiumAdjustment = proposedPremiumAdjustment;
     this.proposedCoverageDetails = proposedCoverageDetails;
     this.proposedPremiumDetails = proposedPremiumDetails;
   }
@@ -44,16 +44,16 @@ public class PolicyModificationResponse {
     return policyModificationId;
   }
 
-  public DateTime getExpirationDate() {
-    return expirationDate;
-  }
-
   public PolicyModificationStatus getStatus() {
     return status;
   }
 
-  public Money getPremiumAdjustment() {
-    return premiumAdjustment;
+  public DateTime getExpirationDate() {
+    return expirationDate;
+  }
+
+  public Money getProposedPremiumAdjustment() {
+    return proposedPremiumAdjustment;
   }
 
   public CoverageDetails getProposedCoverageDetails() {

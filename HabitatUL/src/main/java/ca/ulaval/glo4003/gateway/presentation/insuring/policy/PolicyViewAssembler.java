@@ -40,9 +40,9 @@ public class PolicyViewAssembler {
   public PolicyModificationResponse from(PolicyModificationDto policyModificationDto) {
     return new PolicyModificationResponse(
         policyModificationDto.getPolicyModificationId(),
-        policyModificationDto.getExpirationDate(),
         policyModificationDto.getStatus(),
-        policyModificationDto.getPremiumAdjustment(),
+        policyModificationDto.getExpirationDate(),
+        policyModificationDto.getProposedPremiumAdjustment(),
         policyModificationDto.getProposedCoverageDetails(),
         policyModificationDto.getProposedPremiumDetails());
   }
