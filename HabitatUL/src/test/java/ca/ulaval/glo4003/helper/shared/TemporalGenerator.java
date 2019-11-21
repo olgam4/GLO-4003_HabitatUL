@@ -100,9 +100,15 @@ public class TemporalGenerator {
     return new Period(startDate, endDate);
   }
 
-  public static Period createFuturePeriod() {
+  public static Period createCurrentPeriod() {
     Date startDate = createDateBefore(getNowDate());
     Date endDate = createDateAfter(getNowDate());
+    return new Period(startDate, endDate);
+  }
+
+  public static Period createFuturePeriod() {
+    Date startDate = createDateAfter(getNowDate());
+    Date endDate = createDateAfter(startDate);
     return new Period(startDate, endDate);
   }
 

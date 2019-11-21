@@ -4,7 +4,9 @@ import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
+import ca.ulaval.glo4003.helper.policy.PolicyRenewalBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
+import ca.ulaval.glo4003.insuring.domain.policy.error.AnotherRenewalAlreadyAcceptedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
@@ -20,6 +22,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
@@ -27,6 +32,7 @@ import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPolicyVi
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createJavaTimePeriod;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
+import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.ACCEPTED;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.PENDING;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -50,7 +56,7 @@ public class SubmitCoverageRenewalTest {
   public void setUp() {
     when(policyCoveragePeriodLengthProvider.getPolicyCoveragePeriod())
         .thenReturn(POLICY_COVERAGE_PERIOD_LENGTH);
-    policyRenewalsCoordinator = createPolicyRenewalsCoordinator();
+    policyRenewalsCoordinator = createPolicyRenewalsCoordinator(new ArrayList<>());
     subject =
         PolicyBuilder.aPolicy()
             .withStatus(ACTIVE)
@@ -112,6 +118,23 @@ public class SubmitCoverageRenewalTest {
   @Test(expected = InactivePolicyError.class)
   public void submittingCoverageRenewal_withInactivePolicy_shouldThrow() {
     subject = PolicyBuilder.aPolicy().withStatus(INACTIVE).build();
+
+    subject.submitCoverageRenewal(
+        PROPOSED_COVERAGE_DETAILS, PROPOSED_PREMIUM_DETAILS, policyCoveragePeriodLengthProvider);
+  }
+
+  @Test(expected = AnotherRenewalAlreadyAcceptedError.class)
+  public void submittingCoverageRenewal_withAnotherRenewalAlreadyAccepted_shouldThrow() {
+    policyRenewalsCoordinator =
+        createPolicyRenewalsCoordinator(
+            Arrays.asList(PolicyRenewalBuilder.aPolicyRenewal().withStatus(ACCEPTED).build()));
+    subject =
+        PolicyBuilder.aPolicy()
+            .withStatus(ACTIVE)
+            .withPolicyHistoric(POLICY_HISTORIC)
+            .withPolicyRenewalsCoordinator(policyRenewalsCoordinator)
+            .withClockProvider(CLOCK_PROVIDER)
+            .build();
 
     subject.submitCoverageRenewal(
         PROPOSED_COVERAGE_DETAILS, PROPOSED_PREMIUM_DETAILS, policyCoveragePeriodLengthProvider);

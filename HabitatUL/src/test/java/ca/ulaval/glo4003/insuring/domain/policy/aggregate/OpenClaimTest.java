@@ -23,7 +23,7 @@ import java.util.List;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFuturePeriod;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createCurrentPeriod;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastPeriod;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OpenClaimTest {
-  private static final Period CURRENT_COVERAGE_PERIOD = createFuturePeriod();
+  private static final Period CURRENT_COVERAGE_PERIOD = createCurrentPeriod();
   private static final PolicyInformation CURRENT_POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();
   private static final PolicyView CURRENT_POLICY_VIEW =

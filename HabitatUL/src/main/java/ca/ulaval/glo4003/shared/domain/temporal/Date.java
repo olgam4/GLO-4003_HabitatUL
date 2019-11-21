@@ -48,4 +48,8 @@ public class Date extends ValueObject {
   public Date minus(Period period) {
     return new Date(value.minus(period));
   }
+
+  public DateTime atStartOfDay() {
+    return DateTime.from(value.atStartOfDay());
+  }
 }

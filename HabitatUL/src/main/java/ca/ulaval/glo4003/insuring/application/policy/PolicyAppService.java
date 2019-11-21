@@ -25,6 +25,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 public class PolicyAppService {
@@ -157,9 +158,20 @@ public class PolicyAppService {
           policy.submitCoverageRenewal(
               coverageDto.getCoverageDetails(),
               coverageDto.getPremiumDetails(),
-                  policyCoveragePeriodLengthProvider);
+              policyCoveragePeriodLengthProvider);
       policyRepository.update(policy);
       return policyAssembler.from(policyRenewal);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
+  }
+
+  public void acceptRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      policy.acceptRenewal(policyRenewalId);
+      // TODO: set up background task for renewal processing on end of current term
+      policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
     }

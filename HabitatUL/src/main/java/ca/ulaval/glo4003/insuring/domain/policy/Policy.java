@@ -17,6 +17,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPo
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
 import ca.ulaval.glo4003.mediator.AggregateRoot;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
@@ -142,8 +143,13 @@ public class Policy extends AggregateRoot {
         renewalEffectiveDate,
         proposedCoverageDetails,
         proposedPremiumDetails,
-            policyCoveragePeriodLengthProvider,
+        policyCoveragePeriodLengthProvider,
         clockProvider);
+  }
+
+  public void acceptRenewal(PolicyRenewalId policyRenewalId) {
+    checkIfInactivePolicy();
+    policyRenewalsCoordinator.retrieveAcceptedRenewal(policyRenewalId);
   }
 
   private void checkIfInactivePolicy() {

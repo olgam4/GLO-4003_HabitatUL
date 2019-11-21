@@ -80,6 +80,7 @@ public class ErrorResponseFactory {
   }
 
   private static void registerInsuringErrors() {
+    STATUS_MAP.put(AnotherRenewalAlreadyAcceptedError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(ClaimNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CouldNotOpenClaimError.class, Status.BAD_REQUEST);
@@ -95,6 +96,9 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(PolicyModificationNotFoundError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(PolicyRenewalNotFoundError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(RenewalAlreadyCanceledError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(RenewalAlreadyConfirmedError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(RenewalExpiredError.class, Status.BAD_REQUEST);
   }
 
   public ErrorResponse createErrorResponse(Error error) {

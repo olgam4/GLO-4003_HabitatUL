@@ -23,12 +23,12 @@ import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerato
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPreviousCoveragePeriod;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createFuturePeriod;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createCurrentPeriod;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyTest {
-  private static final Period CURRENT_COVERAGE_PERIOD = createFuturePeriod();
+  private static final Period CURRENT_COVERAGE_PERIOD = createCurrentPeriod();
   private static final PolicyInformation CURRENT_POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails CURRENT_PREMIUM_DETAILS = createPremiumDetails();

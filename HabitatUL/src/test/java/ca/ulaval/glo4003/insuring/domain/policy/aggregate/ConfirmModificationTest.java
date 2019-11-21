@@ -56,16 +56,16 @@ public class ConfirmModificationTest {
       PolicyViewBuilder.aPolicyView().withCoveragePeriod(CURRENT_COVERAGE_PERIOD).build();
   private static final List<PolicyView> PREVIOUS_POLICY_VIEWS =
       createPreviousPolicyViews(CURRENT_COVERAGE_PERIOD);
-  private static final PolicyModification FIRST_CONFIRMED_MODIFICATION =
-      createConfirmedModification();
-  private static final PolicyModification SECOND_CONFIRMED_MODIFICATION =
-      createConfirmedModification();
   private static final PolicyModification FIRST_PENDING_MODIFICATION = createPendingModification();
   private static final PolicyModification SECOND_PENDING_MODIFICATION = createPendingModification();
   private static final PolicyModification FIRST_OUTDATED_MODIFICATION =
       createOutdatedModification();
   private static final PolicyModification SECOND_OUTDATED_MODIFICATION =
       createOutdatedModification();
+  private static final PolicyModification FIRST_CONFIRMED_MODIFICATION =
+      createConfirmedModification();
+  private static final PolicyModification SECOND_CONFIRMED_MODIFICATION =
+      createConfirmedModification();
   private static final PolicyModification FIRST_EXPIRED_MODIFICATION = createExpiredModification();
   private static final PolicyModification SECOND_EXPIRED_MODIFICATION = createExpiredModification();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
@@ -79,10 +79,6 @@ public class ConfirmModificationTest {
   private PolicyModificationsCoordinator policyModificationsCoordinator;
   private PolicyModification policyModification;
 
-  private static PolicyModification createConfirmedModification() {
-    return PolicyModificationBuilder.aPolicyModification().withStatus(CONFIRMED).build();
-  }
-
   private static PolicyModification createPendingModification() {
     return PolicyModificationBuilder.aPolicyModification().withStatus(PENDING).build();
   }
@@ -92,6 +88,10 @@ public class ConfirmModificationTest {
         .withStatus(PENDING)
         .withExpirationDate(createPastDateTime())
         .build();
+  }
+
+  private static PolicyModification createConfirmedModification() {
+    return PolicyModificationBuilder.aPolicyModification().withStatus(CONFIRMED).build();
   }
 
   private static PolicyModification createExpiredModification() {
@@ -117,12 +117,12 @@ public class ConfirmModificationTest {
     policyModifications =
         Arrays.asList(
             policyModification,
-            FIRST_CONFIRMED_MODIFICATION,
-            SECOND_CONFIRMED_MODIFICATION,
             FIRST_PENDING_MODIFICATION,
             SECOND_PENDING_MODIFICATION,
             FIRST_OUTDATED_MODIFICATION,
             SECOND_OUTDATED_MODIFICATION,
+            FIRST_CONFIRMED_MODIFICATION,
+            SECOND_CONFIRMED_MODIFICATION,
             FIRST_EXPIRED_MODIFICATION,
             SECOND_EXPIRED_MODIFICATION);
     policyModificationsCoordinator = createPolicyModificationsCoordinator(policyModifications);

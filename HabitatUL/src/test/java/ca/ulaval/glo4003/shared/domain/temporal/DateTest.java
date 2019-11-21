@@ -72,6 +72,14 @@ public class DateTest {
     assertEquals(expected, observed);
   }
 
+  @Test
+  public void gettingDateAtStartOfDayTime_shouldReturnDateAtStartOfDayTime() {
+    DateTime value = subject.atStartOfDay();
+
+    DateTime expectedValue = DateTime.from(subject.getValue().atStartOfDay());
+    assertEquals(expectedValue, value);
+  }
+
   @RunWith(Parameterized.class)
   public static class gettingEarliestDateBetweenTwoDates {
     private Date firstDate;

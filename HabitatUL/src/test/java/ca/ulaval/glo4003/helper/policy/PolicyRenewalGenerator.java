@@ -16,8 +16,8 @@ import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPeriod;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 
-public class PolicyRenewalsGenerator {
-  private PolicyRenewalsGenerator() {}
+public class PolicyRenewalGenerator {
+  private PolicyRenewalGenerator() {}
 
   public static PolicyRenewalDto createPolicyRenewalDto() {
     return new PolicyRenewalDto(

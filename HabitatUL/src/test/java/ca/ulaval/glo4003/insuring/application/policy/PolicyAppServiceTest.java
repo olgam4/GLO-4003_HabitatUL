@@ -26,6 +26,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodLengthProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
@@ -42,6 +43,7 @@ import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
+import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -58,10 +60,11 @@ public class PolicyAppServiceTest {
   private static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();
   private static final PremiumDetails CURRENT_PREMIUM_DETAILS = createPremiumDetails();
   private static final CoverageDto COVERAGE_DTO = createCoverageDto();
-  private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsureBicycleDto();
   private static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
+  private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final TriggerRenewalDto TRIGGER_RENEWAL_DTO = createTriggerRenewalDto();
+  private static final PolicyRenewalId POLICY_RENEWAL_ID = createPolicyRenewalId();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
 
@@ -296,6 +299,34 @@ public class PolicyAppServiceTest {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
     subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
+  }
+
+  @Test
+  public void acceptingRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void acceptingRenewal_shouldAcceptRenewal() {
+    subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policy).acceptRenewal(POLICY_RENEWAL_ID);
+  }
+
+  @Test
+  public void acceptingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test(expected = PolicyNotFoundError.class)
+  public void acceptingRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
+    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
   }
 
   @Test

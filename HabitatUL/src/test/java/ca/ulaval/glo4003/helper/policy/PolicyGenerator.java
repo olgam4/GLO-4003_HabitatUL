@@ -29,7 +29,7 @@ import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerat
 import static ca.ulaval.glo4003.helper.policy.PolicyHistoricGenerator.createPolicyHistoric;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModifications;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalsGenerator.createPolicyRenewals;
+import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewals;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 
 public class PolicyGenerator {
@@ -92,7 +92,7 @@ public class PolicyGenerator {
     return createPolicyRenewalsCoordinator(createPolicyRenewals());
   }
 
-  private static PolicyRenewalsCoordinator createPolicyRenewalsCoordinator(
+  public static PolicyRenewalsCoordinator createPolicyRenewalsCoordinator(
       List<PolicyRenewal> policyRenewals) {
     return new PolicyRenewalsCoordinator(
         policyRenewals.stream()

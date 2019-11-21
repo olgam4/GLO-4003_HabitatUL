@@ -92,15 +92,11 @@ public class PolicyModification {
   }
 
   public void updateStatus() {
-    if (status.equals(PENDING) && isOutdated()) status = EXPIRED;
+    if (isOutdated()) expire();
   }
 
   private boolean isOutdated() {
     return DateTime.now(clockProvider.getClock()).isAfter(expirationDate);
-  }
-
-  public void expire() {
-    if (status.equals(PENDING)) status = EXPIRED;
   }
 
   public void confirm() {
@@ -119,5 +115,9 @@ public class PolicyModification {
     if (status.equals(CONFIRMED)) {
       throw new ModificationAlreadyConfirmedError(policyModificationId);
     }
+  }
+
+  public void expire() {
+    if (status.equals(PENDING)) status = EXPIRED;
   }
 }
