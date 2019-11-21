@@ -128,9 +128,29 @@ public class PolicyRenewalsCoordinator {
   }
 
   private PolicyRenewal cancelRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
-    PolicyRenewal policyRenewal = getRenewal(policyRenewalId);
-    policyRenewal.cancel();
+    PolicyRenewal policyRenewal = getRenewalWithoutUpdate(policyRenewalId);
+    cancelRenewal(policyRenewal);
     return policyRenewal;
+  }
+
+  private void cancelRenewal(PolicyRenewal policyRenewal) {
+    policyRenewal.cancel();
+    renewals.put(policyRenewal.getPolicyRenewalId(), policyRenewal);
+  }
+
+  public PolicyRenewal confirmRenewal(PolicyRenewalId policyRenewalId) {
+    return updateRenewalsStatus(() -> confirmRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal confirmRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
+    PolicyRenewal policyRenewal = getRenewalWithoutUpdate(policyRenewalId);
+    confirmRenewal(policyRenewal);
+    return policyRenewal;
+  }
+
+  private void confirmRenewal(PolicyRenewal policyRenewal) {
+    policyRenewal.confirm();
+    renewals.put(policyRenewal.getPolicyRenewalId(), policyRenewal);
   }
 
   private <T> T updateRenewalsStatus(Producer<T> call) {

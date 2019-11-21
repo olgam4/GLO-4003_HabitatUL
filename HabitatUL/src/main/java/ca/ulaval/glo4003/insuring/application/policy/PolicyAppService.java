@@ -188,6 +188,16 @@ public class PolicyAppService {
     }
   }
 
+  public void confirmRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
+    try {
+      Policy policy = policyRepository.getById(policyId);
+      policy.confirmRenewal(policyRenewalId);
+      policyRepository.update(policy);
+    } catch (PolicyNotFoundException e) {
+      throw new PolicyNotFoundError(policyId);
+    }
+  }
+
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     try {
       LossDeclarations lossDeclarations = openClaimDto.getLossDeclarations();

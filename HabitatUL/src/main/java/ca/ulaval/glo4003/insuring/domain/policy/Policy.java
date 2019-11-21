@@ -207,8 +207,21 @@ public class Policy extends AggregateRoot {
 
   private PolicyRenewal cancelRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
     checkIfInactivePolicy();
+    PolicyRenewal policyRenewal = policyRenewalsCoordinator.cancelRenewal(policyRenewalId);
     status = ACTIVE;
-    return policyRenewalsCoordinator.cancelRenewal(policyRenewalId);
+    return policyRenewal;
+  }
+
+  public void confirmRenewal(PolicyRenewalId policyRenewalId) {
+    updateStatus(() -> confirmRenewalWithoutUpdate(policyRenewalId));
+  }
+
+  private PolicyRenewal confirmRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
+    checkIfInactivePolicy();
+    PolicyRenewal policyRenewal = policyRenewalsCoordinator.confirmRenewal(policyRenewalId);
+    policyHistoric.updatePolicyHistory(policyRenewal);
+    status = ACTIVE;
+    return policyRenewal;
   }
 
   private void checkIfInactivePolicy() {
@@ -238,12 +251,16 @@ public class Policy extends AggregateRoot {
     return call.call();
   }
 
-  private void updateStatus() {
-    if (isOutdated()) status = INACTIVE;
+  public void updateStatus() {
+    if (isOutdated()) expire();
   }
 
   private boolean isOutdated() {
     return DateTime.now(clockProvider.getClock())
         .isAfter(policyHistoric.getCurrentCoveragePeriod().getEndDate().atStartOfDay());
+  }
+
+  private void expire() {
+    if (status.equals(ACTIVE)) status = INACTIVE;
   }
 }

@@ -44,6 +44,10 @@ public class TemporalGenerator {
     return Date.from(futureDate.toLocalDate());
   }
 
+  public static Date createDateBetween(Period period) {
+    return createDateBetween(period.getStartDate(), period.getEndDate());
+  }
+
   public static Date createDateBetween(Date date1, Date date2) {
     long numberOfDays =
         Faker.instance().number().numberBetween(0, numberDaysBetween(date1, date2) - 1);

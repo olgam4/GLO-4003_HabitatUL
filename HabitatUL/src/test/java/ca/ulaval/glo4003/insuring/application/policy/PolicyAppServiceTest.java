@@ -255,6 +255,42 @@ public class PolicyAppServiceTest {
   }
 
   @Test
+  public void confirmingModification_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    verify(policyRepository).getById(POLICY_ID);
+  }
+
+  @Test
+  public void confirmingModification_shouldConfirmModification() {
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    verify(policy).confirmModification(POLICY_MODIFICATION_ID);
+  }
+
+  @Test
+  public void confirmingModification_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    verify(policyRepository).update(policy);
+  }
+
+  @Test
+  public void confirmingModification_shouldProduceCorrespondingPolicyDto() {
+    PolicyDto policyDto = subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+
+    assertThat(policyDto, matchesPolicyDto(policy));
+  }
+
+  @Test(expected = PolicyNotFoundError.class)
+  public void confirmingModification_withNotExistingPolicy_shouldThrow()
+      throws PolicyNotFoundException {
+    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+  }
+
+  @Test
   public void triggeringRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
     subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
 
@@ -358,39 +394,31 @@ public class PolicyAppServiceTest {
   }
 
   @Test
-  public void confirmingModification_shouldGetPolicyById() throws PolicyNotFoundException {
-    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+  public void confirmingRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
+    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyRepository).getById(POLICY_ID);
   }
 
   @Test
-  public void confirmingModification_shouldConfirmModification() {
-    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+  public void confirmingRenewal_shouldConfirmRenewal() {
+    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
-    verify(policy).confirmModification(POLICY_MODIFICATION_ID);
+    verify(policy).confirmRenewal(POLICY_RENEWAL_ID);
   }
 
   @Test
-  public void confirmingModification_shouldUpdatePolicy() throws PolicyNotFoundException {
-    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+  public void confirmingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
+    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyRepository).update(policy);
   }
 
-  @Test
-  public void confirmingModification_shouldProduceCorrespondingPolicyDto() {
-    PolicyDto policyDto = subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
-
-    assertThat(policyDto, matchesPolicyDto(policy));
-  }
-
   @Test(expected = PolicyNotFoundError.class)
-  public void confirmingModification_withNotExistingPolicy_shouldThrow()
-      throws PolicyNotFoundException {
+  public void confirmingRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
-    subject.confirmModification(POLICY_ID, POLICY_MODIFICATION_ID);
+    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
   }
 
   @Test

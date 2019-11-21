@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalAlreadyCanceledErro
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalAlreadyConfirmedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalExpiredError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalNotYetAcceptedError;
+import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -64,10 +65,14 @@ public class PolicyRenewal {
         .isAfter(coveragePeriod.getStartDate().atStartOfDay());
   }
 
+  public void expire() {
+    if (status.equals(PENDING)) status = EXPIRED;
+  }
+
   public void accept() {
     checkIfRenewalIsExpired();
-    checkIfRenewalIsConfirmed();
     checkIfRenewalIsCanceled();
+    checkIfRenewalIsConfirmed();
     status = ACCEPTED;
   }
 
@@ -77,20 +82,16 @@ public class PolicyRenewal {
     }
   }
 
-  private void checkIfRenewalIsConfirmed() {
-    if (status.equals(CONFIRMED)) {
-      throw new RenewalAlreadyConfirmedError(policyRenewalId);
-    }
-  }
-
   private void checkIfRenewalIsCanceled() {
     if (status.equals(CANCELED)) {
       throw new RenewalAlreadyCanceledError(policyRenewalId);
     }
   }
 
-  public void expire() {
-    if (status.equals(PENDING)) status = EXPIRED;
+  private void checkIfRenewalIsConfirmed() {
+    if (status.equals(CONFIRMED)) {
+      throw new RenewalAlreadyConfirmedError(policyRenewalId);
+    }
   }
 
   public void cancel() {
@@ -98,9 +99,22 @@ public class PolicyRenewal {
     status = CANCELED;
   }
 
+  public void confirm() {
+    checkIfRenewalIsNotAccepted();
+    status = CONFIRMED;
+  }
+
   private void checkIfRenewalIsNotAccepted() {
     if (!status.equals(ACCEPTED)) {
       throw new RenewalNotYetAcceptedError(policyRenewalId);
     }
+  }
+
+  public PolicyView updatePolicyView(PolicyView currentView) {
+    return new PolicyView(
+        coveragePeriod,
+        currentView.getPolicyInformation(),
+        proposedCoverageDetails,
+        proposedPremiumDetails);
   }
 }

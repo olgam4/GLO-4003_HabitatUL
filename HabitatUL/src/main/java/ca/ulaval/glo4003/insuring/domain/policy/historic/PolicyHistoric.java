@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.shared.domain.ValueObject;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -90,5 +91,10 @@ public class PolicyHistoric extends ValueObject {
     Date currentViewCoveragePeriodStartDate = currentView.getCoveragePeriod().getStartDate();
     Date modifiedViewCoveragePeriodStartDate = modifiedView.getCoveragePeriod().getStartDate();
     return new Period(currentViewCoveragePeriodStartDate, modifiedViewCoveragePeriodStartDate);
+  }
+
+  public void updatePolicyHistory(PolicyRenewal policyRenewal) {
+    PolicyView updatedPolicyView = policyRenewal.updatePolicyView(getCurrentView());
+    historic.add(updatedPolicyView);
   }
 }

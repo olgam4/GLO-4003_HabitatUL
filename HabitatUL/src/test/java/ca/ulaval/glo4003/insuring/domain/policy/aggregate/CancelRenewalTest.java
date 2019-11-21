@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.helper.policy.PolicyRenewalBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
+import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyRenewalNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalNotYetAcceptedError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
@@ -21,8 +22,7 @@ import java.util.Arrays;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
 import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
-import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
-import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.*;
 import static org.junit.Assert.assertEquals;
 
@@ -50,7 +50,7 @@ public class CancelRenewalTest {
     policyRenewalsCoordinator = createPolicyRenewalsCoordinator(Arrays.asList(policyRenewal));
     subject =
         PolicyBuilder.aPolicy()
-            .withStatus(ACTIVE)
+            .withStatus(RENEWING)
             .withPolicyHistoric(policyHistoric)
             .withPolicyRenewalsCoordinator(policyRenewalsCoordinator)
             .withClockProvider(CLOCK_PROVIDER)
@@ -76,6 +76,11 @@ public class CancelRenewalTest {
     subject = PolicyBuilder.aPolicy().withStatus(INACTIVE).build();
 
     subject.cancelRenewal(POLICY_RENEWAL_ID);
+  }
+
+  @Test(expected = PolicyRenewalNotFoundError.class)
+  public void cancellingRenewal_withNotExistingRenewal_shouldThrow() {
+    subject.cancelRenewal(createPolicyRenewalId());
   }
 
   @Test(expected = RenewalNotYetAcceptedError.class)

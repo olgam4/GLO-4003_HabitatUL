@@ -196,7 +196,7 @@ public class ConfirmModificationTest {
   }
 
   @Test
-  public void confirmingModification_shouldSplitCurrentCoveragePeriod() {
+  public void confirmingModification_shouldSplitPreviousCoveragePeriod() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     Period expectedCoveragePeriod =
@@ -207,7 +207,7 @@ public class ConfirmModificationTest {
   }
 
   @Test
-  public void confirmingModification_shouldNotChangeCurrentPolicyInformation() {
+  public void confirmingModification_shouldNotChangePreviousPolicyInformation() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     PolicyInformation policyInformation =
@@ -216,7 +216,7 @@ public class ConfirmModificationTest {
   }
 
   @Test
-  public void confirmingModification_shouldNotChangeCurrentCoverageDetails() {
+  public void confirmingModification_shouldNotChangePreviousCoverageDetails() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     CoverageDetails coverageDetails =
@@ -225,7 +225,7 @@ public class ConfirmModificationTest {
   }
 
   @Test
-  public void confirmingModification_shouldNotChangeCurrentPremiumDetails() {
+  public void confirmingModification_shouldNotChangePreviousPremiumDetails() {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     PremiumDetails premiumDetails =

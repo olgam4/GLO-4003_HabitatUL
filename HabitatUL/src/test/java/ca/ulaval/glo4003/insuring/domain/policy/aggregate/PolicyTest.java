@@ -24,6 +24,8 @@ import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPreviousCoveragePeriod;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createCurrentPeriod;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastPeriod;
+import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -91,5 +93,32 @@ public class PolicyTest {
 
     assertEquals(1, events.size());
     assertEquals(PolicyIssuedEvent.class, events.get(0).getClass());
+  }
+
+  @Test
+  public void updatingStatus_withOutdatedPolicyAndUpdatableStatus_shouldSetPolicyInactive() {
+    PolicyHistoric policyHistoric = createOutdatedPolicyHistoric();
+    subject = PolicyBuilder.aPolicy().withStatus(ACTIVE).withPolicyHistoric(policyHistoric).build();
+
+    subject.updateStatus();
+
+    assertEquals(INACTIVE, subject.getStatus());
+  }
+
+  @Test
+  public void updatingStatus_withOutdatedPolicyAndNotUpdatableStatus_shouldNotUpdateStatus() {
+    PolicyHistoric policyHistoric = createOutdatedPolicyHistoric();
+    subject =
+        PolicyBuilder.aPolicy().withStatus(RENEWING).withPolicyHistoric(policyHistoric).build();
+
+    subject.updateStatus();
+
+    assertEquals(RENEWING, subject.getStatus());
+  }
+
+  private PolicyHistoric createOutdatedPolicyHistoric() {
+    PolicyView policyView =
+        PolicyViewBuilder.aPolicyView().withCoveragePeriod(createPastPeriod()).build();
+    return PolicyHistoricBuilder.aPolicyHistoric().withPolicyView(policyView).build();
   }
 }
