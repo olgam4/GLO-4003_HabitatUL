@@ -15,6 +15,7 @@ import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimErro
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
+import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.*;
@@ -29,6 +30,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +47,7 @@ import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDateTime;
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -66,6 +69,7 @@ public class PolicyAppServiceTest {
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final TriggerRenewalDto TRIGGER_RENEWAL_DTO = createTriggerRenewalDto();
   private static final PolicyRenewalId POLICY_RENEWAL_ID = createPolicyRenewalId();
+  private static final DateTime RENEWAL_EFFECTIVE_DATE = createDateTime();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
 
@@ -78,6 +82,7 @@ public class PolicyAppServiceTest {
   @Mock private PolicyRenewal policyRenewal;
   @Mock private PolicyRenewalPeriodProvider policyRenewalPeriodProvider;
   @Mock private PolicyCoveragePeriodProvider policyCoveragePeriodProvider;
+  @Mock private PolicyRenewalProcessor policyRenewalProcessor;
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
@@ -116,6 +121,8 @@ public class PolicyAppServiceTest {
             any(PolicyRenewalPeriodProvider.class),
             any(PolicyCoveragePeriodProvider.class)))
         .thenReturn(policyRenewal);
+    when(policy.acceptRenewal(any(PolicyRenewalId.class))).thenReturn(policyRenewal);
+    when(policyRenewal.getEffectiveDateTime()).thenReturn(RENEWAL_EFFECTIVE_DATE);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
     when(coverageDomainService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
@@ -136,6 +143,7 @@ public class PolicyAppServiceTest {
             policyModificationValidityPeriodProvider,
             policyRenewalPeriodProvider,
             policyCoveragePeriodProvider,
+            policyRenewalProcessor,
             claimFactory,
             claimRepository);
   }
@@ -357,6 +365,14 @@ public class PolicyAppServiceTest {
   }
 
   @Test
+  public void acceptingRenewal_shouldScheduleRenewalProcessing() {
+    subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRenewalProcessor)
+        .scheduleRenewal(subject, POLICY_ID, POLICY_RENEWAL_ID, RENEWAL_EFFECTIVE_DATE);
+  }
+
+  @Test
   public void acceptingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
     subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
@@ -385,6 +401,13 @@ public class PolicyAppServiceTest {
   }
 
   @Test
+  public void cancellingRenewal_shouldCancelRenewalProcessing() {
+    subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRenewalProcessor).cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+  }
+
+  @Test
   public void cancellingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
@@ -410,6 +433,13 @@ public class PolicyAppServiceTest {
     subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policy).confirmRenewal(POLICY_RENEWAL_ID);
+  }
+
+  @Test
+  public void cancellingRenewal_shouldCompleteRenewalProcessing() {
+    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
+
+    verify(policyRenewalProcessor).completeRenewal(POLICY_ID, POLICY_RENEWAL_ID);
   }
 
   @Test

@@ -11,6 +11,7 @@ import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimErro
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
+import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
@@ -37,6 +38,7 @@ public class PolicyAppService {
   private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   private PolicyRenewalPeriodProvider policyRenewalPeriodProvider;
   private PolicyCoveragePeriodProvider policyCoveragePeriodProvider;
+  private PolicyRenewalProcessor policyRenewalProcessor;
   private ClaimFactory claimFactory;
   private ClaimRepository claimRepository;
 
@@ -49,6 +51,7 @@ public class PolicyAppService {
         ServiceLocator.resolve(PolicyModificationValidityPeriodProvider.class),
         ServiceLocator.resolve(PolicyRenewalPeriodProvider.class),
         ServiceLocator.resolve(PolicyCoveragePeriodProvider.class),
+        ServiceLocator.resolve(PolicyRenewalProcessor.class),
         new ClaimFactory(),
         ServiceLocator.resolve(ClaimRepository.class));
   }
@@ -61,6 +64,7 @@ public class PolicyAppService {
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider,
       PolicyRenewalPeriodProvider policyRenewalPeriodProvider,
       PolicyCoveragePeriodProvider policyCoveragePeriodProvider,
+      PolicyRenewalProcessor policyRenewalProcessor,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository) {
     this.policyAssembler = policyAssembler;
@@ -70,6 +74,7 @@ public class PolicyAppService {
     this.policyModificationValidityPeriodProvider = policyModificationValidityPeriodProvider;
     this.policyRenewalPeriodProvider = policyRenewalPeriodProvider;
     this.policyCoveragePeriodProvider = policyCoveragePeriodProvider;
+    this.policyRenewalProcessor = policyRenewalProcessor;
     this.claimFactory = claimFactory;
     this.claimRepository = claimRepository;
   }
@@ -175,8 +180,9 @@ public class PolicyAppService {
   public void acceptRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
     try {
       Policy policy = policyRepository.getById(policyId);
-      policy.acceptRenewal(policyRenewalId);
-      // TODO: schedule background task
+      PolicyRenewal policyRenewal = policy.acceptRenewal(policyRenewalId);
+      policyRenewalProcessor.scheduleRenewal(
+          this, policyId, policyRenewalId, policyRenewal.getEffectiveDateTime());
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
@@ -187,7 +193,7 @@ public class PolicyAppService {
     try {
       Policy policy = policyRepository.getById(policyId);
       policy.cancelRenewal(policyRenewalId);
-      // TODO: cancel background task
+      policyRenewalProcessor.cancelRenewal(policyId, policyRenewalId);
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
@@ -198,6 +204,7 @@ public class PolicyAppService {
     try {
       Policy policy = policyRepository.getById(policyId);
       policy.confirmRenewal(policyRenewalId);
+      policyRenewalProcessor.completeRenewal(policyId, policyRenewalId);
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);

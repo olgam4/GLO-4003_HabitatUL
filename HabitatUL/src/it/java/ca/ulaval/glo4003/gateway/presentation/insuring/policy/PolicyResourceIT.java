@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.json.JSONObject;
 import org.junit.*;
@@ -28,6 +29,7 @@ import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyDto;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
+import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -45,6 +47,10 @@ public class PolicyResourceIT {
   private static final String POLICY_MODIFICATION_ID_REPRESENTATION =
       POLICY_MODIFICATION_ID.toRepresentation();
   private static final PolicyDto POLICY_DTO = createPolicyDto();
+  private static final PolicyRenewalDto POLICY_RENEWAL_DTO = createPolicyRenewalDto();
+  private static final PolicyRenewalId POLICY_RENEWAL_ID = POLICY_RENEWAL_DTO.getPolicyRenewalId();
+  private static final String POLICY_RENEWAL_ID_REPRESENTATION =
+      POLICY_RENEWAL_ID.toRepresentation();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final String CLAIM_ID_REPRESENTATION = CLAIM_ID.toRepresentation();
 
@@ -70,6 +76,8 @@ public class PolicyResourceIT {
         .thenReturn(POLICY_MODIFICATION_DTO);
     when(policyAppService.confirmModification(any(PolicyId.class), any(PolicyModificationId.class)))
         .thenReturn(POLICY_DTO);
+    when(policyAppService.triggerRenewal(any(PolicyId.class), any(TriggerRenewalDto.class)))
+        .thenReturn(POLICY_RENEWAL_DTO);
     when(policyAppService.openClaim(any(PolicyId.class), any(OpenClaimDto.class)))
         .thenReturn(CLAIM_ID);
     PolicyResource policyResource =
@@ -226,6 +234,83 @@ public class PolicyResourceIT {
             CONFIRM_MODIFICATION_ROUTE);
 
     getBaseScenario().when().post(route).then().body(matchesJsonSchema("policy/PolicyResponse"));
+  }
+
+  @Test
+  public void triggeringRenewal_shouldHaveExpectedStatusCode() {
+    JSONObject request = createTriggerRenewalRequestBody();
+    String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, TRIGGER_RENEWAL_ROUTE);
+
+    int expectedStatusCode = Response.Status.CREATED.getStatusCode();
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(route)
+        .then()
+        .statusCode(expectedStatusCode);
+  }
+
+  @Test
+  public void triggeringRenewal_shouldProvideLocationCreatedPolicyRenewal() {
+    JSONObject request = createTriggerRenewalRequestBody();
+    String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, TRIGGER_RENEWAL_ROUTE);
+
+    String expectedLocation =
+        toUri(
+            POLICY_ROUTE,
+            POLICY_ID_REPRESENTATION,
+            POLICY_RENEWAL_ROUTE,
+            POLICY_RENEWAL_ID_REPRESENTATION);
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(route)
+        .then()
+        .header(HttpHeaders.LOCATION, expectedLocation);
+  }
+
+  @Test
+  public void triggeringRenewal_shouldProvideProperlyFormattedResponse() {
+    JSONObject request = createTriggerRenewalRequestBody();
+    String route = toPath(POLICY_ROUTE, POLICY_ID_REPRESENTATION, TRIGGER_RENEWAL_ROUTE);
+
+    getBaseScenario()
+        .given()
+        .body(request.toString())
+        .when()
+        .post(route)
+        .then()
+        .body(matchesJsonSchema("policy/PolicyRenewalResponse"));
+  }
+
+  @Test
+  public void acceptingRenewal_shouldHaveExpectedStatusCode() {
+    String route =
+        toPath(
+            POLICY_ROUTE,
+            POLICY_ID_REPRESENTATION,
+            POLICY_RENEWAL_ROUTE,
+            POLICY_RENEWAL_ID_REPRESENTATION,
+            ACCEPT_RENEWAL_ROUTE);
+
+    int expectedStatusCode = Response.Status.OK.getStatusCode();
+    getBaseScenario().when().post(route).then().statusCode(expectedStatusCode);
+  }
+
+  @Test
+  public void cancellingRenewal_shouldHaveExpectedStatusCode() {
+    String route =
+        toPath(
+            POLICY_ROUTE,
+            POLICY_ID_REPRESENTATION,
+            POLICY_RENEWAL_ROUTE,
+            POLICY_RENEWAL_ID_REPRESENTATION,
+            CANCEL_RENEWAL_ROUTE);
+
+    int expectedStatusCode = Response.Status.OK.getStatusCode();
+    getBaseScenario().when().post(route).then().statusCode(expectedStatusCode);
   }
 
   @Test

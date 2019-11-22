@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCove
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyModificationResponse;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyRenewalResponse;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyResponse;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 
@@ -33,10 +34,6 @@ public class PolicyViewAssembler {
         modifyCoverageRequest.getPersonalProperty(), modifyCoverageRequest.getCivilLiability());
   }
 
-  public TriggerRenewalDto from(TriggerRenewalRequest triggerRenewalRequest) {
-    return new TriggerRenewalDto(triggerRenewalRequest.getPersonalProperty());
-  }
-
   public PolicyModificationResponse from(PolicyModificationDto policyModificationDto) {
     return new PolicyModificationResponse(
         policyModificationDto.getPolicyModificationId(),
@@ -45,6 +42,20 @@ public class PolicyViewAssembler {
         policyModificationDto.getProposedPremiumAdjustment(),
         policyModificationDto.getProposedCoverageDetails(),
         policyModificationDto.getProposedPremiumDetails());
+  }
+
+  public TriggerRenewalDto from(TriggerRenewalRequest triggerRenewalRequest) {
+    return new TriggerRenewalDto(triggerRenewalRequest.getPersonalProperty());
+  }
+
+  public PolicyRenewalResponse from(PolicyRenewalDto policyRenewalDto) {
+    return new PolicyRenewalResponse(
+        policyRenewalDto.getPolicyRenewalId(),
+        policyRenewalDto.getStatus(),
+        policyRenewalDto.getCoveragePeriod(),
+        policyRenewalDto.getProposedPremiumDetails().computeTotalPremium(),
+        policyRenewalDto.getProposedCoverageDetails(),
+        policyRenewalDto.getProposedPremiumDetails());
   }
 
   public PolicyResponse from(PolicyDto policyDto) {

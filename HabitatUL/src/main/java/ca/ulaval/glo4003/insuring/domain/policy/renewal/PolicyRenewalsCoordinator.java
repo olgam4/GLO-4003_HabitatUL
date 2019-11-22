@@ -86,7 +86,7 @@ public class PolicyRenewalsCoordinator {
     Date renewalCoveragePeriodStartDate =
         currentCoveragePeriodEndDate.plus(java.time.Period.ofDays(1));
     Date renewalCoveragePeriodEndDate =
-        renewalCoveragePeriodStartDate.plus(policyCoveragePeriodProvider.getPolicyCoveragePeriod());
+        currentCoveragePeriodEndDate.plus(policyCoveragePeriodProvider.getPolicyCoveragePeriod());
     return new Period(renewalCoveragePeriodStartDate, renewalCoveragePeriodEndDate);
   }
 

@@ -24,6 +24,11 @@ public class CoverageRenewalFormBuilder {
     return new CoverageRenewalFormBuilder();
   }
 
+  public CoverageRenewalFormBuilder withCoverageAmount(Amount coverageAmount) {
+    this.coverageAmount = coverageAmount;
+    return this;
+  }
+
   public CoverageRenewalFormBuilder withCurrentCoverageDetails(
       CoverageDetails currentCoverageDetails) {
     this.currentCoverageDetails = currentCoverageDetails;

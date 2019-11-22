@@ -97,7 +97,7 @@ public class SubmitCoverageRenewalTest {
     Date expectedRenewalCoveragePeriodStartDate =
         currentCoveragePeriodEndDate.plus(java.time.Period.ofDays(1));
     Date expectedRenewalCoveragePeriodEndDate =
-        expectedRenewalCoveragePeriodStartDate.plus(POLICY_COVERAGE_PERIOD);
+        currentCoveragePeriodEndDate.plus(POLICY_COVERAGE_PERIOD);
     Period expectedRenewalCoveragePeriod =
         new Period(expectedRenewalCoveragePeriodStartDate, expectedRenewalCoveragePeriodEndDate);
     assertEquals(expectedRenewalCoveragePeriod, policyRenewal.getCoveragePeriod());

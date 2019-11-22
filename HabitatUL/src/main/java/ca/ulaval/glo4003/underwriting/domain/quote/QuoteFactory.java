@@ -46,7 +46,10 @@ public class QuoteFactory {
   private Period computeEffectivePeriod(QuoteForm quoteForm) {
     Date effectivePeriodStartDate = quoteForm.getEffectiveDate();
     Date effectivePeriodEndDate =
-        quoteForm.getEffectiveDate().plus(quoteEffectivePeriodProvider.getQuoteEffectivePeriod());
+        quoteForm
+            .getEffectiveDate()
+            .plus(quoteEffectivePeriodProvider.getQuoteEffectivePeriod())
+            .minus(java.time.Period.ofDays(1));
     return new Period(effectivePeriodStartDate, effectivePeriodEndDate);
   }
 }

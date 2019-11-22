@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
+import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.IncreasedCoverageAmountError;
 import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormBuilder;
+import ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmaller
 import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 
 @RunWith(Enclosed.class)
-public class IncreasedCoverageAmountFormValidationPartTest {
+public class IncreasedCoverageAmountCoverageRenewalFormValidationPartTest {
   private static final Amount CURRENT_COVERAGE_AMOUNT = createCoverageAmount();
 
   @RunWith(Parameterized.class)
@@ -45,8 +45,8 @@ public class IncreasedCoverageAmountFormValidationPartTest {
     }
 
     @Test
-    public void validatingCoverageModificationForm() {
-      super.validatingCoverageModificationForm();
+    public void validatingCoverageRenewalForm() {
+      super.validatingCoverageRenewalForm();
     }
   }
 
@@ -75,13 +75,13 @@ public class IncreasedCoverageAmountFormValidationPartTest {
     }
 
     @Test(expected = IncreasedCoverageAmountError.class)
-    public void validatingCoverageModificationForm() {
-      super.validatingCoverageModificationForm();
+    public void validatingCoverageRenewalForm() {
+      super.validatingCoverageRenewalForm();
     }
   }
 
   public abstract static class TestCase {
-    private IncreasedCoverageAmountFormValidationPart subject;
+    private IncreasedCoverageAmountCoverageRenewalFormValidationPart subject;
     private Amount currentCoverageAmount;
     private Amount requestedCoverageAmount;
 
@@ -92,21 +92,21 @@ public class IncreasedCoverageAmountFormValidationPartTest {
 
     @Before
     public void setUp() {
-      subject = new IncreasedCoverageAmountFormValidationPart();
+      subject = new IncreasedCoverageAmountCoverageRenewalFormValidationPart();
     }
 
-    public void validatingCoverageModificationForm() {
+    public void validatingCoverageRenewalForm() {
       CoverageDetails currentCoverageDetails =
           CoverageDetailsBuilder.aCoverageDetails()
               .withPersonalPropertyCoverageDetail(currentCoverageAmount)
               .build();
-      CoverageModificationForm coverageModificationForm =
-          CoverageModificationFormBuilder.aCoverageModificationForm()
-              .withPersonalProperty(requestedCoverageAmount)
+      CoverageRenewalForm coverageRenewalForm =
+          CoverageRenewalFormBuilder.aCoverageRenewalForm()
+              .withCoverageAmount(requestedCoverageAmount)
               .withCurrentCoverageDetails(currentCoverageDetails)
               .build();
 
-      subject.validate(coverageModificationForm);
+      subject.validate(coverageRenewalForm);
     }
   }
 }

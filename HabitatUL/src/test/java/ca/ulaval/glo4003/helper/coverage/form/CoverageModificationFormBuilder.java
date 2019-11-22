@@ -13,13 +13,13 @@ import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.
 import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
 
 public class CoverageModificationFormBuilder {
-  private final Amount DEFAULT_PERSONAL_PROPERTY = createCoverageAmount();
+  private final Amount DEFAULT_COVERAGE_AMOUNT = createCoverageAmount();
   private final CivilLiabilityLimit DEFAULT_CIVIL_LIABILITY_LIMIT = createCivilLiabilityLimit();
   private final int DEFAULT_NUMBER_OF_UNITS = createNumberOfUnits();
   private final CoverageDetails DEFAULT_CURRENT_COVERAGE_DETAILS = createCoverageDetails();
   private final PremiumDetails DEFAULT_CURRENT_PREMIUM_DETAILS = createPremiumDetails();
 
-  private Amount personalProperty = DEFAULT_PERSONAL_PROPERTY;
+  private Amount coverageAmount = DEFAULT_COVERAGE_AMOUNT;
   private CivilLiabilityLimit civilLiabilityLimit = DEFAULT_CIVIL_LIABILITY_LIMIT;
   private CoverageDetails currentCoverageDetails = DEFAULT_CURRENT_COVERAGE_DETAILS;
   private PremiumDetails currentPremiumDetails = DEFAULT_CURRENT_PREMIUM_DETAILS;
@@ -31,8 +31,8 @@ public class CoverageModificationFormBuilder {
     return new CoverageModificationFormBuilder();
   }
 
-  public CoverageModificationFormBuilder withPersonalProperty(Amount personalProperty) {
-    this.personalProperty = personalProperty;
+  public CoverageModificationFormBuilder withCoverageAmount(Amount coverageAmount) {
+    this.coverageAmount = coverageAmount;
     return this;
   }
 
@@ -61,7 +61,7 @@ public class CoverageModificationFormBuilder {
 
   public CoverageModificationForm build() {
     return new CoverageModificationForm(
-        personalProperty,
+        coverageAmount,
         civilLiabilityLimit,
         numberOfUnits,
         currentCoverageDetails,

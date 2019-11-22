@@ -24,7 +24,7 @@ public class PositiveCoverageAmountCoverageModificationFormValidationPartTest {
     Amount coverageAmount = createAmountGreaterThanZero();
     coverageModificationForm =
         CoverageModificationFormBuilder.aCoverageModificationForm()
-            .withPersonalProperty(coverageAmount)
+            .withCoverageAmount(coverageAmount)
             .build();
 
     subject.validate(coverageModificationForm);
@@ -34,7 +34,7 @@ public class PositiveCoverageAmountCoverageModificationFormValidationPartTest {
   public void validatingCoverageModificationForm_withNullCoverageAmount_shouldNotThrow() {
     coverageModificationForm =
         CoverageModificationFormBuilder.aCoverageModificationForm()
-            .withPersonalProperty(null)
+            .withCoverageAmount(null)
             .build();
 
     subject.validate(coverageModificationForm);
@@ -45,7 +45,7 @@ public class PositiveCoverageAmountCoverageModificationFormValidationPartTest {
     Amount coverageAmount = createAmountSmallerThanZero();
     coverageModificationForm =
         CoverageModificationFormBuilder.aCoverageModificationForm()
-            .withPersonalProperty(coverageAmount)
+            .withCoverageAmount(coverageAmount)
             .build();
 
     subject.validate(coverageModificationForm);

@@ -61,7 +61,8 @@ public class QuoteFactoryTest {
 
     Period expectedEffectivePeriod =
         new Period(
-            QUOTE_FORM.getEffectiveDate(), QUOTE_FORM.getEffectiveDate().plus(COVERAGE_PERIOD));
+            QUOTE_FORM.getEffectiveDate(),
+            QUOTE_FORM.getEffectiveDate().plus(COVERAGE_PERIOD).minus(java.time.Period.ofDays(1)));
     assertEquals(expectedEffectivePeriod, quote.getEffectivePeriod());
   }
 

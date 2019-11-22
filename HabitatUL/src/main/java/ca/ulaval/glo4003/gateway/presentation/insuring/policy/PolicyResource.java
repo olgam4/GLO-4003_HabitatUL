@@ -11,6 +11,7 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -30,10 +31,14 @@ public class PolicyResource {
   public static final String MODIFY_COVERAGE_ROUTE = "/modify-coverage";
   public static final String POLICY_MODIFICATION_ROUTE = "/modifications";
   public static final String CONFIRM_MODIFICATION_ROUTE = "/confirm";
-  public static final String OPEN_CLAIM_ROUTE = "/open-claim";
   public static final String TRIGGER_RENEWAL_ROUTE = "/trigger-renewal";
+  public static final String POLICY_RENEWAL_ROUTE = "/renewals";
+  public static final String ACCEPT_RENEWAL_ROUTE = "/accept";
+  public static final String CANCEL_RENEWAL_ROUTE = "/cancel";
+  public static final String OPEN_CLAIM_ROUTE = "/open-claim";
   private static final String POLICY_ID_PARAM_NAME = "policyId";
   private static final String POLICY_MODIFICATION_ID_PARAM_NAME = "policyModificationId";
+  private static final String POLICY_RENEWAL_ID_PARAM_NAME = "policyRenewalId";
   private static final String SPECIFIC_POLICY_ROUTE = "/{" + POLICY_ID_PARAM_NAME + "}";
   private static final String INSURE_BICYCLE_FULL_ROUTE =
       SPECIFIC_POLICY_ROUTE + INSURE_BICYCLE_ROUTE;
@@ -46,9 +51,21 @@ public class PolicyResource {
           + POLICY_MODIFICATION_ROUTE
           + SPECIFIC_POLICY_MODIFICATION_ROUTE
           + CONFIRM_MODIFICATION_ROUTE;
-  private static final String OPEN_CLAIM_FULL_ROUTE = SPECIFIC_POLICY_ROUTE + OPEN_CLAIM_ROUTE;
   private static final String TRIGGER_RENEWAL_FULL_ROUTE =
       SPECIFIC_POLICY_ROUTE + TRIGGER_RENEWAL_ROUTE;
+  private static final String SPECIFIC_POLICY_RENEWAL_ROUTE =
+      "/{" + POLICY_RENEWAL_ID_PARAM_NAME + "}";
+  private static final String ACCEPT_RENEWAL_FULL_ROUTE =
+      SPECIFIC_POLICY_ROUTE
+          + POLICY_RENEWAL_ROUTE
+          + SPECIFIC_POLICY_RENEWAL_ROUTE
+          + ACCEPT_RENEWAL_ROUTE;
+  private static final String CANCEL_RENEWAL_FULL_ROUTE =
+      SPECIFIC_POLICY_ROUTE
+          + POLICY_RENEWAL_ROUTE
+          + SPECIFIC_POLICY_RENEWAL_ROUTE
+          + CANCEL_RENEWAL_ROUTE;
+  private static final String OPEN_CLAIM_FULL_ROUTE = SPECIFIC_POLICY_ROUTE + OPEN_CLAIM_ROUTE;
 
   private PolicyAppService policyAppService;
   private UserAppService userAppService;
@@ -139,9 +156,39 @@ public class PolicyResource {
       @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
       @Valid TriggerRenewalRequest triggerRenewalRequest) {
     TriggerRenewalDto triggerRenewalDto = policyViewAssembler.from(triggerRenewalRequest);
-    policyAppService.triggerRenewal(policyId, triggerRenewalDto);
-    // TODO: COME BACK TO IT ONCE THE USE CASE COMPLETED
-    // TODO: might want to produce different response even than for a simple modification!
+    PolicyRenewalDto policyRenewalDto =
+        policyAppService.triggerRenewal(policyId, triggerRenewalDto);
+    String policyIdRepresentation = policyId.toRepresentation();
+    String policyRenewalIdRepresentation = policyRenewalDto.getPolicyRenewalId().toRepresentation();
+    URI location =
+        UriBuilder.fromPath(CONTEXT_PATH)
+            .path(POLICY_ROUTE)
+            .path(policyIdRepresentation)
+            .path(POLICY_RENEWAL_ROUTE)
+            .path(policyRenewalIdRepresentation)
+            .build();
+    return Response.created(location).entity(policyViewAssembler.from(policyRenewalDto)).build();
+  }
+
+  @POST
+  @Secured
+  @Path(ACCEPT_RENEWAL_FULL_ROUTE)
+  public Response acceptRenewal(
+      @Context SecurityContext securityContext,
+      @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
+      @PathParam(POLICY_RENEWAL_ID_PARAM_NAME) PolicyRenewalId policyRenewalId) {
+    policyAppService.acceptRenewal(policyId, policyRenewalId);
+    return Response.ok().build();
+  }
+
+  @POST
+  @Secured
+  @Path(CANCEL_RENEWAL_FULL_ROUTE)
+  public Response cancelRenewal(
+      @Context SecurityContext securityContext,
+      @PathParam(POLICY_ID_PARAM_NAME) PolicyId policyId,
+      @PathParam(POLICY_RENEWAL_ID_PARAM_NAME) PolicyRenewalId policyRenewalId) {
+    policyAppService.cancelRenewal(policyId, policyRenewalId);
     return Response.ok().build();
   }
 

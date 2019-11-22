@@ -56,6 +56,10 @@ public class PolicyRenewal {
     return proposedPremiumDetails;
   }
 
+  public DateTime getEffectiveDateTime() {
+    return coveragePeriod.getStartDate().atStartOfDay();
+  }
+
   public void updateStatus() {
     if (isOutdated()) expire();
   }

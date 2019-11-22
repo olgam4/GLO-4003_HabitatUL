@@ -1,6 +1,8 @@
 package ca.ulaval.glo4003.insuring.context;
 
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
+import ca.ulaval.glo4003.insuring.application.policy.renewal.TaskSchedulerPolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.communication.policy.PolicyBoundedContextEventHandler;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
@@ -23,6 +25,7 @@ public class DemoInsuringContext {
         PolicyModificationValidityPeriodProvider.class,
         new ConfigBasedPolicyModificationValidityPeriodProvider());
     register(PolicyRenewalPeriodProvider.class, new ConfigBasedPolicyRenewalPeriodProvider());
+    register(PolicyRenewalProcessor.class, new TaskSchedulerPolicyRenewalProcessor());
     register(PolicyCoveragePeriodProvider.class, new ConfigBasedPolicyCoveragePeriodProvider());
     register(
         PolicyRepository.class,

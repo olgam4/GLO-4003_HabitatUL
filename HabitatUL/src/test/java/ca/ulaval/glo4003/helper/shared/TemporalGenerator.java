@@ -68,7 +68,7 @@ public class TemporalGenerator {
         date.getValue().plus(Faker.instance().number().randomDigitNotZero(), ChronoUnit.DAYS));
   }
 
-  private static DateTime createDateTime() {
+  public static DateTime createDateTime() {
     return DateTime.from(
         LocalDateTime.ofInstant(
             Faker.instance().date().birthday().toInstant(), ZoneId.systemDefault()));

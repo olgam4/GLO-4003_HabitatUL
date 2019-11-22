@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.gateway.presentation.coverage.request.*;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
 import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -16,8 +17,7 @@ import org.json.JSONObject;
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_FLOOR_VALUE;
 import static ca.ulaval.glo4003.gateway.presentation.IntegrationTestContext.VALID_ZIP_CODE_VALUE;
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimRequest;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createInsureBicycleRequest;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createModifyCoverageRequest;
+import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteRequest;
 import static ca.ulaval.glo4003.helper.user.CredentialsGenerator.createCredentialsRequest;
 
@@ -142,6 +142,13 @@ public class RequestBodyGenerator {
     JSONObject json = new JSONObject();
     json.put("personalProperty", modifyCoverageRequest.getPersonalProperty().getValue());
     json.put("civilLiability", modifyCoverageRequest.getCivilLiability().getRepresentation());
+    return json;
+  }
+
+  public static JSONObject createTriggerRenewalRequestBody() {
+    TriggerRenewalRequest triggerRenewalRequest = createTriggerRenewalRequest();
+    JSONObject json = new JSONObject();
+    json.put("personalProperty", triggerRenewalRequest.getPersonalProperty().getValue());
     return json;
   }
 

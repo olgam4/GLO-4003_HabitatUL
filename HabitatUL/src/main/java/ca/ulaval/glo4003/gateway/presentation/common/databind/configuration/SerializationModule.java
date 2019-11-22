@@ -14,6 +14,7 @@ import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.insuring.domain.claim.SinisterType;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
+import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.domain.address.Floor;
 import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
@@ -75,6 +76,7 @@ public class SerializationModule extends Module {
     serializers.addSerializer(Money.class, new MoneySerializer());
     serializers.addSerializer(PolicyId.class, new PolicyIdSerializer());
     serializers.addSerializer(PolicyModificationId.class, new PolicyModificationIdSerializer());
+    serializers.addSerializer(PolicyRenewalId.class, new PolicyRenewalIdSerializer());
     serializers.addSerializer(PremiumDetails.class, new PremiumDetailsSerializer());
     serializers.addSerializer(QuoteId.class, new QuoteIdSerializer());
     serializers.addSerializer(Token.class, new TokenSerializer());

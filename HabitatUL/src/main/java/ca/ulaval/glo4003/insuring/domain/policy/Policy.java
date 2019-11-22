@@ -205,8 +205,8 @@ public class Policy extends AggregateRoot {
     }
   }
 
-  public void acceptRenewal(PolicyRenewalId policyRenewalId) {
-    updateStatus(() -> acceptRenewalWithoutUpdate(policyRenewalId));
+  public PolicyRenewal acceptRenewal(PolicyRenewalId policyRenewalId) {
+    return updateStatus(() -> acceptRenewalWithoutUpdate(policyRenewalId));
   }
 
   private PolicyRenewal acceptRenewalWithoutUpdate(PolicyRenewalId policyRenewalId) {
