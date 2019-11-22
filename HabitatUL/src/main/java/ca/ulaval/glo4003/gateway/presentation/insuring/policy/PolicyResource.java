@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.insuring.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
+import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
@@ -72,7 +73,10 @@ public class PolicyResource {
   private PolicyViewAssembler policyViewAssembler;
 
   public PolicyResource() {
-    this(new PolicyAppService(), new UserAppService(), new PolicyViewAssembler());
+    this(
+        ServiceLocator.resolve(PolicyAppService.class),
+        ServiceLocator.resolve(UserAppService.class),
+        new PolicyViewAssembler());
   }
 
   public PolicyResource(

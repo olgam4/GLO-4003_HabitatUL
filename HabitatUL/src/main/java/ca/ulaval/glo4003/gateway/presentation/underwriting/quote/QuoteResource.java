@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.underwriting.quote;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
+import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
@@ -30,7 +31,10 @@ public class QuoteResource {
   private QuoteViewAssembler quoteViewAssembler;
 
   public QuoteResource() {
-    this(new QuoteAppService(), new UserAppService(), new QuoteViewAssembler());
+    this(
+        ServiceLocator.resolve(QuoteAppService.class),
+        ServiceLocator.resolve(UserAppService.class),
+        new QuoteViewAssembler());
   }
 
   public QuoteResource(

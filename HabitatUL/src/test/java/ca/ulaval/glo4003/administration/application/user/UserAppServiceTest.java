@@ -34,6 +34,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,6 +61,7 @@ public class UserAppServiceTest {
   @Mock QuoteRegistry quoteRegistry;
   @Mock PolicyRegistry policyRegistry;
   @Mock PaymentProcessor paymentProcessor;
+  @Mock Logger logger;
 
   private UserAppService subject;
 
@@ -72,7 +74,7 @@ public class UserAppServiceTest {
     when(tokenRegistry.getToken(any())).thenReturn(TOKEN.getValue());
     when(tokenValidityPeriodProvider.getTokenValidityPeriod()).thenReturn(VALIDITY_PERIOD);
     subject =
-        new UserAppService(
+        new UserAppServiceImpl(
             usernameRegistry,
             quoteRegistry,
             policyRegistry,
@@ -82,7 +84,8 @@ public class UserAppServiceTest {
             tokenValidityPeriodProvider,
             tokenRegistry,
             paymentProcessor,
-            userKeyGenerator);
+            userKeyGenerator,
+            logger);
   }
 
   @Test
@@ -230,10 +233,13 @@ public class UserAppServiceTest {
   }
 
   @Test
-  public void gettingPolicies_shouldGetPolicyKeys() {
-    subject.getPolicies(USER_KEY);
+  public void associatingPolicy_shouldLogKeyNotFoundExceptionsAsSevere()
+          throws KeyNotFoundException {
+    when(quoteRegistry.getUserKey(QUOTE_KEY)).thenThrow(new KeyNotFoundException());
 
-    verify(policyRegistry).getPolicyKeys(USER_KEY);
+    subject.associatePolicy(QUOTE_KEY, POLICY_KEY);
+
+    verify(logger).severe(anyString());
   }
 
   @Test
@@ -248,5 +254,32 @@ public class UserAppServiceTest {
     subject.processQuotePayment(QUOTE_KEY, PAYMENT);
 
     verify(paymentProcessor).process(USER_KEY, PAYMENT);
+  }
+
+  @Test
+  public void processingQuotePayment_shouldLogKeyNotFoundExceptionsAsSevere()
+      throws KeyNotFoundException {
+    when(quoteRegistry.getUserKey(QUOTE_KEY)).thenThrow(new KeyNotFoundException());
+
+    subject.processQuotePayment(QUOTE_KEY, PAYMENT);
+
+    verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void processingQuotePayment_shouldLogPaymentFailedExceptionsAsSevere()
+      throws PaymentFailedException {
+    doThrow(new PaymentFailedException()).when(paymentProcessor).process(USER_KEY, PAYMENT);
+
+    subject.processQuotePayment(QUOTE_KEY, PAYMENT);
+
+    verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void gettingPolicies_shouldGetPolicyKeys() {
+    subject.getPolicies(USER_KEY);
+
+    verify(policyRegistry).getPolicyKeys(USER_KEY);
   }
 }

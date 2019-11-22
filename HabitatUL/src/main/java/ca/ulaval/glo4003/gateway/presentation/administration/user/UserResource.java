@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.gateway.presentation.administration.user;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
+import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.administration.user.request.CredentialsRequest;
 
 import javax.ws.rs.Consumes;
@@ -27,7 +28,7 @@ public class UserResource {
   private UserViewAssembler userViewAssembler;
 
   public UserResource() {
-    this(new UserAppService(), new UserViewAssembler());
+    this(ServiceLocator.resolve(UserAppService.class), new UserViewAssembler());
   }
 
   public UserResource(UserAppService userAppService, UserViewAssembler userViewAssembler) {

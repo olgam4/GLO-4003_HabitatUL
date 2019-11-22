@@ -11,10 +11,13 @@ import ca.ulaval.glo4003.shared.infrastructure.threading.JavaTimerTaskScheduler;
 import ca.ulaval.glo4003.shared.presentation.temporal.ConfigBasedLocalZoneIdProvider;
 import ca.ulaval.glo4003.shared.presentation.temporal.LocalZoneIdProvider;
 
+import java.util.logging.Logger;
+
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
 
 public class DemoSharedContext {
   public void execute() {
+    register(Logger.class, Logger.getLogger("Habitat-UL"));
     register(ClockProvider.class, new SystemDefaultZoneClockProvider());
     register(FloorFormatter.class, new UsCanadianConventionFloorFormatter());
     register(ZipCodeFormatter.class, new CanadianZipCodeFormatter());

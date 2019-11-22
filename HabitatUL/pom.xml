@@ -205,6 +205,12 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${exec-maven-plugin.version}</version>
                 <configuration>
+                    <systemProperties>
+                        <systemProperty>
+                            <key>java.util.logging.SimpleFormatter.format</key>
+                            <value>[%1$tF %1$tT] [%3$s - %4$s] %5$s %n</value>
+                        </systemProperty>
+                    </systemProperties>
                     <mainClass>${main-class}</mainClass>
                     <skip>false</skip>
                 </configuration>

@@ -57,7 +57,8 @@ public class QuoteAppServiceTest {
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
     subject =
-        new QuoteAppService(quoteAssembler, coverageDomainService, quoteFactory, quoteRepository);
+        new QuoteAppServiceImpl(
+            quoteAssembler, coverageDomainService, quoteFactory, quoteRepository);
   }
 
   @Test

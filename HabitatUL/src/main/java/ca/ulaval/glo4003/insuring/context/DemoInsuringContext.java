@@ -1,6 +1,11 @@
 package ca.ulaval.glo4003.insuring.context;
 
+import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
+import ca.ulaval.glo4003.insuring.application.claim.ClaimAppServiceImpl;
+import ca.ulaval.glo4003.insuring.application.claim.ClaimAppServiceLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
+import ca.ulaval.glo4003.insuring.application.policy.PolicyAppServiceImpl;
+import ca.ulaval.glo4003.insuring.application.policy.PolicyAppServiceLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.TaskSchedulerPolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.communication.policy.PolicyBoundedContextEventHandler;
@@ -31,9 +36,14 @@ public class DemoInsuringContext {
         PolicyRepository.class,
         new EventPublisherPolicyRepositoryDecorator(new InMemoryPolicyRepository(), mediator));
     register(ClaimRepository.class, new InMemoryClaimRepository());
-    PolicyAppService policyAppService = new PolicyAppService();
+    PolicyAppService policyAppService =
+        new PolicyAppServiceLoggingDecorator(new PolicyAppServiceImpl());
+    ClaimAppService claimAppService =
+        new ClaimAppServiceLoggingDecorator(new ClaimAppServiceImpl());
     PolicyBoundedContextEventHandler policyBoundedContextEventHandler =
         new PolicyBoundedContextEventHandler(policyAppService);
+    register(PolicyAppService.class, policyAppService);
+    register(ClaimAppService.class, claimAppService);
     policyBoundedContextEventHandler.register(mediator);
   }
 }

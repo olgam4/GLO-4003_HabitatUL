@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.gateway.presentation.insuring.claim;
 
+import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.insuring.claim.response.ClaimResponse;
 import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
@@ -21,7 +22,7 @@ public class ClaimResource {
   private ClaimViewAssembler claimViewAssembler;
 
   public ClaimResource() {
-    this(new ClaimAppService(), new ClaimViewAssembler());
+    this(ServiceLocator.resolve(ClaimAppService.class), new ClaimViewAssembler());
   }
 
   public ClaimResource(ClaimAppService claimAppService, ClaimViewAssembler claimViewAssembler) {

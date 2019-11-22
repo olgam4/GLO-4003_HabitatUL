@@ -2,6 +2,8 @@ package ca.ulaval.glo4003.administration.context;
 
 import ca.ulaval.glo4003.administration.application.user.AccessController;
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
+import ca.ulaval.glo4003.administration.application.user.UserAppServiceImpl;
+import ca.ulaval.glo4003.administration.application.user.UserAppServiceLoggingDecorator;
 import ca.ulaval.glo4003.administration.communication.user.UserBoundedContextEventHandler;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
@@ -39,7 +41,8 @@ public class DemoAdministrationContext {
     register(TokenTranslator.class, new JwtTokenTranslator(jwtSecret));
     register(TokenValidityPeriodProvider.class, new ConfigBasedTokenValidityPeriodProvider());
 
-    UserAppService userAppService = new UserAppService();
+    UserAppService userAppService = new UserAppServiceLoggingDecorator(new UserAppServiceImpl());
+    register(UserAppService.class, userAppService);
     register(AccessController.class, userAppService);
     UserBoundedContextEventHandler userBoundedContextEventHandler =
         new UserBoundedContextEventHandler(userAppService);

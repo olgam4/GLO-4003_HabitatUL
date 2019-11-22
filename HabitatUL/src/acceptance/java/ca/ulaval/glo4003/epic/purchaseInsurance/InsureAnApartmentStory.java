@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.epic.purchaseInsurance;
 import ca.ulaval.glo4003.AcceptanceTestHelper;
 import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
+import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppServiceImpl;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import org.junit.Before;
@@ -22,7 +23,7 @@ public class InsureAnApartmentStory {
 
   @Before
   public void setUp() {
-    quoteAppService = new QuoteAppService();
+    quoteAppService = new QuoteAppServiceImpl();
     requestQuoteDto = QuoteGenerator.createRequestQuoteDto();
   }
 

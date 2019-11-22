@@ -39,6 +39,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.logging.Logger;
+
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.helper.coverage.CoverageGenerator.createCoverageDto;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
@@ -52,8 +54,8 @@ import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -86,6 +88,7 @@ public class PolicyAppServiceTest {
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
+  @Mock private Logger logger;
 
   private PolicyAppService subject;
   private PolicyAssembler policyAssembler;
@@ -135,7 +138,7 @@ public class PolicyAppServiceTest {
         .thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
     subject =
-        new PolicyAppService(
+        new PolicyAppServiceImpl(
             policyAssembler,
             policyFactory,
             policyRepository,
@@ -145,7 +148,8 @@ public class PolicyAppServiceTest {
             policyCoveragePeriodProvider,
             policyRenewalProcessor,
             claimFactory,
-            claimRepository);
+            claimRepository,
+            logger);
   }
 
   @Test
@@ -160,6 +164,16 @@ public class PolicyAppServiceTest {
     subject.issuePolicy(POLICY_PURCHASED_EVENT);
 
     verify(policyRepository).create(policy);
+  }
+
+  @Test
+  public void issuingPolicy_shouldLogPolicyAlreadyCreatedExceptionsAsSevere()
+      throws PolicyAlreadyCreatedException {
+    doThrow(new PolicyAlreadyCreatedException()).when(policyRepository).create(any(Policy.class));
+
+    subject.issuePolicy(POLICY_PURCHASED_EVENT);
+
+    verify(logger).severe(anyString());
   }
 
   @Test

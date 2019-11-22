@@ -30,7 +30,7 @@ public class ClaimAppServiceTest {
   public void setUp() throws ClaimNotFoundException {
     claimAssembler = new ClaimAssembler();
     when(claimRepository.getById(any(ClaimId.class))).thenReturn(claim);
-    subject = new ClaimAppService(claimRepository, claimAssembler);
+    subject = new ClaimAppServiceImpl(claimRepository, claimAssembler);
   }
 
   @Test
