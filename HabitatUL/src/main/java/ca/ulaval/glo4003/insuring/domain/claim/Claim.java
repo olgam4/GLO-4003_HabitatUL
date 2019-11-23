@@ -11,8 +11,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.BICYCLE_ENDORSEMENT;
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
-import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.RECEIVED;
-import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.UNDER_ANALYSIS;
+import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.*;
 import static ca.ulaval.glo4003.insuring.domain.claim.LossCategory.BICYCLE;
 import static ca.ulaval.glo4003.insuring.domain.claim.SinisterType.THEFT;
 import static ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber.UNFILLED_AUTHORITY_NUMBER;
@@ -129,5 +128,9 @@ public class Claim {
         || !sinisterType.equals(THEFT)
         || !claimStatus.equals(RECEIVED)
         || !value.declaredOn(declarationDate);
+  }
+
+  public void expire() {
+    this.claimStatus = EXPIRED;
   }
 }

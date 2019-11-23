@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
+import ca.ulaval.glo4003.insuring.application.claim.expiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
@@ -29,6 +30,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 import java.util.logging.Logger;
 
@@ -43,6 +45,9 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   private PolicyRenewalProcessor policyRenewalProcessor;
   private ClaimFactory claimFactory;
   private ClaimRepository claimRepository;
+  private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
+  private ClaimExpirationProcessor claimExpirationProcessor;
+  private ClockProvider clockProvider;
   private Logger logger;
 
   public PolicyAppServiceImpl() {
@@ -57,6 +62,9 @@ public class PolicyAppServiceImpl implements PolicyAppService {
         ServiceLocator.resolve(PolicyRenewalProcessor.class),
         new ClaimFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(ClaimRepository.class),
+        ServiceLocator.resolve(ClaimExpirationPeriodProvider.class),
+        ServiceLocator.resolve(ClaimExpirationProcessor.class),
+        ServiceLocator.resolve(ClockProvider.class),
         ServiceLocator.resolve(Logger.class));
   }
 
@@ -71,6 +79,9 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       PolicyRenewalProcessor policyRenewalProcessor,
       ClaimFactory claimFactory,
       ClaimRepository claimRepository,
+      ClaimExpirationPeriodProvider claimExpirationPeriodProvider,
+      ClaimExpirationProcessor claimExpirationProcessor,
+      ClockProvider clockProvider,
       Logger logger) {
     this.policyAssembler = policyAssembler;
     this.policyFactory = policyFactory;
@@ -82,6 +93,9 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     this.policyRenewalProcessor = policyRenewalProcessor;
     this.claimFactory = claimFactory;
     this.claimRepository = claimRepository;
+    this.claimExpirationPeriodProvider = claimExpirationPeriodProvider;
+    this.claimExpirationProcessor = claimExpirationProcessor;
+    this.clockProvider = clockProvider;
     this.logger = logger;
   }
 
@@ -211,6 +225,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       Policy policy = policyRepository.getById(policyId);
       Claim claim = claimFactory.create(openClaimDto.getSinisterType(), lossDeclarations);
       policy.openClaim(claim);
+      claimExpirationProcessor.scheduleExpiration(claim.getClaimId(), computeClaimExpirationDate());
       claimRepository.create(claim);
       return claim.getClaimId();
     } catch (PolicyNotFoundException e) {
@@ -218,6 +233,11 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     } catch (ClaimAlreadyCreatedException e) {
       throw new CouldNotOpenClaimError();
     }
+  }
+
+  private DateTime computeClaimExpirationDate() {
+    return DateTime.now(clockProvider.getClock())
+        .plus(claimExpirationPeriodProvider.getClaimExpirationPeriod());
   }
 
   private void checkIfEmptyLossDeclarations(LossDeclarations lossDeclarations) {

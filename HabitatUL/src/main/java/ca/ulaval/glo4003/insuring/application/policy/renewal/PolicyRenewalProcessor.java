@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 public interface PolicyRenewalProcessor {
   void scheduleRenewal(
-      PolicyId policyId, PolicyRenewalId policyRenewalId, DateTime renewalEffectiveDate);
+      PolicyId policyId, PolicyRenewalId policyRenewalId, DateTime renewalEffectiveDateTime);
 
   void cancelRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId);
 }

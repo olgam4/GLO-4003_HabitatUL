@@ -56,6 +56,6 @@ public class ClaimAppServiceLoggingDecoratorTest {
   public void providingAuthorityNumber_shouldDelegateToPolicyAppService() {
     subject.provideAuthorityNumber(CLAIM_ID, AUTHORITY_NUMBER);
 
-    verify(claimAppService).getClaim(CLAIM_ID);
+    verify(claimAppService).provideAuthorityNumber(CLAIM_ID, AUTHORITY_NUMBER);
   }
 }

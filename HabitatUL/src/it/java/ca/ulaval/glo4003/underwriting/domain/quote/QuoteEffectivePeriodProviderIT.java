@@ -14,7 +14,7 @@ public abstract class QuoteEffectivePeriodProviderIT {
   }
 
   @Test
-  public void gettingQuoteEffectivePeriod_shouldProvideEffectivePeriod() {
+  public void gettingQuoteEffectivePeriod_shouldProvidePeriod() {
     assertNotNull(subject.getQuoteEffectivePeriod());
   }
 

@@ -14,7 +14,7 @@ public abstract class QuoteValidityPeriodProviderIT {
   }
 
   @Test
-  public void gettingQuoteValidityPeriod_shouldProvideValidityPeriod() {
+  public void gettingQuoteValidityPeriod_shouldProvidePeriod() {
     assertNotNull(subject.getQuoteValidityPeriod());
   }
 

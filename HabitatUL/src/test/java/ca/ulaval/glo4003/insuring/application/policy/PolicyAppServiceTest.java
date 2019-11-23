@@ -10,6 +10,7 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
+import ca.ulaval.glo4003.insuring.application.claim.expiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
@@ -29,6 +30,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProv
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
+import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -39,6 +41,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.Duration;
 import java.util.logging.Logger;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
@@ -49,7 +52,7 @@ import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDateTime;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -60,6 +63,7 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyAppServiceTest {
+  private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final PolicyInformation POLICY_INFORMATION = createPolicyInformation();
@@ -74,6 +78,7 @@ public class PolicyAppServiceTest {
   private static final DateTime RENEWAL_EFFECTIVE_DATE = createDateTime();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
+  private static final Duration CLAIM_EXPIRATION_PERIOD = createDuration();
 
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
@@ -88,6 +93,8 @@ public class PolicyAppServiceTest {
   @Mock private Claim claim;
   @Mock private ClaimFactory claimFactory;
   @Mock private ClaimRepository claimRepository;
+  @Mock private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
+  @Mock private ClaimExpirationProcessor claimExpirationProcessor;
   @Mock private Logger logger;
 
   private PolicyAppService subject;
@@ -137,6 +144,8 @@ public class PolicyAppServiceTest {
     when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
         .thenReturn(claim);
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
+    when(claimExpirationPeriodProvider.getClaimExpirationPeriod())
+        .thenReturn(CLAIM_EXPIRATION_PERIOD);
     subject =
         new PolicyAppServiceImpl(
             policyAssembler,
@@ -149,6 +158,9 @@ public class PolicyAppServiceTest {
             policyRenewalProcessor,
             claimFactory,
             claimRepository,
+            claimExpirationPeriodProvider,
+            claimExpirationProcessor,
+            CLOCK_PROVIDER,
             logger);
   }
 
@@ -454,6 +466,15 @@ public class PolicyAppServiceTest {
     subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     verify(claimRepository).create(claim);
+  }
+
+  @Test
+  public void openingClaim_shouldScheduleClaimExpiration() {
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
+
+    DateTime expectedClaimExpirationDate =
+        getNowDateTime(CLOCK_PROVIDER).plus(CLAIM_EXPIRATION_PERIOD);
+    verify(claimExpirationProcessor).scheduleExpiration(CLAIM_ID, expectedClaimExpirationDate);
   }
 
   @Test

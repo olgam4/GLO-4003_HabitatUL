@@ -31,7 +31,7 @@ public class ClaimAppServiceLoggingDecorator implements ClaimAppService {
   @Override
   public ClaimDto provideAuthorityNumber(ClaimId claimId, AuthorityNumber authorityNumber) {
     logger.info(String.format("Provide authority number for claim <%s>", claimId));
-    ClaimDto claimDto = this.claimAppService.getClaim(claimId);
+    ClaimDto claimDto = this.claimAppService.provideAuthorityNumber(claimId, authorityNumber);
     logger.info(String.format("Authority number provided for claim <%s>", claimDto));
     return claimDto;
   }

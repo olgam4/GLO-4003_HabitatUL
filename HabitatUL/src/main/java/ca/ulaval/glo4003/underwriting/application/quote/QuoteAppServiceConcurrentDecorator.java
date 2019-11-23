@@ -5,8 +5,8 @@ import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 
-public class QuoteAppServiceConcurrentDecorator
-    extends ConcurrentDecorator<QuoteId> implements QuoteAppService {
+public class QuoteAppServiceConcurrentDecorator extends ConcurrentDecorator<QuoteId>
+    implements QuoteAppService {
   private QuoteAppService quoteAppService;
 
   public QuoteAppServiceConcurrentDecorator(QuoteAppService quoteAppService) {

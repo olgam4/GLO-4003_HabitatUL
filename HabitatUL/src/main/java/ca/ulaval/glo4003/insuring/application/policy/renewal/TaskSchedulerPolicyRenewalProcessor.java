@@ -27,11 +27,11 @@ public class TaskSchedulerPolicyRenewalProcessor implements PolicyRenewalProcess
 
   @Override
   public void scheduleRenewal(
-      PolicyId policyId, PolicyRenewalId policyRenewalId, DateTime renewalEffectiveDate) {
-    PolicyRenewalTask renewalTask =
+      PolicyId policyId, PolicyRenewalId policyRenewalId, DateTime renewalEffectiveDateTime) {
+    PolicyRenewalTask policyRenewalTask =
         new PolicyRenewalTask(policyRepository, policyId, policyRenewalId);
     RenewalTaskKey taskKey = new RenewalTaskKey(policyId, policyRenewalId);
-    taskScheduler.schedule(taskKey, renewalTask, renewalEffectiveDate);
+    taskScheduler.schedule(taskKey, policyRenewalTask, renewalEffectiveDateTime);
   }
 
   @Override

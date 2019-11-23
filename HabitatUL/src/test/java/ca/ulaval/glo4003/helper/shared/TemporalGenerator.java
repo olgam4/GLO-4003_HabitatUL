@@ -20,6 +20,14 @@ public class TemporalGenerator {
     return Date.now(clockProvider.getClock());
   }
 
+  public static DateTime getNowDateTime() {
+    return getNowDateTime(getClockProvider());
+  }
+
+  public static DateTime getNowDateTime(ClockProvider clockProvider) {
+    return DateTime.now(clockProvider.getClock());
+  }
+
   public static Date createDate() {
     return Date.from(createDateTime().getValue().toLocalDate());
   }
