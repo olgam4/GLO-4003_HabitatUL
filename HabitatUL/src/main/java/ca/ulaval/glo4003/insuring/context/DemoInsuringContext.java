@@ -31,13 +31,15 @@ public class DemoInsuringContext {
         PolicyModificationValidityPeriodProvider.class,
         new ConfigBasedPolicyModificationValidityPeriodProvider());
     register(PolicyRenewalPeriodProvider.class, new ConfigBasedPolicyRenewalPeriodProvider());
-    register(PolicyRenewalProcessor.class, new TaskSchedulerPolicyRenewalProcessor());
     register(PolicyCoveragePeriodProvider.class, new ConfigBasedPolicyCoveragePeriodProvider());
     register(
         PolicyRepository.class,
         new EventPublisherPolicyRepositoryDecorator(new InMemoryPolicyRepository(), mediator));
     register(ClaimRepository.class, new InMemoryClaimRepository());
-    PolicyAppService policyAppService = buildPolicyAppService();
+    register(PolicyRenewalProcessor.class, new TaskSchedulerPolicyRenewalProcessor());
+    PolicyAppService policyAppService =
+        new PolicyAppServiceLoggingDecorator(
+            new PolicyAppServiceConcurrentDecorator(new PolicyAppServiceImpl()));
     ClaimAppService claimAppService =
         new ClaimAppServiceLoggingDecorator(new ClaimAppServiceImpl());
     PolicyBoundedContextEventHandler policyBoundedContextEventHandler =
@@ -45,10 +47,5 @@ public class DemoInsuringContext {
     register(PolicyAppService.class, policyAppService);
     register(ClaimAppService.class, claimAppService);
     policyBoundedContextEventHandler.register(mediator);
-  }
-
-  private PolicyAppService buildPolicyAppService() {
-    return new PolicyAppServiceLoggingDecorator(
-      new PolicyAppServiceConcurrentDecorator(new PolicyAppServiceImpl()));
   }
 }

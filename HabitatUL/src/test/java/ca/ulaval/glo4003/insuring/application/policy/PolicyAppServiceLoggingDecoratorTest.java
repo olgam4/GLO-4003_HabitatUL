@@ -25,14 +25,15 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyAppServiceLoggingDecoratorTest {
-  public static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsureBicycleDto();
+  private static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();
   private static final TriggerRenewalDto TRIGGER_RENEWAL_DTO = createTriggerRenewalDto();
   private static final PolicyRenewalId POLICY_RENEWAL_ID = createPolicyRenewalId();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
+
   @Mock private PolicyAppService policyAppService;
   @Mock private Logger logger;
 
@@ -139,20 +140,6 @@ public class PolicyAppServiceLoggingDecoratorTest {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyAppService).cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-  }
-
-  @Test
-  public void confirmingRenewal_shouldLogParamsAsInfo() {
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-
-    verify(logger).info(anyString());
-  }
-
-  @Test
-  public void confirmingRenewal_shouldDelegateToPolicyAppService() {
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-
-    verify(policyAppService).confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
   }
 
   @Test

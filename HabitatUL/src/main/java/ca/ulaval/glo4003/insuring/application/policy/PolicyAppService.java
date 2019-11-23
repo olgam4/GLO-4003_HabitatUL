@@ -22,7 +22,5 @@ public interface PolicyAppService {
 
   void cancelRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId);
 
-  void confirmRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId);
-
   ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto);
 }

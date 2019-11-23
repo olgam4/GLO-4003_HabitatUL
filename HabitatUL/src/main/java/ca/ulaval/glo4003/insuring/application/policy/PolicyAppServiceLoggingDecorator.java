@@ -87,14 +87,6 @@ public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
   }
 
   @Override
-  public void confirmRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
-    logger.info(
-        String.format(
-            "Confirm renewal of policy <%s> with renewalId <%s>", policyId, policyRenewalId));
-    this.policyAppService.confirmRenewal(policyId, policyRenewalId);
-  }
-
-  @Override
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     logger.info(String.format("Open claim <%s> on policy <%s>", openClaimDto, policyId));
     ClaimId claimId = this.policyAppService.openClaim(policyId, openClaimDto);

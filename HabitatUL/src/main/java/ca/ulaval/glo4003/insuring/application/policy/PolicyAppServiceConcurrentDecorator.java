@@ -1,12 +1,6 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
-import ca.ulaval.glo4003.insuring.application.policy.dto.InsureBicycleDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.ModifyCoverageDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyModificationDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.PolicyRenewalDto;
-import ca.ulaval.glo4003.insuring.application.policy.dto.TriggerRenewalDto;
+import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
@@ -14,8 +8,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.concurrency.ConcurrentDecorator;
 
-public class PolicyAppServiceConcurrentDecorator
-    extends ConcurrentDecorator<PolicyId> implements PolicyAppService {
+public class PolicyAppServiceConcurrentDecorator extends ConcurrentDecorator<PolicyId>
+    implements PolicyAppService {
   private PolicyAppService policyAppService;
 
   public PolicyAppServiceConcurrentDecorator(PolicyAppService policyAppService) {
@@ -35,21 +29,21 @@ public class PolicyAppServiceConcurrentDecorator
   @Override
   public PolicyModificationDto modifyCoverage(
       PolicyId policyId, ModifyCoverageDto modifyCoverageDto) {
-    return lockAndCall(policyId,
-        () -> policyAppService.modifyCoverage(policyId, modifyCoverageDto));
+    return lockAndCall(
+        policyId, () -> policyAppService.modifyCoverage(policyId, modifyCoverageDto));
   }
 
   @Override
   public PolicyDto confirmModification(
       PolicyId policyId, PolicyModificationId policyModificationId) {
-    return lockAndCall(policyId,
-        () -> policyAppService.confirmModification(policyId, policyModificationId));
+    return lockAndCall(
+        policyId, () -> policyAppService.confirmModification(policyId, policyModificationId));
   }
 
   @Override
   public PolicyRenewalDto triggerRenewal(PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
-    return lockAndCall(policyId,
-        () -> policyAppService.triggerRenewal(policyId, triggerRenewalDto));
+    return lockAndCall(
+        policyId, () -> policyAppService.triggerRenewal(policyId, triggerRenewalDto));
   }
 
   @Override
@@ -63,12 +57,7 @@ public class PolicyAppServiceConcurrentDecorator
   }
 
   @Override
-  public void confirmRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
-    lockAndCall(policyId, () -> policyAppService.confirmRenewal(policyId, policyRenewalId));
-  }
-
-  @Override
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
-    return policyAppService.openClaim(policyId, openClaimDto);
+    return lockAndCall(policyId, () -> policyAppService.openClaim(policyId, openClaimDto));
   }
 }

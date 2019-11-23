@@ -186,7 +186,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       Policy policy = policyRepository.getById(policyId);
       PolicyRenewal policyRenewal = policy.acceptRenewal(policyRenewalId);
       policyRenewalProcessor.scheduleRenewal(
-          this, policyId, policyRenewalId, policyRenewal.getEffectiveDateTime());
+          policyId, policyRenewalId, policyRenewal.getEffectiveDateTime());
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);
@@ -198,17 +198,6 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       Policy policy = policyRepository.getById(policyId);
       policy.cancelRenewal(policyRenewalId);
       policyRenewalProcessor.cancelRenewal(policyId, policyRenewalId);
-      policyRepository.update(policy);
-    } catch (PolicyNotFoundException e) {
-      throw new PolicyNotFoundError(policyId);
-    }
-  }
-
-  public void confirmRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
-    try {
-      Policy policy = policyRepository.getById(policyId);
-      policy.confirmRenewal(policyRenewalId);
-      policyRenewalProcessor.completeRenewal(policyId, policyRenewalId);
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       throw new PolicyNotFoundError(policyId);

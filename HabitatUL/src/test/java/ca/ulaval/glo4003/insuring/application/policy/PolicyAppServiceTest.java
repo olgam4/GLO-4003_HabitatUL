@@ -383,7 +383,7 @@ public class PolicyAppServiceTest {
     subject.acceptRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyRenewalProcessor)
-        .scheduleRenewal(subject, POLICY_ID, POLICY_RENEWAL_ID, RENEWAL_EFFECTIVE_DATE);
+        .scheduleRenewal(POLICY_ID, POLICY_RENEWAL_ID, RENEWAL_EFFECTIVE_DATE);
   }
 
   @Test
@@ -433,41 +433,6 @@ public class PolicyAppServiceTest {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-  }
-
-  @Test
-  public void confirmingRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-
-    verify(policyRepository).getById(POLICY_ID);
-  }
-
-  @Test
-  public void confirmingRenewal_shouldConfirmRenewal() {
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-
-    verify(policy).confirmRenewal(POLICY_RENEWAL_ID);
-  }
-
-  @Test
-  public void cancellingRenewal_shouldCompleteRenewalProcessing() {
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-
-    verify(policyRenewalProcessor).completeRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-  }
-
-  @Test
-  public void confirmingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
-
-    verify(policyRepository).update(policy);
-  }
-
-  @Test(expected = PolicyNotFoundError.class)
-  public void confirmingRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
-    when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
-
-    subject.confirmRenewal(POLICY_ID, POLICY_RENEWAL_ID);
   }
 
   @Test

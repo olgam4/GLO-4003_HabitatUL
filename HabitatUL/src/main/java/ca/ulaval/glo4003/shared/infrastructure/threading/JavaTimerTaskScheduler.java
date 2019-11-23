@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.shared.infrastructure.threading;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.shared.application.TaskScheduler;
+import ca.ulaval.glo4003.shared.application.threading.TaskScheduler;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
@@ -11,7 +11,7 @@ import static java.time.ZoneOffset.UTC;
 
 public class JavaTimerTaskScheduler implements TaskScheduler {
   private Timer timer;
-  private Map<String, TimerTask> tasks;
+  private Map<Comparable, TimerTask> tasks;
   private ClockProvider clockProvider;
 
   public JavaTimerTaskScheduler() {
@@ -19,23 +19,21 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
   }
 
   public JavaTimerTaskScheduler(
-      Timer timer, Map<String, TimerTask> tasks, ClockProvider clockProvider) {
+      Timer timer, Map<Comparable, TimerTask> tasks, ClockProvider clockProvider) {
     this.timer = timer;
     this.tasks = tasks;
     this.clockProvider = clockProvider;
   }
 
   @Override
-  public String schedule(Runnable runnable, DateTime scheduledProcessingDateTime) {
-    String taskId = UUID.randomUUID().toString();
-    TimerTask timerTask = createTimerTask(runnable);
+  public void schedule(Comparable taskId, Runnable runnable, DateTime scheduledProcessingDateTime) {
+    TimerTask timerTask = createTimerTask(taskId, runnable);
     tasks.put(taskId, timerTask);
     long delay = computeDelay(scheduledProcessingDateTime);
     timer.schedule(timerTask, delay);
-    return taskId;
   }
 
-  private TimerTask createTimerTask(Runnable runnable) {
+  private TimerTask createTimerTask(Comparable taskId, Runnable runnable) {
     return new TimerTask() {
       @Override
       public void run() {
@@ -44,6 +42,8 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
         } catch (Throwable e) {
           // TODO: Log Error
           // e.printStackTrace();
+        } finally {
+          tasks.remove(taskId);
         }
       }
     };
@@ -57,7 +57,7 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
   }
 
   @Override
-  public void cancel(String taskId) {
+  public void cancel(Comparable taskId) {
     Optional.ofNullable(tasks.remove(taskId)).map(TimerTask::cancel);
   }
 }

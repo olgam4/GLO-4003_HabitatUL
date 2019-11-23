@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.shared.context;
 
-import ca.ulaval.glo4003.shared.application.TaskScheduler;
+import ca.ulaval.glo4003.shared.application.threading.TaskScheduler;
 import ca.ulaval.glo4003.shared.domain.address.FloorFormatter;
 import ca.ulaval.glo4003.shared.domain.address.ZipCodeFormatter;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumberFormatter;

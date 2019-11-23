@@ -19,6 +19,7 @@ import java.util.TimerTask;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastDateTime;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 import static java.time.ZoneOffset.UTC;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -28,15 +29,15 @@ public class JavaTimerTaskSchedulerTest {
   private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final DateTime SCHEDULED_PROCESSING_DATE_TIME =
       DateTime.now(CLOCK_PROVIDER.getClock()).plus(Duration.ofMinutes(1));
-  private static final String TASK_ID = Faker.instance().internet().uuid();
-  private static final String ANOTHER_TASK_ID = Faker.instance().internet().uuid();
+  private static final String TASK_KEY = Faker.instance().internet().uuid();
+  private static final String ANOTHER_TASK_KEY = Faker.instance().internet().uuid();
 
   @Mock private Timer timer;
   @Mock private Runnable runnable;
   @Mock private TimerTask timerTask;
 
   private JavaTimerTaskScheduler subject;
-  private Map<String, TimerTask> tasks;
+  private Map<Comparable, TimerTask> tasks;
 
   @Before
   public void setUp() {
@@ -46,7 +47,7 @@ public class JavaTimerTaskSchedulerTest {
 
   @Test
   public void schedulingTask_shouldComputeDelay() {
-    subject.schedule(runnable, SCHEDULED_PROCESSING_DATE_TIME);
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
 
     long expectedDelay =
         SCHEDULED_PROCESSING_DATE_TIME.getValue().toInstant(UTC).toEpochMilli()
@@ -56,25 +57,44 @@ public class JavaTimerTaskSchedulerTest {
 
   @Test
   public void schedulingTask_withNegativeDelay_shouldNotThrow() {
-    subject.schedule(runnable, createPastDateTime());
+    subject.schedule(TASK_KEY, runnable, createPastDateTime());
   }
 
   @Test
   public void schedulingTask_shouldWrapRunnableProperly() {
-    String taskId = subject.schedule(runnable, SCHEDULED_PROCESSING_DATE_TIME);
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
 
-    tasks.get(taskId).run();
+    tasks.get(TASK_KEY).run();
 
     verify(runnable).run();
+  }
+
+  @Test
+  public void schedulingTask_shouldRemoveTaskAfterCompletion() {
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
+
+    tasks.get(TASK_KEY).run();
+
+    assertFalse(tasks.containsKey(TASK_KEY));
   }
 
   @Test
   public void schedulingTask_withErrorThrowingTask_shouldNotThrow() {
     Mockito.doThrow(new RuntimeException()).when(runnable).run();
 
-    String taskId = subject.schedule(runnable, SCHEDULED_PROCESSING_DATE_TIME);
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
 
-    tasks.get(taskId).run();
+    tasks.get(TASK_KEY).run();
+  }
+
+  @Test
+  public void schedulingTask_withErrorThrowingTask_shouldRemoveTaskAfterCompletion() {
+    Mockito.doThrow(new RuntimeException()).when(runnable).run();
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
+
+    tasks.get(TASK_KEY).run();
+
+    assertFalse(tasks.containsKey(TASK_KEY));
   }
 
   @Test
@@ -82,20 +102,20 @@ public class JavaTimerTaskSchedulerTest {
     subject =
         new JavaTimerTaskScheduler(
             timer,
-            new HashMap<String, TimerTask>() {
+            new HashMap<Comparable, TimerTask>() {
               {
-                put(TASK_ID, timerTask);
+                put(TASK_KEY, timerTask);
               }
             },
             CLOCK_PROVIDER);
 
-    subject.cancel(TASK_ID);
+    subject.cancel(TASK_KEY);
 
     verify(timerTask).cancel();
   }
 
   @Test
   public void cancellingTask_withNotExistingTask_shouldNotThrow() {
-    subject.cancel(ANOTHER_TASK_ID);
+    subject.cancel(ANOTHER_TASK_KEY);
   }
 }
