@@ -13,6 +13,7 @@ import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarations
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.*;
+import ca.ulaval.glo4003.shared.application.concurrency.error.ConcurrentAccessError;
 import ca.ulaval.glo4003.shared.domain.handling.Error;
 import ca.ulaval.glo4003.underwriting.application.quote.error.CouldNotRequestQuoteError;
 import ca.ulaval.glo4003.underwriting.application.quote.error.QuoteNotFoundError;
@@ -28,7 +29,6 @@ public class ErrorResponseFactory {
   private static final Status DEFAULT_STATUS = Status.INTERNAL_SERVER_ERROR;
 
   static {
-    registerGenericErrors();
     registerSharedErrors();
     registerCoverageErrors();
     registerAdministrationErrors();
@@ -36,11 +36,8 @@ public class ErrorResponseFactory {
     registerInsuringErrors();
   }
 
-  private static void registerGenericErrors() {
-    STATUS_MAP.put(UnauthorizedError.class, Status.UNAUTHORIZED);
-  }
-
   private static void registerSharedErrors() {
+    STATUS_MAP.put(ConcurrentAccessError.class, Status.TOO_MANY_REQUESTS);
     STATUS_MAP.put(InvalidAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidDateTimeError.class, Status.BAD_REQUEST);
@@ -70,6 +67,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(CouldNotAuthenticateUserError.class, Status.INTERNAL_SERVER_ERROR);
     STATUS_MAP.put(CouldNotCreateUserError.class, Status.INTERNAL_SERVER_ERROR);
     STATUS_MAP.put(InvalidCredentialsError.class, Status.UNAUTHORIZED);
+    STATUS_MAP.put(UnauthorizedError.class, Status.UNAUTHORIZED);
   }
 
   private static void registerUnderwritingErrors() {

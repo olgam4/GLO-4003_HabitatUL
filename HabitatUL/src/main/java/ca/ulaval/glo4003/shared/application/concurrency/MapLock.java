@@ -21,7 +21,7 @@ public class MapLock<T> {
     values.remove(value);
   }
 
-  static class LockHandle<U> {
+  public static class LockHandle<U> {
     private final MapLock<U> mapLock;
     private final U value;
 
