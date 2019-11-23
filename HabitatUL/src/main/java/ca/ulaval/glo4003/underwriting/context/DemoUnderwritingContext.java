@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.underwriting.context;
 
 import ca.ulaval.glo4003.mediator.Mediator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
+import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppServiceConcurrentDecorator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppServiceImpl;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppServiceLoggingDecorator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
@@ -21,6 +22,11 @@ public class DemoUnderwritingContext {
     register(
         QuoteRepository.class,
         new EventPublisherQuoteRepositoryDecorator(new InMemoryQuoteRepository(), mediator));
-    register(QuoteAppService.class, new QuoteAppServiceLoggingDecorator(new QuoteAppServiceImpl()));
+    register(QuoteAppService.class, buildQuoteAppService());
+  }
+
+  private QuoteAppService buildQuoteAppService() {
+    return new QuoteAppServiceLoggingDecorator(
+        new QuoteAppServiceConcurrentDecorator(new QuoteAppServiceImpl()));
   }
 }
