@@ -4,5 +4,6 @@ public enum ClaimStatus {
   RECEIVED,
   UNDER_ANALYSIS,
   ACCEPTED,
-  PAID
+  PAID,
+  EXPIRED
 }

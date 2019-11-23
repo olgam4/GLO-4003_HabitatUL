@@ -28,6 +28,13 @@ public class InMemoryClaimRepository implements ClaimRepository {
     claims.put(claim.getClaimId(), claim);
   }
 
+  @Override
+  public void update(Claim claim) throws ClaimNotFoundException {
+    ClaimId claimId = claim.getClaimId();
+    if (!isExistingClaim(claimId)) throw new ClaimNotFoundException();
+    claims.put(claimId, claim);
+  }
+
   private boolean isExistingClaim(ClaimId claimId) {
     return claims.containsKey(claimId);
   }

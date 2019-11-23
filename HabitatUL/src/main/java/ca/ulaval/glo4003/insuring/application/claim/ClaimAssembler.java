@@ -7,7 +7,8 @@ public class ClaimAssembler {
   public ClaimDto from(Claim claim) {
     return new ClaimDto(
         claim.getClaimId(),
-        claim.getClaimStatus(),
+        claim.getStatus(),
+        claim.getAuthorityNumber(),
         claim.getSinisterType(),
         claim.getLossDeclarations());
   }

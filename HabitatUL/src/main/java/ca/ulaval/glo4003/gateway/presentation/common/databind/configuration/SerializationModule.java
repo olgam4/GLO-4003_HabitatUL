@@ -17,6 +17,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.domain.address.Floor;
 import ca.ulaval.glo4003.shared.domain.address.ZipCode;
+import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -53,6 +54,7 @@ public class SerializationModule extends Module {
     SimpleDeserializers deserializers = new SimpleDeserializers();
     deserializers.addDeserializer(Amount.class, new AmountDeserializer());
     deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
+    deserializers.addDeserializer(AuthorityNumber.class, new AuthorityNumberDeserializer());
     deserializers.addDeserializer(CivilLiabilityLimit.class, new CivilLiabilityLimitDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
     deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
@@ -69,6 +71,7 @@ public class SerializationModule extends Module {
   private void setSerializers(SetupContext setupContext) {
     SimpleSerializers serializers = new SimpleSerializers();
     serializers.addSerializer(Amount.class, new AmountSerializer());
+    serializers.addSerializer(AuthorityNumber.class, new AuthorityNumberSerializer());
     serializers.addSerializer(ClaimId.class, new ClaimIdSerializer());
     serializers.addSerializer(CoverageDetails.class, new CoverageDetailsSerializer());
     serializers.addSerializer(Date.class, new DateSerializer());

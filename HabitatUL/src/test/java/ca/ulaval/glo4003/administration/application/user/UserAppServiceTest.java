@@ -234,7 +234,7 @@ public class UserAppServiceTest {
 
   @Test
   public void associatingPolicy_shouldLogKeyNotFoundExceptionsAsSevere()
-          throws KeyNotFoundException {
+      throws KeyNotFoundException {
     when(quoteRegistry.getUserKey(QUOTE_KEY)).thenThrow(new KeyNotFoundException());
 
     subject.associatePolicy(QUOTE_KEY, POLICY_KEY);

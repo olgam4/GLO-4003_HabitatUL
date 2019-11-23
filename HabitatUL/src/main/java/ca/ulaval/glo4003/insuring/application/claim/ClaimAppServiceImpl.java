@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
+import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
 
 public class ClaimAppServiceImpl implements ClaimAppService {
   private ClaimRepository claimRepository;
@@ -25,6 +26,18 @@ public class ClaimAppServiceImpl implements ClaimAppService {
   public ClaimDto getClaim(ClaimId claimId) {
     try {
       Claim claim = claimRepository.getById(claimId);
+      return claimAssembler.from(claim);
+    } catch (ClaimNotFoundException e) {
+      throw new ClaimNotFoundError(claimId);
+    }
+  }
+
+  @Override
+  public ClaimDto provideAuthorityNumber(ClaimId claimId, AuthorityNumber authorityNumber) {
+    try {
+      Claim claim = claimRepository.getById(claimId);
+      claim.provideAuthorityNumber(authorityNumber);
+      claimRepository.update(claim);
       return claimAssembler.from(claim);
     } catch (ClaimNotFoundException e) {
       throw new ClaimNotFoundError(claimId);

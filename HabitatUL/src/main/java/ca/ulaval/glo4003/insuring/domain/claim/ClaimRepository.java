@@ -7,4 +7,6 @@ public interface ClaimRepository {
   Claim getById(ClaimId claimId) throws ClaimNotFoundException;
 
   void create(Claim claim) throws ClaimAlreadyCreatedException;
+
+  void update(Claim claim) throws ClaimNotFoundException;
 }

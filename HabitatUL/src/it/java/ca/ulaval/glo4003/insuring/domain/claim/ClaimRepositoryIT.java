@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
+import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
 import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
@@ -14,6 +15,7 @@ public abstract class ClaimRepositoryIT {
 
   private ClaimRepository subject;
   private Claim claim;
+  private Claim updatedClaim;
   private ClaimId claimId;
 
   @Before
@@ -29,7 +31,7 @@ public abstract class ClaimRepositoryIT {
   }
 
   @Test
-  public void creatingClaim_shouldPersistUserAsIs()
+  public void creatingClaim_shouldPersistClaimAsIs()
       throws ClaimAlreadyCreatedException, ClaimNotFoundException {
     subject.create(claim);
 
@@ -42,6 +44,22 @@ public abstract class ClaimRepositoryIT {
     subject.create(claim);
 
     subject.create(claim);
+  }
+
+  @Test(expected = ClaimNotFoundException.class)
+  public void updatingClaim_withNotYetPersistedClaim_shouldThrow() throws ClaimNotFoundException {
+    subject.update(claim);
+  }
+
+  @Test
+  public void updatingClaim_shouldChangeAssociatedClaim()
+      throws ClaimAlreadyCreatedException, ClaimNotFoundException {
+    subject.create(claim);
+    updatedClaim = ClaimBuilder.aClaim().withClaimId(claim.getClaimId()).build();
+
+    subject.update(updatedClaim);
+
+    assertThat(subject.getById(claimId), matchesClaim(updatedClaim));
   }
 
   protected abstract ClaimRepository createSubject();

@@ -30,7 +30,7 @@ public abstract class PolicyRepositoryIT {
   }
 
   @Test
-  public void creatingPolicy_shouldPersistUserAsIs()
+  public void creatingPolicy_shouldPersistPolicyAsIs()
       throws PolicyAlreadyCreatedException, PolicyNotFoundException {
     subject.create(policy);
 

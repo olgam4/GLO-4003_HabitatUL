@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyAppServiceLoggingDecoratorTest {
+  public static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
   private static final PolicyId POLICY_ID = createPolicyId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final InsureBicycleDto INSURING_BICYCLE_DTO = createInsureBicycleDto();
@@ -32,8 +33,6 @@ public class PolicyAppServiceLoggingDecoratorTest {
   private static final TriggerRenewalDto TRIGGER_RENEWAL_DTO = createTriggerRenewalDto();
   private static final PolicyRenewalId POLICY_RENEWAL_ID = createPolicyRenewalId();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
-  public static final ModifyCoverageDto MODIFY_COVERAGE_DTO = createModifyCoverageDto();
-
   @Mock private PolicyAppService policyAppService;
   @Mock private Logger logger;
 

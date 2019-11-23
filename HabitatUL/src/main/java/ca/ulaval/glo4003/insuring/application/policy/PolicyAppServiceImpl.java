@@ -55,7 +55,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
         ServiceLocator.resolve(PolicyRenewalPeriodProvider.class),
         ServiceLocator.resolve(PolicyCoveragePeriodProvider.class),
         ServiceLocator.resolve(PolicyRenewalProcessor.class),
-        new ClaimFactory(),
+        new ClaimFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(ClaimRepository.class),
         ServiceLocator.resolve(Logger.class));
   }

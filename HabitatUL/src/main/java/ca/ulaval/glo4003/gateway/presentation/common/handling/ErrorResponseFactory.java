@@ -10,6 +10,7 @@ import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
+import ca.ulaval.glo4003.insuring.domain.claim.error.CannotAcceptAuthorityNumberError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.*;
@@ -39,6 +40,7 @@ public class ErrorResponseFactory {
   private static void registerSharedErrors() {
     STATUS_MAP.put(ConcurrentAccessError.class, Status.TOO_MANY_REQUESTS);
     STATUS_MAP.put(InvalidAmountError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidAuthorityNumber.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidDateError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidDateTimeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidFloorError.class, Status.BAD_REQUEST);
@@ -79,6 +81,7 @@ public class ErrorResponseFactory {
 
   private static void registerInsuringErrors() {
     STATUS_MAP.put(AnotherRenewalAlreadyAcceptedError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(CannotAcceptAuthorityNumberError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(CannotTriggerRenewalBeforeRenewalPeriodError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(ClaimNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(ClaimOutsideCoveragePeriodError.class, Status.BAD_REQUEST);
@@ -98,6 +101,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(RenewalAlreadyCanceledError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(RenewalAlreadyConfirmedError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(RenewalExpiredError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(RenewalNotYetAcceptedError.class, Status.BAD_REQUEST);
   }
 
   public ErrorResponse createErrorResponse(Error error) {

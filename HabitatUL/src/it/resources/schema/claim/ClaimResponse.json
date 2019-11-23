@@ -4,7 +4,8 @@
   "title": "claim response",
   "required": [
     "id",
-    "status"
+    "status",
+    "authorityNumber"
   ],
   "properties": {
     "id": {
@@ -18,8 +19,13 @@
         "RECEIVED",
         "UNDER_ANALYSIS",
         "ACCEPTED",
-        "PAID"
+        "PAID",
+        "EXPIRED"
       ]
+    },
+    "authorityNumber": {
+      "description": "claim authority number",
+      "type": "string"
     }
   }
 }
