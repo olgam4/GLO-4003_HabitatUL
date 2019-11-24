@@ -8,7 +8,6 @@ import ca.ulaval.glo4003.shared.application.threading.TaskSchedulerFactory;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 public class TaskSchedulerClaimExpirationProcessor implements ClaimExpirationProcessor {
-  // TODO: add logger wrapper
   private TaskScheduler taskScheduler;
   private ClaimRepository claimRepository;
 

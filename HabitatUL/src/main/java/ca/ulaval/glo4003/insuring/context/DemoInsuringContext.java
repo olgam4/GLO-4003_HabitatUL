@@ -4,9 +4,11 @@ import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
 import ca.ulaval.glo4003.insuring.application.claim.ClaimAppServiceImpl;
 import ca.ulaval.glo4003.insuring.application.claim.ClaimAppServiceLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.claim.expiration.ClaimExpirationProcessor;
+import ca.ulaval.glo4003.insuring.application.claim.expiration.ClaimExpirationProcessorLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.claim.expiration.TaskSchedulerClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.*;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
+import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessorLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.TaskSchedulerPolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.communication.policy.PolicyBoundedContextEventHandler;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
@@ -37,8 +39,12 @@ public class DemoInsuringContext {
         PolicyRepository.class,
         new EventPublisherPolicyRepositoryDecorator(new InMemoryPolicyRepository(), mediator));
     register(ClaimRepository.class, new InMemoryClaimRepository());
-    register(PolicyRenewalProcessor.class, new TaskSchedulerPolicyRenewalProcessor());
-    register(ClaimExpirationProcessor.class, new TaskSchedulerClaimExpirationProcessor());
+    register(
+        PolicyRenewalProcessor.class,
+        new PolicyRenewalProcessorLoggingDecorator(new TaskSchedulerPolicyRenewalProcessor()));
+    register(
+        ClaimExpirationProcessor.class,
+        new ClaimExpirationProcessorLoggingDecorator(new TaskSchedulerClaimExpirationProcessor()));
     PolicyAppService policyAppService =
         new PolicyAppServiceLoggingDecorator(
             new PolicyAppServiceConcurrentDecorator(new PolicyAppServiceImpl()));

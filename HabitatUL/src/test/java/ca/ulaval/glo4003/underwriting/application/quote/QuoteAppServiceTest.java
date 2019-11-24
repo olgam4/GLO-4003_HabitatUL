@@ -21,15 +21,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteDto;
 import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesQuoteForm;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -85,9 +83,7 @@ public class QuoteAppServiceTest {
   @Test(expected = CouldNotRequestQuoteError.class)
   public void requestingQuote_withQuoteAlreadyCreated_shouldThrow()
       throws QuoteAlreadyCreatedException {
-    Mockito.doThrow(QuoteAlreadyCreatedException.class)
-        .when(quoteRepository)
-        .create(any(Quote.class));
+    doThrow(QuoteAlreadyCreatedException.class).when(quoteRepository).create(any(Quote.class));
 
     subject.requestQuote(QUOTE_FORM_DTO);
   }

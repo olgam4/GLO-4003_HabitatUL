@@ -39,7 +39,7 @@ public class ClaimAppServiceLoggingDecoratorTest {
   }
 
   @Test
-  public void gettingClaim_shouldDelegateToPolicyAppService() {
+  public void gettingClaim_shouldDelegateToClaimAppService() {
     subject.getClaim(CLAIM_ID);
 
     verify(claimAppService).getClaim(CLAIM_ID);
@@ -53,7 +53,7 @@ public class ClaimAppServiceLoggingDecoratorTest {
   }
 
   @Test
-  public void providingAuthorityNumber_shouldDelegateToPolicyAppService() {
+  public void providingAuthorityNumber_shouldDelegateToClaimAppService() {
     subject.provideAuthorityNumber(CLAIM_ID, AUTHORITY_NUMBER);
 
     verify(claimAppService).provideAuthorityNumber(CLAIM_ID, AUTHORITY_NUMBER);

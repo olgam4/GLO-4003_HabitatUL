@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.function.Supplier;
@@ -55,7 +54,7 @@ public class ConcurrentDecoratorTest {
   @Test
   public void lockingAndCallingRunnable_withThrowingRunnable_shouldLockAndUnlock()
       throws ValueAlreadyLockedException {
-    Mockito.doThrow(EXCEPTION).when(runnable).run();
+    doThrow(EXCEPTION).when(runnable).run();
 
     callSafely(runnable);
 
@@ -66,7 +65,7 @@ public class ConcurrentDecoratorTest {
   @Test
   public void lockingAndCallingSupplier_withThrowingSupplier_shouldLockAndUnlock()
       throws ValueAlreadyLockedException {
-    Mockito.doThrow(EXCEPTION).when(supplier).get();
+    doThrow(EXCEPTION).when(supplier).get();
 
     callSafely(supplier);
 
@@ -90,7 +89,7 @@ public class ConcurrentDecoratorTest {
 
   @Test
   public void lockingAndCallingRunnable_withThrowingRunnable_shouldThrowSameException() {
-    Mockito.doThrow(EXCEPTION).when(runnable).run();
+    doThrow(EXCEPTION).when(runnable).run();
 
     try {
       subject.lockAndCall(LOCK_VALUE, runnable);
@@ -101,7 +100,7 @@ public class ConcurrentDecoratorTest {
 
   @Test
   public void lockingAndCallingSupplier_withThrowingSupplier_shouldThrowSameException() {
-    Mockito.doThrow(EXCEPTION).when(supplier).get();
+    doThrow(EXCEPTION).when(supplier).get();
 
     try {
       subject.lockAndCall(LOCK_VALUE, supplier);

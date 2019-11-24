@@ -38,7 +38,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
@@ -503,9 +502,7 @@ public class PolicyAppServiceTest {
   @Test(expected = CouldNotOpenClaimError.class)
   public void openingClaim_withAlreadyCreatedClaim_shouldThrow()
       throws ClaimAlreadyCreatedException {
-    Mockito.doThrow(ClaimAlreadyCreatedException.class)
-        .when(claimRepository)
-        .create(any(Claim.class));
+    doThrow(ClaimAlreadyCreatedException.class).when(claimRepository).create(any(Claim.class));
 
     subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
   }

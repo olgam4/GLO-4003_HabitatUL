@@ -38,7 +38,7 @@ public class QuoteAppServiceLoggingDecoratorTest {
   }
 
   @Test
-  public void requestingQuote_shouldDelegateToPolicyAppService() {
+  public void requestingQuote_shouldDelegateToQuoteAppService() {
     subject.requestQuote(QUOTE_FORM_DTO);
 
     verify(quoteAppService).requestQuote(QUOTE_FORM_DTO);
@@ -52,7 +52,7 @@ public class QuoteAppServiceLoggingDecoratorTest {
   }
 
   @Test
-  public void purchasingQuote_shouldDelegateToPolicyAppService() {
+  public void purchasingQuote_shouldDelegateToQuoteAppService() {
     subject.purchaseQuote(QUOTE_ID);
 
     verify(quoteAppService).purchaseQuote(QUOTE_ID);

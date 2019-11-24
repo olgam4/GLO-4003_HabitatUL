@@ -28,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
@@ -119,7 +118,7 @@ public class UserAppServiceTest {
   @Test(expected = CouldNotCreateUserError.class)
   public void creatingUser_withAlreadyExistingUserKey_shouldThrow()
       throws KeyAlreadyExistException {
-    Mockito.doThrow(KeyAlreadyExistException.class)
+    doThrow(KeyAlreadyExistException.class)
         .when(usernameRegistry)
         .register(USER_KEY, CREDENTIALS.getUsername());
 
@@ -172,9 +171,7 @@ public class UserAppServiceTest {
   @Test(expected = InvalidCredentialsError.class)
   public void authenticatingUser_withInvalidCredentials_shouldThrow()
       throws InvalidCredentialsException {
-    Mockito.doThrow(InvalidCredentialsException.class)
-        .when(passwordManager)
-        .validatePassword(any(), any());
+    doThrow(InvalidCredentialsException.class).when(passwordManager).validatePassword(any(), any());
 
     subject.authenticateUser(CREDENTIALS);
   }
@@ -190,7 +187,7 @@ public class UserAppServiceTest {
   @Test(expected = CouldNotAuthenticateUserError.class)
   public void authenticatingUser_withAlreadyAuthenticatedUserKey_shouldThrow()
       throws KeyAlreadyExistException {
-    Mockito.doThrow(KeyAlreadyExistException.class)
+    doThrow(KeyAlreadyExistException.class)
         .when(tokenRegistry)
         .register(USER_KEY, TOKEN.getValue());
 

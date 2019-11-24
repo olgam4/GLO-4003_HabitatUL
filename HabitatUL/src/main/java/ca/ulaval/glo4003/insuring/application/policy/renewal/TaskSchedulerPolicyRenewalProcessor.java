@@ -10,7 +10,6 @@ import ca.ulaval.glo4003.shared.domain.ValueComparableObject;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 public class TaskSchedulerPolicyRenewalProcessor implements PolicyRenewalProcessor {
-  // TODO: add logger wrapper
   private TaskScheduler taskScheduler;
   private PolicyRepository policyRepository;
 

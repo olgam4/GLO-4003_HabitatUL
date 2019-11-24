@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 import static java.time.ZoneOffset.UTC;
 
@@ -13,16 +14,22 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
   private Timer timer;
   private Map<Comparable, TimerTask> tasks;
   private ClockProvider clockProvider;
+  private Logger logger;
 
   public JavaTimerTaskScheduler() {
-    this(new Timer(), new HashMap<>(), ServiceLocator.resolve(ClockProvider.class));
+    this(
+        new Timer(),
+        new HashMap<>(),
+        ServiceLocator.resolve(ClockProvider.class),
+        ServiceLocator.resolve(Logger.class));
   }
 
   public JavaTimerTaskScheduler(
-      Timer timer, Map<Comparable, TimerTask> tasks, ClockProvider clockProvider) {
+      Timer timer, Map<Comparable, TimerTask> tasks, ClockProvider clockProvider, Logger logger) {
     this.timer = timer;
     this.tasks = tasks;
     this.clockProvider = clockProvider;
+    this.logger = logger;
   }
 
   @Override
@@ -40,8 +47,7 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
         try {
           runnable.run();
         } catch (Throwable e) {
-          // TODO: Log Error
-          // e.printStackTrace();
+          logger.severe(String.format("Error in TimerTask execution: <%s>", e.toString()));
         } finally {
           tasks.remove(taskId);
         }

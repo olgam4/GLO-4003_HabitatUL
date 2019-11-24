@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
@@ -15,13 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastDateTime;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,6 +35,7 @@ public class JavaTimerTaskSchedulerTest {
   @Mock private Timer timer;
   @Mock private Runnable runnable;
   @Mock private TimerTask timerTask;
+  @Mock private Logger logger;
 
   private JavaTimerTaskScheduler subject;
   private Map<Comparable, TimerTask> tasks;
@@ -42,7 +43,7 @@ public class JavaTimerTaskSchedulerTest {
   @Before
   public void setUp() {
     tasks = new HashMap<>();
-    subject = new JavaTimerTaskScheduler(timer, tasks, CLOCK_PROVIDER);
+    subject = new JavaTimerTaskScheduler(timer, tasks, CLOCK_PROVIDER, logger);
   }
 
   @Test
@@ -80,7 +81,7 @@ public class JavaTimerTaskSchedulerTest {
 
   @Test
   public void schedulingTask_withErrorThrowingTask_shouldNotThrow() {
-    Mockito.doThrow(new RuntimeException()).when(runnable).run();
+    doThrow(new RuntimeException()).when(runnable).run();
 
     subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
 
@@ -89,12 +90,22 @@ public class JavaTimerTaskSchedulerTest {
 
   @Test
   public void schedulingTask_withErrorThrowingTask_shouldRemoveTaskAfterCompletion() {
-    Mockito.doThrow(new RuntimeException()).when(runnable).run();
+    doThrow(new RuntimeException()).when(runnable).run();
     subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
 
     tasks.get(TASK_KEY).run();
 
     assertFalse(tasks.containsKey(TASK_KEY));
+  }
+
+  @Test
+  public void schedulingTask_withErrorThrowingTask_shouldLogErrorAsSevere() {
+    doThrow(RuntimeException.class).when(runnable).run();
+
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
+    tasks.get(TASK_KEY).run();
+
+    verify(logger).severe(anyString());
   }
 
   @Test
@@ -107,7 +118,8 @@ public class JavaTimerTaskSchedulerTest {
                 put(TASK_KEY, timerTask);
               }
             },
-            CLOCK_PROVIDER);
+            CLOCK_PROVIDER,
+            logger);
 
     subject.cancel(TASK_KEY);
 
