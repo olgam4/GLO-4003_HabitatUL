@@ -17,19 +17,21 @@ public class ConcurrentDecorator<T> {
     this.mapLock = mapLock;
   }
 
+  protected void lockAndCall(T lockValue, Runnable runnable) {
+    lockAndCall(
+        lockValue,
+        () -> {
+          runnable.run();
+          return 0;
+        });
+  }
+
   protected <U> U lockAndCall(T lockValue, Supplier<U> supplier) {
+    LockHandle<T> lockHandle = getLockHandle(lockValue);
     try {
       return supplier.get();
     } finally {
-      getLockHandle(lockValue).unlock();
-    }
-  }
-
-  protected void lockAndCall(T lockValue, Runnable runnable) {
-    try {
-      runnable.run();
-    } finally {
-      getLockHandle(lockValue).unlock();
+      lockHandle.unlock();
     }
   }
 

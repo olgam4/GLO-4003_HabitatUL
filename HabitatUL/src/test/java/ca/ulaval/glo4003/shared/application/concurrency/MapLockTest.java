@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 public class MapLockTest {
   private static final String LOCK_VALUE = Faker.instance().internet().uuid();
-  private static final String DIFFERENT_LOCK_VALUE = Faker.instance().internet().uuid();
+  private static final String ANOTHER_LOCK_VALUE = Faker.instance().internet().uuid();
   private static final int CONCURRENCY_LEVEL = 4;
   private static final int NB_ITERATIONS = 100000;
 
@@ -40,7 +40,7 @@ public class MapLockTest {
   @Test
   public void lockingValue_withUnlockedValue_shouldAllowLock() throws ValueAlreadyLockedException {
     LockHandle<String> handle = subject.lock(LOCK_VALUE);
-    LockHandle<String> other_handle = subject.lock(DIFFERENT_LOCK_VALUE);
+    LockHandle<String> other_handle = subject.lock(ANOTHER_LOCK_VALUE);
 
     handle.unlock();
     other_handle.unlock();
@@ -70,10 +70,10 @@ public class MapLockTest {
         () -> {
           try {
             mapLock.lock(LOCK_VALUE);
+            return 1;
           } catch (ValueAlreadyLockedException e) {
             return 0;
           }
-          return 1;
         };
 
     return IntStream.range(0, CONCURRENCY_LEVEL).mapToObj(i -> executor.submit(task))
