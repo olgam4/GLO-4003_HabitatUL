@@ -5,6 +5,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.threading.TaskScheduler;
+import ca.ulaval.glo4003.shared.application.threading.TaskSchedulerFactory;
 import ca.ulaval.glo4003.shared.domain.ValueComparableObject;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
@@ -15,7 +16,7 @@ public class TaskSchedulerPolicyRenewalProcessor implements PolicyRenewalProcess
 
   public TaskSchedulerPolicyRenewalProcessor() {
     this(
-        ServiceLocator.resolve(TaskScheduler.class),
+        ServiceLocator.resolve(TaskSchedulerFactory.class).create(),
         ServiceLocator.resolve(PolicyRepository.class));
   }
 

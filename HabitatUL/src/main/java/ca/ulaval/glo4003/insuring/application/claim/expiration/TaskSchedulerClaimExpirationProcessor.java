@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.shared.application.threading.TaskScheduler;
+import ca.ulaval.glo4003.shared.application.threading.TaskSchedulerFactory;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 public class TaskSchedulerClaimExpirationProcessor implements ClaimExpirationProcessor {
@@ -13,7 +14,8 @@ public class TaskSchedulerClaimExpirationProcessor implements ClaimExpirationPro
 
   public TaskSchedulerClaimExpirationProcessor() {
     this(
-        ServiceLocator.resolve(TaskScheduler.class), ServiceLocator.resolve(ClaimRepository.class));
+        ServiceLocator.resolve(TaskSchedulerFactory.class).create(),
+        ServiceLocator.resolve(ClaimRepository.class));
   }
 
   public TaskSchedulerClaimExpirationProcessor(
