@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.shared.application.threading;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
-
-import java.util.logging.Logger;
 
 public class TaskSchedulerLoggingDecorator implements TaskScheduler {
   private TaskScheduler taskScheduler;

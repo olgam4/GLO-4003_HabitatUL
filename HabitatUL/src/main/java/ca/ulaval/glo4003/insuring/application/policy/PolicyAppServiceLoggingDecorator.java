@@ -7,8 +7,7 @@ import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
-
-import java.util.logging.Logger;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 
 public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
   private Logger logger;

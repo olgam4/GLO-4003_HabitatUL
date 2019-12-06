@@ -29,10 +29,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProv
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
-
-import java.util.logging.Logger;
 
 public class PolicyAppServiceImpl implements PolicyAppService {
   private PolicyAssembler policyAssembler;

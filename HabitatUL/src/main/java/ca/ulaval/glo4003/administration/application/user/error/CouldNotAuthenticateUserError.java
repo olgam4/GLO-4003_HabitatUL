@@ -8,4 +8,8 @@ public class CouldNotAuthenticateUserError extends UserAppServiceError {
   public CouldNotAuthenticateUserError() {
     super(ERROR, MESSAGE);
   }
+
+  public CouldNotAuthenticateUserError(Throwable cause) {
+    super(ERROR, MESSAGE, cause);
+  }
 }

@@ -1,11 +1,10 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
-
-import java.util.logging.Logger;
 
 public class QuoteAppServiceLoggingDecorator implements QuoteAppService {
   private QuoteAppService quoteAppService;

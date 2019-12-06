@@ -1,14 +1,13 @@
 package ca.ulaval.glo4003.insuring.application.claim.expiration;
 
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.logging.Logger;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDateTime;

@@ -30,6 +30,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProv
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
@@ -41,7 +42,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
-import java.util.logging.Logger;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.helper.coverage.CoverageGenerator.createCoverageDto;

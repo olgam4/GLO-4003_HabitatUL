@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.shared.infrastructure.threading;
 
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import com.github.javafaker.Faker;
@@ -14,15 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastDateTime;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JavaTimerTaskSchedulerTest {
@@ -106,6 +108,14 @@ public class JavaTimerTaskSchedulerTest {
     tasks.get(TASK_KEY).run();
 
     verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void schedulingTask_shouldLogTaskStartAndEndAsInfo() {
+    subject.schedule(TASK_KEY, runnable, SCHEDULED_PROCESSING_DATE_TIME);
+    tasks.get(TASK_KEY).run();
+
+    verify(logger, times(2)).info(contains(TASK_KEY));
   }
 
   @Test

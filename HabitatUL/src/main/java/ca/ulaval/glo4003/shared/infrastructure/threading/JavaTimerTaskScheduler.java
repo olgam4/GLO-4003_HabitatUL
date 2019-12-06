@@ -1,12 +1,12 @@
 package ca.ulaval.glo4003.shared.infrastructure.threading;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.application.threading.TaskScheduler;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 import static java.time.ZoneOffset.UTC;
 
@@ -45,7 +45,9 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
       @Override
       public void run() {
         try {
+          logger.info(String.format("Executing task <%s>", taskId));
           runnable.run();
+          logger.info(String.format("Task <%s> completed successfully", taskId));
         } catch (Throwable e) {
           logger.severe(String.format("Error in TimerTask execution: <%s>", e.toString()));
         } finally {
@@ -64,6 +66,6 @@ public class JavaTimerTaskScheduler implements TaskScheduler {
 
   @Override
   public void cancel(Comparable taskId) {
-    Optional.ofNullable(tasks.remove(taskId)).map(TimerTask::cancel);
+    Optional.ofNullable(tasks.remove(taskId)).ifPresent(TimerTask::cancel);
   }
 }

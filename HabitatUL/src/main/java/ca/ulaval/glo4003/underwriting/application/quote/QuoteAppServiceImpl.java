@@ -51,7 +51,7 @@ public class QuoteAppServiceImpl implements QuoteAppService {
       quoteRepository.create(quote);
       return quoteAssembler.from(quote);
     } catch (QuoteAlreadyCreatedException e) {
-      throw new CouldNotRequestQuoteError();
+      throw new CouldNotRequestQuoteError(e);
     }
   }
 

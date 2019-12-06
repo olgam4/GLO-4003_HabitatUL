@@ -6,4 +6,8 @@ public abstract class QuoteAppServiceError extends BaseError {
   public QuoteAppServiceError(String error, String message) {
     super(error, message);
   }
+
+  public QuoteAppServiceError(String error, String message, Throwable cause) {
+    super(error, message, cause);
+  }
 }

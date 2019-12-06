@@ -8,4 +8,8 @@ public class CouldNotRequestQuoteError extends QuoteAppServiceError {
   public CouldNotRequestQuoteError() {
     super(ERROR, MESSAGE);
   }
+
+  public CouldNotRequestQuoteError(Throwable cause) {
+    super(ERROR, MESSAGE, cause);
+  }
 }

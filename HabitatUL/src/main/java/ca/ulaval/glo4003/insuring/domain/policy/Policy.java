@@ -252,7 +252,6 @@ public class Policy extends AggregateRoot {
   }
 
   private void checkIfClaimOutsideCoveragePeriod() {
-    // TODO: should ask for date of occurrence
     Date now = Date.now(clockProvider.getClock());
     if (!getCoveragePeriod().isWithin(now)) {
       throw new ClaimOutsideCoveragePeriodError();

@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.coverage.application.premium;
 
 import ca.ulaval.glo4003.coverage.application.coverage.AdditionalCoverageResolver;
 import ca.ulaval.glo4003.coverage.application.premium.assembler.PremiumAssembler;
+import ca.ulaval.glo4003.coverage.application.premium.error.CannotComputeModificationPremiumAdjustmentError;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
@@ -19,6 +20,7 @@ import ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormBuilder;
 import ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsBuilder;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,10 +33,12 @@ import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabili
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.TWO_MILLION;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
 import static ca.ulaval.glo4003.helper.coverage.premium.CoverageModificationPremiumInputGenerator.createCoverageModificationPremiumInput;
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmount;
 import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
 import static ca.ulaval.glo4003.matcher.CoverageMatcher.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
@@ -90,6 +94,7 @@ public class PremiumCalculatorTest {
   @Mock private QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
   @Mock private BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula;
   @Mock private CoverageModificationPremiumFormula coverageModificationPremiumFormula;
+  @Mock private Logger logger;
 
   private PremiumCalculator subject;
   private PremiumAssembler premiumAssembler;
@@ -115,7 +120,8 @@ public class PremiumCalculatorTest {
             additionalCoverageResolver,
             quoteBasicBlockPremiumFormula,
             bicycleEndorsementPremiumFormula,
-            coverageModificationPremiumFormula);
+            coverageModificationPremiumFormula,
+            logger);
   }
 
   @Test
@@ -207,6 +213,39 @@ public class PremiumCalculatorTest {
                         COVERAGE_MODIFICATION_CURRENT_VIEW_PREMIUM)))
             .build();
     assertEquals(expectedPremiumDetails, premiumDetails);
+  }
+
+  @Test(expected = CannotComputeModificationPremiumAdjustmentError.class)
+  public void computingCoverageModificationPremium_withInvalidCivilLiabilityAmount_shouldThrow() {
+    CoverageDetails coverageDetails =
+        CoverageDetailsBuilder.aCoverageDetails()
+            .withCivilLiabilityCoverageDetail(createAmount())
+            .build();
+    CoverageModificationForm coverageModificationForm =
+        CoverageModificationFormBuilder.aCoverageModificationForm()
+            .withCurrentCoverageDetails(coverageDetails)
+            .build();
+
+    subject.computeCoverageModificationPremium(coverageModificationForm);
+  }
+
+  @Test
+  public void
+      computingCoverageModificationPremium_withInvalidCivilLiabilityAmount_shouldLogErrorAsSevere() {
+    CoverageDetails coverageDetails =
+        CoverageDetailsBuilder.aCoverageDetails()
+            .withCivilLiabilityCoverageDetail(createAmount())
+            .build();
+    CoverageModificationForm coverageModificationForm =
+        CoverageModificationFormBuilder.aCoverageModificationForm()
+            .withCurrentCoverageDetails(coverageDetails)
+            .build();
+
+    try {
+      subject.computeCoverageModificationPremium(coverageModificationForm);
+    } catch (Exception e) {
+      verify(logger).severe(anyString());
+    }
   }
 
   @Test

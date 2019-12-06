@@ -2,9 +2,8 @@ package ca.ulaval.glo4003.insuring.application.claim.expiration;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
-
-import java.util.logging.Logger;
 
 public class ClaimExpirationProcessorLoggingDecorator implements ClaimExpirationProcessor {
   private ClaimExpirationProcessor claimExpirationProcessor;

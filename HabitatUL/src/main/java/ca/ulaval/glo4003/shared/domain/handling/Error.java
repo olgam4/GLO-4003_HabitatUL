@@ -4,4 +4,6 @@ public interface Error {
   String getError();
 
   String getMessage();
+
+  Throwable getCause();
 }

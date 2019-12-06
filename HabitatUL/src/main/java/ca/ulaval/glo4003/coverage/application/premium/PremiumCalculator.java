@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.coverage.application.premium;
 
+import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.coverage.application.coverage.AdditionalCoverageResolver;
 import ca.ulaval.glo4003.coverage.application.premium.assembler.BicycleEndorsementPremiumFormulaAssembler;
 import ca.ulaval.glo4003.coverage.application.premium.assembler.CoverageModificationPremiumFormulaAssembler;
 import ca.ulaval.glo4003.coverage.application.premium.assembler.PremiumAssembler;
 import ca.ulaval.glo4003.coverage.application.premium.assembler.QuoteBasicBlockPremiumFormulaAssembler;
+import ca.ulaval.glo4003.coverage.application.premium.error.CannotComputeModificationPremiumAdjustmentError;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
@@ -20,6 +22,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.formula.coveragemodification.Co
 import ca.ulaval.glo4003.coverage.domain.premium.formula.coveragemodification.CoverageModificationPremiumInput;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuoteBasicBlockPremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
@@ -33,6 +36,7 @@ public class PremiumCalculator {
   private QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula;
   private BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula;
   private CoverageModificationPremiumFormula coverageModificationPremiumFormula;
+  private Logger logger;
 
   public PremiumCalculator() {
     this(
@@ -40,7 +44,8 @@ public class PremiumCalculator {
         new AdditionalCoverageResolver(),
         QuoteBasicBlockPremiumFormulaAssembler.assemble(),
         BicycleEndorsementPremiumFormulaAssembler.assemble(),
-        CoverageModificationPremiumFormulaAssembler.assemble());
+        CoverageModificationPremiumFormulaAssembler.assemble(),
+        ServiceLocator.resolve(Logger.class));
   }
 
   public PremiumCalculator(
@@ -48,12 +53,14 @@ public class PremiumCalculator {
       AdditionalCoverageResolver additionalCoverageResolver,
       QuoteBasicBlockPremiumFormula quoteBasicBlockPremiumFormula,
       BicycleEndorsementPremiumFormula bicycleEndorsementPremiumFormula,
-      CoverageModificationPremiumFormula coverageModificationPremiumFormula) {
+      CoverageModificationPremiumFormula coverageModificationPremiumFormula,
+      Logger logger) {
     this.premiumAssembler = premiumAssembler;
     this.additionalCoverageResolver = additionalCoverageResolver;
     this.quoteBasicBlockPremiumFormula = quoteBasicBlockPremiumFormula;
     this.bicycleEndorsementPremiumFormula = bicycleEndorsementPremiumFormula;
     this.coverageModificationPremiumFormula = coverageModificationPremiumFormula;
+    this.logger = logger;
   }
 
   public PremiumDetails computeQuotePremium(QuoteForm quoteForm) {
@@ -118,10 +125,8 @@ public class PremiumCalculator {
     try {
       return computeCoverageModificationPremiumAdjustment(coverageModificationForm);
     } catch (InvalidArgumentException e) {
-      // TODO: should never happen, log the exception
-      // TODO: throw invalid civil liability limit error
-      e.printStackTrace();
-      return null;
+      logger.severe(e.toString());
+      throw new CannotComputeModificationPremiumAdjustmentError(e);
     }
   }
 

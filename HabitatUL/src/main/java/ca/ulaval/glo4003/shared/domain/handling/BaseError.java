@@ -5,6 +5,11 @@ public abstract class BaseError extends RuntimeException implements Error {
   private final String message;
 
   public BaseError(String error, String message) {
+    this(error, message, null);
+  }
+
+  public BaseError(String error, String message, Throwable cause) {
+    super(cause);
     this.error = error;
     this.message = message;
   }

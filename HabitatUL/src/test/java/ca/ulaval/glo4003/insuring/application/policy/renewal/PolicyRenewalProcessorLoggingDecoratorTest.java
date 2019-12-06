@@ -2,14 +2,13 @@ package ca.ulaval.glo4003.insuring.application.policy.renewal;
 
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.logging.Logger;
 
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
 import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;

@@ -6,4 +6,8 @@ public abstract class UserAppServiceError extends BaseError {
   public UserAppServiceError(String error, String message) {
     super(error, message);
   }
+
+  public UserAppServiceError(String error, String message, Throwable cause) {
+    super(error, message, cause);
+  }
 }

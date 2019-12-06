@@ -17,12 +17,12 @@ import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class UserAppServiceImpl implements UserAppService {
   private UsernameRegistry usernameRegistry;
@@ -84,7 +84,7 @@ public class UserAppServiceImpl implements UserAppService {
       passwordManager.registerPassword(userKey, credentials.getPassword());
       return userKey;
     } catch (KeyAlreadyExistException | InvalidPasswordException e) {
-      throw new CouldNotCreateUserError();
+      throw new CouldNotCreateUserError(e);
     }
   }
 
@@ -97,7 +97,7 @@ public class UserAppServiceImpl implements UserAppService {
       tokenRegistry.register(userKey, token.getValue());
       return token;
     } catch (KeyNotFoundException | KeyAlreadyExistException e) {
-      throw new CouldNotAuthenticateUserError();
+      throw new CouldNotAuthenticateUserError(e);
     }
   }
 

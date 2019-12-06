@@ -8,4 +8,8 @@ public class CouldNotCreateUserError extends UserAppServiceError {
   public CouldNotCreateUserError() {
     super(ERROR, MESSAGE);
   }
+
+  public CouldNotCreateUserError(Throwable cause) {
+    super(ERROR, MESSAGE, cause);
+  }
 }

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.address.FloorFormatter;
 import ca.ulaval.glo4003.shared.domain.address.ZipCodeFormatter;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumberFormatter;
@@ -11,8 +12,9 @@ import com.github.javafaker.Faker;
 
 import java.time.ZoneId;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import static ca.ulaval.glo4003.context.ServiceLocator.register;
+import static ca.ulaval.glo4003.helper.shared.LoggingGenerator.createNullLogger;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDate;
 
 public class IntegrationTestContext {
@@ -25,7 +27,8 @@ public class IntegrationTestContext {
   }
 
   private static void disableLogging() {
-    Logger.getLogger("org.glassfish.jersey.internal.inject.Providers").setLevel(Level.SEVERE);
+    java.util.logging.Logger.getLogger("org.glassfish.jersey.internal.inject.Providers")
+        .setLevel(Level.SEVERE);
     System.setProperty("org.eclipse.jetty.util.log.class", "org.eclipse.jetty.util.log.StdErrLog");
     System.setProperty("org.eclipse.jetty.LEVEL", "OFF");
   }
@@ -58,10 +61,11 @@ public class IntegrationTestContext {
   }
 
   private void registerServices() {
-    ServiceLocator.register(AuthorityNumberFormatter.class, getDummyAuthorityNumberFormatter());
-    ServiceLocator.register(AuthorityNumberParser.class, number -> createDate());
-    ServiceLocator.register(FloorFormatter.class, getDummyFloorFormatter());
-    ServiceLocator.register(LocalZoneIdProvider.class, () -> ZoneId.of("UTC"));
-    ServiceLocator.register(ZipCodeFormatter.class, getDummyZipCodeFormatter());
+    register(Logger.class, createNullLogger());
+    register(AuthorityNumberFormatter.class, getDummyAuthorityNumberFormatter());
+    register(AuthorityNumberParser.class, number -> createDate());
+    register(FloorFormatter.class, getDummyFloorFormatter());
+    register(LocalZoneIdProvider.class, () -> ZoneId.of("UTC"));
+    register(ZipCodeFormatter.class, getDummyZipCodeFormatter());
   }
 }

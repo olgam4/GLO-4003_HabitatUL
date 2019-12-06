@@ -4,10 +4,10 @@ import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public class UserAppServiceLoggingDecorator implements UserAppService {
   private UserAppService userAppService;

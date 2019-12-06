@@ -3,9 +3,8 @@ package ca.ulaval.glo4003.insuring.application.policy.renewal;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
-
-import java.util.logging.Logger;
 
 public class PolicyRenewalProcessorLoggingDecorator implements PolicyRenewalProcessor {
   private PolicyRenewalProcessor policyRenewalProcessor;

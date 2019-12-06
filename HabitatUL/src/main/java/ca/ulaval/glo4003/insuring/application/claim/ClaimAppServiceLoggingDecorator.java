@@ -3,9 +3,8 @@ package ca.ulaval.glo4003.insuring.application.claim;
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
-
-import java.util.logging.Logger;
 
 public class ClaimAppServiceLoggingDecorator implements ClaimAppService {
   private ClaimAppService claimAppService;

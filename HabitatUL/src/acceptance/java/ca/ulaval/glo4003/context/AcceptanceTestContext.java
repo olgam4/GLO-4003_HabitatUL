@@ -14,7 +14,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent.Gra
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.preferentialprogram.PreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.domain.premium.formulapart.roommate.RoommateAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.infrastructure.form.validation.DummyUlRegistrarOffice;
-import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
@@ -22,10 +22,13 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
+import static ca.ulaval.glo4003.helper.shared.LoggingGenerator.createNullLogger;
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 
 public class AcceptanceTestContext {
   public void execute() {
-    register(ClockProvider.class, TemporalGenerator.getClockProvider());
+    register(Logger.class, createNullLogger());
+    register(ClockProvider.class, getClockProvider());
     register(QuoteEffectivePeriodProvider.class, new DummyQuoteEffectivePeriodProvider());
     register(UlRegistrarOffice.class, new DummyUlRegistrarOffice());
     registerCalculationServices();

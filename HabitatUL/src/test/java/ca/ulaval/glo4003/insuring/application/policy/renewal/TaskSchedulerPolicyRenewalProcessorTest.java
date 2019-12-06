@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.insuring.application.policy.renewal;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.application.threading.TaskScheduler;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import org.junit.Before;
@@ -28,12 +29,13 @@ public class TaskSchedulerPolicyRenewalProcessorTest {
 
   @Mock private TaskScheduler taskScheduler;
   @Mock private PolicyRepository policyRepository;
+  @Mock private Logger logger;
 
   private TaskSchedulerPolicyRenewalProcessor subject;
 
   @Before
   public void setUp() {
-    subject = new TaskSchedulerPolicyRenewalProcessor(taskScheduler, policyRepository);
+    subject = new TaskSchedulerPolicyRenewalProcessor(taskScheduler, policyRepository, logger);
   }
 
   @Test

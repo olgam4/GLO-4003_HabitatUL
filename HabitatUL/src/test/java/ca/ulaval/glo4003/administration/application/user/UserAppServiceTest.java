@@ -21,6 +21,7 @@ import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.helper.user.TokenGenerator;
 import ca.ulaval.glo4003.helper.user.TokenPayloadGenerator;
+import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import com.github.javafaker.Faker;
@@ -33,7 +34,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
