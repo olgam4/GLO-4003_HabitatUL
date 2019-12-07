@@ -11,14 +11,14 @@ import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpira
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationProcessorLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.TaskSchedulerClaimExpirationProcessor;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioProvider;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessorLoggingDecorator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.TaskSchedulerPolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.communication.policy.PolicyBoundedContextEventHandler;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
-import ca.ulaval.glo4003.insuring.domain.policy.lossratio.MaximumLossRatioConfigurer;
-import ca.ulaval.glo4003.insuring.domain.policy.lossratio.MaximumLossRatioProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;

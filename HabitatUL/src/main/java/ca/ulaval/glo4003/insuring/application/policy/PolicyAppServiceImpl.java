@@ -12,7 +12,9 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
+import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
@@ -36,6 +38,9 @@ import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
 public class PolicyAppServiceImpl implements PolicyAppService {
+  public static final LossRatio SMALLEST_MAXIMUM_LOSS_RATIO = new LossRatio(1f);
+  public static final LossRatio GREATEST_MAXIMUM_LOSS_RATIO = new LossRatio(4f);
+
   private PolicyAssembler policyAssembler;
   private PolicyFactory policyFactory;
   private PolicyRepository policyRepository;
@@ -48,6 +53,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   private ClaimRepository claimRepository;
   private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
   private ClaimExpirationProcessor claimExpirationProcessor;
+  private MaximumLossRatioConfigurer maximumLossRatioConfigurer;
   private ClockProvider clockProvider;
   private Logger logger;
 
@@ -65,6 +71,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
         ServiceLocator.resolve(ClaimRepository.class),
         ServiceLocator.resolve(ClaimExpirationPeriodProvider.class),
         ServiceLocator.resolve(ClaimExpirationProcessor.class),
+        ServiceLocator.resolve(MaximumLossRatioConfigurer.class),
         ServiceLocator.resolve(ClockProvider.class),
         ServiceLocator.resolve(Logger.class));
   }
@@ -82,6 +89,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       ClaimRepository claimRepository,
       ClaimExpirationPeriodProvider claimExpirationPeriodProvider,
       ClaimExpirationProcessor claimExpirationProcessor,
+      MaximumLossRatioConfigurer maximumLossRatioConfigurer,
       ClockProvider clockProvider,
       Logger logger) {
     this.policyAssembler = policyAssembler;
@@ -96,6 +104,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     this.claimRepository = claimRepository;
     this.claimExpirationPeriodProvider = claimExpirationPeriodProvider;
     this.claimExpirationProcessor = claimExpirationProcessor;
+    this.maximumLossRatioConfigurer = maximumLossRatioConfigurer;
     this.clockProvider = clockProvider;
     this.logger = logger;
   }
@@ -248,11 +257,21 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   }
 
   public void configureMaximumLossRatio(LossRatio maximumLossRatio) {
-    // TODO: validate new loss ratio between 1 and 4
-    // TODO: use configurer to set new value
+    checkIfValidMaximumLossRatioConfiguration(maximumLossRatio);
+    maximumLossRatioConfigurer.configureMaximumLossRatio(maximumLossRatio);
     // TODO: once value updated, iterate over all policies to get
     // TODO: the list of claims not yet accepted exceeding the new loss ratio
     // TODO: basically iterates over all policies and compute loss ratio
     // TODO: if > new value, return list of claims not yet accepted
+  }
+
+  private void checkIfValidMaximumLossRatioConfiguration(LossRatio maximumLossRatio) {
+    if (!isValidMaximumLossRatioConfiguration(maximumLossRatio)) {
+      throw new OutOfBoundMaximumLossRatioError();
+    }
+  }
+
+  private boolean isValidMaximumLossRatioConfiguration(LossRatio maximumLossRatio) {
+    return maximumLossRatio.isBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
   }
 }

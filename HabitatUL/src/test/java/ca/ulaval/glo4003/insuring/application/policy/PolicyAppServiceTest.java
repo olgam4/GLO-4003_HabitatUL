@@ -16,7 +16,9 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
+import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
@@ -24,6 +26,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.*;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
@@ -48,11 +51,15 @@ import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.helper.coverage.CoverageGenerator.createCoverageDto;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatioBetween;
+import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatioSmallerThan;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
+import static ca.ulaval.glo4003.insuring.application.policy.PolicyAppServiceImpl.GREATEST_MAXIMUM_LOSS_RATIO;
+import static ca.ulaval.glo4003.insuring.application.policy.PolicyAppServiceImpl.SMALLEST_MAXIMUM_LOSS_RATIO;
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -79,6 +86,8 @@ public class PolicyAppServiceTest {
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final Duration CLAIM_EXPIRATION_PERIOD = createDuration();
+  private static final LossRatio VALID_LOSS_RATIO =
+      createLossRatioBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
 
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
@@ -95,6 +104,7 @@ public class PolicyAppServiceTest {
   @Mock private ClaimRepository claimRepository;
   @Mock private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
   @Mock private ClaimExpirationProcessor claimExpirationProcessor;
+  @Mock private MaximumLossRatioConfigurer maximumLossRatioConfigurer;
   @Mock private Logger logger;
 
   private PolicyAppService subject;
@@ -160,6 +170,7 @@ public class PolicyAppServiceTest {
             claimRepository,
             claimExpirationPeriodProvider,
             claimExpirationProcessor,
+            maximumLossRatioConfigurer,
             CLOCK_PROVIDER,
             logger);
   }
@@ -506,5 +517,18 @@ public class PolicyAppServiceTest {
     doThrow(ClaimAlreadyCreatedException.class).when(claimRepository).create(any(Claim.class));
 
     subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
+  }
+
+  @Test
+  public void
+      configuringMaximumLossRatio_withValidMaximumLossRatio_shouldConfigureMaximumLossRatio() {
+    subject.configureMaximumLossRatio(VALID_LOSS_RATIO);
+
+    verify(maximumLossRatioConfigurer).configureMaximumLossRatio(VALID_LOSS_RATIO);
+  }
+
+  @Test(expected = OutOfBoundMaximumLossRatioError.class)
+  public void configuringMaximumLossRatio_withInvalidMaximumLossRatio_shouldThrow() {
+    subject.configureMaximumLossRatio(createLossRatioSmallerThan(VALID_LOSS_RATIO));
   }
 }

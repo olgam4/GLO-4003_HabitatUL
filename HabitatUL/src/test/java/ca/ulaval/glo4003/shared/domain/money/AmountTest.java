@@ -8,12 +8,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class AmountTest {
-  private static Amount VALUE = createAmount();
-  private static Amount SMALLER_VALUE = createAmountSmallerThan(VALUE);
-  private static Amount EVEN_SMALLER_VALUE = createAmountSmallerThan(SMALLER_VALUE);
-  private static Amount SAME_VALUE = new Amount(VALUE.getValue());
-  private static Amount GREATER_VALUE = createAmountGreaterThan(VALUE);
-  private static Amount EVEN_GREATER_VALUE = createAmountGreaterThan(GREATER_VALUE);
+  private static final Amount VALUE = createAmount();
+  private static final Amount SMALLER_VALUE = createAmountSmallerThan(VALUE);
+  private static final Amount EVEN_SMALLER_VALUE = createAmountSmallerThan(SMALLER_VALUE);
+  private static final Amount SAME_VALUE = new Amount(VALUE.getValue());
+  private static final Amount GREATER_VALUE = createAmountGreaterThan(VALUE);
+  private static final Amount EVEN_GREATER_VALUE = createAmountGreaterThan(GREATER_VALUE);
 
   private Amount subject;
 

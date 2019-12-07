@@ -11,6 +11,7 @@ import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
+import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.CannotAcceptAuthorityNumberError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
@@ -97,6 +98,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(ModificationAlreadyConfirmedError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(ModificationExpiredError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(NotDeclaredBicycleError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(OutOfBoundMaximumLossRatioError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyModificationNotFoundError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(PolicyNotFoundError.class, Status.NOT_FOUND);
     STATUS_MAP.put(PolicyRenewalNotFoundError.class, Status.BAD_REQUEST);
