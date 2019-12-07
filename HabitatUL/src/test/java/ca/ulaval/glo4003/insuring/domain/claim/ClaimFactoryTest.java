@@ -10,10 +10,14 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Clock;
+import java.util.Arrays;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
+import static ca.ulaval.glo4003.helper.shared.EnumSampler.sample;
 import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.RECEIVED;
+import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.UNDER_ANALYSIS;
+import static ca.ulaval.glo4003.insuring.domain.claim.SinisterType.FIRE;
 import static ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber.UNFILLED_AUTHORITY_NUMBER;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -43,8 +47,16 @@ public class ClaimFactoryTest {
   }
 
   @Test
-  public void creatingClaim_shouldCreateReceivedClaim() {
-    Claim claim = subject.create(SINISTER_TYPE, LOSS_DECLARATIONS);
+  public void creatingClaim_withFireSinisterType_shouldCreateUnderAnalysisClaim() {
+    Claim claim = subject.create(FIRE, LOSS_DECLARATIONS);
+
+    assertEquals(UNDER_ANALYSIS, claim.getStatus());
+  }
+
+  @Test
+  public void creatingClaim_withSinisterTypeDifferentThanFire_shouldCreateReceivedClaim() {
+    SinisterType sinisterTypeDifferentThanFire = sample(SinisterType.class, Arrays.asList(FIRE));
+    Claim claim = subject.create(sinisterTypeDifferentThanFire, LOSS_DECLARATIONS);
 
     assertEquals(RECEIVED, claim.getStatus());
   }
