@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.insuring.claim;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Secured;
 import ca.ulaval.glo4003.gateway.presentation.insuring.claim.request.ProvideAuthorityNumberRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.claim.response.ClaimResponse;
 import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
@@ -18,8 +18,11 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class ClaimResource {
   public static final String CLAIM_ROUTE = "/claims";
+  public static final String PROVIDE_AUTHORITY_NUMBER_ROUTE = "/authority-number";
   private static final String CLAIM_ID_PARAM_NAME = "claimId";
-  private static final String PROVIDE_AUTHORITY_NUMBER_ROUTE = "/authority-number";
+  private static final String SPECIFIC_CLAIM_ROUTE = "/{" + CLAIM_ID_PARAM_NAME + "}";
+  private static final String PROVIDE_AUTHORITY_NUMBER_FULL_ROUTE =
+      SPECIFIC_CLAIM_ROUTE + PROVIDE_AUTHORITY_NUMBER_ROUTE;
 
   private ClaimAppService claimAppService;
   private ClaimViewAssembler claimViewAssembler;
@@ -35,7 +38,7 @@ public class ClaimResource {
 
   @GET
   @Secured
-  @Path("/{" + CLAIM_ID_PARAM_NAME + "}")
+  @Path(SPECIFIC_CLAIM_ROUTE)
   public Response getClaim(@PathParam(CLAIM_ID_PARAM_NAME) ClaimId claimId) {
     ClaimDto claimDto = claimAppService.getClaim(claimId);
     ClaimResponse claimResponse = claimViewAssembler.from(claimDto);
@@ -44,7 +47,7 @@ public class ClaimResource {
 
   @POST
   @Secured
-  @Path("/{" + CLAIM_ID_PARAM_NAME + "}" + PROVIDE_AUTHORITY_NUMBER_ROUTE)
+  @Path(PROVIDE_AUTHORITY_NUMBER_FULL_ROUTE)
   public Response provideAuthorityNumber(
       @PathParam(CLAIM_ID_PARAM_NAME) ClaimId claimId,
       @Valid ProvideAuthorityNumberRequest provideAuthorityNumberRequest) {

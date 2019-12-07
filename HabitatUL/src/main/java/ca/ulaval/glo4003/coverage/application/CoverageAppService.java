@@ -10,16 +10,16 @@ import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 
-public class CoverageDomainService {
+public class CoverageAppService {
   private FormValidator formValidator;
   private CoverageSummarizer coverageSummarizer;
   private PremiumCalculator premiumCalculator;
 
-  public CoverageDomainService() {
+  public CoverageAppService() {
     this(new FormValidator(), new CoverageSummarizer(), new PremiumCalculator());
   }
 
-  public CoverageDomainService(
+  public CoverageAppService(
       FormValidator formValidator,
       CoverageSummarizer coverageSummarizer,
       PremiumCalculator premiumCalculator) {

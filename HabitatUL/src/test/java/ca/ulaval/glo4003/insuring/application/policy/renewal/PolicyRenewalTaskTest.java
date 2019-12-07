@@ -33,7 +33,7 @@ public class PolicyRenewalTaskTest {
   @Before
   public void setUp() throws PolicyNotFoundException {
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
-    subject = new PolicyRenewalTask(policyRepository, POLICY_ID, POLICY_RENEWAL_ID, logger);
+    subject = new PolicyRenewalTask(POLICY_ID, POLICY_RENEWAL_ID, policyRepository, logger);
   }
 
   @Test

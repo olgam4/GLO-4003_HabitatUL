@@ -8,19 +8,19 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.logging.Logger;
 
 public class PolicyRenewalTask implements Runnable {
-  private PolicyRepository policyRepository;
   private PolicyId policyId;
   private PolicyRenewalId policyRenewalId;
+  private PolicyRepository policyRepository;
   private Logger logger;
 
   public PolicyRenewalTask(
-      PolicyRepository policyRepository,
       PolicyId policyId,
       PolicyRenewalId policyRenewalId,
+      PolicyRepository policyRepository,
       Logger logger) {
-    this.policyRepository = policyRepository;
     this.policyId = policyId;
     this.policyRenewalId = policyRenewalId;
+    this.policyRepository = policyRepository;
     this.logger = logger;
   }
 

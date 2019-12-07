@@ -9,6 +9,7 @@ import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
@@ -71,6 +72,10 @@ public class PolicyGenerator {
 
   public static PolicyStatus createPolicyStatus() {
     return EnumSampler.sample(PolicyStatus.class);
+  }
+
+  public static LossRatio createLossRatio() {
+    return new LossRatio((float) Faker.instance().number().randomDigit());
   }
 
   public static PolicyModificationsCoordinator createPolicyModificationsCoordinator() {

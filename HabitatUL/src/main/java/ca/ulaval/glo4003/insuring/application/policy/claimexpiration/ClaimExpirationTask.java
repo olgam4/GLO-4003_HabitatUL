@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.insuring.application.claim.expiration;
+package ca.ulaval.glo4003.insuring.application.policy.claimexpiration;
 
 import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
@@ -7,12 +7,12 @@ import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
 
 public class ClaimExpirationTask implements Runnable {
-  private ClaimRepository claimRepository;
   private ClaimId claimId;
+  private ClaimRepository claimRepository;
 
-  public ClaimExpirationTask(ClaimRepository claimRepository, ClaimId claimId) {
-    this.claimRepository = claimRepository;
+  public ClaimExpirationTask(ClaimId claimId, ClaimRepository claimRepository) {
     this.claimId = claimId;
+    this.claimRepository = claimRepository;
   }
 
   @Override

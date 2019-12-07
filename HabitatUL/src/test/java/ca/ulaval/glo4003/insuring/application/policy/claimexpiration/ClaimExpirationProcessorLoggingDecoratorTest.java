@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.insuring.application.claim.expiration;
+package ca.ulaval.glo4003.insuring.application.policy.claimexpiration;
 
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.shared.application.logging.Logger;

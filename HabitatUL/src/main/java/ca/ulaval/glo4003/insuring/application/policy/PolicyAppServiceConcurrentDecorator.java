@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.concurrency.ConcurrentDecorator;
@@ -59,5 +60,10 @@ public class PolicyAppServiceConcurrentDecorator extends ConcurrentDecorator<Pol
   @Override
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
     return lockAndCall(policyId, () -> policyAppService.openClaim(policyId, openClaimDto));
+  }
+
+  @Override
+  public void configureMaximumLossRatio(LossRatio maximumLossRatio) {
+    policyAppService.configureMaximumLossRatio(maximumLossRatio);
   }
 }

@@ -33,7 +33,7 @@ public class TaskSchedulerPolicyRenewalProcessor implements PolicyRenewalProcess
   public void scheduleRenewal(
       PolicyId policyId, PolicyRenewalId policyRenewalId, DateTime renewalEffectiveDateTime) {
     PolicyRenewalTask policyRenewalTask =
-        new PolicyRenewalTask(policyRepository, policyId, policyRenewalId, logger);
+        new PolicyRenewalTask(policyId, policyRenewalId, policyRepository, logger);
     RenewalTaskKey taskKey = new RenewalTaskKey(policyId, policyRenewalId);
     taskScheduler.schedule(taskKey, policyRenewalTask, renewalEffectiveDateTime);
   }

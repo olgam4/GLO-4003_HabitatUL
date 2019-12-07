@@ -1,6 +1,6 @@
-package ca.ulaval.glo4003.insuring.infrastructure.policy;
+package ca.ulaval.glo4003.insuring.infrastructure.policy.claimexpiration;
 
-import ca.ulaval.glo4003.insuring.application.policy.ClaimExpirationPeriodProvider;
+import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationPeriodProvider;
 import ca.ulaval.glo4003.shared.infrastructure.io.ConfigFileReader;
 
 import java.time.Duration;

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.insuring.application.claim.expiration;
+package ca.ulaval.glo4003.insuring.application.policy.claimexpiration;
 
 import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
@@ -28,7 +28,7 @@ public class ClaimExpirationTaskTest {
   @Before
   public void setUp() throws ClaimNotFoundException {
     when(claimRepository.getById(any(ClaimId.class))).thenReturn(claim);
-    subject = new ClaimExpirationTask(claimRepository, CLAIM_ID);
+    subject = new ClaimExpirationTask(CLAIM_ID, claimRepository);
   }
 
   @Test

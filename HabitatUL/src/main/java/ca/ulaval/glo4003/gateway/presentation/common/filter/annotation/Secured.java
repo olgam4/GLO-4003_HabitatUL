@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.gateway.presentation.common.annotation;
+package ca.ulaval.glo4003.gateway.presentation.common.filter.annotation;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.Retention;

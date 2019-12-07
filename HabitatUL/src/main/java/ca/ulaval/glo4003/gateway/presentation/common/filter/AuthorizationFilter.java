@@ -7,7 +7,7 @@ import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Secured;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -53,6 +53,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   @Override
   public void filter(ContainerRequestContext requestContext) {
     Method resourceMethod = resourceInfo.getResourceMethod();
+    // TODO: check for actuary access
     if (resourceMethod.getAnnotation(Secured.class) == null) return;
 
     TokenPayload tokenPayload = extractTokenUser(requestContext);

@@ -4,6 +4,7 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 
@@ -23,4 +24,6 @@ public interface PolicyAppService {
   void cancelRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId);
 
   ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto);
+
+  void configureMaximumLossRatio(LossRatio maximumLossRatio);
 }

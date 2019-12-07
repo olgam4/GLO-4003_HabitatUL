@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CoverageDomainServiceTest {
+public class CoverageAppServiceTest {
   private static final QuoteForm QUOTE_FORM = createQuoteForm();
   private static final BicycleEndorsementForm BICYCLE_ENDORSEMENT_FORM =
       createBicycleEndorsementForm();
@@ -43,7 +43,7 @@ public class CoverageDomainServiceTest {
   @Mock private CoverageSummarizer coverageSummarizer;
   @Mock private PremiumCalculator premiumCalculator;
 
-  private CoverageDomainService subject;
+  private CoverageAppService subject;
 
   @Before
   public void setUp() {
@@ -62,7 +62,7 @@ public class CoverageDomainServiceTest {
         .thenReturn(COVERAGE_DETAILS);
     when(premiumCalculator.computeCoverageRenewalPremium(any(CoverageRenewalForm.class)))
         .thenReturn(PREMIUM_DETAILS);
-    subject = new CoverageDomainService(formValidator, coverageSummarizer, premiumCalculator);
+    subject = new CoverageAppService(formValidator, coverageSummarizer, premiumCalculator);
   }
 
   @Test

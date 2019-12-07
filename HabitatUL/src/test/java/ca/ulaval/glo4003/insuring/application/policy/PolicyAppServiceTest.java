@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
-import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.application.CoverageAppService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
@@ -10,7 +10,8 @@ import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
 import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
-import ca.ulaval.glo4003.insuring.application.claim.expiration.ClaimExpirationProcessor;
+import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationPeriodProvider;
+import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
@@ -82,7 +83,7 @@ public class PolicyAppServiceTest {
   @Mock private Policy policy;
   @Mock private PolicyFactory policyFactory;
   @Mock private PolicyRepository policyRepository;
-  @Mock private CoverageDomainService coverageDomainService;
+  @Mock private CoverageAppService coverageAppService;
   @Mock private PolicyModification policyModification;
   @Mock private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   @Mock private PolicyRenewal policyRenewal;
@@ -134,11 +135,11 @@ public class PolicyAppServiceTest {
     when(policyRenewal.getEffectiveDateTime()).thenReturn(RENEWAL_EFFECTIVE_DATE);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
-    when(coverageDomainService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
+    when(coverageAppService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
         .thenReturn(COVERAGE_DTO);
-    when(coverageDomainService.requestCoverageModification(any(CoverageModificationForm.class)))
+    when(coverageAppService.requestCoverageModification(any(CoverageModificationForm.class)))
         .thenReturn(COVERAGE_DTO);
-    when(coverageDomainService.requestCoverageRenewal(any(CoverageRenewalForm.class)))
+    when(coverageAppService.requestCoverageRenewal(any(CoverageRenewalForm.class)))
         .thenReturn(COVERAGE_DTO);
     when(claimFactory.create(any(SinisterType.class), any(LossDeclarations.class)))
         .thenReturn(claim);
@@ -150,7 +151,7 @@ public class PolicyAppServiceTest {
             policyAssembler,
             policyFactory,
             policyRepository,
-            coverageDomainService,
+            coverageAppService,
             policyModificationValidityPeriodProvider,
             policyRenewalPeriodProvider,
             policyCoveragePeriodProvider,
@@ -198,7 +199,7 @@ public class PolicyAppServiceTest {
   public void insuringBicycle_shouldRequestBicycleEndorsementCoverage() {
     subject.insureBicycle(POLICY_ID, INSURING_BICYCLE_DTO);
 
-    verify(coverageDomainService)
+    verify(coverageAppService)
         .requestBicycleEndorsementCoverage(
             argThat(matchesBicycleEndorsementForm(policy, INSURING_BICYCLE_DTO)));
   }
@@ -248,7 +249,7 @@ public class PolicyAppServiceTest {
   public void modifyingCoverage_shouldRequestCoverageModification() {
     subject.modifyCoverage(POLICY_ID, MODIFY_COVERAGE_DTO);
 
-    verify(coverageDomainService)
+    verify(coverageAppService)
         .requestCoverageModification(
             argThat(matchesCoverageModificationForm(policy, MODIFY_COVERAGE_DTO)));
   }
@@ -338,7 +339,7 @@ public class PolicyAppServiceTest {
   public void triggeringRenewal_shouldRequestCoverageRenewal() {
     subject.triggerRenewal(POLICY_ID, TRIGGER_RENEWAL_DTO);
 
-    verify(coverageDomainService)
+    verify(coverageAppService)
         .requestCoverageRenewal(argThat(matchesCoverageRenewalForm(policy, TRIGGER_RENEWAL_DTO)));
   }
 

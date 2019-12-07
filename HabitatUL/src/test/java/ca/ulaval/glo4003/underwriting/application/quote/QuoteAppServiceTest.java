@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.application.CoverageAppService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
@@ -36,7 +36,7 @@ public class QuoteAppServiceTest {
   private static final RequestQuoteDto QUOTE_FORM_DTO = QuoteGenerator.createRequestQuoteDto();
   private static final CoverageDto COVERAGE_DTO = CoverageGenerator.createCoverageDto();
 
-  @Mock private CoverageDomainService coverageDomainService;
+  @Mock private CoverageAppService coverageAppService;
   @Mock private Quote quote;
   @Mock private QuoteFactory quoteFactory;
   @Mock private QuoteRepository quoteRepository;
@@ -48,22 +48,21 @@ public class QuoteAppServiceTest {
   public void setUp() throws QuoteNotFoundException {
     quoteAssembler = new QuoteAssembler();
     when(quote.getQuoteId()).thenReturn(QUOTE_ID);
-    when(coverageDomainService.requestQuoteCoverage(any(QuoteForm.class))).thenReturn(COVERAGE_DTO);
+    when(coverageAppService.requestQuoteCoverage(any(QuoteForm.class))).thenReturn(COVERAGE_DTO);
     when(quoteFactory.create(
             any(QuoteForm.class), any(CoverageDetails.class), any(PremiumDetails.class)))
         .thenReturn(quote);
     when(quoteRepository.getById(any(QuoteId.class))).thenReturn(quote);
 
     subject =
-        new QuoteAppServiceImpl(
-            quoteAssembler, coverageDomainService, quoteFactory, quoteRepository);
+        new QuoteAppServiceImpl(quoteAssembler, coverageAppService, quoteFactory, quoteRepository);
   }
 
   @Test
   public void requestingQuote_shouldRequestQuoteCoverage() {
     subject.requestQuote(QUOTE_FORM_DTO);
 
-    verify(coverageDomainService).requestQuoteCoverage(argThat(matchesQuoteForm(QUOTE_FORM_DTO)));
+    verify(coverageAppService).requestQuoteCoverage(argThat(matchesQuoteForm(QUOTE_FORM_DTO)));
   }
 
   @Test

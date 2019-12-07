@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.application.CoverageAppService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
@@ -15,14 +15,14 @@ import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundExcept
 
 public class QuoteAppServiceImpl implements QuoteAppService {
   private QuoteAssembler quoteAssembler;
-  private CoverageDomainService coverageDomainService;
+  private CoverageAppService coverageAppService;
   private QuoteFactory quoteFactory;
   private QuoteRepository quoteRepository;
 
   public QuoteAppServiceImpl() {
     this(
         new QuoteAssembler(),
-        new CoverageDomainService(),
+        new CoverageAppService(),
         new QuoteFactory(
             ServiceLocator.resolve(QuoteValidityPeriodProvider.class),
             ServiceLocator.resolve(QuoteEffectivePeriodProvider.class),
@@ -32,11 +32,11 @@ public class QuoteAppServiceImpl implements QuoteAppService {
 
   public QuoteAppServiceImpl(
       QuoteAssembler quoteAssembler,
-      CoverageDomainService coverageDomainService,
+      CoverageAppService coverageAppService,
       QuoteFactory quoteFactory,
       QuoteRepository quoteRepository) {
     this.quoteAssembler = quoteAssembler;
-    this.coverageDomainService = coverageDomainService;
+    this.coverageAppService = coverageAppService;
     this.quoteFactory = quoteFactory;
     this.quoteRepository = quoteRepository;
   }
@@ -44,7 +44,7 @@ public class QuoteAppServiceImpl implements QuoteAppService {
   public QuoteDto requestQuote(RequestQuoteDto requestQuoteDto) {
     try {
       QuoteForm quoteForm = quoteAssembler.from(requestQuoteDto);
-      CoverageDto coverageDto = coverageDomainService.requestQuoteCoverage(quoteForm);
+      CoverageDto coverageDto = coverageAppService.requestQuoteCoverage(quoteForm);
       Quote quote =
           quoteFactory.create(
               quoteForm, coverageDto.getCoverageDetails(), coverageDto.getPremiumDetails());

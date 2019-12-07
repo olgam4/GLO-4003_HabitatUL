@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
+import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationPeriodProvider;
 import org.junit.Before;
 import org.junit.Test;
 

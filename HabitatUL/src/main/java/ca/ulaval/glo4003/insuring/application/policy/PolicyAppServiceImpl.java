@@ -1,12 +1,13 @@
 package ca.ulaval.glo4003.insuring.application.policy;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.coverage.application.CoverageDomainService;
+import ca.ulaval.glo4003.coverage.application.CoverageAppService;
 import ca.ulaval.glo4003.coverage.application.CoverageDto;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
-import ca.ulaval.glo4003.insuring.application.claim.expiration.ClaimExpirationProcessor;
+import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationPeriodProvider;
+import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
 import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
@@ -22,6 +23,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationValidityPeriodProvider;
@@ -37,7 +39,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   private PolicyAssembler policyAssembler;
   private PolicyFactory policyFactory;
   private PolicyRepository policyRepository;
-  private CoverageDomainService coverageDomainService;
+  private CoverageAppService coverageAppService;
   private PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider;
   private PolicyRenewalPeriodProvider policyRenewalPeriodProvider;
   private PolicyCoveragePeriodProvider policyCoveragePeriodProvider;
@@ -54,7 +56,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
         new PolicyAssembler(),
         new PolicyFactory(ServiceLocator.resolve(ClockProvider.class)),
         ServiceLocator.resolve(PolicyRepository.class),
-        new CoverageDomainService(),
+        new CoverageAppService(),
         ServiceLocator.resolve(PolicyModificationValidityPeriodProvider.class),
         ServiceLocator.resolve(PolicyRenewalPeriodProvider.class),
         ServiceLocator.resolve(PolicyCoveragePeriodProvider.class),
@@ -71,7 +73,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       PolicyAssembler policyAssembler,
       PolicyFactory policyFactory,
       PolicyRepository policyRepository,
-      CoverageDomainService coverageDomainService,
+      CoverageAppService coverageAppService,
       PolicyModificationValidityPeriodProvider policyModificationValidityPeriodProvider,
       PolicyRenewalPeriodProvider policyRenewalPeriodProvider,
       PolicyCoveragePeriodProvider policyCoveragePeriodProvider,
@@ -85,7 +87,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     this.policyAssembler = policyAssembler;
     this.policyFactory = policyFactory;
     this.policyRepository = policyRepository;
-    this.coverageDomainService = coverageDomainService;
+    this.coverageAppService = coverageAppService;
     this.policyModificationValidityPeriodProvider = policyModificationValidityPeriodProvider;
     this.policyRenewalPeriodProvider = policyRenewalPeriodProvider;
     this.policyCoveragePeriodProvider = policyCoveragePeriodProvider;
@@ -121,7 +123,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       BicycleEndorsementForm bicycleEndorsementForm =
           policyAssembler.from(insureBicycleDto, policy);
       CoverageDto coverageDto =
-          coverageDomainService.requestBicycleEndorsementCoverage(bicycleEndorsementForm);
+          coverageAppService.requestBicycleEndorsementCoverage(bicycleEndorsementForm);
       PolicyModification policyModification =
           policy.submitInsureBicycleModification(
               insureBicycleDto.getBicycle(),
@@ -143,7 +145,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
           policyAssembler.from(modifyCoverageDto, policy);
       checkIfEmptyCoverageModificationRequest(coverageModificationForm);
       CoverageDto coverageDto =
-          coverageDomainService.requestCoverageModification(coverageModificationForm);
+          coverageAppService.requestCoverageModification(coverageModificationForm);
       PolicyModification policyModification =
           policy.submitCoverageModification(
               coverageDto.getCoverageDetails(),
@@ -180,7 +182,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     try {
       Policy policy = policyRepository.getById(policyId);
       CoverageRenewalForm coverageRenewalForm = policyAssembler.from(triggerRenewalDto, policy);
-      CoverageDto coverageDto = coverageDomainService.requestCoverageRenewal(coverageRenewalForm);
+      CoverageDto coverageDto = coverageAppService.requestCoverageRenewal(coverageRenewalForm);
       PolicyRenewal policyRenewal =
           policy.submitCoverageRenewal(
               coverageDto.getCoverageDetails(),
@@ -243,5 +245,14 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     if (lossDeclarations.isEmpty()) {
       throw new EmptyLossDeclarationsError();
     }
+  }
+
+  public void configureMaximumLossRatio(LossRatio maximumLossRatio) {
+    // TODO: validate new loss ratio between 1 and 4
+    // TODO: use configurer to set new value
+    // TODO: once value updated, iterate over all policies to get
+    // TODO: the list of claims not yet accepted exceeding the new loss ratio
+    // TODO: basically iterates over all policies and compute loss ratio
+    // TODO: if > new value, return list of claims not yet accepted
   }
 }

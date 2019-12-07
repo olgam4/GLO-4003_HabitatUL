@@ -2,11 +2,9 @@ package ca.ulaval.glo4003.gateway.presentation.insuring.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.context.ServiceLocator;
-import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Actuary;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Secured;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.*;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
@@ -37,6 +35,7 @@ public class PolicyResource {
   public static final String ACCEPT_RENEWAL_ROUTE = "/accept";
   public static final String CANCEL_RENEWAL_ROUTE = "/cancel";
   public static final String OPEN_CLAIM_ROUTE = "/open-claim";
+  public static final String CONFIGURE_MAXIMUM_LOSS_RATIO_ROUTE = "/maximum-loss-ratio";
   private static final String POLICY_ID_PARAM_NAME = "policyId";
   private static final String POLICY_MODIFICATION_ID_PARAM_NAME = "policyModificationId";
   private static final String POLICY_RENEWAL_ID_PARAM_NAME = "policyRenewalId";
@@ -209,5 +208,14 @@ public class PolicyResource {
     URI location =
         UriBuilder.fromPath(CONTEXT_PATH).path(CLAIM_ROUTE).path(claimIdRepresentation).build();
     return Response.created(location).build();
+  }
+
+  @POST
+  @Actuary
+  @Path(CONFIGURE_MAXIMUM_LOSS_RATIO_ROUTE)
+  public Response configureMaximumLossRatio(
+      @Valid ConfigureMaximumLossRatioRequest configureMaximumLossRatioRequest) {
+    // TODO: return list of exceeding claims
+    return Response.ok().build();
   }
 }

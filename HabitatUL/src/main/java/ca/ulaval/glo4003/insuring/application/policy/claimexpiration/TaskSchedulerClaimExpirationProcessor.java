@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.insuring.application.claim.expiration;
+package ca.ulaval.glo4003.insuring.application.policy.claimexpiration;
 
 import ca.ulaval.glo4003.context.ServiceLocator;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
@@ -25,7 +25,7 @@ public class TaskSchedulerClaimExpirationProcessor implements ClaimExpirationPro
 
   @Override
   public void scheduleExpiration(ClaimId claimId, DateTime expirationDateTime) {
-    ClaimExpirationTask claimExpirationTask = new ClaimExpirationTask(claimRepository, claimId);
+    ClaimExpirationTask claimExpirationTask = new ClaimExpirationTask(claimId, claimRepository);
     taskScheduler.schedule(claimId, claimExpirationTask, expirationDateTime);
   }
 

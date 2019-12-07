@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.insuring.application.policy.dto.OpenClaimDto;
 import ca.ulaval.glo4003.insuring.application.policy.dto.TriggerRenewalDto;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.logging.Logger;
@@ -32,6 +33,7 @@ public class PolicyAppServiceLoggingDecoratorTest {
   private static final TriggerRenewalDto TRIGGER_RENEWAL_DTO = createTriggerRenewalDto();
   private static final PolicyRenewalId POLICY_RENEWAL_ID = createPolicyRenewalId();
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
+  private static final LossRatio LOSS_RATIO = createLossRatio();
 
   @Mock private PolicyAppService policyAppService;
   @Mock private Logger logger;
@@ -153,5 +155,12 @@ public class PolicyAppServiceLoggingDecoratorTest {
     subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
 
     verify(policyAppService).openClaim(POLICY_ID, OPEN_CLAIM_DTO);
+  }
+
+  @Test
+  public void configuringMaximumLossRatio_shouldLogParamsAsInfo() {
+    subject.configureMaximumLossRatio(LOSS_RATIO);
+
+    verify(logger).info(anyString());
   }
 }

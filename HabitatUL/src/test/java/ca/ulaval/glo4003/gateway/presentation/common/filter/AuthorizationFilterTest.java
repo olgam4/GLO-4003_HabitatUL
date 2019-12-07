@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureE
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
-import ca.ulaval.glo4003.gateway.presentation.common.annotation.Secured;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Secured;
 import ca.ulaval.glo4003.helper.user.TokenGenerator;
 import ca.ulaval.glo4003.helper.user.TokenPayloadGenerator;
 import org.junit.Before;
