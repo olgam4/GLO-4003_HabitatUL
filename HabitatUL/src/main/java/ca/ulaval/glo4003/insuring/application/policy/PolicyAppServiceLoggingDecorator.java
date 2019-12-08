@@ -10,6 +10,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.logging.Logger;
 
+import java.util.List;
+import java.util.Map;
+
 public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
   private Logger logger;
   private PolicyAppService policyAppService;
@@ -25,16 +28,16 @@ public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
 
   @Override
   public void issuePolicy(PolicyPurchasedEvent policyPurchasedEvent) {
-    logger.info(String.format("Issue policy with event <%s>", policyPurchasedEvent));
+    logger.info(String.format("Issuing policy with event <%s>", policyPurchasedEvent));
     policyAppService.issuePolicy(policyPurchasedEvent);
   }
 
   @Override
   public PolicyModificationDto insureBicycle(PolicyId policyId, InsureBicycleDto insureBicycleDto) {
-    logger.info(String.format("Insure bicycle <%s> on policy <%s>", insureBicycleDto, policyId));
+    logger.info(String.format("Insuring bicycle <%s> on policy <%s>", insureBicycleDto, policyId));
     PolicyModificationDto policyModificationDto =
         policyAppService.insureBicycle(policyId, insureBicycleDto);
-    logger.info(String.format("Policy <%s> changed with <%s>", policyModificationDto, policyId));
+    logger.info(String.format("Policy <%s> modified with <%s>", policyId, policyModificationDto));
     return policyModificationDto;
   }
 
@@ -42,10 +45,10 @@ public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
   public PolicyModificationDto modifyCoverage(
       PolicyId policyId, ModifyCoverageDto modifyCoverageDto) {
     logger.info(
-        String.format("Modify coverage of policy <%s> with <%s>", policyId, modifyCoverageDto));
+        String.format("Modifying coverage of policy <%s> with <%s>", policyId, modifyCoverageDto));
     PolicyModificationDto policyModificationDto =
         policyAppService.modifyCoverage(policyId, modifyCoverageDto);
-    logger.info(String.format("Policy <%s> changed with <%s>", policyModificationDto, policyId));
+    logger.info(String.format("Policy <%s> modified for <%s>", policyId, policyModificationDto));
     return policyModificationDto;
   }
 
@@ -54,16 +57,17 @@ public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
       PolicyId policyId, PolicyModificationId policyModificationId) {
     logger.info(
         String.format(
-            "Confirm modification of policy <%s> with modificationId <%s>",
+            "Confirming modification of policy <%s> with modificationId <%s>",
             policyId, policyModificationId));
     PolicyDto policyDto = policyAppService.confirmModification(policyId, policyModificationId);
-    logger.info(String.format("Policy <%s> changed to <%s>", policyId, policyDto));
+    logger.info(String.format("Policy <%s> modified to <%s>", policyId, policyDto));
     return policyDto;
   }
 
   @Override
   public PolicyRenewalDto triggerRenewal(PolicyId policyId, TriggerRenewalDto triggerRenewalDto) {
-    logger.info(String.format("Trigger renewal <%s> on policy <%s>", triggerRenewalDto, policyId));
+    logger.info(
+        String.format("Triggering renewal <%s> on policy <%s>", triggerRenewalDto, policyId));
     PolicyRenewalDto policyRenewalDto =
         policyAppService.triggerRenewal(policyId, triggerRenewalDto);
     logger.info(String.format("Renewal <%s> triggered on policy <%s>", policyRenewalDto, policyId));
@@ -74,7 +78,7 @@ public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
   public void acceptRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
     logger.info(
         String.format(
-            "Accept renewal of policy <%s> with renewalId <%s>", policyId, policyRenewalId));
+            "Accepting renewal of policy <%s> with renewalId <%s>", policyId, policyRenewalId));
     policyAppService.acceptRenewal(policyId, policyRenewalId);
   }
 
@@ -82,23 +86,23 @@ public class PolicyAppServiceLoggingDecorator implements PolicyAppService {
   public void cancelRenewal(PolicyId policyId, PolicyRenewalId policyRenewalId) {
     logger.info(
         String.format(
-            "Cancel renewal of policy <%s> with renewalId <%s>", policyId, policyRenewalId));
+            "Canceling renewal of policy <%s> with renewalId <%s>", policyId, policyRenewalId));
     policyAppService.cancelRenewal(policyId, policyRenewalId);
   }
 
   @Override
   public ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto) {
-    logger.info(String.format("Open claim <%s> on policy <%s>", openClaimDto, policyId));
+    logger.info(String.format("Opening claim <%s> for policy <%s>", openClaimDto, policyId));
     ClaimId claimId = policyAppService.openClaim(policyId, openClaimDto);
-    logger.info(String.format("Claim <%s> opened", claimId, policyId));
+    logger.info(String.format("Claim <%s> opened for policy <%s>", claimId, policyId));
     return claimId;
   }
 
   @Override
-  public void configureMaximumLossRatio(LossRatio maximumLossRatio) {
+  public Map<PolicyId, List<ClaimId>> configureMaximumLossRatio(LossRatio maximumLossRatio) {
     logger.info(
         String.format(
-            "Configure maximum loss ratio to a value of <%s>", maximumLossRatio.getValue()));
-    policyAppService.configureMaximumLossRatio(maximumLossRatio);
+            "Configuring maximum loss ratio to a value of <%s>", maximumLossRatio.getValue()));
+    return policyAppService.configureMaximumLossRatio(maximumLossRatio);
   }
 }

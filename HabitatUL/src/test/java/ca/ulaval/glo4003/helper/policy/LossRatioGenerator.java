@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.helper.policy;
 
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ConfigureMaximumLossRatioRequest;
 import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import com.github.javafaker.Faker;
 
@@ -7,6 +8,10 @@ public class LossRatioGenerator {
   private static final int MAX_NUMBER_OF_DECIMALS = 5;
 
   private LossRatioGenerator() {}
+
+  public static ConfigureMaximumLossRatioRequest createConfigureMaximumLossRatioRequest() {
+    return new ConfigureMaximumLossRatioRequest(createLossRatio());
+  }
 
   public static LossRatio createLossRatio() {
     return new LossRatio((float) Faker.instance().number().randomDigitNotZero());

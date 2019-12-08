@@ -40,7 +40,7 @@ public class UserAppServiceLoggingDecorator implements UserAppService {
 
   @Override
   public void controlAccess(TokenPayload tokenPayload) {
-    logger.info(String.format("Controling access of <%s>", tokenPayload));
+    logger.info(String.format("Controlling access of <%s>", tokenPayload));
     this.userAppService.controlAccess(tokenPayload);
   }
 
@@ -66,7 +66,7 @@ public class UserAppServiceLoggingDecorator implements UserAppService {
 
   @Override
   public List<String> getPolicies(String userKey) {
-    logger.info(String.format("Geting Policies of User <%s>", userKey));
+    logger.info(String.format("Getting Policies of User <%s>", userKey));
     List<String> policies = this.userAppService.getPolicies(userKey);
     logger.info(String.format("User Policies: <%s>", String.join(", ", policies)));
     return policies;

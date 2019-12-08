@@ -13,6 +13,7 @@ import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.LossDeclarations;
 import ca.ulaval.glo4003.insuring.domain.claim.SinisterType;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
+import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.domain.address.Floor;
@@ -61,6 +62,7 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
+    deserializers.addDeserializer(LossRatio.class, new LossRatioDeserializer());
     deserializers.addDeserializer(PreventionSystems.class, new PreventionSystemsDeserializer());
     deserializers.addDeserializer(SinisterType.class, new SinisterTypeDeserializer());
     deserializers.addDeserializer(Year.class, new YearDeserializer());

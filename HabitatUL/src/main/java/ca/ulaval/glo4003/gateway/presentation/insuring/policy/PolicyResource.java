@@ -17,6 +17,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import static ca.ulaval.glo4003.Server.CONTEXT_PATH;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.claim.ClaimResource.CLAIM_ROUTE;
@@ -215,7 +216,9 @@ public class PolicyResource {
   @Path(CONFIGURE_MAXIMUM_LOSS_RATIO_ROUTE)
   public Response configureMaximumLossRatio(
       @Valid ConfigureMaximumLossRatioRequest configureMaximumLossRatioRequest) {
-    // TODO: return list of exceeding claims
-    return Response.ok().build();
+    Map<PolicyId, List<ClaimId>> exceedingClaimsByPolicy =
+        policyAppService.configureMaximumLossRatio(
+            configureMaximumLossRatioRequest.getMaximumLossRatio());
+    return Response.ok(policyViewAssembler.from(exceedingClaimsByPolicy)).build();
   }
 }

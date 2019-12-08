@@ -40,7 +40,7 @@ public class TaskSchedulerClaimExpirationProcessorTest {
   }
 
   @Test
-  public void cancellingExpiration_shouldCancelTask() {
+  public void cancelingExpiration_shouldCancelTask() {
     subject.cancelExpiration(TASK_KEY);
 
     verify(taskScheduler).cancel(TASK_KEY);

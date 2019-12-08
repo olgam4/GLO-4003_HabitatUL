@@ -47,7 +47,7 @@ public class TaskSchedulerPolicyRenewalProcessorTest {
   }
 
   @Test
-  public void cancellingRenewal_shouldCancelTask() {
+  public void cancelingRenewal_shouldCancelTask() {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(taskScheduler).cancel(TASK_KEY);

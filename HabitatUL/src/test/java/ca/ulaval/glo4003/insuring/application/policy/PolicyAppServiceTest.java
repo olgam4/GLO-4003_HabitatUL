@@ -19,6 +19,7 @@ import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarations
 import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.PolicyLossRatioCalculator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
@@ -46,8 +47,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Duration;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaims;
 import static ca.ulaval.glo4003.helper.coverage.CoverageGenerator.createCoverageDto;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
@@ -63,6 +67,7 @@ import static ca.ulaval.glo4003.insuring.application.policy.PolicyAppServiceImpl
 import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -72,6 +77,7 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 public class PolicyAppServiceTest {
   private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final PolicyId POLICY_ID = createPolicyId();
+  private static final PolicyId ANOTHER_POLICY_ID = createPolicyId();
   private static final PolicyPurchasedEvent POLICY_PURCHASED_EVENT = createPolicyPurchasedEvent();
   private static final PolicyInformation POLICY_INFORMATION = createPolicyInformation();
   private static final CoverageDetails CURRENT_COVERAGE_DETAILS = createCoverageDetails();
@@ -88,8 +94,11 @@ public class PolicyAppServiceTest {
   private static final Duration CLAIM_EXPIRATION_PERIOD = createDuration();
   private static final LossRatio VALID_LOSS_RATIO =
       createLossRatioBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
+  private static final List<Claim> POLICY_EXCEEDING_CLAIMS = createClaims();
+  private static final List<Claim> ANOTHER_POLICY_EXCEEDING_CLAIMS = createClaims();
 
   @Mock private Policy policy;
+  @Mock private Policy anotherPolicy;
   @Mock private PolicyFactory policyFactory;
   @Mock private PolicyRepository policyRepository;
   @Mock private CoverageAppService coverageAppService;
@@ -105,6 +114,7 @@ public class PolicyAppServiceTest {
   @Mock private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
   @Mock private ClaimExpirationProcessor claimExpirationProcessor;
   @Mock private MaximumLossRatioConfigurer maximumLossRatioConfigurer;
+  @Mock private PolicyLossRatioCalculator policyLossRatioCalculator;
   @Mock private Logger logger;
 
   private PolicyAppService subject;
@@ -121,6 +131,8 @@ public class PolicyAppServiceTest {
             any(CoverageDetails.class),
             any(PremiumDetails.class)))
         .thenReturn(policy);
+    when(policy.getPolicyId()).thenReturn(POLICY_ID);
+    when(anotherPolicy.getPolicyId()).thenReturn(ANOTHER_POLICY_ID);
     when(policy.getPolicyInformation()).thenReturn(POLICY_INFORMATION);
     when(policy.getCoverageDetails()).thenReturn(CURRENT_COVERAGE_DETAILS);
     when(policy.getPremiumDetails()).thenReturn(CURRENT_PREMIUM_DETAILS);
@@ -145,6 +157,7 @@ public class PolicyAppServiceTest {
     when(policyRenewal.getEffectiveDateTime()).thenReturn(RENEWAL_EFFECTIVE_DATE);
     when(policyModification.getPolicyModificationId()).thenReturn(POLICY_MODIFICATION_ID);
     when(policyRepository.getById(any(PolicyId.class))).thenReturn(policy);
+    when(policyRepository.getAll()).thenReturn(Arrays.asList(policy, anotherPolicy));
     when(coverageAppService.requestBicycleEndorsementCoverage(any(BicycleEndorsementForm.class)))
         .thenReturn(COVERAGE_DTO);
     when(coverageAppService.requestCoverageModification(any(CoverageModificationForm.class)))
@@ -156,6 +169,12 @@ public class PolicyAppServiceTest {
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
     when(claimExpirationPeriodProvider.getClaimExpirationPeriod())
         .thenReturn(CLAIM_EXPIRATION_PERIOD);
+    when(policyLossRatioCalculator.listNotYetAcceptedClaimsExceedingMaximumLossRatio(
+            eq(policy), any(LossRatio.class)))
+        .thenReturn(POLICY_EXCEEDING_CLAIMS);
+    when(policyLossRatioCalculator.listNotYetAcceptedClaimsExceedingMaximumLossRatio(
+            eq(anotherPolicy), any(LossRatio.class)))
+        .thenReturn(ANOTHER_POLICY_EXCEEDING_CLAIMS);
     subject =
         new PolicyAppServiceImpl(
             policyAssembler,
@@ -171,6 +190,7 @@ public class PolicyAppServiceTest {
             claimExpirationPeriodProvider,
             claimExpirationProcessor,
             maximumLossRatioConfigurer,
+            policyLossRatioCalculator,
             CLOCK_PROVIDER,
             logger);
   }
@@ -424,35 +444,35 @@ public class PolicyAppServiceTest {
   }
 
   @Test
-  public void cancellingRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
+  public void cancelingRenewal_shouldGetPolicyById() throws PolicyNotFoundException {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyRepository).getById(POLICY_ID);
   }
 
   @Test
-  public void cancellingRenewal_shouldCancelRenewal() {
+  public void cancelingRenewal_shouldCancelRenewal() {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policy).cancelRenewal(POLICY_RENEWAL_ID);
   }
 
   @Test
-  public void cancellingRenewal_shouldCancelRenewalProcessing() {
+  public void cancelingRenewal_shouldCancelRenewalProcessing() {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyRenewalProcessor).cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
   }
 
   @Test
-  public void cancellingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
+  public void cancelingRenewal_shouldUpdatePolicy() throws PolicyNotFoundException {
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyRepository).update(policy);
   }
 
   @Test(expected = PolicyNotFoundError.class)
-  public void cancellingRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
+  public void cancelingRenewal_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
 
     subject.cancelRenewal(POLICY_ID, POLICY_RENEWAL_ID);
@@ -520,11 +540,86 @@ public class PolicyAppServiceTest {
   }
 
   @Test
-  public void
-      configuringMaximumLossRatio_withValidMaximumLossRatio_shouldConfigureMaximumLossRatio() {
+  public void configuringMaximumLossRatio_shouldConfigureMaximumLossRatio() {
     subject.configureMaximumLossRatio(VALID_LOSS_RATIO);
 
     verify(maximumLossRatioConfigurer).configureMaximumLossRatio(VALID_LOSS_RATIO);
+  }
+
+  @Test
+  public void configuringMaximumLossRatio_shouldGetAllPolicies() {
+    subject.configureMaximumLossRatio(VALID_LOSS_RATIO);
+
+    verify(policyRepository).getAll();
+  }
+
+  @Test
+  public void
+      configuringMaximumLossRatio_shouldListNotYetAcceptedClaimsExceedingMaximumLossRatioForAllPolicies() {
+    subject.configureMaximumLossRatio(VALID_LOSS_RATIO);
+
+    verify(policyLossRatioCalculator)
+        .listNotYetAcceptedClaimsExceedingMaximumLossRatio(policy, VALID_LOSS_RATIO);
+    verify(policyLossRatioCalculator)
+        .listNotYetAcceptedClaimsExceedingMaximumLossRatio(anotherPolicy, VALID_LOSS_RATIO);
+  }
+
+  @Test
+  public void
+      configuringMaximumLossRatio_shouldReturnListingOfAllNotYetAcceptedClaimExceedingMaximumLossRatio() {
+    Map<PolicyId, List<ClaimId>> exceedingClaims =
+        subject.configureMaximumLossRatio(VALID_LOSS_RATIO);
+
+    Map<PolicyId, List<ClaimId>> expectedExceedingClaims =
+        new HashMap<PolicyId, List<ClaimId>>() {
+          {
+            put(
+                POLICY_ID,
+                POLICY_EXCEEDING_CLAIMS.stream()
+                    .map(Claim::getClaimId)
+                    .collect(Collectors.toList()));
+            put(
+                ANOTHER_POLICY_ID,
+                ANOTHER_POLICY_EXCEEDING_CLAIMS.stream()
+                    .map(Claim::getClaimId)
+                    .collect(Collectors.toList()));
+          }
+        };
+    assertEquals(expectedExceedingClaims, exceedingClaims);
+  }
+
+  @Test
+  public void
+      configuringMaximumLossRatio_shouldNotListPoliciesWithoutClaimsExceedingMaximumLossRatio() {
+    when(policyLossRatioCalculator.listNotYetAcceptedClaimsExceedingMaximumLossRatio(
+            eq(anotherPolicy), any(LossRatio.class)))
+        .thenReturn(Collections.EMPTY_LIST);
+
+    Map<PolicyId, List<ClaimId>> exceedingClaims =
+        subject.configureMaximumLossRatio(VALID_LOSS_RATIO);
+
+    Map<PolicyId, List<ClaimId>> expectedExceedingClaims =
+        new HashMap<PolicyId, List<ClaimId>>() {
+          {
+            put(
+                POLICY_ID,
+                POLICY_EXCEEDING_CLAIMS.stream()
+                    .map(Claim::getClaimId)
+                    .collect(Collectors.toList()));
+          }
+        };
+    assertEquals(expectedExceedingClaims, exceedingClaims);
+    assertFalse(exceedingClaims.containsKey(ANOTHER_POLICY_ID));
+  }
+
+  @Test
+  public void configuringMaximumLossRatio_withSmallestMaximumLossRatio_shouldNotThrow() {
+    subject.configureMaximumLossRatio(SMALLEST_MAXIMUM_LOSS_RATIO);
+  }
+
+  @Test
+  public void configuringMaximumLossRatio_withGreatestMaximumLossRatio_shouldNotThrow() {
+    subject.configureMaximumLossRatio(GREATEST_MAXIMUM_LOSS_RATIO);
   }
 
   @Test(expected = OutOfBoundMaximumLossRatioError.class)

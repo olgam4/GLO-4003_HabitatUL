@@ -24,14 +24,14 @@ public class ClaimExpirationProcessorLoggingDecorator implements ClaimExpiration
   public void scheduleExpiration(ClaimId claimId, DateTime expirationDateTime) {
     logger.info(
         String.format(
-            "Schedule Claim <%s> to expire at <%s>",
+            "Scheduling Claim <%s> to expire at <%s>",
             claimId.toRepresentation(), expirationDateTime.getValue()));
     claimExpirationProcessor.scheduleExpiration(claimId, expirationDateTime);
   }
 
   @Override
   public void cancelExpiration(ClaimId claimId) {
-    logger.info(String.format("Cancel expiration for Claim <%s>", claimId.toRepresentation()));
+    logger.info(String.format("Canceling expiration for Claim <%s>", claimId.toRepresentation()));
     claimExpirationProcessor.cancelExpiration(claimId);
   }
 }

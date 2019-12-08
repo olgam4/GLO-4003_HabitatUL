@@ -64,14 +64,14 @@ public class UserAppServiceLoggingDecoratorTest {
   }
 
   @Test
-  public void controlingAccess_shouldLogParamsAsInfo() {
+  public void controllingAccess_shouldLogParamsAsInfo() {
     subject.controlAccess(TOKEN_PAYLOAD);
 
     verify(logger).info(anyString());
   }
 
   @Test
-  public void controlingAccess_shouldDelegateToUserAppService() {
+  public void controllingAccess_shouldDelegateToUserAppService() {
     subject.controlAccess(TOKEN_PAYLOAD);
 
     verify(userAppService).controlAccess(TOKEN_PAYLOAD);

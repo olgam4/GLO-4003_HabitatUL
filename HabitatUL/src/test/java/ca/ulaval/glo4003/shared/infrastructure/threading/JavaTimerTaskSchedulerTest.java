@@ -119,7 +119,7 @@ public class JavaTimerTaskSchedulerTest {
   }
 
   @Test
-  public void cancellingTask_shouldCancelTask() {
+  public void cancelingTask_shouldCancelTask() {
     subject =
         new JavaTimerTaskScheduler(
             timer,
@@ -137,7 +137,7 @@ public class JavaTimerTaskSchedulerTest {
   }
 
   @Test
-  public void cancellingTask_withNotExistingTask_shouldNotThrow() {
+  public void cancelingTask_withNotExistingTask_shouldNotThrow() {
     subject.cancel(ANOTHER_TASK_KEY);
   }
 }

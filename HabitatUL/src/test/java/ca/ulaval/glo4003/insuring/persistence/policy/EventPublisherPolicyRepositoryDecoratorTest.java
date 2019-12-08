@@ -37,6 +37,13 @@ public class EventPublisherPolicyRepositoryDecoratorTest {
   }
 
   @Test
+  public void gettingAllPolicies_shouldDelegateToPolicyRepository() {
+    subject.getAll();
+
+    verify(policyRepository).getAll();
+  }
+
+  @Test
   public void gettingPolicyById_shouldDelegateToPolicyRepository() throws PolicyNotFoundException {
     subject.getById(POLICY_ID);
 

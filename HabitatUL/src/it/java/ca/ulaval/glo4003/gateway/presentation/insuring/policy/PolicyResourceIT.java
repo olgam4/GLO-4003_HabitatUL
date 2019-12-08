@@ -300,7 +300,7 @@ public class PolicyResourceIT {
   }
 
   @Test
-  public void cancellingRenewal_shouldHaveExpectedStatusCode() {
+  public void cancelingRenewal_shouldHaveExpectedStatusCode() {
     String route =
         toPath(
             POLICY_ROUTE,

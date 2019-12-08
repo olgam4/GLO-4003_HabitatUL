@@ -10,7 +10,6 @@ public class ConfigureMaximumLossRatioRequest {
   private ConfigureMaximumLossRatioRequest() {}
 
   public ConfigureMaximumLossRatioRequest(LossRatio maximumLossRatio) {
-    // TODO: create loss ratio deserializer
     this.maximumLossRatio = maximumLossRatio;
   }
 

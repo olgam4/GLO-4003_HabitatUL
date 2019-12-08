@@ -9,6 +9,11 @@ import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus;
 import ca.ulaval.glo4003.insuring.domain.claim.SinisterType;
+import com.github.javafaker.Faker;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 import static ca.ulaval.glo4003.helper.shared.AuthorityGenerator.createAuthorityNumber;
@@ -27,6 +32,12 @@ public class ClaimGenerator {
 
   public static ClaimDto createClaimDto() {
     return new ClaimAssembler().from(createClaim());
+  }
+
+  public static List<Claim> createClaims() {
+    return IntStream.range(0, Faker.instance().number().randomDigitNotZero())
+        .mapToObj(i -> createClaim())
+        .collect(Collectors.toList());
   }
 
   public static Claim createClaim() {

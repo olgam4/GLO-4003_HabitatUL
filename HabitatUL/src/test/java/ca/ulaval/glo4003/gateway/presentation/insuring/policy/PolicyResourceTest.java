@@ -1,10 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.insuring.policy;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.*;
 import ca.ulaval.glo4003.insuring.application.policy.PolicyAppService;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
@@ -21,6 +18,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimRequest;
+import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createConfigureMaximumLossRatioRequest;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
@@ -52,6 +50,8 @@ public class PolicyResourceTest {
   private static final PolicyRenewalDto POLICY_RENEWAL_DTO = createPolicyRenewalDto();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final ClaimRequest CLAIM_REQUEST = createClaimRequest();
+  private static final ConfigureMaximumLossRatioRequest CONFIGURE_MAXIMUM_LOSS_RATIO_REQUEST =
+      createConfigureMaximumLossRatioRequest();
 
   @Mock private PolicyAppService policyAppService;
   @Mock private UserAppService userAppService;
@@ -123,7 +123,7 @@ public class PolicyResourceTest {
   }
 
   @Test
-  public void cancellingRenewal_shouldDelegateToPolicyAppService() {
+  public void cancelingRenewal_shouldDelegateToPolicyAppService() {
     subject.cancelRenewal(SECURITY_CONTEXT, POLICY_ID, POLICY_RENEWAL_ID);
 
     verify(policyAppService).cancelRenewal(eq(POLICY_ID), eq(POLICY_RENEWAL_ID));
@@ -134,5 +134,13 @@ public class PolicyResourceTest {
     subject.openClaim(SECURITY_CONTEXT, POLICY_ID, CLAIM_REQUEST);
 
     verify(policyAppService).openClaim(eq(POLICY_ID), argThat(matchesOpenClaimDto(CLAIM_REQUEST)));
+  }
+
+  @Test
+  public void configuringMaximumLossRatio_shouldDelegateToPolicyAppService() {
+    subject.configureMaximumLossRatio(CONFIGURE_MAXIMUM_LOSS_RATIO_REQUEST);
+
+    verify(policyAppService)
+        .configureMaximumLossRatio(CONFIGURE_MAXIMUM_LOSS_RATIO_REQUEST.getMaximumLossRatio());
   }
 }

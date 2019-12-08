@@ -58,33 +58,33 @@ public class CancelRenewalTest {
   }
 
   @Test
-  public void cancellingRenewal_shouldSetPolicyActive() {
+  public void cancelingRenewal_shouldSetPolicyActive() {
     subject.cancelRenewal(POLICY_RENEWAL_ID);
 
     assertEquals(ACTIVE, subject.getStatus());
   }
 
   @Test
-  public void cancellingRenewal_shouldCancelRenewal() {
+  public void cancelingRenewal_shouldCancelRenewal() {
     subject.cancelRenewal(POLICY_RENEWAL_ID);
 
     assertEquals(CANCELED, policyRenewal.getStatus());
   }
 
   @Test(expected = InactivePolicyError.class)
-  public void cancellingRenewal_withInactivePolicy_shouldThrow() {
+  public void cancelingRenewal_withInactivePolicy_shouldThrow() {
     subject = PolicyBuilder.aPolicy().withStatus(INACTIVE).build();
 
     subject.cancelRenewal(POLICY_RENEWAL_ID);
   }
 
   @Test(expected = PolicyRenewalNotFoundError.class)
-  public void cancellingRenewal_withNotExistingRenewal_shouldThrow() {
+  public void cancelingRenewal_withNotExistingRenewal_shouldThrow() {
     subject.cancelRenewal(createPolicyRenewalId());
   }
 
   @Test(expected = RenewalNotYetAcceptedError.class)
-  public void cancellingRenewal_withNotYetAcceptedRenewal_shouldThrow() {
+  public void cancelingRenewal_withNotYetAcceptedRenewal_shouldThrow() {
     policyRenewal =
         PolicyRenewalBuilder.aPolicyRenewal()
             .withPolicyRenewalId(POLICY_RENEWAL_ID)

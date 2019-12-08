@@ -5,13 +5,16 @@ import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ClaimReque
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.InsureBicycleRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.ModifyCoverageRequest;
 import ca.ulaval.glo4003.gateway.presentation.insuring.policy.request.TriggerRenewalRequest;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PoliciesResponse;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyModificationResponse;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyRenewalResponse;
-import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.PolicyResponse;
+import ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.*;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
+import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static ca.ulaval.glo4003.gateway.presentation.insuring.policy.response.ConfigureMaximumLossRatioResponse.ExceedingClaimsByPolicyResponse;
 
 public class PolicyViewAssembler {
   private CoverageViewAssembler coverageViewAssembler;
@@ -69,5 +72,12 @@ public class PolicyViewAssembler {
 
   public OpenClaimDto from(ClaimRequest claimRequest) {
     return new OpenClaimDto(claimRequest.getSinisterType(), claimRequest.getLossDeclarations());
+  }
+
+  public ConfigureMaximumLossRatioResponse from(Map<PolicyId, List<ClaimId>> exceedingClaims) {
+    return new ConfigureMaximumLossRatioResponse(
+        exceedingClaims.entrySet().stream()
+            .map(x -> new ExceedingClaimsByPolicyResponse(x.getKey(), x.getValue()))
+            .collect(Collectors.toList()));
   }
 }

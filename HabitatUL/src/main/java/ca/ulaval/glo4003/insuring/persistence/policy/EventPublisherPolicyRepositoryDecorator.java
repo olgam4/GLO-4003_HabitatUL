@@ -7,6 +7,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedEx
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
 import ca.ulaval.glo4003.mediator.Mediator;
 
+import java.util.List;
+
 public class EventPublisherPolicyRepositoryDecorator implements PolicyRepository {
   private PolicyRepository policyRepository;
   private Mediator mediator;
@@ -15,6 +17,11 @@ public class EventPublisherPolicyRepositoryDecorator implements PolicyRepository
       PolicyRepository policyRepository, Mediator mediator) {
     this.policyRepository = policyRepository;
     this.mediator = mediator;
+  }
+
+  @Override
+  public List<Policy> getAll() {
+    return policyRepository.getAll();
   }
 
   @Override

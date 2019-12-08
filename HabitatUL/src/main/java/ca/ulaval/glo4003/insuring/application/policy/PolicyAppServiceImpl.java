@@ -15,6 +15,7 @@ import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarations
 import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.PolicyLossRatioCalculator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
@@ -37,6 +38,11 @@ import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class PolicyAppServiceImpl implements PolicyAppService {
   public static final LossRatio SMALLEST_MAXIMUM_LOSS_RATIO = new LossRatio(1f);
   public static final LossRatio GREATEST_MAXIMUM_LOSS_RATIO = new LossRatio(4f);
@@ -54,6 +60,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
   private ClaimExpirationProcessor claimExpirationProcessor;
   private MaximumLossRatioConfigurer maximumLossRatioConfigurer;
+  private PolicyLossRatioCalculator policyLossRatioCalculator;
   private ClockProvider clockProvider;
   private Logger logger;
 
@@ -72,6 +79,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
         ServiceLocator.resolve(ClaimExpirationPeriodProvider.class),
         ServiceLocator.resolve(ClaimExpirationProcessor.class),
         ServiceLocator.resolve(MaximumLossRatioConfigurer.class),
+        new PolicyLossRatioCalculator(),
         ServiceLocator.resolve(ClockProvider.class),
         ServiceLocator.resolve(Logger.class));
   }
@@ -90,6 +98,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       ClaimExpirationPeriodProvider claimExpirationPeriodProvider,
       ClaimExpirationProcessor claimExpirationProcessor,
       MaximumLossRatioConfigurer maximumLossRatioConfigurer,
+      PolicyLossRatioCalculator policyLossRatioCalculator,
       ClockProvider clockProvider,
       Logger logger) {
     this.policyAssembler = policyAssembler;
@@ -105,6 +114,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     this.claimExpirationPeriodProvider = claimExpirationPeriodProvider;
     this.claimExpirationProcessor = claimExpirationProcessor;
     this.maximumLossRatioConfigurer = maximumLossRatioConfigurer;
+    this.policyLossRatioCalculator = policyLossRatioCalculator;
     this.clockProvider = clockProvider;
     this.logger = logger;
   }
@@ -256,11 +266,14 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     }
   }
 
-  public void configureMaximumLossRatio(LossRatio maximumLossRatio) {
+  public Map<PolicyId, List<ClaimId>> configureMaximumLossRatio(LossRatio maximumLossRatio) {
     checkIfValidMaximumLossRatioConfiguration(maximumLossRatio);
     maximumLossRatioConfigurer.configureMaximumLossRatio(maximumLossRatio);
-    // TODO: once value updated, iterate over all policies to get
-    // TODO: basically iterates over all policies and compute loss ratio
+    Map<PolicyId, List<ClaimId>> exceedingClaimsByPolicy = new HashMap<>();
+    policyRepository
+        .getAll()
+        .forEach(x -> appendExceedingClaims(exceedingClaimsByPolicy, maximumLossRatio, x));
+    return exceedingClaimsByPolicy;
   }
 
   private void checkIfValidMaximumLossRatioConfiguration(LossRatio maximumLossRatio) {
@@ -270,6 +283,20 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   }
 
   private boolean isValidMaximumLossRatioConfiguration(LossRatio maximumLossRatio) {
-    return maximumLossRatio.isBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
+    return maximumLossRatio.equals(SMALLEST_MAXIMUM_LOSS_RATIO)
+        || maximumLossRatio.equals(GREATEST_MAXIMUM_LOSS_RATIO)
+        || maximumLossRatio.isBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
+  }
+
+  private void appendExceedingClaims(
+      Map<PolicyId, List<ClaimId>> exceedingClaimsByPolicy,
+      LossRatio maximumLossRatio,
+      Policy policy) {
+    List<ClaimId> claimIds =
+        policyLossRatioCalculator
+            .listNotYetAcceptedClaimsExceedingMaximumLossRatio(policy, maximumLossRatio).stream()
+            .map(Claim::getClaimId)
+            .collect(Collectors.toList());
+    if (!claimIds.isEmpty()) exceedingClaimsByPolicy.put(policy.getPolicyId(), claimIds);
   }
 }

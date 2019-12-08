@@ -7,10 +7,17 @@ import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedEx
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class InMemoryPolicyRepository implements PolicyRepository {
   private Map<PolicyId, Policy> policies = new HashMap<>();
+
+  @Override
+  public List<Policy> getAll() {
+    return policies.values().stream().collect(Collectors.toList());
+  }
 
   @Override
   public Policy getById(PolicyId policyId) throws PolicyNotFoundException {

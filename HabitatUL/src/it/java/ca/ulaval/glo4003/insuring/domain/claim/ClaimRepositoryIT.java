@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
 import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
 import org.junit.Before;
@@ -9,11 +8,13 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaim;
+import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
 import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesClaim;
 import static org.junit.Assert.*;
 
 public abstract class ClaimRepositoryIT {
-  private static final ClaimId NOT_EXISTING_CLAIM_ID = ClaimGenerator.createClaimId();
+  private static final ClaimId NOT_EXISTING_CLAIM_ID = createClaimId();
 
   private ClaimRepository subject;
   private Claim claim;
@@ -23,7 +24,7 @@ public abstract class ClaimRepositoryIT {
   @Before
   public void setUp() {
     subject = createSubject();
-    claim = ClaimGenerator.createClaim();
+    claim = createClaim();
     claimId = claim.getClaimId();
   }
 

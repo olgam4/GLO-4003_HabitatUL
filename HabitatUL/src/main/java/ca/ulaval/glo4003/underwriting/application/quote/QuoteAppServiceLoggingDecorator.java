@@ -21,7 +21,7 @@ public class QuoteAppServiceLoggingDecorator implements QuoteAppService {
 
   @Override
   public QuoteDto requestQuote(RequestQuoteDto requestQuoteDto) {
-    logger.info(String.format("Request quote for <%s>", requestQuoteDto));
+    logger.info(String.format("Requesting quote for <%s>", requestQuoteDto));
     QuoteDto quoteDto = this.quoteAppService.requestQuote(requestQuoteDto);
     logger.info(String.format("Requested quote <%s>", quoteDto));
     return quoteDto;
@@ -29,7 +29,7 @@ public class QuoteAppServiceLoggingDecorator implements QuoteAppService {
 
   @Override
   public void purchaseQuote(QuoteId quoteId) {
-    logger.info(String.format("Purchase quote <%s>", quoteId));
+    logger.info(String.format("Purchasing quote <%s>", quoteId));
     this.quoteAppService.purchaseQuote(quoteId);
   }
 }

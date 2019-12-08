@@ -93,6 +93,7 @@ public class ErrorResponseFactory {
     STATUS_MAP.put(EmptyLossDeclarationsError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InactivePolicyError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidLossDeclarationsError.class, Status.BAD_REQUEST);
+    STATUS_MAP.put(InvalidLossRatioError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(InvalidSinisterTypeError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(LossDeclarationsExceedCoverageAmountError.class, Status.BAD_REQUEST);
     STATUS_MAP.put(ModificationAlreadyConfirmedError.class, Status.BAD_REQUEST);

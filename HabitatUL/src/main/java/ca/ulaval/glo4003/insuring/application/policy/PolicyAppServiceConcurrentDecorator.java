@@ -9,6 +9,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.application.concurrency.ConcurrentDecorator;
 
+import java.util.List;
+import java.util.Map;
+
 public class PolicyAppServiceConcurrentDecorator extends ConcurrentDecorator<PolicyId>
     implements PolicyAppService {
   private PolicyAppService policyAppService;
@@ -63,7 +66,7 @@ public class PolicyAppServiceConcurrentDecorator extends ConcurrentDecorator<Pol
   }
 
   @Override
-  public void configureMaximumLossRatio(LossRatio maximumLossRatio) {
-    policyAppService.configureMaximumLossRatio(maximumLossRatio);
+  public Map<PolicyId, List<ClaimId>> configureMaximumLossRatio(LossRatio maximumLossRatio) {
+    return policyAppService.configureMaximumLossRatio(maximumLossRatio);
   }
 }

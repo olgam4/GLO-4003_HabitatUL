@@ -8,6 +8,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 
+import java.util.List;
+import java.util.Map;
+
 public interface PolicyAppService {
   void issuePolicy(PolicyPurchasedEvent policyPurchasedEvent);
 
@@ -25,5 +28,5 @@ public interface PolicyAppService {
 
   ClaimId openClaim(PolicyId policyId, OpenClaimDto openClaimDto);
 
-  void configureMaximumLossRatio(LossRatio maximumLossRatio);
+  Map<PolicyId, List<ClaimId>> configureMaximumLossRatio(LossRatio maximumLossRatio);
 }
