@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class InMemoryClaimRepository implements ClaimRepository {
   private Map<ClaimId, Claim> claims = new HashMap<>();
@@ -17,6 +18,19 @@ public class InMemoryClaimRepository implements ClaimRepository {
     if (isExistingClaim(claimId)) return claims.get(claimId);
 
     throw new ClaimNotFoundException();
+  }
+
+  @Override
+  public Optional<Claim> findById(ClaimId claimId) {
+    return Optional.ofNullable(tryFindClaim(claimId));
+  }
+
+  private Claim tryFindClaim(ClaimId claimId) {
+    try {
+      return getById(claimId);
+    } catch (ClaimNotFoundException e) {
+      return null;
+    }
   }
 
   @Override

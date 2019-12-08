@@ -260,9 +260,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     checkIfValidMaximumLossRatioConfiguration(maximumLossRatio);
     maximumLossRatioConfigurer.configureMaximumLossRatio(maximumLossRatio);
     // TODO: once value updated, iterate over all policies to get
-    // TODO: the list of claims not yet accepted exceeding the new loss ratio
     // TODO: basically iterates over all policies and compute loss ratio
-    // TODO: if > new value, return list of claims not yet accepted
   }
 
   private void checkIfValidMaximumLossRatioConfiguration(LossRatio maximumLossRatio) {

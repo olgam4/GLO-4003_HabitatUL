@@ -11,7 +11,7 @@ import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesPolicy;
 import static org.junit.Assert.assertThat;
 
 public abstract class PolicyRepositoryIT {
-  private static final PolicyId POLICY_ID = PolicyGenerator.createPolicyId();
+  private static final PolicyId NOT_EXISTING_POLICY_ID = PolicyGenerator.createPolicyId();
 
   private PolicyRepository subject;
   private Policy policy;
@@ -26,7 +26,7 @@ public abstract class PolicyRepositoryIT {
 
   @Test(expected = PolicyNotFoundException.class)
   public void gettingPolicyById_withUnknownPolicyId_shouldThrow() throws PolicyNotFoundException {
-    subject.getById(POLICY_ID);
+    subject.getById(NOT_EXISTING_POLICY_ID);
   }
 
   @Test

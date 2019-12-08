@@ -7,11 +7,13 @@ import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesClaim;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public abstract class ClaimRepositoryIT {
-  private static final ClaimId CLAIM_ID = ClaimGenerator.createClaimId();
+  private static final ClaimId NOT_EXISTING_CLAIM_ID = ClaimGenerator.createClaimId();
 
   private ClaimRepository subject;
   private Claim claim;
@@ -27,7 +29,25 @@ public abstract class ClaimRepositoryIT {
 
   @Test(expected = ClaimNotFoundException.class)
   public void gettingClaimById_withUnknownClaimId_shouldThrow() throws ClaimNotFoundException {
-    subject.getById(CLAIM_ID);
+    subject.getById(NOT_EXISTING_CLAIM_ID);
+  }
+
+  @Test
+  public void findingClaimById_withExistingClaimId_shouldReturnAssociatedClaim()
+      throws ClaimAlreadyCreatedException {
+    subject.create(claim);
+
+    Optional<Claim> optionalClaim = subject.findById(claimId);
+
+    assertTrue(optionalClaim.isPresent());
+    assertThat(optionalClaim.get(), matchesClaim(claim));
+  }
+
+  @Test
+  public void findingClaimById_withUnknownClaimId_shouldReturnEmptyClaim() {
+    Optional<Claim> optionalClaim = subject.findById(NOT_EXISTING_CLAIM_ID);
+
+    assertFalse(optionalClaim.isPresent());
   }
 
   @Test

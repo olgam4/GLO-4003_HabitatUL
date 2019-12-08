@@ -19,7 +19,7 @@ import static ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber.UNFILLED
 public class Claim {
   private ClaimId claimId;
   private Date declarationDate;
-  private ClaimStatus claimStatus;
+  private ClaimStatus status;
   private AuthorityNumber authorityNumber;
   private SinisterType sinisterType;
   private LossDeclarations lossDeclarations;
@@ -27,13 +27,13 @@ public class Claim {
   public Claim(
       ClaimId claimId,
       Date declarationDate,
-      ClaimStatus claimStatus,
+      ClaimStatus status,
       AuthorityNumber authorityNumber,
       SinisterType sinisterType,
       LossDeclarations lossDeclarations) {
     this.claimId = claimId;
     this.declarationDate = declarationDate;
-    this.claimStatus = claimStatus;
+    this.status = status;
     this.authorityNumber = authorityNumber;
     this.sinisterType = sinisterType;
     this.lossDeclarations = lossDeclarations;
@@ -48,7 +48,7 @@ public class Claim {
   }
 
   public ClaimStatus getStatus() {
-    return claimStatus;
+    return status;
   }
 
   public AuthorityNumber getAuthorityNumber() {
@@ -113,7 +113,7 @@ public class Claim {
 
   public void provideAuthorityNumber(AuthorityNumber value) {
     checkIfCannotAcceptAuthorityNumber(value);
-    claimStatus = UNDER_ANALYSIS;
+    status = UNDER_ANALYSIS;
     authorityNumber = value;
   }
 
@@ -126,11 +126,15 @@ public class Claim {
   private boolean cannotAcceptAuthorityNumber(AuthorityNumber value) {
     return !authorityNumber.equals(UNFILLED_AUTHORITY_NUMBER)
         || !sinisterType.equals(THEFT)
-        || !claimStatus.equals(RECEIVED)
+        || !status.equals(RECEIVED)
         || !value.declaredOn(declarationDate);
   }
 
   public void expire() {
-    this.claimStatus = EXPIRED;
+    this.status = EXPIRED;
+  }
+
+  public Amount computePersonalPropertyLosses() {
+    return getLossDeclarations().computePersonalPropertyLosses();
   }
 }

@@ -9,7 +9,7 @@ public class LossRatioGenerator {
   private LossRatioGenerator() {}
 
   public static LossRatio createLossRatio() {
-    return new LossRatio((float) Faker.instance().number().randomDigit());
+    return new LossRatio((float) Faker.instance().number().randomDigitNotZero());
   }
 
   public static LossRatio createLossRatioSmallerThan(LossRatio lossRatio) {

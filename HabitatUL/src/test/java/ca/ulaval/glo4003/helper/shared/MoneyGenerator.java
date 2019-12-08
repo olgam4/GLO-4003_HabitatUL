@@ -7,6 +7,7 @@ import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 
 public class MoneyGenerator {
+  private static final int HUGE_VALUE = 1000000000;
   private static final int MAX_NUMBER_OF_DECIMALS = 5;
 
   private MoneyGenerator() {}
@@ -32,9 +33,7 @@ public class MoneyGenerator {
 
   public static Amount createAmount() {
     double randomDouble =
-        Faker.instance()
-            .number()
-            .randomDouble(MAX_NUMBER_OF_DECIMALS, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        Faker.instance().number().randomDouble(MAX_NUMBER_OF_DECIMALS, -HUGE_VALUE, HUGE_VALUE);
     return new Amount(new BigDecimal(randomDouble));
   }
 
@@ -42,7 +41,7 @@ public class MoneyGenerator {
     double randomDouble =
         Faker.instance()
             .number()
-            .randomDouble(MAX_NUMBER_OF_DECIMALS, Integer.MIN_VALUE, amount.getValue().intValue());
+            .randomDouble(MAX_NUMBER_OF_DECIMALS, -HUGE_VALUE, amount.getValue().intValue());
     return new Amount(new BigDecimal(randomDouble));
   }
 
@@ -50,7 +49,7 @@ public class MoneyGenerator {
     double randomDouble =
         Faker.instance()
             .number()
-            .randomDouble(MAX_NUMBER_OF_DECIMALS, amount.getValue().intValue(), Integer.MAX_VALUE);
+            .randomDouble(MAX_NUMBER_OF_DECIMALS, amount.getValue().intValue() + 1, HUGE_VALUE);
     return new Amount(new BigDecimal(randomDouble));
   }
 

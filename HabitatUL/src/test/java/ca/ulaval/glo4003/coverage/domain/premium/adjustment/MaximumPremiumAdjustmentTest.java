@@ -5,14 +5,14 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
 
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoneyGreaterThan;
+import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoneySmallerThan;
 import static org.junit.Assert.assertEquals;
 
 public class MaximumPremiumAdjustmentTest {
   private static final Money MAXIMUM_PREMIUM = MoneyGenerator.createMoney();
-  private static final Money PREMIUM_SMALLER_THAN_MINIMUM =
-      MoneyGenerator.createMoneySmallerThan(MAXIMUM_PREMIUM);
-  private static final Money PREMIUM_GREATER_THAN_MINIMUM =
-      MoneyGenerator.createMoneyGreaterThan(MAXIMUM_PREMIUM);
+  private static final Money PREMIUM_SMALLER_THAN_MINIMUM = createMoneySmallerThan(MAXIMUM_PREMIUM);
+  private static final Money PREMIUM_GREATER_THAN_MINIMUM = createMoneyGreaterThan(MAXIMUM_PREMIUM);
 
   private MaximumPremiumAdjustment subject;
 
