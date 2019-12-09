@@ -13,12 +13,10 @@ import ca.ulaval.glo4003.helper.policy.OpenClaimDtoBuilder;
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationPeriodProvider;
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
-import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
-import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
-import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
-import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
+import ca.ulaval.glo4003.insuring.application.policy.error.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioProvider;
 import ca.ulaval.glo4003.insuring.application.policy.lossratio.PolicyLossRatioCalculator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
@@ -55,8 +53,7 @@ import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaims;
 import static ca.ulaval.glo4003.helper.coverage.CoverageGenerator.createCoverageDto;
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatioBetween;
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatioSmallerThan;
+import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
 import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
@@ -92,6 +89,9 @@ public class PolicyAppServiceTest {
   private static final OpenClaimDto OPEN_CLAIM_DTO = createOpenClaimDto();
   private static final ClaimId CLAIM_ID = createClaimId();
   private static final Duration CLAIM_EXPIRATION_PERIOD = createDuration();
+  private static final LossRatio MAXIMUM_LOSS_RATIO =
+      createLossRatioBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
+  private static final LossRatio POLICY_LOSS_RATIO = createLossRatioSmallerThan(MAXIMUM_LOSS_RATIO);
   private static final LossRatio VALID_LOSS_RATIO =
       createLossRatioBetween(SMALLEST_MAXIMUM_LOSS_RATIO, GREATEST_MAXIMUM_LOSS_RATIO);
   private static final List<Claim> POLICY_EXCEEDING_CLAIMS = createClaims();
@@ -113,6 +113,7 @@ public class PolicyAppServiceTest {
   @Mock private ClaimRepository claimRepository;
   @Mock private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
   @Mock private ClaimExpirationProcessor claimExpirationProcessor;
+  @Mock private MaximumLossRatioProvider maximumLossRatioProvider;
   @Mock private MaximumLossRatioConfigurer maximumLossRatioConfigurer;
   @Mock private PolicyLossRatioCalculator policyLossRatioCalculator;
   @Mock private Logger logger;
@@ -169,6 +170,9 @@ public class PolicyAppServiceTest {
     when(claim.getClaimId()).thenReturn(CLAIM_ID);
     when(claimExpirationPeriodProvider.getClaimExpirationPeriod())
         .thenReturn(CLAIM_EXPIRATION_PERIOD);
+    when(maximumLossRatioProvider.getMaximumLossRatio()).thenReturn(MAXIMUM_LOSS_RATIO);
+    when(policyLossRatioCalculator.computeLossRatioWithAdditionalClaim(policy, claim))
+        .thenReturn(POLICY_LOSS_RATIO);
     when(policyLossRatioCalculator.listNotYetAcceptedClaimsExceedingMaximumLossRatio(
             eq(policy), any(LossRatio.class)))
         .thenReturn(POLICY_EXCEEDING_CLAIMS);
@@ -189,6 +193,7 @@ public class PolicyAppServiceTest {
             claimRepository,
             claimExpirationPeriodProvider,
             claimExpirationProcessor,
+            maximumLossRatioProvider,
             maximumLossRatioConfigurer,
             policyLossRatioCalculator,
             CLOCK_PROVIDER,
@@ -527,6 +532,14 @@ public class PolicyAppServiceTest {
   @Test(expected = PolicyNotFoundError.class)
   public void openingClaim_withNotExistingPolicy_shouldThrow() throws PolicyNotFoundException {
     when(policyRepository.getById(POLICY_ID)).thenThrow(PolicyNotFoundException.class);
+
+    subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
+  }
+
+  @Test(expected = PolicyExceedingMaximumLossRatioError.class)
+  public void openingClaim_withPolicyExceedingMaximumLossRatio_shouldThrow() {
+    when(policyLossRatioCalculator.computeLossRatioWithAdditionalClaim(policy, claim))
+        .thenReturn(createLossRatioGreaterThan(MAXIMUM_LOSS_RATIO));
 
     subject.openClaim(POLICY_ID, OPEN_CLAIM_DTO);
   }

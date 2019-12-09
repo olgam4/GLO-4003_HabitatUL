@@ -9,12 +9,10 @@ import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationPeriodProvider;
 import ca.ulaval.glo4003.insuring.application.policy.claimexpiration.ClaimExpirationProcessor;
 import ca.ulaval.glo4003.insuring.application.policy.dto.*;
-import ca.ulaval.glo4003.insuring.application.policy.error.CouldNotOpenClaimError;
-import ca.ulaval.glo4003.insuring.application.policy.error.EmptyCoverageModificationRequestError;
-import ca.ulaval.glo4003.insuring.application.policy.error.EmptyLossDeclarationsError;
-import ca.ulaval.glo4003.insuring.application.policy.error.OutOfBoundMaximumLossRatioError;
+import ca.ulaval.glo4003.insuring.application.policy.error.*;
 import ca.ulaval.glo4003.insuring.application.policy.event.PolicyPurchasedEvent;
 import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer;
+import ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioProvider;
 import ca.ulaval.glo4003.insuring.application.policy.lossratio.PolicyLossRatioCalculator;
 import ca.ulaval.glo4003.insuring.application.policy.renewal.PolicyRenewalProcessor;
 import ca.ulaval.glo4003.insuring.domain.claim.*;
@@ -59,6 +57,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
   private ClaimRepository claimRepository;
   private ClaimExpirationPeriodProvider claimExpirationPeriodProvider;
   private ClaimExpirationProcessor claimExpirationProcessor;
+  private MaximumLossRatioProvider maximumLossRatioProvider;
   private MaximumLossRatioConfigurer maximumLossRatioConfigurer;
   private PolicyLossRatioCalculator policyLossRatioCalculator;
   private ClockProvider clockProvider;
@@ -78,6 +77,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
         ServiceLocator.resolve(ClaimRepository.class),
         ServiceLocator.resolve(ClaimExpirationPeriodProvider.class),
         ServiceLocator.resolve(ClaimExpirationProcessor.class),
+        ServiceLocator.resolve(MaximumLossRatioProvider.class),
         ServiceLocator.resolve(MaximumLossRatioConfigurer.class),
         new PolicyLossRatioCalculator(),
         ServiceLocator.resolve(ClockProvider.class),
@@ -97,6 +97,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       ClaimRepository claimRepository,
       ClaimExpirationPeriodProvider claimExpirationPeriodProvider,
       ClaimExpirationProcessor claimExpirationProcessor,
+      MaximumLossRatioProvider maximumLossRatioProvider,
       MaximumLossRatioConfigurer maximumLossRatioConfigurer,
       PolicyLossRatioCalculator policyLossRatioCalculator,
       ClockProvider clockProvider,
@@ -113,6 +114,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     this.claimRepository = claimRepository;
     this.claimExpirationPeriodProvider = claimExpirationPeriodProvider;
     this.claimExpirationProcessor = claimExpirationProcessor;
+    this.maximumLossRatioProvider = maximumLossRatioProvider;
     this.maximumLossRatioConfigurer = maximumLossRatioConfigurer;
     this.policyLossRatioCalculator = policyLossRatioCalculator;
     this.clockProvider = clockProvider;
@@ -244,6 +246,7 @@ public class PolicyAppServiceImpl implements PolicyAppService {
       checkIfEmptyLossDeclarations(lossDeclarations);
       Policy policy = policyRepository.getById(policyId);
       Claim claim = claimFactory.create(openClaimDto.getSinisterType(), lossDeclarations);
+      checkIfPolicyExceedingMaximumLossRatio(policy, claim);
       policy.openClaim(claim);
       claimExpirationProcessor.scheduleExpiration(claim.getClaimId(), computeClaimExpirationDate());
       claimRepository.create(claim);
@@ -255,15 +258,28 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     }
   }
 
-  private DateTime computeClaimExpirationDate() {
-    return DateTime.now(clockProvider.getClock())
-        .plus(claimExpirationPeriodProvider.getClaimExpirationPeriod());
-  }
-
   private void checkIfEmptyLossDeclarations(LossDeclarations lossDeclarations) {
     if (lossDeclarations.isEmpty()) {
       throw new EmptyLossDeclarationsError();
     }
+  }
+
+  private void checkIfPolicyExceedingMaximumLossRatio(Policy policy, Claim claim) {
+    if (isPolicyExceedingMaximumLossRatio(policy, claim)) {
+      throw new PolicyExceedingMaximumLossRatioError();
+    }
+  }
+
+  private boolean isPolicyExceedingMaximumLossRatio(Policy policy, Claim claim) {
+    LossRatio policyLossRatio =
+        policyLossRatioCalculator.computeLossRatioWithAdditionalClaim(policy, claim);
+    LossRatio maximumLossRatio = maximumLossRatioProvider.getMaximumLossRatio();
+    return policyLossRatio.isGreaterThan(maximumLossRatio);
+  }
+
+  private DateTime computeClaimExpirationDate() {
+    return DateTime.now(clockProvider.getClock())
+        .plus(claimExpirationPeriodProvider.getClaimExpirationPeriod());
   }
 
   public Map<PolicyId, List<ClaimId>> configureMaximumLossRatio(LossRatio maximumLossRatio) {

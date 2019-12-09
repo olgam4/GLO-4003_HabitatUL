@@ -33,10 +33,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PolicyLossRatioCalculatorTest {
   private static final Period POLICY_COVERAGE_PERIOD = createPeriod();
-  private static final Amount PERSONAL_PROPERTY_COVERAGE_AMOUNT = createAmountGreaterThanZero();
-  private static final LossRatio MAXIMUM_LOSS_RATIO = createLossRatio();
   private static final Amount PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES =
-      PERSONAL_PROPERTY_COVERAGE_AMOUNT.multiply(MAXIMUM_LOSS_RATIO.getValue());
+      createAmountGreaterThanZero();
+  private static final LossRatio MAXIMUM_LOSS_RATIO = createLossRatio();
+  private static final Amount PERSONAL_PROPERTY_COVERAGE_AMOUNT =
+      PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES.divide(MAXIMUM_LOSS_RATIO.getValue());
   private static final Amount AMOUNT_GREATER_THAN_PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES =
       createAmountGreaterThan(PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES);
   private static final ClaimId FIRST_CLAIM_ID = createClaimId();
@@ -53,19 +54,43 @@ public class PolicyLossRatioCalculatorTest {
   @Mock private Claim secondClaim;
   @Mock private Claim expiredClaim;
   @Mock private Claim previousCoveragePeriodClaim;
+  @Mock private Claim additionalClaim;
 
   private PolicyLossRatioCalculator subject;
 
   @Before
   public void setUp() {
     setUpPolicy();
+    setUpClaimsPersonalPropertyLosses(Amount.ZERO, Amount.ZERO, Amount.ZERO, Amount.ZERO);
     setUpClaim(firstClaim, RECEIVED, createDateBetween(POLICY_COVERAGE_PERIOD));
     setUpClaim(secondClaim, UNDER_ANALYSIS, createDateBetween(POLICY_COVERAGE_PERIOD));
     setUpClaim(expiredClaim, EXPIRED, createDateBetween(POLICY_COVERAGE_PERIOD));
     setUpClaim(
         previousCoveragePeriodClaim, PAID, createDateBefore(POLICY_COVERAGE_PERIOD.getStartDate()));
+    setUpClaim(additionalClaim, RECEIVED, createDateBetween(POLICY_COVERAGE_PERIOD));
     setUpClaimRepository();
     subject = new PolicyLossRatioCalculator(claimRepository);
+  }
+
+  @Test
+  public void computingLossRatioWithAdditionalClaim_shouldConsiderAdditionalClaim() {
+    Amount firstClaimAmount = createAmountGreaterThanZero();
+    Amount secondClaimAmount = createAmountGreaterThanZero();
+    setUpClaimsPersonalPropertyLosses(
+        firstClaimAmount,
+        secondClaimAmount,
+        createAmountGreaterThanZero(),
+        createAmountGreaterThanZero());
+    Amount additionalClaimAmount = createAmountGreaterThanZero();
+    when(additionalClaim.computePersonalPropertyLosses()).thenReturn(additionalClaimAmount);
+
+    LossRatio lossRatio = subject.computeLossRatioWithAdditionalClaim(policy, additionalClaim);
+
+    LossRatio expectedLossRatio =
+        new LossRatio(
+            PERSONAL_PROPERTY_COVERAGE_AMOUNT,
+            firstClaimAmount.add(secondClaimAmount).add(additionalClaimAmount));
+    assertEquals(expectedLossRatio, lossRatio);
   }
 
   @Test
@@ -111,8 +136,11 @@ public class PolicyLossRatioCalculatorTest {
   @Test
   public void
       listingNotYetAcceptedClaimsExceedingMaximumLossRatio_withPolicyNotExceedingMaximumLossRatio_shouldReturnNoClaim() {
-    Amount firstClaimAmount = createAmountSmallerThan(PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES);
-    Amount secondClaimAmount = PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES.subtract(firstClaimAmount);
+    Amount firstClaimAmount =
+        createAmountBetween(Amount.ZERO, PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES);
+    Amount secondClaimAmount =
+        createAmountBetween(
+            Amount.ZERO, PERSONAL_PROPERTY_MAXIMUM_TOTAL_LOSSES.subtract(firstClaimAmount));
     setUpClaimsPersonalPropertyLosses(
         firstClaimAmount,
         secondClaimAmount,
@@ -139,7 +167,7 @@ public class PolicyLossRatioCalculatorTest {
     List<Claim> exceedingClaims =
         subject.listNotYetAcceptedClaimsExceedingMaximumLossRatio(policy, MAXIMUM_LOSS_RATIO);
 
-    assertEquals(exceedingClaims, Arrays.asList(firstClaim, secondClaim));
+    assertEquals(Arrays.asList(firstClaim, secondClaim), exceedingClaims);
   }
 
   private void setUpPolicy() {
@@ -153,7 +181,6 @@ public class PolicyLossRatioCalculatorTest {
   }
 
   private void setUpClaim(Claim claim, ClaimStatus claimStatus, Date declarationDate) {
-    setUpClaimsPersonalPropertyLosses(Amount.ZERO, Amount.ZERO, Amount.ZERO, Amount.ZERO);
     when(claim.getStatus()).thenReturn(claimStatus);
     when(claim.getDeclarationDate()).thenReturn(declarationDate);
   }
