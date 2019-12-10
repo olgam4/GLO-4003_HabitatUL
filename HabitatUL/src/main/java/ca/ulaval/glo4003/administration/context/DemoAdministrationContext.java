@@ -30,6 +30,7 @@ public class DemoAdministrationContext {
     InMemoryUsernameRegistry usernameRegistry = new InMemoryUsernameRegistry();
     PasswordManager passwordManager = new DummyPasswordManager();
     registerAdminUser(properties, usernameRegistry, passwordManager);
+    registerActuaryUser(properties, usernameRegistry, passwordManager);
 
     register(PasswordManager.class, passwordManager);
     register(PaymentProcessor.class, new DummyPaymentProcessor());
@@ -52,11 +53,28 @@ public class DemoAdministrationContext {
   private void registerAdminUser(
       Properties properties, UsernameRegistry usernameRegistry, PasswordManager passwordManager) {
     String adminKey = String.valueOf(properties.getProperty("admin.key"));
-    String adminName = String.valueOf(properties.getProperty("admin.username"));
+    String adminUserName = String.valueOf(properties.getProperty("admin.username"));
     String adminPassword = String.valueOf(properties.getProperty("admin.password"));
+    registerUser(usernameRegistry, passwordManager, adminKey, adminUserName, adminPassword);
+  }
+
+  private void registerActuaryUser(
+      Properties properties, UsernameRegistry usernameRegistry, PasswordManager passwordManager) {
+    String actuaryKey = String.valueOf(properties.getProperty("actuary.key"));
+    String actuaryUserName = String.valueOf(properties.getProperty("actuary.username"));
+    String actuaryPassword = String.valueOf(properties.getProperty("actuary.password"));
+    registerUser(usernameRegistry, passwordManager, actuaryKey, actuaryUserName, actuaryPassword);
+  }
+
+  private void registerUser(
+      UsernameRegistry usernameRegistry,
+      PasswordManager passwordManager,
+      String userKey,
+      String userName,
+      String password) {
     try {
-      usernameRegistry.register(adminKey, adminName);
-      passwordManager.registerPassword(adminName, adminPassword);
+      usernameRegistry.register(userKey, userName);
+      passwordManager.registerPassword(userKey, password);
     } catch (KeyAlreadyExistException | InvalidPasswordException e) {
       e.printStackTrace();
     }

@@ -7,6 +7,7 @@ import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.context.ServiceLocator;
+import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Actuary;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Secured;
 
 import javax.annotation.Priority;
@@ -53,11 +54,18 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   @Override
   public void filter(ContainerRequestContext requestContext) {
     Method resourceMethod = resourceInfo.getResourceMethod();
-    // TODO: check for actuary access
-    if (resourceMethod.getAnnotation(Secured.class) == null) return;
+    if (isRestrictedResourceMethod(resourceMethod)) controlAccess(requestContext, resourceMethod);
+  }
 
+  private boolean isRestrictedResourceMethod(Method method) {
+    return method.getAnnotation(Secured.class) != null
+        || method.getAnnotation(Actuary.class) != null;
+  }
+
+  private void controlAccess(ContainerRequestContext requestContext, Method method) {
     TokenPayload tokenPayload = extractTokenUser(requestContext);
     accessController.controlAccess(tokenPayload);
+    checkIfActuary(method, tokenPayload);
     setSecurityContext(requestContext, tokenPayload);
   }
 
@@ -68,6 +76,13 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     try {
       return tokenTranslator.decodeToken(token);
     } catch (InvalidTokenSignatureException e) {
+      throw new UnauthorizedError();
+    }
+  }
+
+  private void checkIfActuary(Method method, TokenPayload tokenPayload) {
+    if (method.getAnnotation(Actuary.class) != null
+        && !tokenPayload.getUserKey().equals("89826a12-9cfc-401e-82f0-dcf9e17d48af")) {
       throw new UnauthorizedError();
     }
   }

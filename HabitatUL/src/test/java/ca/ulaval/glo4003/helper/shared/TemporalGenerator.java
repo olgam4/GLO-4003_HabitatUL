@@ -124,6 +124,16 @@ public class TemporalGenerator {
     return new Period(startDate, endDate);
   }
 
+  public static Instant createFutureInstant() {
+    Faker faker = Faker.instance();
+    return faker.date().future(faker.number().randomDigitNotZero(), TimeUnit.DAYS).toInstant();
+  }
+
+  public static Instant createPastInstant() {
+    Faker faker = Faker.instance();
+    return faker.date().past(faker.number().randomDigitNotZero(), TimeUnit.DAYS).toInstant();
+  }
+
   public static java.time.Period createJavaTimePeriod() {
     return java.time.Period.ofMonths(Faker.instance().number().randomDigitNotZero());
   }

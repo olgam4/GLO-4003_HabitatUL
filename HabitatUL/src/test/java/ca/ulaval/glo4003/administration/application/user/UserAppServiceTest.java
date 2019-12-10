@@ -20,6 +20,7 @@ import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.helper.user.TokenGenerator;
+import ca.ulaval.glo4003.helper.user.TokenPayloadBuilder;
 import ca.ulaval.glo4003.helper.user.TokenPayloadGenerator;
 import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -35,6 +36,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastInstant;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -201,7 +203,8 @@ public class UserAppServiceTest {
 
   @Test(expected = UnauthorizedError.class)
   public void controllingAccess_withExpiredTokenPayload_shouldThrow() {
-    TokenPayload expiredTokenPayload = TokenPayloadGenerator.createExpiredTokenPayload();
+    TokenPayload expiredTokenPayload =
+        TokenPayloadBuilder.aTokenPayload().withExpiration(createPastInstant()).build();
 
     subject.controlAccess(expiredTokenPayload);
   }
