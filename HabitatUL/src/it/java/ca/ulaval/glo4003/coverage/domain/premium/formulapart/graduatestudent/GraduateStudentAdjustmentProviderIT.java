@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.coverage.domain.premium.formulapart.graduatestudent;
 
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.shared.domain.identity.Cycle;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +9,7 @@ import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramG
 import static org.junit.Assert.assertNotNull;
 
 public abstract class GraduateStudentAdjustmentProviderIT {
-  private static final String CYCLE = createCycle();
+  private static final Cycle CYCLE = createCycle();
 
   private GraduateStudentAdjustmentProvider subject;
 

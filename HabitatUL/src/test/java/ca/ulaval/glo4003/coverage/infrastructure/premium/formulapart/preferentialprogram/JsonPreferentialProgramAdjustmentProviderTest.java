@@ -3,6 +3,9 @@ package ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.preferenti
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
+import ca.ulaval.glo4003.shared.domain.identity.Cycle;
+import ca.ulaval.glo4003.shared.domain.identity.Degree;
 import ca.ulaval.glo4003.shared.infrastructure.io.JsonFileReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,25 +23,21 @@ import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.preferentialprogram.JsonPreferentialProgramAdjustmentProvider.FILE_PATH;
 import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.shared.domain.identity.Cycle.*;
+import static ca.ulaval.glo4003.shared.domain.identity.Degree.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class JsonPreferentialProgramAdjustmentProviderTest {
-  private static final String FIRST_CYCLE = "1er";
-  private static final String BACHELOR = "baccalaureat";
   private static final String BACHELOR_PREFERENTIAL_PROGRAM = "bachelor preferential program";
   private static final float BACHELOR_ADJUSTMENT_VALUE = 5f;
   private static final PremiumAdjustment BACHELOR_ADJUSTMENT =
       new MultiplicativePremiumAdjustment(-BACHELOR_ADJUSTMENT_VALUE / 100);
-  private static final String SECOND_CYCLE = "2e";
-  private static final String MASTER = "maitrise";
   private static final String MASTER_PREFERENTIAL_PROGRAM = "master preferential program";
   private static final float MASTER_ADJUSTMENT_VALUE = 10f;
   private static final PremiumAdjustment MASTER_ADJUSTMENT =
       new MultiplicativePremiumAdjustment(-MASTER_ADJUSTMENT_VALUE / 100);
-  private static final String THIRD_CYCLE = "3e";
-  private static final String DOCTORAL = "doctorat";
   private static final String DOCTORAL_PREFERENTIAL_PROGRAM = "doctoral preferential program";
   private static final float DOCTORAL_ADJUSTMENT_VALUE = 15;
   private static final PremiumAdjustment DOCTORAL_ADJUSTMENT =
@@ -50,15 +49,15 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
   @Mock private JsonFileReader jsonFileReader;
 
   private JsonPreferentialProgramAdjustmentProvider subject;
-  private String cycle;
-  private String degree;
+  private Cycle cycle;
+  private Degree degree;
   private String program;
   private PremiumAdjustment expectedAdjustment;
 
   public JsonPreferentialProgramAdjustmentProviderTest(
       String title,
-      String cycle,
-      String degree,
+      Cycle cycle,
+      Degree degree,
       String program,
       PremiumAdjustment expectedAdjustment) {
     this.cycle = cycle;
@@ -100,20 +99,6 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
             DOCTORAL_ADJUSTMENT
           },
           {
-            "without normalized cycle should compute associated adjustment",
-            "1ER",
-            BACHELOR,
-            BACHELOR_PREFERENTIAL_PROGRAM,
-            BACHELOR_ADJUSTMENT
-          },
-          {
-            "without normalized degree should compute associated adjustment",
-            FIRST_CYCLE,
-            "baCCalauréat",
-            BACHELOR_PREFERENTIAL_PROGRAM,
-            BACHELOR_ADJUSTMENT
-          },
-          {
             "without normalized program should compute associated adjustment",
             FIRST_CYCLE,
             BACHELOR,
@@ -145,7 +130,7 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
   }
 
   @Before
-  public void setUp() {
+  public void setUp() throws InvalidArgumentException {
     when(jsonFileReader.read(FILE_PATH)).thenReturn(FakeJsonFileContent());
     subject = new JsonPreferentialProgramAdjustmentProvider(jsonFileReader);
   }
@@ -161,16 +146,17 @@ public class JsonPreferentialProgramAdjustmentProviderTest {
     JSONObject content = new JSONObject();
     JSONArray bachelorPreferentialPrograms =
         createPreferentialPrograms(BACHELOR_PREFERENTIAL_PROGRAM, BACHELOR_ADJUSTMENT_VALUE);
-    JSONObject firstCycleDegrees = new JSONObject().put(BACHELOR, bachelorPreferentialPrograms);
-    content.put(FIRST_CYCLE, firstCycleDegrees);
+    JSONObject firstCycleDegrees =
+        new JSONObject().put("baccalaureat", bachelorPreferentialPrograms);
+    content.put("1er", firstCycleDegrees);
     JSONArray masterPreferentialPrograms =
         createPreferentialPrograms(MASTER_PREFERENTIAL_PROGRAM, MASTER_ADJUSTMENT_VALUE);
-    JSONObject secondCycleDegrees = new JSONObject().put(MASTER, masterPreferentialPrograms);
-    content.put(SECOND_CYCLE, secondCycleDegrees);
+    JSONObject secondCycleDegrees = new JSONObject().put("maitrise", masterPreferentialPrograms);
+    content.put("2e", secondCycleDegrees);
     JSONArray doctoralPreferentialPrograms =
         createPreferentialPrograms(DOCTORAL_PREFERENTIAL_PROGRAM, DOCTORAL_ADJUSTMENT_VALUE);
-    JSONObject thirdCycleDegrees = new JSONObject().put(DOCTORAL, doctoralPreferentialPrograms);
-    content.put(THIRD_CYCLE, thirdCycleDegrees);
+    JSONObject thirdCycleDegrees = new JSONObject().put("doctorat", doctoralPreferentialPrograms);
+    content.put("3e", thirdCycleDegrees);
     return content;
   }
 

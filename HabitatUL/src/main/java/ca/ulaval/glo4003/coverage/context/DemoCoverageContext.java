@@ -24,6 +24,7 @@ import ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.civilliabil
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.graduatestudent.HardCodedGraduateStudentAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.preferentialprogram.JsonPreferentialProgramAdjustmentProvider;
 import ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.roommate.HardCodedRoommateAdjustmentProvider;
+import ca.ulaval.glo4003.shared.domain.handling.InvalidArgumentException;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
 
@@ -38,9 +39,13 @@ public class DemoCoverageContext {
         new HardCodedCivilLiabilityLimitAdjustmentProvider());
     register(AnimalsAdjustmentProvider.class, new HardCodedAnimalsAdjustmentProvider());
     register(AnimalsAdjustmentLimitsProvider.class, new HardCodedAnimalsAdjustmentLimitsProvider());
-    register(
-        PreferentialProgramAdjustmentProvider.class,
-        new JsonPreferentialProgramAdjustmentProvider());
+    try {
+      register(
+          PreferentialProgramAdjustmentProvider.class,
+          new JsonPreferentialProgramAdjustmentProvider());
+    } catch (InvalidArgumentException e) {
+      e.printStackTrace();
+    }
     register(RoommateAdjustmentProvider.class, new HardCodedRoommateAdjustmentProvider());
     register(
         GraduateStudentAdjustmentProvider.class, new HardCodedGraduateStudentAdjustmentProvider());

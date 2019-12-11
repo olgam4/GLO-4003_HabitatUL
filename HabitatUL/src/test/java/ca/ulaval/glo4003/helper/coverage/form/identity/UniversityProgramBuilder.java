@@ -1,16 +1,18 @@
 package ca.ulaval.glo4003.helper.coverage.form.identity;
 
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
+import ca.ulaval.glo4003.shared.domain.identity.Cycle;
+import ca.ulaval.glo4003.shared.domain.identity.Degree;
 
 import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.*;
 
 public class UniversityProgramBuilder {
-  private final String DEFAULT_CYCLE = createCycle();
-  private final String DEFAULT_DEGREE = createDegree();
+  private final Cycle DEFAULT_CYCLE = createCycle();
+  private final Degree DEFAULT_DEGREE = createDegree();
   private final String DEFAULT_MAJOR = createMajor();
 
-  private String cycle = DEFAULT_CYCLE;
-  private String degree = DEFAULT_DEGREE;
+  private Cycle cycle = DEFAULT_CYCLE;
+  private Degree degree = DEFAULT_DEGREE;
   private String major = DEFAULT_MAJOR;
 
   private UniversityProgramBuilder() {}
@@ -19,12 +21,12 @@ public class UniversityProgramBuilder {
     return new UniversityProgramBuilder();
   }
 
-  public UniversityProgramBuilder withCycle(String cycle) {
+  public UniversityProgramBuilder withCycle(Cycle cycle) {
     this.cycle = cycle;
     return this;
   }
 
-  public UniversityProgramBuilder withDegree(String degree) {
+  public UniversityProgramBuilder withDegree(Degree degree) {
     this.degree = degree;
     return this;
   }

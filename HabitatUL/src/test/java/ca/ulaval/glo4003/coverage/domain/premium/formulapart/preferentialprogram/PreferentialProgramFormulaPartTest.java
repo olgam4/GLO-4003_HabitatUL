@@ -6,6 +6,8 @@ import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput
 import ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramBuilder;
 import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
+import ca.ulaval.glo4003.shared.domain.identity.Cycle;
+import ca.ulaval.glo4003.shared.domain.identity.Degree;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Rule;
@@ -32,8 +34,8 @@ public class PreferentialProgramFormulaPartTest {
   private static final Money PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
   private static final Money SMALLER_PREMIUM_ADJUSTMENT =
       MoneyGenerator.createMoneySmallerThan(PREMIUM_ADJUSTMENT);
-  private static final String CYCLE = createCycle();
-  private static final String DEGREE = createDegree();
+  private static final Cycle CYCLE = createCycle();
+  private static final Degree DEGREE = createDegree();
   private static final String MAJOR = createMajor();
   private static final UniversityProgram FILLED_UNIVERSITY_PROGRAM =
       UniversityProgramBuilder.aUniversityProgram()
@@ -41,8 +43,8 @@ public class PreferentialProgramFormulaPartTest {
           .withDegree(DEGREE)
           .withMajor(MAJOR)
           .build();
-  private static final String ANOTHER_CYCLE = createCycle();
-  private static final String ANOTHER_DEGREE = createDegree();
+  private static final Cycle ANOTHER_CYCLE = createCycle();
+  private static final Degree ANOTHER_DEGREE = createDegree();
   private static final String ANOTHER_MAJOR = createMajor();
   private static final UniversityProgram ANOTHER_FILLED_UNIVERSITY_PROGRAM =
       UniversityProgramBuilder.aUniversityProgram()

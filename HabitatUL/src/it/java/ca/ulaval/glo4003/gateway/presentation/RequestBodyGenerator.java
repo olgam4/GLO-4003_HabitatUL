@@ -58,8 +58,8 @@ public class RequestBodyGenerator {
 
   private static JSONObject toRequestBody(UniversityProgramRequest universityProgramRequest) {
     JSONObject json = new JSONObject();
-    json.put("cycle", universityProgramRequest.getCycle());
-    json.put("degree", universityProgramRequest.getDegree());
+    json.put("cycle", universityProgramRequest.getCycle().getValue());
+    json.put("degree", universityProgramRequest.getDegree().getValue());
     json.put("major", universityProgramRequest.getMajor());
     return json;
   }

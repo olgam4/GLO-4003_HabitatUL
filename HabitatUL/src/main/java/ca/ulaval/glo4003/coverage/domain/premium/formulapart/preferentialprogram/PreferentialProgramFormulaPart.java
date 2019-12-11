@@ -53,12 +53,11 @@ public class PreferentialProgramFormulaPart implements QuoteBasicBlockPremiumFor
   private Money computePremiumAdjustment(UniversityProgram universityProgram, Money basePremium) {
     if (!universityProgram.isFilled()) return null;
 
-    String cycle = universityProgram.getCycle();
-    String degree = universityProgram.getDegree();
-    String program = universityProgram.getMajor();
-
     PremiumAdjustment adjustment =
-        preferentialProgramAdjustmentProvider.getAdjustment(cycle, degree, program);
+        preferentialProgramAdjustmentProvider.getAdjustment(
+            universityProgram.getCycle(),
+            universityProgram.getDegree(),
+            universityProgram.getMajor());
     return adjustment.apply(basePremium);
   }
 }

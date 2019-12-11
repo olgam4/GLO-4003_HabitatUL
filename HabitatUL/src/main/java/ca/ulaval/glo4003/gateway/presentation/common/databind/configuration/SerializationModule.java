@@ -19,6 +19,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.shared.domain.address.Floor;
 import ca.ulaval.glo4003.shared.domain.address.ZipCode;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
+import ca.ulaval.glo4003.shared.domain.identity.Cycle;
+import ca.ulaval.glo4003.shared.domain.identity.Degree;
 import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import ca.ulaval.glo4003.shared.domain.money.Money;
@@ -57,7 +59,9 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(Animals.class, new AnimalsDeserializer());
     deserializers.addDeserializer(AuthorityNumber.class, new AuthorityNumberDeserializer());
     deserializers.addDeserializer(CivilLiabilityLimit.class, new CivilLiabilityLimitDeserializer());
+    deserializers.addDeserializer(Cycle.class, new CycleDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
+    deserializers.addDeserializer(Degree.class, new DegreeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());

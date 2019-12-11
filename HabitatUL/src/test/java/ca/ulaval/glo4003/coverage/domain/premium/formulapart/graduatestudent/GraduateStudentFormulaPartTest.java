@@ -6,6 +6,7 @@ import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput
 import ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramBuilder;
 import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
+import ca.ulaval.glo4003.shared.domain.identity.Cycle;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class GraduateStudentFormulaPartTest {
   private static final Money BASE_PREMIUM = MoneyGenerator.createMoney();
   private static final Money PREMIUM_ADJUSTMENT = MoneyGenerator.createMoney();
-  private static final String CYCLE = createCycle();
+  private static final Cycle CYCLE = createCycle();
   private static final UniversityProgram UNIVERSITY_PROGRAM =
       UniversityProgramBuilder.aUniversityProgram().withCycle(CYCLE).build();
   private static final QuotePremiumInput QUOTE_PREMIUM_INPUT =
@@ -38,7 +39,7 @@ public class GraduateStudentFormulaPartTest {
 
   @Before
   public void setUp() {
-    when(graduateStudentAdjustmentProvider.getAdjustment(any(String.class)))
+    when(graduateStudentAdjustmentProvider.getAdjustment(any(Cycle.class)))
         .thenReturn(premiumAdjustment);
     when(premiumAdjustment.apply(any(Money.class))).thenReturn(PREMIUM_ADJUSTMENT);
     subject = new GraduateStudentFormulaPart(graduateStudentAdjustmentProvider);
