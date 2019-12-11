@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.administration.infrastructure.user;
+package ca.ulaval.glo4003.administration.infrastructure.user.token;
 
 import ca.ulaval.glo4003.shared.infrastructure.io.ConfigFileReader;
 import com.github.javafaker.Faker;
@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Properties;
 
-import static ca.ulaval.glo4003.administration.infrastructure.user.ConfigBasedTokenValidityPeriodProvider.*;
+import static ca.ulaval.glo4003.administration.infrastructure.user.token.ConfigBasedTokenValidityPeriodProvider.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

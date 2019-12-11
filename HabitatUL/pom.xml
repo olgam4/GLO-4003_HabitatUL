@@ -26,6 +26,7 @@
         <javax.version>2.1</javax.version>
         <json.version>20190722</json.version>
         <apache-commons.version>3.9</apache-commons.version>
+        <commons-codec.version>1.11</commons-codec.version>
         <auth0.version>3.8.3</auth0.version>
 
         <!-- Test Dependencies -->
@@ -119,6 +120,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
         </dependency>
         <dependency>
             <groupId>com.auth0</groupId>

@@ -5,9 +5,9 @@ import ca.ulaval.glo4003.administration.application.user.error.CouldNotCreateUse
 import ca.ulaval.glo4003.administration.application.user.error.InvalidCredentialsError;
 import ca.ulaval.glo4003.administration.domain.user.*;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
-import ca.ulaval.glo4003.administration.domain.user.credential.InvalidCredentialsException;
-import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
+import ca.ulaval.glo4003.administration.domain.user.credential.exception.InvalidCredentialsException;
+import ca.ulaval.glo4003.administration.domain.user.credential.exception.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.error.UnauthorizedError;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyNotFoundException;

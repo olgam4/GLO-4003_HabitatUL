@@ -37,8 +37,10 @@ import static org.junit.Assert.assertTrue;
 public class ConfirmRenewalTest {
   private static final ClockProvider CLOCK_PROVIDER = getClockProvider();
   private static final Date CONFIRMATION_DATE = getNowDate();
+  private static final Date LAST_COVERAGE_PERIOD_END_DATE =
+      CONFIRMATION_DATE.minus(java.time.Period.ofDays(1));
   private static final Period LAST_COVERAGE_PERIOD =
-      new Period(createPastDate(), CONFIRMATION_DATE.minus(java.time.Period.ofDays(1)));
+      new Period(createDateBefore(LAST_COVERAGE_PERIOD_END_DATE), LAST_COVERAGE_PERIOD_END_DATE);
   private static final PolicyView CURRENT_POLICY_VIEW =
       PolicyViewBuilder.aPolicyView().withCoveragePeriod(LAST_COVERAGE_PERIOD).build();
   private static final List<PolicyView> PREVIOUS_POLICY_VIEWS =

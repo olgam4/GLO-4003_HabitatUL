@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.administration.infrastructure.user;
+package ca.ulaval.glo4003.administration.infrastructure.user.token;
 
 import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureException;
 import ca.ulaval.glo4003.administration.domain.user.token.Token;

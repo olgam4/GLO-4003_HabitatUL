@@ -6,21 +6,23 @@ import ca.ulaval.glo4003.administration.application.user.UserAppServiceImpl;
 import ca.ulaval.glo4003.administration.application.user.UserAppServiceLoggingDecorator;
 import ca.ulaval.glo4003.administration.communication.user.UserBoundedContextEventHandler;
 import ca.ulaval.glo4003.administration.domain.user.*;
-import ca.ulaval.glo4003.administration.domain.user.credential.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.credential.PasswordManager;
+import ca.ulaval.glo4003.administration.domain.user.credential.exception.InvalidPasswordException;
 import ca.ulaval.glo4003.administration.domain.user.exception.KeyAlreadyExistException;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenValidityPeriodProvider;
-import ca.ulaval.glo4003.administration.infrastructure.user.ConfigBasedTokenValidityPeriodProvider;
-import ca.ulaval.glo4003.administration.infrastructure.user.DummyPasswordManager;
 import ca.ulaval.glo4003.administration.infrastructure.user.DummyPaymentProcessor;
-import ca.ulaval.glo4003.administration.infrastructure.user.JwtTokenTranslator;
+import ca.ulaval.glo4003.administration.infrastructure.user.credential.InMemoryPbkdfPasswordStorage;
+import ca.ulaval.glo4003.administration.infrastructure.user.credential.PbkdfPasswordManager;
+import ca.ulaval.glo4003.administration.infrastructure.user.token.ConfigBasedTokenValidityPeriodProvider;
+import ca.ulaval.glo4003.administration.infrastructure.user.token.JwtTokenTranslator;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryPolicyRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryQuoteRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryTokenRegistry;
 import ca.ulaval.glo4003.administration.persistence.user.InMemoryUsernameRegistry;
 import ca.ulaval.glo4003.mediator.Mediator;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
@@ -28,7 +30,7 @@ import static ca.ulaval.glo4003.context.ServiceLocator.register;
 public class DemoAdministrationContext {
   public void execute(Properties properties, Mediator mediator) {
     InMemoryUsernameRegistry usernameRegistry = new InMemoryUsernameRegistry();
-    PasswordManager passwordManager = new DummyPasswordManager();
+    PasswordManager passwordManager = createPasswordManager();
     registerAdminUser(properties, usernameRegistry, passwordManager);
     registerActuaryUser(properties, usernameRegistry, passwordManager);
 
@@ -48,6 +50,15 @@ public class DemoAdministrationContext {
     UserBoundedContextEventHandler userBoundedContextEventHandler =
         new UserBoundedContextEventHandler(userAppService);
     userBoundedContextEventHandler.register(mediator);
+  }
+
+  private PasswordManager createPasswordManager() {
+    try {
+      return new PbkdfPasswordManager(new InMemoryPbkdfPasswordStorage());
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   private void registerAdminUser(

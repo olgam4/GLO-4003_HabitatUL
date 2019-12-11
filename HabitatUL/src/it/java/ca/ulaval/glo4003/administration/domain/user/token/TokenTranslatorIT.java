@@ -1,9 +1,5 @@
-package ca.ulaval.glo4003.administration.domain.user;
+package ca.ulaval.glo4003.administration.domain.user.token;
 
-import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureException;
-import ca.ulaval.glo4003.administration.domain.user.token.Token;
-import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
-import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
 import ca.ulaval.glo4003.helper.user.TokenPayloadGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
