@@ -58,7 +58,6 @@ public class SerializationModule extends Module {
     deserializers.addDeserializer(AuthorityNumber.class, new AuthorityNumberDeserializer());
     deserializers.addDeserializer(CivilLiabilityLimit.class, new CivilLiabilityLimitDeserializer());
     deserializers.addDeserializer(Date.class, new DateDeserializer());
-    deserializers.addDeserializer(DateTime.class, new DateTimeDeserializer());
     deserializers.addDeserializer(Floor.class, new FloorDeserializer());
     deserializers.addDeserializer(Gender.class, new GenderDeserializer());
     deserializers.addDeserializer(LossDeclarations.class, new LossDeclarationsDeserializer());
