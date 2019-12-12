@@ -10,7 +10,6 @@
 
     <modules>
         <module>HabitatUL</module>
-        <module>ApiDocumentation</module>
     </modules>
 
     <properties>
