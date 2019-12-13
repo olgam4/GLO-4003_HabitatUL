@@ -26,12 +26,12 @@ public class QuoteMatcher {
   public static Matcher<Quote> matchesQuote(final Quote quote) {
     return allOf(
         hasProperty("quoteId", equalTo(quote.getQuoteId())),
+        hasProperty("status", equalTo(quote.getStatus())),
         hasProperty("quoteForm", equalTo(quote.getQuoteForm())),
         hasProperty("expirationDate", equalTo(quote.getExpirationDate())),
         hasProperty("effectivePeriod", equalTo(quote.getEffectivePeriod())),
         hasProperty("coverageDetails", equalTo(quote.getCoverageDetails())),
-        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())),
-        hasProperty("purchased", equalTo(quote.isPurchased())));
+        hasProperty("premiumDetails", equalTo(quote.getPremiumDetails())));
   }
 
   public static Matcher<QuoteDto> matchesQuoteDto(final Quote quote) {

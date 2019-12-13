@@ -19,8 +19,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.underwriting.domain.quote.QuoteStatus.CREATED;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,6 +47,13 @@ public class QuoteFactoryTest {
   }
 
   @Test
+  public void creatingQuote_shouldCreatePurchasableQuote() {
+    Quote quote = subject.create(QUOTE_FORM, COVERAGE_DETAILS, PREMIUM_DETAILS);
+
+    assertEquals(CREATED, quote.getStatus());
+  }
+
+  @Test
   public void creatingQuote_shouldComputeExpirationDate() {
     Quote quote = subject.create(QUOTE_FORM, COVERAGE_DETAILS, PREMIUM_DETAILS);
 
@@ -64,12 +71,5 @@ public class QuoteFactoryTest {
             QUOTE_FORM.getEffectiveDate(),
             QUOTE_FORM.getEffectiveDate().plus(COVERAGE_PERIOD).minus(java.time.Period.ofDays(1)));
     assertEquals(expectedEffectivePeriod, quote.getEffectivePeriod());
-  }
-
-  @Test
-  public void creatingQuote_shouldCreateNotYetPurchasedQuote() {
-    Quote quote = subject.create(QUOTE_FORM, COVERAGE_DETAILS, PREMIUM_DETAILS);
-
-    assertFalse(quote.isPurchased());
   }
 }

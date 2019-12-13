@@ -11,37 +11,44 @@ import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
 
+import static ca.ulaval.glo4003.underwriting.domain.quote.QuoteStatus.EXPIRED;
+import static ca.ulaval.glo4003.underwriting.domain.quote.QuoteStatus.PURCHASED;
+
 public class Quote extends AggregateRoot {
   private QuoteId quoteId;
+  private QuoteStatus status;
   private QuoteForm quoteForm;
   private DateTime expirationDate;
   private Period effectivePeriod;
   private CoverageDetails coverageDetails;
   private PremiumDetails premiumDetails;
-  private Boolean purchased;
   private ClockProvider clockProvider;
 
   public Quote(
       QuoteId quoteId,
+      QuoteStatus status,
       QuoteForm quoteForm,
       DateTime expirationDate,
       Period effectivePeriod,
       CoverageDetails coverageDetails,
       PremiumDetails premiumDetails,
-      Boolean purchased,
       ClockProvider clockProvider) {
     this.quoteId = quoteId;
+    this.status = status;
     this.quoteForm = quoteForm;
     this.expirationDate = expirationDate;
     this.effectivePeriod = effectivePeriod;
     this.coverageDetails = coverageDetails;
     this.premiumDetails = premiumDetails;
-    this.purchased = purchased;
     this.clockProvider = clockProvider;
   }
 
   public QuoteId getQuoteId() {
     return quoteId;
+  }
+
+  public QuoteStatus getStatus() {
+    return status;
   }
 
   public QuoteForm getQuoteForm() {
@@ -64,20 +71,23 @@ public class Quote extends AggregateRoot {
     return premiumDetails;
   }
 
-  public boolean isExpired() {
-    return DateTime.now(clockProvider.getClock()).isAfter(expirationDate);
-  }
-
-  public boolean isPurchased() {
-    return purchased;
-  }
-
   public void purchase() {
-    if (isPurchased()) throw new QuoteAlreadyPurchasedError(quoteId);
-    if (isExpired()) throw new QuoteExpiredError(quoteId);
-
-    purchased = true;
+    checkIfAlreadyPurchased();
+    checkIfExpired();
+    status = PURCHASED;
     registerQuotePurchaseEvent();
+  }
+
+  private void checkIfAlreadyPurchased() {
+    if (status.equals(PURCHASED)) {
+      throw new QuoteAlreadyPurchasedError(quoteId);
+    }
+  }
+
+  private void checkIfExpired() {
+    if (status.equals(EXPIRED)) {
+      throw new QuoteExpiredError(quoteId);
+    }
   }
 
   private void registerQuotePurchaseEvent() {

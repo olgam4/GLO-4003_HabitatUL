@@ -160,10 +160,14 @@ public class Policy extends AggregateRoot {
     PolicyModification policyModification =
         policyModificationsCoordinator.retrieveConfirmedModification(policyModificationId);
     policyHistoric.updatePolicyHistory(policyModification);
+    registerPolicyModifiedEvent(policyModification);
+    return policyModification;
+  }
+
+  private void registerPolicyModifiedEvent(PolicyModification policyModification) {
     registerEvent(
         new PolicyModifiedEvent(
             policyId, policyModification.getProposedPremiumDetails().computeTotalPremium()));
-    return policyModification;
   }
 
   public PolicyRenewal submitCoverageRenewal(
@@ -236,11 +240,15 @@ public class Policy extends AggregateRoot {
     checkIfInactivePolicy();
     PolicyRenewal policyRenewal = policyRenewalsCoordinator.confirmRenewal(policyRenewalId);
     policyHistoric.updatePolicyHistory(policyRenewal);
+    status = ACTIVE;
+    registerPolicyRenewedEvent(policyRenewal);
+    return policyRenewal;
+  }
+
+  private void registerPolicyRenewedEvent(PolicyRenewal policyRenewal) {
     registerEvent(
         new PolicyRenewedEvent(
             policyId, policyRenewal.getProposedPremiumDetails().computeTotalPremium()));
-    status = ACTIVE;
-    return policyRenewal;
   }
 
   private void checkIfInactivePolicy() {
@@ -253,6 +261,10 @@ public class Policy extends AggregateRoot {
     checkIfClaimOutsideCoveragePeriod();
     claim.validate(getPolicyInformation(), getCoverageDetails());
     claims.add(claim.getClaimId());
+    registerClaimOpenedEvent(claim);
+  }
+
+  private void registerClaimOpenedEvent(Claim claim) {
     registerEvent(
         new ClaimOpenedEvent(policyId, claim.getClaimId(), Date.now(clockProvider.getClock())));
   }

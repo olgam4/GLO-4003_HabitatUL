@@ -1,11 +1,13 @@
 package ca.ulaval.glo4003.helper.quote;
 
 import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
+import ca.ulaval.glo4003.helper.shared.EnumSampler;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAssembler;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteStatus;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
@@ -54,16 +56,20 @@ public class QuoteGenerator {
   public static Quote createQuote() {
     return new Quote(
         createQuoteId(),
+        createQuoteStatus(),
         createQuoteForm(),
         createFutureDateTime(),
         createPeriod(),
         createCoverageDetails(),
         createPremiumDetails(),
-        false,
         getClockProvider());
   }
 
   public static QuoteId createQuoteId() {
     return new QuoteId();
+  }
+
+  public static QuoteStatus createQuoteStatus() {
+    return EnumSampler.sample(QuoteStatus.class);
   }
 }

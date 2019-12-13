@@ -8,6 +8,8 @@ import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 
+import static ca.ulaval.glo4003.underwriting.domain.quote.QuoteStatus.CREATED;
+
 public class QuoteFactory {
   private QuoteValidityPeriodProvider quoteValidityPeriodProvider;
   private QuoteEffectivePeriodProvider quoteEffectivePeriodProvider;
@@ -29,12 +31,12 @@ public class QuoteFactory {
     Period effectivePeriod = computeEffectivePeriod(quoteForm);
     return new Quote(
         quoteId,
+        CREATED,
         quoteForm,
         expirationDate,
         effectivePeriod,
         coverageDetails,
         premiumDetails,
-        false,
         clockProvider);
   }
 

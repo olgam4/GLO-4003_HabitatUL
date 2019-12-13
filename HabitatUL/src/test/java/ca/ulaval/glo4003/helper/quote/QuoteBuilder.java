@@ -10,29 +10,30 @@ import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
-import com.github.javafaker.Faker;
+import ca.ulaval.glo4003.underwriting.domain.quote.QuoteStatus;
 
 import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteId;
+import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteStatus;
 
 public class QuoteBuilder {
   private final QuoteId DEFAULT_QUOTE_ID = createQuoteId();
+  private final QuoteStatus DEFAULT_STATUS = createQuoteStatus();
   private final QuoteForm DEFAULT_QUOTE_FORM = QuoteFormGenerator.createQuoteForm();
   private final DateTime DEFAULT_EXPIRATION_DATE = TemporalGenerator.createFutureDateTime();
   private final Period DEFAULT_EFFECTIVE_PERIOD = TemporalGenerator.createPeriod();
   private final CoverageDetails DEFAULT_COVERAGE_DETAILS = createCoverageDetails();
   private final PremiumDetails DEFAULT_PREMIUM_DETAILS = createPremiumDetails();
-  private final Boolean DEFAULT_PURCHASED = Faker.instance().bool().bool();
   private final ClockProvider DEFAULT_CLOCK_PROVIDER = TemporalGenerator.getClockProvider();
 
   private QuoteId quoteId = DEFAULT_QUOTE_ID;
+  private QuoteStatus status = DEFAULT_STATUS;
   private QuoteForm quoteForm = DEFAULT_QUOTE_FORM;
   private DateTime expirationDate = DEFAULT_EXPIRATION_DATE;
   private Period effectivePeriod = DEFAULT_EFFECTIVE_PERIOD;
   private CoverageDetails coverageDetails = DEFAULT_COVERAGE_DETAILS;
   private PremiumDetails premiumDetails = DEFAULT_PREMIUM_DETAILS;
-  private Boolean purchased = DEFAULT_PURCHASED;
   private ClockProvider clockProvider = DEFAULT_CLOCK_PROVIDER;
 
   private QuoteBuilder() {}
@@ -46,30 +47,20 @@ public class QuoteBuilder {
     return this;
   }
 
-  public QuoteBuilder expired() {
-    this.expirationDate = TemporalGenerator.createPastDateTime();
-    return this;
-  }
-
-  public QuoteBuilder unPurchased() {
-    this.purchased = false;
-    return this;
-  }
-
-  public QuoteBuilder purchased() {
-    this.purchased = true;
+  public QuoteBuilder withStatus(QuoteStatus status) {
+    this.status = status;
     return this;
   }
 
   public Quote build() {
     return new Quote(
         quoteId,
+        status,
         quoteForm,
         expirationDate,
         effectivePeriod,
         coverageDetails,
         premiumDetails,
-        purchased,
         clockProvider);
   }
 }
