@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.helper.shared;
 
-import ca.ulaval.glo4003.shared.domain.temporal.*;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import ca.ulaval.glo4003.shared.domain.temporal.Year;
+import ca.ulaval.glo4003.shared.domain.temporal.*;
 import com.github.javafaker.Faker;
 
 import java.time.*;

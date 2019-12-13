@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.helper.policy.PolicyModificationBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyModifiedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationAlreadyConfirmedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ModificationExpiredError;
@@ -18,6 +19,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModification;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationId;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
+import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -261,6 +263,16 @@ public class ConfirmModificationTest {
     subject.confirmModification(POLICY_MODIFICATION_ID);
 
     assertEquals(policyModification.getProposedPremiumDetails(), subject.getPremiumDetails());
+  }
+
+  @Test
+  public void confirmingModification_shouldRegisterPolicyModifiedEvent() {
+    subject.confirmModification(POLICY_MODIFICATION_ID);
+
+    List<Event> events = subject.getEvents();
+
+    assertEquals(1, events.size());
+    assertEquals(PolicyModifiedEvent.class, events.get(0).getClass());
   }
 
   @Test(expected = InactivePolicyError.class)

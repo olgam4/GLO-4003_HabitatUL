@@ -8,6 +8,7 @@ import ca.ulaval.glo4003.helper.policy.PolicyRenewalBuilder;
 import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
+import ca.ulaval.glo4003.insuring.domain.policy.PolicyRenewedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.PolicyRenewalNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.RenewalNotYetAcceptedError;
@@ -16,6 +17,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
+import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -170,6 +172,16 @@ public class ConfirmRenewalTest {
     subject.confirmRenewal(POLICY_RENEWAL_ID);
 
     assertEquals(policyRenewal.getProposedPremiumDetails(), subject.getPremiumDetails());
+  }
+
+  @Test
+  public void confirmingRenewal_shouldRegisterPolicyRenewedEvent() {
+    subject.confirmRenewal(POLICY_RENEWAL_ID);
+
+    List<Event> events = subject.getEvents();
+
+    assertEquals(1, events.size());
+    assertEquals(PolicyRenewedEvent.class, events.get(0).getClass());
   }
 
   @Test(expected = InactivePolicyError.class)

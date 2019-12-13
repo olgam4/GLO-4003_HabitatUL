@@ -20,10 +20,7 @@ import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastDateTi
 import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
 import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

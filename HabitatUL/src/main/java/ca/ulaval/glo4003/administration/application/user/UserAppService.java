@@ -20,5 +20,9 @@ public interface UserAppService extends AccessController {
 
   void processQuotePayment(String quoteKey, Money payment);
 
+  void processPolicyModificationPayment(String policyKey, Money payment);
+
+  void processPolicyRenewalPayment(String policyKey, Money payment);
+
   List<String> getPolicies(String userKey);
 }

@@ -65,6 +65,24 @@ public class UserAppServiceLoggingDecorator implements UserAppService {
   }
 
   @Override
+  public void processPolicyModificationPayment(String policyKey, Money payment) {
+    logger.info(
+        String.format(
+            "Processing policy modification payment of Policy <%s> with amount of <%s>",
+            policyKey, payment));
+    this.userAppService.processPolicyModificationPayment(policyKey, payment);
+  }
+
+  @Override
+  public void processPolicyRenewalPayment(String policyKey, Money payment) {
+    logger.info(
+        String.format(
+            "Processing policy renewal payment of Policy <%s> with amount of <%s>",
+            policyKey, payment));
+    this.userAppService.processPolicyRenewalPayment(policyKey, payment);
+  }
+
+  @Override
   public List<String> getPolicies(String userKey) {
     logger.info(String.format("Getting Policies of User <%s>", userKey));
     List<String> policies = this.userAppService.getPolicies(userKey);

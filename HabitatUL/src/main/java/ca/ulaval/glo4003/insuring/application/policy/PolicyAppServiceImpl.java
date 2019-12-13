@@ -191,7 +191,6 @@ public class PolicyAppServiceImpl implements PolicyAppService {
     try {
       Policy policy = policyRepository.getById(policyId);
       policy.confirmModification(policyModificationId);
-      // TODO: process to payment here
       policyRepository.update(policy);
       return policyAssembler.from(policy);
     } catch (PolicyNotFoundException e) {

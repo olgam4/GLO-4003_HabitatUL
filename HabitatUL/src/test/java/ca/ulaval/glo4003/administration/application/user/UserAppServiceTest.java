@@ -69,10 +69,11 @@ public class UserAppServiceTest {
   @Before
   public void setUp() throws KeyNotFoundException {
     when(userKeyGenerator.generateUserKey()).thenReturn(USER_KEY);
-    when(usernameRegistry.getUserKey(any())).thenReturn(USER_KEY);
-    when(quoteRegistry.getUserKey(any())).thenReturn(USER_KEY);
-    when(tokenTranslator.encodeToken(any())).thenReturn(TOKEN);
-    when(tokenRegistry.getToken(any())).thenReturn(TOKEN.getValue());
+    when(usernameRegistry.getUserKey(any(String.class))).thenReturn(USER_KEY);
+    when(quoteRegistry.getUserKey(any(String.class))).thenReturn(USER_KEY);
+    when(policyRegistry.getUserKey(any(String.class))).thenReturn(USER_KEY);
+    when(tokenTranslator.encodeToken(any(TokenPayload.class))).thenReturn(TOKEN);
+    when(tokenRegistry.getToken(any(String.class))).thenReturn(TOKEN.getValue());
     when(tokenValidityPeriodProvider.getTokenValidityPeriod()).thenReturn(VALIDITY_PERIOD);
     subject =
         new UserAppServiceImpl(
@@ -272,6 +273,75 @@ public class UserAppServiceTest {
     doThrow(new PaymentFailedException()).when(paymentProcessor).process(USER_KEY, PAYMENT);
 
     subject.processQuotePayment(QUOTE_KEY, PAYMENT);
+
+    verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void processingPolicyModificationPayment_shouldGetUserKey() throws KeyNotFoundException {
+    subject.processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+
+    verify(policyRegistry).getUserKey(POLICY_KEY);
+  }
+
+  @Test
+  public void processingPolicyModificationPayment_shouldProcessPayment()
+      throws PaymentFailedException {
+    subject.processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+
+    verify(paymentProcessor).process(USER_KEY, PAYMENT);
+  }
+
+  @Test
+  public void processingPolicyModificationPayment_shouldLogKeyNotFoundExceptionsAsSevere()
+      throws KeyNotFoundException {
+    when(policyRegistry.getUserKey(POLICY_KEY)).thenThrow(new KeyNotFoundException());
+
+    subject.processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+
+    verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void processingPolicyModificationPayment_shouldLogPaymentFailedExceptionsAsSevere()
+      throws PaymentFailedException {
+    doThrow(new PaymentFailedException()).when(paymentProcessor).process(USER_KEY, PAYMENT);
+
+    subject.processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+
+    verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void processingPolicyRenewalPayment_shouldGetUserKey() throws KeyNotFoundException {
+    subject.processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
+
+    verify(policyRegistry).getUserKey(POLICY_KEY);
+  }
+
+  @Test
+  public void processingPolicyRenewalPayment_shouldProcessPayment() throws PaymentFailedException {
+    subject.processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
+
+    verify(paymentProcessor).process(USER_KEY, PAYMENT);
+  }
+
+  @Test
+  public void processingPolicyRenewalPayment_shouldLogKeyNotFoundExceptionsAsSevere()
+      throws KeyNotFoundException {
+    when(policyRegistry.getUserKey(POLICY_KEY)).thenThrow(new KeyNotFoundException());
+
+    subject.processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
+
+    verify(logger).severe(anyString());
+  }
+
+  @Test
+  public void processingPolicyRenewalPayment_shouldLogPaymentFailedExceptionsAsSevere()
+      throws PaymentFailedException {
+    doThrow(new PaymentFailedException()).when(paymentProcessor).process(USER_KEY, PAYMENT);
+
+    subject.processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
 
     verify(logger).severe(anyString());
   }

@@ -29,7 +29,6 @@ public class PolicyRenewalTask implements Runnable {
     try {
       Policy policy = policyRepository.getById(policyId);
       policy.confirmRenewal(policyRenewalId);
-      // TODO: process to payment here
       policyRepository.update(policy);
     } catch (PolicyNotFoundException e) {
       logger.severe(String.format("Could not renew not existing policy with id <%s>", policyId));

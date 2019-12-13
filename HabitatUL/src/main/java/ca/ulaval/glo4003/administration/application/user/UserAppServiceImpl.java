@@ -159,6 +159,25 @@ public class UserAppServiceImpl implements UserAppService {
     }
   }
 
+  @Override
+  public void processPolicyModificationPayment(String policyKey, Money payment) {
+    try {
+      String userKey = policyRegistry.getUserKey(policyKey);
+      paymentProcessor.process(userKey, payment);
+    } catch (KeyNotFoundException | PaymentFailedException e) {
+      logger.severe(e.toString());
+    }
+  }
+
+  public void processPolicyRenewalPayment(String policyKey, Money payment) {
+    try {
+      String userKey = policyRegistry.getUserKey(policyKey);
+      paymentProcessor.process(userKey, payment);
+    } catch (KeyNotFoundException | PaymentFailedException e) {
+      logger.severe(e.toString());
+    }
+  }
+
   public List<String> getPolicies(String userKey) {
     return policyRegistry.getPolicyKeys(userKey);
   }

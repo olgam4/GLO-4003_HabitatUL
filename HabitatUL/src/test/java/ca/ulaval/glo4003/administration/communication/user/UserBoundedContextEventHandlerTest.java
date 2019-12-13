@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.administration.communication.user;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.application.user.event.PolicyAssociatedEvent;
-import ca.ulaval.glo4003.administration.application.user.event.QuotePaymentRequestedEvent;
+import ca.ulaval.glo4003.administration.application.user.event.QuotePurchaseConfirmedEvent;
 import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import com.github.javafaker.Faker;
@@ -31,9 +31,9 @@ public class UserBoundedContextEventHandlerTest {
 
   @Test
   public void handlingQuotePaymentRequestedEvent_shouldDelegateToUserAppService() {
-    QuotePaymentRequestedEvent event = new QuotePaymentRequestedEvent(QUOTE_KEY, TOTAL);
+    QuotePurchaseConfirmedEvent event = new QuotePurchaseConfirmedEvent(QUOTE_KEY, TOTAL);
 
-    subject.handleQuotePaymentRequestedEvent(event);
+    subject.handleQuotePurchaseConfirmedEvent(event);
 
     verify(userAppService).processQuotePayment(QUOTE_KEY, TOTAL);
   }

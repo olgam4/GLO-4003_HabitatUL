@@ -120,6 +120,34 @@ public class UserAppServiceLoggingDecoratorTest {
   }
 
   @Test
+  public void processingPolicyModificationPayment_shouldLogParamsAsInfo() {
+    subject.processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+
+    verify(logger).info(anyString());
+  }
+
+  @Test
+  public void processingPolicyModificationPayment_shouldDelegateToUserAppService() {
+    subject.processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+
+    verify(userAppService).processPolicyModificationPayment(POLICY_KEY, PAYMENT);
+  }
+
+  @Test
+  public void processingPolicyRenewalPayment_shouldLogParamsAsInfo() {
+    subject.processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
+
+    verify(logger).info(anyString());
+  }
+
+  @Test
+  public void processingPolicyRenewalPayment_shouldDelegateToUserAppService() {
+    subject.processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
+
+    verify(userAppService).processPolicyRenewalPayment(POLICY_KEY, PAYMENT);
+  }
+
+  @Test
   public void gettingPolicies_shouldLogParamsAndReturnAsInfo() {
     subject.getPolicies(USER_KEY);
 

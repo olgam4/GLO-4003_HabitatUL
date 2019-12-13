@@ -160,6 +160,9 @@ public class Policy extends AggregateRoot {
     PolicyModification policyModification =
         policyModificationsCoordinator.retrieveConfirmedModification(policyModificationId);
     policyHistoric.updatePolicyHistory(policyModification);
+    registerEvent(
+        new PolicyModifiedEvent(
+            policyId, policyModification.getProposedPremiumDetails().computeTotalPremium()));
     return policyModification;
   }
 
@@ -233,6 +236,9 @@ public class Policy extends AggregateRoot {
     checkIfInactivePolicy();
     PolicyRenewal policyRenewal = policyRenewalsCoordinator.confirmRenewal(policyRenewalId);
     policyHistoric.updatePolicyHistory(policyRenewal);
+    registerEvent(
+        new PolicyRenewedEvent(
+            policyId, policyRenewal.getProposedPremiumDetails().computeTotalPremium()));
     status = ACTIVE;
     return policyRenewal;
   }
