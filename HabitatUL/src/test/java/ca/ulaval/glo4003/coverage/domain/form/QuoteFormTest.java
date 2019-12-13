@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.form;
 
-import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.QuoteFormBuilder;
 import org.junit.Test;
 
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability.UNFILLED_CIVIL_LIABILITY;

@@ -3,12 +3,12 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.BicycleEndorsementForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.BicycleAlreadyCoveredError;
-import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.BicycleEndorsementFormBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
+import static ca.ulaval.glo4003.coverage.helper.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
 
 public class BicycleAlreadyCoveredFormValidationPartTest {
   private BicycleAlreadyCoveredFormValidationPart subject;

@@ -10,9 +10,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDateTime;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.createDateTime;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.verify;
 

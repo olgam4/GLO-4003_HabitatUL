@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastDateTime;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.createPastDateTime;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.getClockProvider;
 import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;

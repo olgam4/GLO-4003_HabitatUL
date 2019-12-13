@@ -8,9 +8,9 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+import static ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProgramGenerator.*;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.*;
 
 public class UniversityProgramRequestTest {
   private UniversityProgramRequest subject;

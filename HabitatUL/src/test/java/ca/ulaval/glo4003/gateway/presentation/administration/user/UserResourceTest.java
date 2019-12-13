@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.gateway.presentation.administration.user;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.administration.domain.user.credential.Credentials;
+import ca.ulaval.glo4003.administration.helper.user.CredentialsGenerator;
 import ca.ulaval.glo4003.gateway.presentation.administration.user.request.CredentialsRequest;
-import ca.ulaval.glo4003.helper.user.CredentialsGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.matcher.CredentialsMatcher.matchesCredentials;
+import static ca.ulaval.glo4003.administration.matcher.CredentialsMatcher.matchesCredentials;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

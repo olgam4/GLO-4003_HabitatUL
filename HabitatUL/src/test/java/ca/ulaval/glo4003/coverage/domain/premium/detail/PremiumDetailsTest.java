@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.premium.detail;
 
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumCategory;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
-import ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsBuilder;
+import ca.ulaval.glo4003.coverage.helper.premium.PremiumDetailsBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static ca.ulaval.glo4003.helper.coverage.premium.PremiumCategoryGenerator.createAdditionalPremiumCategory;
-import static ca.ulaval.glo4003.helper.coverage.premium.PremiumCategoryGenerator.createBasePremiumCategory;
-import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.*;
+import static ca.ulaval.glo4003.coverage.helper.premium.PremiumCategoryGenerator.createAdditionalPremiumCategory;
+import static ca.ulaval.glo4003.coverage.helper.premium.PremiumCategoryGenerator.createBasePremiumCategory;
+import static ca.ulaval.glo4003.coverage.helper.premium.PremiumDetailsGenerator.*;
 import static org.junit.Assert.*;
 
 public class PremiumDetailsTest {

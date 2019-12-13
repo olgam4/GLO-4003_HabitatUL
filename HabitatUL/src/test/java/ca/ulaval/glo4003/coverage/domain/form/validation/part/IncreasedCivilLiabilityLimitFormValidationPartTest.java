@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.IncreasedCivilLiabilityLimitError;
-import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.CoverageModificationFormBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -17,8 +17,8 @@ import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.ONE_MILLION;
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.TWO_MILLION;
-import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.coverage.helper.premium.QuotePremiumInputGenerator.createCivilLiabilityLimit;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 
 @RunWith(Enclosed.class)
 public class IncreasedCivilLiabilityLimitFormValidationPartTest {

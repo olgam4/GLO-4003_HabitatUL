@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.underwriting;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
-import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
+import ca.ulaval.glo4003.underwriting.helper.quote.QuoteGenerator;
 
 import javax.ws.rs.core.Response;
 

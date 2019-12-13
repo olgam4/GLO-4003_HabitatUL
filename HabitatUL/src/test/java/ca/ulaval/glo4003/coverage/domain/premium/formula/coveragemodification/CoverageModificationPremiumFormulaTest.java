@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.coverage.premium.CoverageModificationPremiumInputGenerator.createCoverageModificationPremiumInput;
+import static ca.ulaval.glo4003.coverage.helper.premium.CoverageModificationPremiumInputGenerator.createCoverageModificationPremiumInput;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)

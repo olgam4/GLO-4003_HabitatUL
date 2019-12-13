@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.gateway.presentation.insuring.claim.response;
 
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.shared.AuthorityGenerator.createAuthorityNumber;
 import static ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber.UNFILLED_AUTHORITY_NUMBER;
+import static ca.ulaval.glo4003.shared.helper.AuthorityGenerator.createAuthorityNumber;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 

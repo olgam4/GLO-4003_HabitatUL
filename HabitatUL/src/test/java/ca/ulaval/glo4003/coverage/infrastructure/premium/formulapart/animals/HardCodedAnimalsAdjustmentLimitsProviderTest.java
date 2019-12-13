@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.animals;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.MaximumPremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.MinimumPremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.shared.helper.MoneyGenerator;
 import org.junit.Before;
 import org.junit.Test;
 

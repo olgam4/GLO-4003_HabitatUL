@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
-import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.helper.TemporalGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,13 +12,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.Clock;
 import java.util.Arrays;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
-import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
-import static ca.ulaval.glo4003.helper.shared.EnumSampler.sample;
 import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.RECEIVED;
 import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.UNDER_ANALYSIS;
 import static ca.ulaval.glo4003.insuring.domain.claim.SinisterType.FIRE;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createSinisterType;
+import static ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 import static ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber.UNFILLED_AUTHORITY_NUMBER;
+import static ca.ulaval.glo4003.shared.helper.EnumSampler.sample;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

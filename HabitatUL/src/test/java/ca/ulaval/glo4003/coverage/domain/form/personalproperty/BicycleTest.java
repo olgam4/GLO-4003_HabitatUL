@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.form.personalproperty;
 
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
+import static ca.ulaval.glo4003.coverage.helper.form.personalproperty.BicycleGenerator.createBicycle;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

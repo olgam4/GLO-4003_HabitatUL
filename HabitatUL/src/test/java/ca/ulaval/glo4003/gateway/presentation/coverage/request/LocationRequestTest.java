@@ -8,12 +8,12 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+import static ca.ulaval.glo4003.coverage.helper.form.location.LocationGenerator.createApartmentNumber;
+import static ca.ulaval.glo4003.coverage.helper.form.location.LocationGenerator.createStreetNumber;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.coverage.form.location.LocationGenerator.createApartmentNumber;
-import static ca.ulaval.glo4003.helper.coverage.form.location.LocationGenerator.createStreetNumber;
-import static ca.ulaval.glo4003.helper.shared.AddressGenerator.createFloor;
-import static ca.ulaval.glo4003.helper.shared.AddressGenerator.createZipCode;
+import static ca.ulaval.glo4003.shared.helper.AddressGenerator.createFloor;
+import static ca.ulaval.glo4003.shared.helper.AddressGenerator.createZipCode;
 
 public class LocationRequestTest {
   private LocationRequest subject;

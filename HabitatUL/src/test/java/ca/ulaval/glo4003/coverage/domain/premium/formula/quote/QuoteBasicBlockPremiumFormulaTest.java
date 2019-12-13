@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createQuotePremiumInput;
+import static ca.ulaval.glo4003.coverage.helper.premium.QuotePremiumInputGenerator.createQuotePremiumInput;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 

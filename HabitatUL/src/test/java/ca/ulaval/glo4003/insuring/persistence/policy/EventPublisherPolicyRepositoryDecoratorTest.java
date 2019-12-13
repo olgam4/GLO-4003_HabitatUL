@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.insuring.persistence.policy;
 
-import ca.ulaval.glo4003.helper.policy.PolicyGenerator;
-import ca.ulaval.glo4003.helper.shared.EventGenerator;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyId;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRepository;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.mediator.Mediator;
+import ca.ulaval.glo4003.shared.helper.EventGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

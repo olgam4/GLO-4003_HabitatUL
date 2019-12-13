@@ -2,10 +2,6 @@ package ca.ulaval.glo4003.insuring.domain.policy.aggregate;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
-import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyRenewalBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.error.AnotherRenewalAlreadyAcceptedError;
 import ca.ulaval.glo4003.insuring.domain.policy.error.CannotTriggerRenewalBeforeRenewalPeriodError;
@@ -16,6 +12,10 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyCoveragePeriodProv
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalPeriodProvider;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyHistoricBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
@@ -28,13 +28,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.coverage.helper.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.ACCEPTED;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.PENDING;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

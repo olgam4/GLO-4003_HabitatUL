@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.underwriting.application.quote;
 
-import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
 import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.RequestQuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
+import ca.ulaval.glo4003.underwriting.helper.quote.QuoteGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

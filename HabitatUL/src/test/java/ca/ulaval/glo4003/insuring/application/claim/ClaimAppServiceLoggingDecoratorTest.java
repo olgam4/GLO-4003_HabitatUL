@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.insuring.application.claim;
 
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.shared.application.logging.Logger;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
 import org.junit.Before;
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.shared.AuthorityGenerator.createAuthorityNumber;
+import static ca.ulaval.glo4003.shared.helper.AuthorityGenerator.createAuthorityNumber;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

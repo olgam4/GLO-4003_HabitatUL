@@ -1,13 +1,13 @@
 package ca.ulaval.glo4003.insuring.domain.policy.modification.modifier;
 
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle;
-import ca.ulaval.glo4003.helper.policy.PolicyInformationBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyInformationBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.createBicycle;
-import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
+import static ca.ulaval.glo4003.coverage.helper.form.personalproperty.BicycleGenerator.createBicycle;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static org.junit.Assert.assertEquals;
 
 public class InsureBicyclePolicyInformationModifierTest {

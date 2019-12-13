@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.coverage.premium.CoverageModificationPremiumInputGenerator.createCoverageModificationPremiumInput;
+import static ca.ulaval.glo4003.coverage.helper.premium.CoverageModificationPremiumInputGenerator.createCoverageModificationPremiumInput;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class CoverageModificationBasePremiumCalculatorIT {

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.coverage.domain.coverage;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.detail.CoverageDetail;
-import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
+import ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.*;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageCategoryGenerator.createAdditionalCoverageCategory;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageCategoryGenerator.createBaseCoverageCategory;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsGenerator.*;
 import static org.junit.Assert.*;
 
 public class CoverageDetailsTest {

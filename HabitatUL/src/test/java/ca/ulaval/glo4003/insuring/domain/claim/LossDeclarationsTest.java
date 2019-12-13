@@ -1,17 +1,17 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
-import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
-import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
+import ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
+import ca.ulaval.glo4003.shared.helper.MoneyGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossCategory;
-import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmount;
 import static ca.ulaval.glo4003.insuring.domain.claim.LossCategory.BICYCLE;
+import static ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsGenerator.createLossCategory;
+import static ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmount;
 import static org.junit.Assert.*;
 
 public class LossDeclarationsTest {

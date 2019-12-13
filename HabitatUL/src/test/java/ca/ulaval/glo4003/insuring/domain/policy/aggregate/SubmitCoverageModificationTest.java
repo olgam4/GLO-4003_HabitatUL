@@ -2,10 +2,7 @@ package ca.ulaval.glo4003.insuring.domain.policy.aggregate;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
-import ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
+import ca.ulaval.glo4003.coverage.helper.premium.PremiumDetailsBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
@@ -15,6 +12,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationV
 import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationsCoordinator;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.NoImpactPolicyInformationModifier;
 import ca.ulaval.glo4003.insuring.domain.policy.modification.modifier.PolicyInformationModifier;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyHistoricBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.DateTime;
@@ -27,13 +27,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyModificationsCoordinator;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoney;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.ACTIVE;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.INACTIVE;
 import static ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationStatus.PENDING;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyModificationsCoordinator;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createMoney;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

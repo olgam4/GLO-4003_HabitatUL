@@ -2,11 +2,11 @@ package ca.ulaval.glo4003.gateway.presentation.underwriting.quote;
 
 import ca.ulaval.glo4003.administration.application.user.UserAppService;
 import ca.ulaval.glo4003.gateway.presentation.underwriting.quote.request.QuoteRequest;
-import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
-import ca.ulaval.glo4003.helper.shared.SecurityContextGenerator;
+import ca.ulaval.glo4003.shared.helper.SecurityContextGenerator;
 import ca.ulaval.glo4003.underwriting.application.quote.QuoteAppService;
 import ca.ulaval.glo4003.underwriting.application.quote.dto.QuoteDto;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
+import ca.ulaval.glo4003.underwriting.helper.quote.QuoteGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.core.SecurityContext;
 
-import static ca.ulaval.glo4003.matcher.QuoteMatcher.matchesRequestQuoteDto;
+import static ca.ulaval.glo4003.underwriting.matcher.QuoteMatcher.matchesRequestQuoteDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.insuring.domain.claim.error.CannotAcceptAuthorityNumber
 
 import javax.ws.rs.core.Response;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimId;
 
 public class CannotAcceptAuthorityNumberErrorMappingIT extends ErrorMappingIT {
   private static final ClaimId CLAIM_ID = createClaimId();

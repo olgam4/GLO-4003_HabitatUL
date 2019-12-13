@@ -15,12 +15,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
-import static ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormGenerator.createCoverageModificationForm;
-import static ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormGenerator.createCoverageRenewalForm;
-import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
-import static ca.ulaval.glo4003.helper.coverage.premium.PremiumDetailsGenerator.createPremiumDetails;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.coverage.helper.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
+import static ca.ulaval.glo4003.coverage.helper.form.CoverageModificationFormGenerator.createCoverageModificationForm;
+import static ca.ulaval.glo4003.coverage.helper.form.CoverageRenewalFormGenerator.createCoverageRenewalForm;
+import static ca.ulaval.glo4003.coverage.helper.form.QuoteFormGenerator.createQuoteForm;
+import static ca.ulaval.glo4003.coverage.helper.premium.PremiumDetailsGenerator.createPremiumDetails;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

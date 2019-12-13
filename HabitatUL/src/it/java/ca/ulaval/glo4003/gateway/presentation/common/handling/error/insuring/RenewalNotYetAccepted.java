@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 
 import javax.ws.rs.core.Response;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
 
 public class RenewalNotYetAccepted extends ErrorMappingIT {
   private static final PolicyRenewalId POLICY_RENEWAL_ID = createPolicyRenewalId();

@@ -1,16 +1,16 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
-import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.claim.exception.ClaimNotFoundException;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Optional;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaim;
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
-import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesClaim;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaim;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.insuring.matcher.ClaimMatcher.matchesClaim;
 import static org.junit.Assert.*;
 
 public abstract class ClaimRepositoryIT {

@@ -4,8 +4,8 @@ import ca.ulaval.glo4003.insuring.domain.policy.lossratio.LossRatio;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatio;
 import static ca.ulaval.glo4003.insuring.application.policy.lossratio.MaximumLossRatioConfigurer.DEFAULT_MAXIMUM_LOSS_RATIO;
+import static ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator.createLossRatio;
 import static org.junit.Assert.assertEquals;
 
 public abstract class MaximumLossRatioConfigurationIT {

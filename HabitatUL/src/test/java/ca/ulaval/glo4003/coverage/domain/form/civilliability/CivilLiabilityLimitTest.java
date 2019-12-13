@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmount;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmount;
 import static org.junit.Assert.assertEquals;
 
 public class CivilLiabilityLimitTest {

@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.underwriting.persistence.quote;
 
-import ca.ulaval.glo4003.helper.quote.QuoteGenerator;
-import ca.ulaval.glo4003.helper.shared.EventGenerator;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.mediator.Mediator;
+import ca.ulaval.glo4003.shared.helper.EventGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.Quote;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteId;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteRepository;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteAlreadyCreatedException;
 import ca.ulaval.glo4003.underwriting.domain.quote.exception.QuoteNotFoundException;
+import ca.ulaval.glo4003.underwriting.helper.quote.QuoteGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.coverage.domain.form.civilliability;
 
-import ca.ulaval.glo4003.helper.coverage.form.civilliability.CivilLiabilityGenerator;
+import ca.ulaval.glo4003.coverage.helper.form.civilliability.CivilLiabilityGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiability.MIN_NB_UNITS_DEFAULT_HIGHER_CIVIL_LIABILITY_LIMIT;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.*;
 
 @RunWith(Enclosed.class)

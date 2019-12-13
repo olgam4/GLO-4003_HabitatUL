@@ -1,18 +1,18 @@
 package ca.ulaval.glo4003.insuring.domain.claim;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.helper.claim.ClaimBuilder;
-import ca.ulaval.glo4003.helper.claim.LossDeclarationsBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyInformationBuilder;
-import ca.ulaval.glo4003.helper.shared.AuthorityGenerator;
-import ca.ulaval.glo4003.helper.shared.EnumSampler;
-import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
 import ca.ulaval.glo4003.insuring.domain.claim.error.CannotAcceptAuthorityNumberError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.LossDeclarationsExceedCoverageAmountError;
 import ca.ulaval.glo4003.insuring.domain.claim.error.NotDeclaredBicycleError;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimBuilder;
+import ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyInformationBuilder;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.helper.AuthorityGenerator;
+import ca.ulaval.glo4003.shared.helper.EnumSampler;
+import ca.ulaval.glo4003.shared.helper.TemporalGenerator;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -20,16 +20,16 @@ import java.util.Arrays;
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.BICYCLE_ENDORSEMENT;
 import static ca.ulaval.glo4003.coverage.domain.coverage.CoverageCategory.PERSONAL_PROPERTY;
 import static ca.ulaval.glo4003.coverage.domain.form.personalproperty.Bicycle.UNFILLED_BICYCLE;
-import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
-import static ca.ulaval.glo4003.helper.shared.AuthorityGenerator.createAuthorityNumber;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThan;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmallerThan;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsGenerator.createCoverageDetails;
 import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.RECEIVED;
 import static ca.ulaval.glo4003.insuring.domain.claim.LossCategory.BICYCLE;
 import static ca.ulaval.glo4003.insuring.domain.claim.SinisterType.THEFT;
+import static ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsGenerator.createPersonalPropertyLossCategory;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber.UNFILLED_AUTHORITY_NUMBER;
+import static ca.ulaval.glo4003.shared.helper.AuthorityGenerator.createAuthorityNumber;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmountGreaterThan;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmountSmallerThan;
 import static org.junit.Assert.assertEquals;
 
 public class ClaimTest {

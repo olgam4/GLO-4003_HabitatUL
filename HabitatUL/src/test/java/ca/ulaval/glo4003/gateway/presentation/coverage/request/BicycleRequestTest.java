@@ -8,10 +8,10 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+import static ca.ulaval.glo4003.coverage.helper.form.personalproperty.BicycleGenerator.*;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.BicycleGenerator.*;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createYear;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.createYear;
 
 public class BicycleRequestTest {
   private BicycleRequest subject;

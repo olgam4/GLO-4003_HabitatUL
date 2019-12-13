@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
 import static ca.ulaval.glo4003.gateway.presentation.underwriting.quote.QuoteResource.PURCHASE_ROUTE;
 import static ca.ulaval.glo4003.gateway.presentation.underwriting.quote.QuoteResource.QUOTE_ROUTE;
-import static ca.ulaval.glo4003.helper.quote.QuoteGenerator.createQuoteDto;
+import static ca.ulaval.glo4003.underwriting.helper.quote.QuoteGenerator.createQuoteDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

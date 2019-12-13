@@ -5,8 +5,8 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
 
+import static ca.ulaval.glo4003.coverage.helper.premium.BicycleEndorsementPremiumInputGenerator.createBicycleEndorsementPremiumInput;
 import static ca.ulaval.glo4003.coverage.infrastructure.premium.formula.bicycleendorsement.HardCodedBicycleEndorsementBasePremiumCalculator.HARDCODED_PREMIUM;
-import static ca.ulaval.glo4003.helper.coverage.premium.BicycleEndorsementPremiumInputGenerator.createBicycleEndorsementPremiumInput;
 import static org.junit.Assert.assertEquals;
 
 public class HardCodedBicycleEndorsementBasePremiumCalculatorTest {

@@ -25,11 +25,11 @@ import static ca.ulaval.glo4003.gateway.presentation.RequestBodyGenerator.*;
 import static ca.ulaval.glo4003.gateway.presentation.RestITestHelper.*;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.claim.ClaimResource.CLAIM_ROUTE;
 import static ca.ulaval.glo4003.gateway.presentation.insuring.policy.PolicyResource.*;
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyDto;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
-import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalDto;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyDto;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

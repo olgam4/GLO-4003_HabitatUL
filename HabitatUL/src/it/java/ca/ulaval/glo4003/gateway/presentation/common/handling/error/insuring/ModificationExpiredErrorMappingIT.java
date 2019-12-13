@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.modification.PolicyModificationI
 
 import javax.ws.rs.core.Response;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
 
 public class ModificationExpiredErrorMappingIT extends ErrorMappingIT {
   private static final PolicyModificationId POLICY_MODIFICATION_ID = createPolicyModificationId();

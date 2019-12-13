@@ -2,10 +2,10 @@ package ca.ulaval.glo4003.gateway.presentation.insuring.claim;
 
 import ca.ulaval.glo4003.gateway.presentation.ResourceConfigBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.AuthFilterBuilder;
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
 import ca.ulaval.glo4003.insuring.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.*;
 import org.junit.runner.RunWith;

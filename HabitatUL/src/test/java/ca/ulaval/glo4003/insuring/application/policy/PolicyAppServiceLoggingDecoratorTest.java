@@ -16,10 +16,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatio;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
-import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
+import static ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator.createLossRatio;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.*;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

@@ -6,7 +6,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.error.InactivePolicyError;
 
 import javax.ws.rs.core.Response;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyId;
 
 public class InactivePolicyErrorMappingIT extends ErrorMappingIT {
   private static final PolicyId POLICY_ID = createPolicyId();

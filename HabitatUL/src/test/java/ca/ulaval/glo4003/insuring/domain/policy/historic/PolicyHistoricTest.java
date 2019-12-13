@@ -1,14 +1,14 @@
 package ca.ulaval.glo4003.insuring.domain.policy.historic;
 
-import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyHistoricBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createCoveragePeriod;
-import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPreviousCoveragePeriod;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyViewGenerator.createCoveragePeriod;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyViewGenerator.createPreviousCoveragePeriod;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 
 public class PolicyHistoricTest {

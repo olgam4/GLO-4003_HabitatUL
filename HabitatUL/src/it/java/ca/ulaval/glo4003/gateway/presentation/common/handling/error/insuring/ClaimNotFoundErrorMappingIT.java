@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.insuring;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.ErrorMappingIT;
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.application.claim.error.ClaimNotFoundError;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator;
 
 import javax.ws.rs.core.Response;
 

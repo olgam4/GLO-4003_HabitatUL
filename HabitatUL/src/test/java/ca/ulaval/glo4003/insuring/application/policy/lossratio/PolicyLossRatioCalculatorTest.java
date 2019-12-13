@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.insuring.application.policy.lossratio;
 
-import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
+import ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsBuilder;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimRepository;
@@ -20,11 +20,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatio;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.*;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static ca.ulaval.glo4003.insuring.domain.claim.ClaimStatus.*;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator.createLossRatio;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.*;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;

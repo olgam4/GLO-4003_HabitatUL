@@ -4,9 +4,9 @@ import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createIdul;
-import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createNi;
-import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.createUniversityProgram;
+import static ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProfileGenerator.createIdul;
+import static ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProfileGenerator.createNi;
+import static ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProgramGenerator.createUniversityProgram;
 import static org.junit.Assert.assertTrue;
 
 public abstract class UlRegistrarOfficeIT {

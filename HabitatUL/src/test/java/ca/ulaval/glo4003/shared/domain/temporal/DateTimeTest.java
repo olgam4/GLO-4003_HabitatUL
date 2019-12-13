@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.shared.domain.temporal;
 
-import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
+import ca.ulaval.glo4003.shared.helper.TemporalGenerator;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

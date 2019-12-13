@@ -8,10 +8,10 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+import static ca.ulaval.glo4003.administration.helper.user.CredentialsGenerator.createPassword;
+import static ca.ulaval.glo4003.administration.helper.user.CredentialsGenerator.createUsername;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.user.CredentialsGenerator.createPassword;
-import static ca.ulaval.glo4003.helper.user.CredentialsGenerator.createUsername;
 
 public class CredentialsRequestTest {
   private CredentialsRequest subject;

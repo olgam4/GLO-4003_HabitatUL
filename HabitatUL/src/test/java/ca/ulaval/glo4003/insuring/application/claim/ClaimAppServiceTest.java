@@ -13,9 +13,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
-import static ca.ulaval.glo4003.helper.shared.AuthorityGenerator.createAuthorityNumber;
-import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesClaimDto;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.insuring.matcher.ClaimMatcher.matchesClaimDto;
+import static ca.ulaval.glo4003.shared.helper.AuthorityGenerator.createAuthorityNumber;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

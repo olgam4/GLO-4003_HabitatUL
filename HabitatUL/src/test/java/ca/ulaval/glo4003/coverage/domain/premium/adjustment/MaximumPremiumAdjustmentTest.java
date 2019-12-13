@@ -1,12 +1,12 @@
 package ca.ulaval.glo4003.coverage.domain.premium.adjustment;
 
-import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.shared.helper.MoneyGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoneyGreaterThan;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createMoneySmallerThan;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createMoneyGreaterThan;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createMoneySmallerThan;
 import static org.junit.Assert.assertEquals;
 
 public class MaximumPremiumAdjustmentTest {

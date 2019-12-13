@@ -2,7 +2,7 @@ package ca.ulaval.glo4003.coverage.domain.premium.formula.bicycleendorsement;
 
 import ca.ulaval.glo4003.coverage.domain.premium.formula.PremiumFormula;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.PremiumFormulaTest;
-import ca.ulaval.glo4003.helper.coverage.premium.BicycleEndorsementPremiumInputGenerator;
+import ca.ulaval.glo4003.coverage.helper.premium.BicycleEndorsementPremiumInputGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

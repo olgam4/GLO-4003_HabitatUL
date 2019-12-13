@@ -3,14 +3,14 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.personalproperty.PersonalProperty;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.PositiveCoverageAmountError;
-import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.QuoteFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.personalproperty.PersonalPropertyBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThanZero;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmallerThanZero;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmountGreaterThanZero;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmountSmallerThanZero;
 
 public class PositiveCoverageAmountQuoteFormValidationPartTest {
   private PositiveCoverageAmountQuoteFormValidationPart subject;

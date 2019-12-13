@@ -4,9 +4,9 @@ import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.identity.Identity;
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.UniversityProfileError;
-import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.identity.IdentityBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator;
+import ca.ulaval.glo4003.coverage.helper.form.QuoteFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.identity.IdentityBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProfileGenerator;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProfile.UNFILLED_UNIVERSITY_PROFILE;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.mockito.Mockito.when;
 
 @RunWith(Enclosed.class)

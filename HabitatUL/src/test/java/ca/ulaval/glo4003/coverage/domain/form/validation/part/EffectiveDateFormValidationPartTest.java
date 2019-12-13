@@ -2,10 +2,10 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 
 import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.QuoteEffectiveDateError;
-import ca.ulaval.glo4003.helper.coverage.form.QuoteFormBuilder;
-import ca.ulaval.glo4003.helper.shared.TemporalGenerator;
+import ca.ulaval.glo4003.coverage.helper.form.QuoteFormBuilder;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
+import ca.ulaval.glo4003.shared.helper.TemporalGenerator;
 import ca.ulaval.glo4003.underwriting.domain.quote.QuoteEffectivePeriodProvider;
 import org.junit.Before;
 import org.junit.Test;

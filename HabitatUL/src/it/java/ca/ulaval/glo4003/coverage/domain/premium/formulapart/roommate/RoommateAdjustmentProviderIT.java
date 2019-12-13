@@ -5,7 +5,7 @@ import ca.ulaval.glo4003.shared.domain.identity.Gender;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.coverage.form.identity.IdentityGenerator.createGender;
+import static ca.ulaval.glo4003.coverage.helper.form.identity.IdentityGenerator.createGender;
 import static org.junit.Assert.assertNotNull;
 
 public abstract class RoommateAdjustmentProviderIT {

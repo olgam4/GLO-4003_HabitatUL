@@ -6,9 +6,9 @@ import ca.ulaval.glo4003.administration.domain.user.token.InvalidTokenSignatureE
 import ca.ulaval.glo4003.administration.domain.user.token.Token;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenPayload;
 import ca.ulaval.glo4003.administration.domain.user.token.TokenTranslator;
+import ca.ulaval.glo4003.administration.helper.user.TokenPayloadBuilder;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Actuary;
 import ca.ulaval.glo4003.gateway.presentation.common.filter.annotation.Secured;
-import ca.ulaval.glo4003.helper.user.TokenPayloadBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,9 +19,9 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
 import java.lang.reflect.Method;
 
+import static ca.ulaval.glo4003.administration.helper.user.TokenGenerator.createToken;
+import static ca.ulaval.glo4003.administration.helper.user.TokenPayloadGenerator.createValidTokenPayload;
 import static ca.ulaval.glo4003.gateway.presentation.common.filter.AuthorizationFilter.AUTHORIZATION_HEADER_SCHEME;
-import static ca.ulaval.glo4003.helper.user.TokenGenerator.createToken;
-import static ca.ulaval.glo4003.helper.user.TokenPayloadGenerator.createValidTokenPayload;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageRenewalForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.IncreasedCoverageAmountError;
-import ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsBuilder;
-import ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.CoverageRenewalFormBuilder;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +15,10 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static ca.ulaval.glo4003.helper.coverage.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountGreaterThan;
-import static ca.ulaval.glo4003.helper.shared.MoneyGenerator.createAmountSmallerThan;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.coverage.helper.form.personalproperty.PersonalPropertyGenerator.createCoverageAmount;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmountGreaterThan;
+import static ca.ulaval.glo4003.shared.helper.MoneyGenerator.createAmountSmallerThan;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 
 @RunWith(Enclosed.class)
 public class IncreasedCoverageAmountCoverageRenewalFormValidationPartTest {

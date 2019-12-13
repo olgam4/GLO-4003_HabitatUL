@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.bicyclepri
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.MultiplicativePremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.NullPremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
-import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
 import ca.ulaval.glo4003.shared.domain.money.Amount;
+import ca.ulaval.glo4003.shared.helper.MoneyGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.bicycleprice.HardCodedBicyclePriceAdjustmentProvider.MINIMUM_BICYCLE_PRICE_BEFORE_SURCHARGE_VALUE;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)

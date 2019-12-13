@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyPurchasedEvent;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyPurchasedEvent;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)

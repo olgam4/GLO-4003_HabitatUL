@@ -10,8 +10,8 @@ import java.util.Set;
 
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.assertViolationDetected;
 import static ca.ulaval.glo4003.gateway.presentation.ValidationTestHelper.getValidator;
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createSinisterType;
-import static ca.ulaval.glo4003.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createSinisterType;
+import static ca.ulaval.glo4003.insuring.helper.claim.LossDeclarationsGenerator.createLossDeclarations;
 
 public class ClaimRequestTest {
   private ClaimRequest subject;

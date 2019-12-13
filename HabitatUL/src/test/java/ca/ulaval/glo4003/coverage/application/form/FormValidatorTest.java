@@ -8,16 +8,16 @@ import ca.ulaval.glo4003.coverage.domain.form.validation.bicycleendorsement.Bicy
 import ca.ulaval.glo4003.coverage.domain.form.validation.coveragemodification.CoverageModificationFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.coveragerenewal.CoverageRenewalFormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.quote.QuoteFormValidation;
-import ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator;
+import ca.ulaval.glo4003.coverage.helper.form.QuoteFormGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.coverage.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
-import static ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormGenerator.createCoverageModificationForm;
-import static ca.ulaval.glo4003.helper.coverage.form.CoverageRenewalFormGenerator.createCoverageRenewalForm;
+import static ca.ulaval.glo4003.coverage.helper.form.BicycleEndorsementFormGenerator.createBicycleEndorsementForm;
+import static ca.ulaval.glo4003.coverage.helper.form.CoverageModificationFormGenerator.createCoverageModificationForm;
+import static ca.ulaval.glo4003.coverage.helper.form.CoverageRenewalFormGenerator.createCoverageRenewalForm;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)

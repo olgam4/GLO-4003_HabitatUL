@@ -14,8 +14,8 @@ import java.time.ZoneId;
 import java.util.logging.Level;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
-import static ca.ulaval.glo4003.helper.shared.LoggingGenerator.createNullLogger;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createDate;
+import static ca.ulaval.glo4003.shared.helper.LoggingGenerator.createNullLogger;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.createDate;
 
 public class IntegrationTestContext {
   public static final String VALID_AUTHORITY_NUMBER_VALUE = "QUE111111001";

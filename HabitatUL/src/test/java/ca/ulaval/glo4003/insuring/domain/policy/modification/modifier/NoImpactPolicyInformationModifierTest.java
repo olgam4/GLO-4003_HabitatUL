@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyInformationGenerator.createPolicyInformation;
 import static org.junit.Assert.assertEquals;
 
 public class NoImpactPolicyInformationModifierTest {

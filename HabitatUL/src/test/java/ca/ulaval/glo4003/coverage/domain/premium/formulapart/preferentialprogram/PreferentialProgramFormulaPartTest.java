@@ -3,12 +3,12 @@ package ca.ulaval.glo4003.coverage.domain.premium.formulapart.preferentialprogra
 import ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram;
 import ca.ulaval.glo4003.coverage.domain.premium.adjustment.PremiumAdjustment;
 import ca.ulaval.glo4003.coverage.domain.premium.formula.quote.QuotePremiumInput;
-import ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramBuilder;
-import ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputBuilder;
-import ca.ulaval.glo4003.helper.shared.MoneyGenerator;
+import ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProgramBuilder;
+import ca.ulaval.glo4003.coverage.helper.premium.QuotePremiumInputBuilder;
 import ca.ulaval.glo4003.shared.domain.identity.Cycle;
 import ca.ulaval.glo4003.shared.domain.identity.Degree;
 import ca.ulaval.glo4003.shared.domain.money.Money;
+import ca.ulaval.glo4003.shared.helper.MoneyGenerator;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
-import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProgramGenerator.*;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProgramGenerator.*;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

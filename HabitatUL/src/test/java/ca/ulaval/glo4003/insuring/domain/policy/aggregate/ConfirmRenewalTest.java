@@ -2,10 +2,6 @@ package ca.ulaval.glo4003.insuring.domain.policy.aggregate;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
 import ca.ulaval.glo4003.coverage.domain.premium.PremiumDetails;
-import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyRenewalBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import ca.ulaval.glo4003.insuring.domain.policy.PolicyRenewedEvent;
@@ -17,6 +13,10 @@ import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewal;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalId;
 import ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalsCoordinator;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyHistoricBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.temporal.ClockProvider;
 import ca.ulaval.glo4003.shared.domain.temporal.Date;
@@ -27,12 +27,12 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
-import static ca.ulaval.glo4003.helper.policy.PolicyViewGenerator.createPreviousPolicyViews;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.PolicyStatus.*;
 import static ca.ulaval.glo4003.insuring.domain.policy.renewal.PolicyRenewalStatus.*;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyRenewalsCoordinator;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyViewGenerator.createPreviousPolicyViews;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

@@ -22,9 +22,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static ca.ulaval.glo4003.coverage.infrastructure.premium.formulapart.preferentialprogram.JsonPreferentialProgramAdjustmentProvider.FILE_PATH;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static ca.ulaval.glo4003.shared.domain.identity.Cycle.*;
 import static ca.ulaval.glo4003.shared.domain.identity.Degree.*;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4003.gateway.presentation.insuring.claim;
 
 import ca.ulaval.glo4003.gateway.presentation.insuring.claim.request.ProvideAuthorityNumberRequest;
-import ca.ulaval.glo4003.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.insuring.application.claim.ClaimAppService;
 import ca.ulaval.glo4003.insuring.application.claim.dto.ClaimDto;
 import ca.ulaval.glo4003.insuring.domain.claim.ClaimId;
+import ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator;
 import ca.ulaval.glo4003.shared.domain.authority.AuthorityNumber;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createAuthorityNumberRequest;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createAuthorityNumberRequest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

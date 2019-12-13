@@ -1,9 +1,6 @@
 package ca.ulaval.glo4003.insuring.domain.policy.aggregate;
 
 import ca.ulaval.glo4003.coverage.domain.coverage.CoverageDetails;
-import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyHistoricBuilder;
-import ca.ulaval.glo4003.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.insuring.domain.claim.Claim;
 import ca.ulaval.glo4003.insuring.domain.policy.ClaimOpenedEvent;
 import ca.ulaval.glo4003.insuring.domain.policy.Policy;
@@ -11,6 +8,9 @@ import ca.ulaval.glo4003.insuring.domain.policy.PolicyInformation;
 import ca.ulaval.glo4003.insuring.domain.policy.error.ClaimOutsideCoveragePeriodError;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyHistoric;
 import ca.ulaval.glo4003.insuring.domain.policy.historic.PolicyView;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyHistoricBuilder;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyViewBuilder;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.shared.domain.temporal.Period;
 import org.junit.Before;
@@ -21,10 +21,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static ca.ulaval.glo4003.helper.coverage.coverage.CoverageDetailsGenerator.createCoverageDetails;
-import static ca.ulaval.glo4003.helper.policy.PolicyInformationGenerator.createPolicyInformation;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createCurrentPeriod;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.createPastPeriod;
+import static ca.ulaval.glo4003.coverage.helper.coverage.CoverageDetailsGenerator.createCoverageDetails;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyInformationGenerator.createPolicyInformation;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.createCurrentPeriod;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.createPastPeriod;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;

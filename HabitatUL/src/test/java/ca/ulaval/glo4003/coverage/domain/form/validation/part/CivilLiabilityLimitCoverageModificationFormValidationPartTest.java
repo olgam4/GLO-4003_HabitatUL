@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.coverage.domain.form.validation.part;
 import ca.ulaval.glo4003.coverage.domain.form.CoverageModificationForm;
 import ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit;
 import ca.ulaval.glo4003.coverage.domain.form.validation.error.CivilLiabilityLimitError;
-import ca.ulaval.glo4003.helper.coverage.form.CoverageModificationFormBuilder;
+import ca.ulaval.glo4003.coverage.helper.form.CoverageModificationFormBuilder;
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabili
 import static ca.ulaval.glo4003.coverage.domain.form.civilliability.CivilLiabilityLimit.TWO_MILLION;
 import static ca.ulaval.glo4003.coverage.domain.form.validation.part.CivilLiabilityLimitFormValidationPart.MAX_NUMBER_OF_UNITS_FOR_LOWER_CIVIL_LIABILITY_LIMIT;
 import static ca.ulaval.glo4003.coverage.domain.form.validation.part.CivilLiabilityLimitFormValidationPart.MIN_NUMBER_OF_UNITS_FOR_HIGHER_CIVIL_LIABILITY_LIMIT;
-import static ca.ulaval.glo4003.helper.shared.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
+import static ca.ulaval.glo4003.shared.helper.ParameterizedTestHelper.PARAMETERIZED_TEST_TITLE;
 
 @RunWith(Enclosed.class)
 public class CivilLiabilityLimitCoverageModificationFormValidationPartTest {

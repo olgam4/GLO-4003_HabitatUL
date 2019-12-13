@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.insuring.domain.policy.lossratio;
 
-import ca.ulaval.glo4003.helper.policy.LossRatioGenerator;
+import ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatioGreaterThan;
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createLossRatioSmallerThan;
+import static ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator.createLossRatioGreaterThan;
+import static ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator.createLossRatioSmallerThan;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

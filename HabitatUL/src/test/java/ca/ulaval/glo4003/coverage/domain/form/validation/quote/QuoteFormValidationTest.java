@@ -4,7 +4,7 @@ import ca.ulaval.glo4003.coverage.domain.form.QuoteForm;
 import ca.ulaval.glo4003.coverage.domain.form.validation.FormValidation;
 import ca.ulaval.glo4003.coverage.domain.form.validation.FormValidationTest;
 
-import static ca.ulaval.glo4003.helper.coverage.form.QuoteFormGenerator.createQuoteForm;
+import static ca.ulaval.glo4003.coverage.helper.form.QuoteFormGenerator.createQuoteForm;
 
 public class QuoteFormValidationTest extends FormValidationTest<QuoteForm> {
   @Override

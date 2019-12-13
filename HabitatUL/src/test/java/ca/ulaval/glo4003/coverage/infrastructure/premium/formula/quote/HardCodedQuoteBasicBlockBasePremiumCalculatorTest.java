@@ -5,8 +5,8 @@ import ca.ulaval.glo4003.shared.domain.money.Money;
 import org.junit.Before;
 import org.junit.Test;
 
+import static ca.ulaval.glo4003.coverage.helper.premium.QuotePremiumInputGenerator.createQuotePremiumInput;
 import static ca.ulaval.glo4003.coverage.infrastructure.premium.formula.quote.HardCodedQuoteBasicBlockBasePremiumCalculator.HARDCODED_PREMIUM;
-import static ca.ulaval.glo4003.helper.coverage.premium.QuotePremiumInputGenerator.createQuotePremiumInput;
 import static org.junit.Assert.assertEquals;
 
 public class HardCodedQuoteBasicBlockBasePremiumCalculatorTest {

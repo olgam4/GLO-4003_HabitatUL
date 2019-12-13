@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.coverage.domain.form.identity;
 import org.junit.Test;
 
 import static ca.ulaval.glo4003.coverage.domain.form.identity.UniversityProgram.UNFILLED_UNIVERSITY_PROGRAM;
-import static ca.ulaval.glo4003.helper.coverage.form.identity.UniversityProfileGenerator.createUniversityProfile;
+import static ca.ulaval.glo4003.coverage.helper.form.identity.UniversityProfileGenerator.createUniversityProfile;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

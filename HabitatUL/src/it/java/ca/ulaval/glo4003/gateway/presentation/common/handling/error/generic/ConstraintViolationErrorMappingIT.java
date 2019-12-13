@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.gateway.presentation.common.handling.error.generic;
 
 import ca.ulaval.glo4003.gateway.presentation.common.handling.MultipleMessagesErrorMappingIT;
-import ca.ulaval.glo4003.helper.shared.EnumSampler;
+import ca.ulaval.glo4003.shared.helper.EnumSampler;
 import com.github.javafaker.Faker;
 
 import javax.validation.ConstraintViolation;

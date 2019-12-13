@@ -1,16 +1,16 @@
 package ca.ulaval.glo4003.insuring.domain.policy;
 
-import ca.ulaval.glo4003.helper.policy.PolicyBuilder;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyAlreadyCreatedException;
 import ca.ulaval.glo4003.insuring.domain.policy.exception.PolicyNotFoundException;
+import ca.ulaval.glo4003.insuring.helper.policy.PolicyBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicy;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.createPolicyId;
-import static ca.ulaval.glo4003.matcher.PolicyMatcher.matchesPolicy;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicy;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.createPolicyId;
+import static ca.ulaval.glo4003.insuring.matcher.PolicyMatcher.matchesPolicy;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertThat;
 

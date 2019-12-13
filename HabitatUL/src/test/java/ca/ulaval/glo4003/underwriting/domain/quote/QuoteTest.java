@@ -1,9 +1,9 @@
 package ca.ulaval.glo4003.underwriting.domain.quote;
 
-import ca.ulaval.glo4003.helper.quote.QuoteBuilder;
 import ca.ulaval.glo4003.mediator.Event;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteAlreadyPurchasedError;
 import ca.ulaval.glo4003.underwriting.domain.quote.error.QuoteExpiredError;
+import ca.ulaval.glo4003.underwriting.helper.quote.QuoteBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

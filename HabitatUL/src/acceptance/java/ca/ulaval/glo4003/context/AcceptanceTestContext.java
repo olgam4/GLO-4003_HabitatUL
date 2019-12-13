@@ -22,8 +22,8 @@ import ca.ulaval.glo4003.underwriting.domain.quote.QuoteValidityPeriodProvider;
 import ca.ulaval.glo4003.underwriting.persistence.quote.InMemoryQuoteRepository;
 
 import static ca.ulaval.glo4003.context.ServiceLocator.register;
-import static ca.ulaval.glo4003.helper.shared.LoggingGenerator.createNullLogger;
-import static ca.ulaval.glo4003.helper.shared.TemporalGenerator.getClockProvider;
+import static ca.ulaval.glo4003.shared.helper.LoggingGenerator.createNullLogger;
+import static ca.ulaval.glo4003.shared.helper.TemporalGenerator.getClockProvider;
 
 public class AcceptanceTestContext {
   public void execute() {

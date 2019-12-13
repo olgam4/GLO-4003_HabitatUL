@@ -16,17 +16,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.core.SecurityContext;
 
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimId;
-import static ca.ulaval.glo4003.helper.claim.ClaimGenerator.createClaimRequest;
-import static ca.ulaval.glo4003.helper.policy.LossRatioGenerator.createConfigureMaximumLossRatioRequest;
-import static ca.ulaval.glo4003.helper.policy.PolicyGenerator.*;
-import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
-import static ca.ulaval.glo4003.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalDto;
-import static ca.ulaval.glo4003.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
-import static ca.ulaval.glo4003.helper.shared.SecurityContextGenerator.createSecurityContext;
-import static ca.ulaval.glo4003.matcher.ClaimMatcher.matchesOpenClaimDto;
-import static ca.ulaval.glo4003.matcher.PolicyMatcher.*;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimId;
+import static ca.ulaval.glo4003.insuring.helper.claim.ClaimGenerator.createClaimRequest;
+import static ca.ulaval.glo4003.insuring.helper.policy.LossRatioGenerator.createConfigureMaximumLossRatioRequest;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyGenerator.*;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyModificationGenerator.createPolicyModificationDto;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyModificationGenerator.createPolicyModificationId;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalDto;
+import static ca.ulaval.glo4003.insuring.helper.policy.PolicyRenewalGenerator.createPolicyRenewalId;
+import static ca.ulaval.glo4003.insuring.matcher.ClaimMatcher.matchesOpenClaimDto;
+import static ca.ulaval.glo4003.insuring.matcher.PolicyMatcher.*;
+import static ca.ulaval.glo4003.shared.helper.SecurityContextGenerator.createSecurityContext;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
